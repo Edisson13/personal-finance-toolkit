@@ -971,7 +971,23 @@
 
       function parseNumber(val) {
         if (typeof val === 'number') return val;
-        const cleaned = String(val || '').replace(/[^0-9.-]/g, '');
+        if (!val) return 0;
+        let str = String(val).trim();
+        // Remove currency symbols, quotes, spaces
+        str = str.replace(/[$€£\s"']/g, '');
+        // Handle European vs US decimals
+        if (str.includes(',') && !str.includes('.')) {
+          str = str.replace(',', '.');
+        } else if (str.includes('.') && str.includes(',')) {
+          if (str.lastIndexOf(',') > str.lastIndexOf('.')) {
+            str = str.replace(/\./g, '').replace(',', '.');
+          } else {
+            str = str.replace(/,/g, '');
+          }
+        } else if (str.includes(',')) {
+          str = str.replace(/,/g, '');
+        }
+        const cleaned = str.replace(/[^0-9.-]/g, '');
         const num = parseFloat(cleaned);
         return isNaN(num) ? 0 : num;
       }
@@ -992,7 +1008,22 @@
         return `${MONTH_NAMES[clamp(month, 0, 11)]} ${year}`;
       }
 
-      function parseCSVLine(line) {
+      function formatCalendarMonthClean(year, month) {
+        return `${year}-${String(month + 1).padStart(2, '0')} (${MONTH_NAMES[clamp(month, 0, 11)]})`;
+      }
+
+      function detectDelimiter(input) {
+        const text = Array.isArray(input) ? input.slice(0, 25).join('\n') : String(input || '');
+        const sample = text.slice(0, 5000);
+        const tabCount = (sample.match(/\t/g) || []).length;
+        const semiCount = (sample.match(/;/g) || []).length;
+        const commaCount = (sample.match(/,/g) || []).length;
+        if (tabCount > semiCount && tabCount > commaCount) return '\t';
+        if (semiCount > commaCount && semiCount > tabCount) return ';';
+        return ',';
+      }
+
+      function parseCSVLine(line, delimiter = ',') {
         const result = [];
         let cur = '';
         let inQuotes = false;
@@ -1005,7 +1036,7 @@
             } else {
               inQuotes = !inQuotes;
             }
-          } else if (c === ',' && !inQuotes) {
+          } else if (c === delimiter && !inQuotes) {
             result.push(cur.trim());
             cur = '';
           } else {
@@ -1014,6 +1045,52 @@
         }
         result.push(cur.trim());
         return result;
+      }
+
+      // Robust month & year parser supporting pure numbers, Excel auto-formatted dates (nov-26, feb-27), and localized names
+      function extractMonthAndYear(cols) {
+        let y = parseInt(cols[0], 10);
+        let m = parseInt(cols[1], 10);
+
+        if (!isNaN(y) && y >= 1970 && y <= 2100 && !isNaN(m) && m >= 1 && m <= 12) {
+          return { year: y, month: m - 1 };
+        }
+
+        const monthMap = {
+          jan: 0, ene: 0, feb: 1, mar: 2, apr: 3, abr: 3,
+          may: 4, jun: 5, jul: 6, aug: 7, ago: 7,
+          sep: 8, set: 8, oct: 9, nov: 10, dec: 11, dic: 11
+        };
+
+        // Check cols 0, 1, 2 for month patterns
+        for (let c = 0; c < Math.min(cols.length, 3); c++) {
+          const s = String(cols[c] || '').trim().toLowerCase();
+          // e.g. "nov-26" or "feb-27"
+          const matchMonYr = s.match(/^([a-z]{3,4})[-/ ](\d{2,4})$/);
+          if (matchMonYr) {
+            const monStr = matchMonYr[1].substring(0, 3);
+            let yrNum = parseInt(matchMonYr[2], 10);
+            if (yrNum < 100) yrNum += (yrNum < 50 ? 2000 : 1900);
+            if (monthMap[monStr] !== undefined) {
+              return { year: yrNum, month: monthMap[monStr] };
+            }
+          }
+          // e.g. "2026-11" or "2026/11"
+          const matchYrMon = s.match(/^(\d{4})[-/](\d{1,2})/);
+          if (matchYrMon) {
+            const yrNum = parseInt(matchYrMon[1], 10);
+            const monNum = parseInt(matchYrMon[2], 10);
+            if (monNum >= 1 && monNum <= 12) {
+              return { year: yrNum, month: monNum - 1 };
+            }
+          }
+        }
+
+        if (!isNaN(y) && y >= 1970 && y <= 2100) {
+          if (!isNaN(m) && m >= 1 && m <= 12) return { year: y, month: m - 1 };
+        }
+
+        return null;
       }
 
       // --- DOM Elements ---
@@ -1556,8 +1633,8 @@
 
           const deltaAllTime = latestNw - firstNw;
           kpiHistoricalDelta.textContent = `${deltaAllTime >= 0 ? '+' : ''}${formatMoney(deltaAllTime)}`;
-          kpiHistoricalDelta.style.color = deltaAllTime >= 0 ? '#38bdf8' : '#f87171';
-          kpiHistoricalDeltaSub = `From ${formatMonthYear(first.year, first.month)} (${count} mos)`;
+          kpiHistoricalDelta.style.color = deltaAllTime >= 0 ? '#34d399' : '#f87171';
+          if (kpiHistoricalDeltaSub) kpiHistoricalDeltaSub.textContent = `From ${formatMonthYear(first.year, first.month)} (${count} mos)`;
 
           const monthsBetween = Math.max(1, (latest.year * 12 + latest.month) - (first.year * 12 + first.month));
           kpiDateRange.textContent = `${monthsBetween + 1} months calendar span`;
@@ -1575,15 +1652,15 @@
           if (variance >= 0) {
             kpiPlanStatus.textContent = 'Ahead of Plan';
             kpiPlanStatus.style.color = '#34d399';
-            kpiPlanStatusSub = `${formatMoney(variance)} above target curve`;
+            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = `${formatMoney(variance)} above target curve`;
           } else if (Math.abs(variance) < 5000) {
             kpiPlanStatus.textContent = 'On Track';
             kpiPlanStatus.style.color = '#fbbf24';
-            kpiPlanStatusSub = `Within ${formatMoney(Math.abs(variance))} of target`;
+            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = `Within ${formatMoney(Math.abs(variance))} of target`;
           } else {
             kpiPlanStatus.textContent = 'Behind Plan';
             kpiPlanStatus.style.color = '#f87171';
-            kpiPlanStatusSub = `${formatMoney(Math.abs(variance))} below target`;
+            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = `${formatMoney(Math.abs(variance))} below target`;
           }
 
           // Insights
@@ -1599,7 +1676,10 @@
           kpiLatestNw.textContent = '$0';
           kpiLatestDate.textContent = 'No entries recorded';
           kpiHistoricalDelta.textContent = '$0';
+          if (kpiHistoricalDeltaSub) kpiHistoricalDeltaSub.textContent = '0 months logged';
           kpiDateRange.textContent = '0 months spanned';
+          kpiPlanStatus.textContent = 'Awaiting Entries';
+          if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = 'Upload or calibrate plan';
           planSlotVarianceVal.textContent = '$0';
           planVariancePct.textContent = '+0.0%';
           insightAvgPace.textContent = '$0/mo';
@@ -1660,13 +1740,13 @@
         rows.push(['Export Date', new Date().toLocaleDateString()]);
         rows.push(['File Purpose', 'Historical Log Tracker (Keep separate from forward planning scenarios)']);
         rows.push(['Total Monthly Entries', trackerState.entries.length]);
-        rows.push(['First Logged Date', formatMonthYear(first.year, first.month)]);
-        rows.push(['Latest Logged Date', formatMonthYear(latest.year, latest.month)]);
+        rows.push(['First Logged Date', formatCalendarMonthClean(first.year, first.month)]);
+        rows.push(['Latest Logged Date', formatCalendarMonthClean(latest.year, latest.month)]);
         rows.push(['Associated Plan Source', trackerState.plannedScenario.sourceName]);
         rows.push([]);
 
         rows.push(['PLANNED BENCHMARK METADATA']);
-        rows.push(['Plan Start Date', formatMonthYear(trackerState.plannedScenario.startYear, trackerState.plannedScenario.startMonth)]);
+        rows.push(['Plan Start Date', formatCalendarMonthClean(trackerState.plannedScenario.startYear, trackerState.plannedScenario.startMonth)]);
         rows.push(['Plan Start Month Index', trackerState.plannedScenario.startMonth + 1]);
         rows.push(['Plan Start Year', trackerState.plannedScenario.startYear]);
         rows.push(['Plan Baseline Assets ($)', (trackerState.plannedScenario.investedAssets + trackerState.plannedScenario.propertyValue).toFixed(2)]);
@@ -1705,7 +1785,7 @@
           rows.push([
             e.year,
             e.month + 1,
-            formatMonthYear(e.year, e.month),
+            formatCalendarMonthClean(e.year, e.month),
             e.liquid.toFixed(2),
             e.invested.toFixed(2),
             e.realEstate.toFixed(2),
@@ -1744,7 +1824,13 @@
           try {
             const text = evt.target.result;
             const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-            const headerJoined = lines.slice(0, 10).join(' ').toLowerCase();
+            if (lines.length === 0) {
+              alert('Uploaded file is empty.');
+              return;
+            }
+
+            const delimiter = detectDelimiter(lines);
+            const headerJoined = lines.slice(0, 15).join(' ').toLowerCase();
 
             // Detect if this is an actual Tracker CSV
             if (!headerJoined.includes('monthly net worth log & historical reality tracker') && !headerJoined.includes('chronological monthly net worth entries')) {
@@ -1758,31 +1844,35 @@
             let inEntries = false;
 
             for (let i = 0; i < lines.length; i++) {
-              const cols = parseCSVLine(lines[i]);
-              if (cols[0] === 'CHRONOLOGICAL MONTHLY NET WORTH ENTRIES (ONE PER MONTH)') {
+              const rawLine = lines[i];
+              const cols = parseCSVLine(rawLine, delimiter);
+              if (cols.length === 0) continue;
+
+              const firstColUpper = (cols[0] || '').trim().toUpperCase();
+              if (firstColUpper.includes('CHRONOLOGICAL MONTHLY NET WORTH ENTRIES') || rawLine.toUpperCase().includes('CHRONOLOGICAL MONTHLY NET WORTH ENTRIES')) {
                 inEntries = true;
-                i++; // skip column headers
+                i++; // skip column headers line
                 continue;
               }
 
               if (inEntries) {
-                if (cols.length < 12) continue;
-                const year = parseInt(cols[0], 10);
-                const monthIdx = parseInt(cols[1], 10);
-                if (isNaN(year) || isNaN(monthIdx) || monthIdx < 1 || monthIdx > 12) continue;
+                if (cols.length < 4) continue;
+                const dateInfo = extractMonthAndYear(cols);
+                if (!dateInfo) continue;
 
+                // Support both standard 17-col export and variations
                 parsedEntries.push({
-                  year: year,
-                  month: monthIdx - 1,
-                  liquid: Math.max(0, parseNumber(cols[3])),
-                  invested: Math.max(0, parseNumber(cols[4])),
-                  realEstate: Math.max(0, parseNumber(cols[5])),
-                  otherAssets: Math.max(0, parseNumber(cols[6])),
-                  consumerDebt: Math.max(0, parseNumber(cols[8])),
-                  mortgage: Math.max(0, parseNumber(cols[9])),
-                  monthlySavings: cols[14] ? Math.max(0, parseNumber(cols[14])) : 0,
-                  monthlyExpenses: cols[15] ? Math.max(0, parseNumber(cols[15])) : 0,
-                  notes: cols[16] ? cols[16].replace(/^"|"$/g, '') : ''
+                  year: dateInfo.year,
+                  month: dateInfo.month,
+                  liquid: cols[3] !== undefined ? Math.max(0, parseNumber(cols[3])) : 0,
+                  invested: cols[4] !== undefined ? Math.max(0, parseNumber(cols[4])) : 0,
+                  realEstate: cols[5] !== undefined ? Math.max(0, parseNumber(cols[5])) : 0,
+                  otherAssets: cols[6] !== undefined ? Math.max(0, parseNumber(cols[6])) : 0,
+                  consumerDebt: cols[8] !== undefined ? Math.max(0, parseNumber(cols[8])) : 0,
+                  mortgage: cols[9] !== undefined ? Math.max(0, parseNumber(cols[9])) : 0,
+                  monthlySavings: cols[14] !== undefined ? Math.max(0, parseNumber(cols[14])) : 0,
+                  monthlyExpenses: cols[15] !== undefined ? Math.max(0, parseNumber(cols[15])) : 0,
+                  notes: cols[16] ? cols[16].replace(/^"|"$/g, '').trim() : ''
                 });
               }
             }
@@ -1797,7 +1887,7 @@
 
           } catch (err) {
             console.error(err);
-            alert('Error parsing Tracker CSV file.');
+            alert('Error parsing Tracker CSV file: ' + (err.message || err));
           }
         };
         reader.readAsText(file);
@@ -1807,12 +1897,13 @@
       function ingestPlannedScenarioCSV(rawText, fileName) {
         const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
         if (lines.length === 0) return;
+        const delimiter = detectDelimiter(lines);
         const headerJoined = lines.slice(0, 15).join(' ').toLowerCase();
 
         // 1. Net Worth Command Center CSV (Primary Master Plan)
         if (headerJoined.includes('holistic net worth command center')) {
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
             const v = cols[1];
@@ -1846,7 +1937,7 @@
           let yVal = null;
 
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols[0] && cols[0].toLowerCase() === 'start month index') mIdx = parseInt(cols[1], 10);
             if (cols[0] && cols[0].toLowerCase() === 'start year') yVal = parseInt(cols[1], 10);
 
@@ -1884,7 +1975,7 @@
           let yVal = null;
 
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols[0] && cols[0].toLowerCase() === 'start month index') mIdx = parseInt(cols[1], 10);
             if (cols[0] && cols[0].toLowerCase() === 'start year') yVal = parseInt(cols[1], 10);
             if (cols[0] && cols[0].toLowerCase().includes('extra monthly payment')) extra = Math.max(0, parseNumber(cols[1]));
@@ -1916,7 +2007,7 @@
         // 4. Mortgage CSV
         if (headerJoined.includes('mortgage calculation') || headerJoined.includes('loan parameters')) {
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
             if (k === 'home price ($)') trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(cols[1]));
