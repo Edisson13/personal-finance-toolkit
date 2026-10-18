@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Finance Toolkit | Offline Suite</title>
+  <title>Personal Finance Toolkit | Offline Suite &amp; Net Worth Hub</title>
   <style>
     :root {
       --bg-base: #070b12;
@@ -54,7 +54,7 @@
       max-width: 1240px;
       display: flex;
       flex-direction: column;
-      gap: 2.25rem;
+      gap: 2.5rem;
     }
 
     /* Top Navigation / Controls Bar */
@@ -95,6 +95,7 @@
       display: flex;
       gap: 0.65rem;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -106,11 +107,12 @@
       color: var(--text-main);
       padding: 0.55rem 1rem;
       border-radius: var(--radius-sm);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
       user-select: none;
+      text-decoration: none;
     }
 
     .btn:hover {
@@ -129,6 +131,28 @@
       color: #fff;
     }
 
+    .btn-success {
+      background: #065f46;
+      border-color: var(--accent-emerald);
+      color: #34d399;
+    }
+
+    .btn-success:hover {
+      background: #047857;
+      color: #fff;
+    }
+
+    .btn-purple {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.45);
+      color: #d8b4fe;
+    }
+
+    .btn-purple:hover {
+      background: var(--accent-purple);
+      color: #fff;
+    }
+
     /* Hero Section */
     .hero {
       text-align: center;
@@ -136,7 +160,7 @@
       flex-direction: column;
       align-items: center;
       gap: 0.75rem;
-      padding: 1rem 0;
+      padding: 0.5rem 0;
     }
 
     .hero h1 {
@@ -151,7 +175,7 @@
     .hero p {
       color: var(--text-muted);
       font-size: 1.05rem;
-      max-width: 680px;
+      max-width: 740px;
       line-height: 1.6;
     }
 
@@ -179,10 +203,414 @@
       color: var(--text-muted);
     }
 
+    /* Step-by-Step User Friendly Guide */
+    .guide-section {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(22, 32, 50, 0.7) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.35rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .guide-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .guide-steps-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 580px) {
+      .guide-steps-grid { grid-template-columns: 1fr; }
+    }
+
+    .guide-step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .guide-step-card:hover {
+      border-color: var(--accent-indigo);
+      transform: translateY(-2px);
+    }
+
+    .guide-step-top {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .guide-badge {
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+    }
+
+    .guide-step-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .guide-step-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.52;
+    }
+
+    .guide-step-tip {
+      margin-top: auto;
+      padding-top: 0.55rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.75rem;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    /* Net Worth Command Center & Future Projector */
+    .nw-hub-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nw-hub-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #10b981, #06b6d4, #6366f1, #a855f7);
+    }
+
+    .nw-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .nw-sync-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.9rem;
+    }
+
+    @media (max-width: 1024px) {
+      .nw-sync-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .nw-sync-grid { grid-template-columns: 1fr; }
+    }
+
+    .sync-slot {
+      background: var(--bg-input);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .sync-slot:hover {
+      border-color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.06);
+    }
+
+    .sync-slot.loaded {
+      border-style: solid;
+      border-color: rgba(16, 185, 129, 0.5);
+      background: rgba(16, 185, 129, 0.06);
+    }
+
+    .sync-slot-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .sync-status-pill {
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(148, 163, 184, 0.15);
+      color: var(--text-muted);
+    }
+
+    .sync-slot.loaded .sync-status-pill {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .sync-slot-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sync-slot-sub {
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Net Worth KPI Cards */
+    .nw-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 920px) {
+      .nw-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .nw-kpi-grid { grid-template-columns: 1fr; }
+    }
+
+    .nw-kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .nw-kpi-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .nw-kpi-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .nw-kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+    }
+
+    /* Net Worth Split Layout: Controls + Chart */
+    .nw-main-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 1024px) {
+      .nw-main-grid { grid-template-columns: 1fr; }
+    }
+
+    .nw-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .nw-panel-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .nw-inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+    }
+
+    @media (max-width: 560px) {
+      .nw-inputs-grid { grid-template-columns: 1fr; }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .field-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-prefix, .input-suffix {
+      position: absolute;
+      color: var(--text-subtle);
+      font-size: 0.84rem;
+      pointer-events: none;
+      font-weight: 600;
+    }
+
+    .input-prefix { left: 0.65rem; }
+    .input-suffix { right: 0.65rem; }
+
+    input[type="text"], input[type="number"], select {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.48rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      width: 100%;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+    }
+
+    .input-wrapper.has-prefix input { padding-left: 1.6rem; }
+    .input-wrapper.has-suffix input { padding-right: 2rem; }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #232d42;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-indigo);
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+
+    .toggle-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent-emerald);
+      cursor: pointer;
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 275px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
     /* Application Cards Grid */
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: 1.5rem;
     }
 
@@ -219,6 +647,7 @@
     }
 
     .card-savings::before { background: linear-gradient(90deg, #4f46e5, #06b6d4); }
+    .card-col::before { background: linear-gradient(90deg, #a855f7, #ec4899); }
     .card-mortgage::before { background: linear-gradient(90deg, #6366f1, #a855f7); }
     .card-debt::before { background: linear-gradient(90deg, #ef4444, #f59e0b); }
     .card-fire::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
@@ -413,7 +842,7 @@
       color: var(--text-subtle);
     }
 
-    /* Viewer Table */
+    /* Viewer & Net Worth Tables */
     .viewer-container {
       display: none;
       flex-direction: column;
@@ -440,7 +869,7 @@
     }
 
     .table-container {
-      max-height: 440px;
+      max-height: 400px;
       overflow-y: auto;
       overflow-x: auto;
       border: 1px solid var(--border-color);
@@ -451,6 +880,13 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 0.83rem;
+      text-align: left;
+    }
+
+    .nw-table th, .nw-table td {
+      text-align: right;
+    }
+    .nw-table th:first-child, .nw-table td:first-child {
       text-align: left;
     }
 
@@ -469,7 +905,7 @@
     th {
       font-weight: 700;
       color: var(--text-muted);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       border-bottom: 1px solid var(--border-color);
@@ -493,11 +929,10 @@
     <div class="top-bar">
       <div class="suite-badge">
         <span class="status-dot"></span>
-        100% Offline &amp; Client-Side
+        100% Offline &amp; Client-Side Suite
       </div>
 
       <div class="top-actions">
-        <!-- Top Refresh Button -->
         <button type="button" class="btn btn-refresh" id="btnPageRefresh" title="Reload Landing Dashboard">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="23 4 23 10 17 10"></polyline>
@@ -511,11 +946,401 @@
 
     <!-- Header Hero -->
     <header class="hero">
-      <h1>Financial Tool Suite</h1>
+      <h1>Personal Finance &amp; Net Worth Suite</h1>
       <p>
-        A unified personal finance ecosystem. Model portfolio compounding, analyze mortgage amortization, eliminate high-interest liabilities, project retirement independence, and benchmark real estate decisions.
+        A private, zero-dependency financial ecosystem that runs 100% locally in your browser. Model multi-asset investing, eliminate debt, factor in cost of living &amp; inflation, and project your total net worth into the future.
       </p>
+
+      <!-- Planning vs Tracking Distinction Notice -->
+      <div style="margin-top:0.75rem; max-width:880px; background:rgba(99, 102, 241, 0.08); border:1px solid rgba(99, 102, 241, 0.3); border-radius:var(--radius-md); padding:0.9rem 1.25rem; text-align:left; font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+        <div style="display:flex; align-items:center; gap:0.5rem; font-weight:700; color:#fff; margin-bottom:0.3rem;">
+          <span style="font-size:1.05rem;">📌</span>
+          <span>Important: Planning Engine vs. Historical Progress Tracker</span>
+        </div>
+        <div>
+          The calculators here (Investing, Debt Payoff, Cost of Living, and the Net Worth Command Center) are <strong>forward-looking planning tools</strong> used to model growth, simulate compound interest, and project scenarios. 
+          To record your <em>actual real-world monthly progress</em> over time and compare reality against your plan, use the dedicated <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700; text-decoration:underline;">Monthly Net Worth Log &amp; Progress Tracker</a> module. Files created in the Tracker module should be stored and loaded exclusively within the Tracker module.
+        </div>
+      </div>
     </header>
+
+    <!-- Summarized Clear Step-by-Step User Guide -->
+    <section class="guide-section" aria-label="Step-by-Step User Guide">
+      <div class="section-header">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          Quick-Start Guide: How to Use This Suite
+        </h2>
+        <p>Four simple steps to model, connect, and back up your complete financial life offline</p>
+      </div>
+
+      <div class="guide-steps-grid">
+        <div class="guide-step-card">
+          <div class="guide-step-top">
+            <span class="guide-badge">Step 1</span>
+            <span class="guide-step-title">Model Your Modules</span>
+          </div>
+          <p class="guide-step-desc">
+            Open any calculator below—such as <strong>Multi-Asset Investing</strong>, <strong>Debt Payoff</strong>, or <strong>Cost of Living</strong>—and enter your current balances, interest rates, and monthly cash flows.
+          </p>
+          <div class="guide-step-tip">Tip: All charts &amp; tables update in real time</div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="guide-step-top">
+            <span class="guide-badge">Step 2</span>
+            <span class="guide-step-title">Export Module CSVs</span>
+          </div>
+          <p class="guide-step-desc">
+            Click the green <strong>Export CSV</strong> button in the top-right corner of any calculator to save your exact configuration and year-by-year projection to your computer.
+          </p>
+          <div class="guide-step-tip">Tip: Files open in Excel or reload back into any tool</div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="guide-step-top">
+            <span class="guide-badge">Step 3</span>
+            <span class="guide-step-title">Combine for Net Worth</span>
+          </div>
+          <p class="guide-step-desc">
+            In the <strong>Net Worth Command Center</strong> right below, load your exported Investing, Debt, and Cost of Living CSVs (or type numbers directly) to see where you stand today and project your future wealth.
+          </p>
+          <div class="guide-step-tip">Tip: Automatically links debt payoff rollovers</div>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="guide-step-top">
+            <span class="guide-badge">Step 4</span>
+            <span class="guide-step-title">Track Reality vs. Plan</span>
+          </div>
+          <p class="guide-step-desc">
+            Use the <strong>Net Worth Command Center</strong> to plan scenarios. Once per month, log your real balances in the <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700;">Monthly Tracker</a> to build a permanent timeline and see if you are ahead of or behind your plan!
+          </p>
+          <div class="guide-step-tip">Tip: Tracker CSVs are dedicated to the Tracker module</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Holistic Net Worth Command Center & Future Projector -->
+    <section class="nw-hub-section" aria-label="Net Worth Command Center">
+      <div class="nw-header-row">
+        <div class="section-header" style="margin-bottom:0;">
+          <div>
+            <h2>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+              Net Worth Command Center &amp; Future Projector
+            </h2>
+            <p style="margin-top:0.25rem;">
+              Import CSV files from your Investing, Debt, Cost of Living, or Mortgage modules—or adjust values directly—to view your current net worth and multi-year trajectory.
+            </p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <input type="file" id="nwMultiCsvInput" accept=".csv" multiple style="display:none;">
+          
+          <button type="button" class="btn btn-purple" id="btnImportModuleCSVs" title="Upload one or more CSVs from Investing, Debt, Cost of Living, Mortgage, or Net Worth">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Load / Sync CSV Files
+          </button>
+
+          <button type="button" class="btn btn-success" id="btnExportNwCSV" title="Download complete Net Worth Snapshot and Future Projection as CSV">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Export Net Worth CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Module CSV Sync Slots -->
+      <div class="nw-sync-grid">
+        <div class="sync-slot" id="slotInvesting" title="Click to load an Investing & Portfolio CSV file">
+          <div class="sync-slot-top">
+            <span>📈 Investing CSV</span>
+            <span class="sync-status-pill" id="pillInvesting">Manual / Default</span>
+          </div>
+          <div class="sync-slot-title" id="slotInvestingVal">$40,000 Assets</div>
+          <div class="sync-slot-sub" id="slotInvestingSub">Click to import Investing CSV</div>
+        </div>
+
+        <div class="sync-slot" id="slotDebt" title="Click to load a Debt Payoff CSV file">
+          <div class="sync-slot-top">
+            <span>🛡️ Debt Payoff CSV</span>
+            <span class="sync-status-pill" id="pillDebt">Manual / Default</span>
+          </div>
+          <div class="sync-slot-title" id="slotDebtVal">$36,000 Debt</div>
+          <div class="sync-slot-sub" id="slotDebtSub">Click to import Debt Payoff CSV</div>
+        </div>
+
+        <div class="sync-slot" id="slotCol" title="Click to load a Cost of Living CSV file">
+          <div class="sync-slot-top">
+            <span>🛒 Cost of Living CSV</span>
+            <span class="sync-status-pill" id="pillCol">Manual / Default</span>
+          </div>
+          <div class="sync-slot-title" id="slotColVal">$4,580/mo Spend</div>
+          <div class="sync-slot-sub" id="slotColSub">Click to import Cost of Living CSV</div>
+        </div>
+
+        <div class="sync-slot" id="slotRealEstate" title="Click to load a Mortgage or Emergency Runway CSV file">
+          <div class="sync-slot-top">
+            <span>🏠 Real Estate / Snapshot</span>
+            <span class="sync-status-pill" id="pillRealEstate">Manual / Default</span>
+          </div>
+          <div class="sync-slot-title" id="slotRealEstateVal">$85,000 Equity</div>
+          <div class="sync-slot-sub" id="slotRealEstateSub">Click to import Mortgage or NW CSV</div>
+        </div>
+      </div>
+
+      <!-- Net Worth Top KPIs -->
+      <div class="nw-kpi-grid">
+        <div class="nw-kpi-card">
+          <span class="nw-kpi-label">Current Net Worth (Today)</span>
+          <span class="nw-kpi-val" id="nwKpiCurrent" style="color:#34d399;">$0</span>
+          <span class="nw-kpi-sub" id="nwKpiCurrentSub">Assets minus Liabilities</span>
+        </div>
+
+        <div class="nw-kpi-card">
+          <span class="nw-kpi-label">Total Assets vs. Liabilities</span>
+          <span class="nw-kpi-val" id="nwKpiAssetsLiab" style="color:#38bdf8; font-size:1.3rem;">$0 / $0</span>
+          <span class="nw-kpi-sub" id="nwKpiDebtRatio">0% debt-to-asset ratio</span>
+        </div>
+
+        <div class="nw-kpi-card">
+          <span class="nw-kpi-label">Projected Future Net Worth</span>
+          <span class="nw-kpi-val" id="nwKpiProjected" style="color:#a855f7;">$0</span>
+          <span class="nw-kpi-sub" id="nwKpiProjectedSub">At Year 10 (Nominal)</span>
+        </div>
+
+        <div class="nw-kpi-card">
+          <span class="nw-kpi-label">Inflation-Adjusted (Real NW)</span>
+          <span class="nw-kpi-val" id="nwKpiReal" style="color:#fbbf24;">$0</span>
+          <span class="nw-kpi-sub" id="nwKpiRealSub">In today's purchasing power</span>
+        </div>
+      </div>
+
+      <!-- Interactive Net Worth Controls + Chart -->
+      <div class="nw-main-grid">
+        
+        <!-- Left Panel: Current Position & Cash Flow Inputs -->
+        <div class="nw-panel">
+          <div class="nw-panel-title">
+            <span>Where You Are &amp; Future Drivers</span>
+            <span style="font-size:0.74rem; font-weight:500; color:var(--text-muted);">Editable or CSV-synced</span>
+          </div>
+
+          <div class="nw-inputs-grid">
+            <div class="field-group" style="grid-column: 1 / -1;">
+              <label class="field-label">
+                <span>Snapshot Date (Where You Are As Of)</span>
+                <span id="nwStartDateBadge" style="color:#a5b4fc;">Oct 2026</span>
+              </label>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+                <select id="nwStartMonthSelect" aria-label="Net Worth Start Month">
+                  <option value="0">January</option>
+                  <option value="1">February</option>
+                  <option value="2">March</option>
+                  <option value="3">April</option>
+                  <option value="4">May</option>
+                  <option value="5">June</option>
+                  <option value="6">July</option>
+                  <option value="7">August</option>
+                  <option value="8">September</option>
+                  <option value="9">October</option>
+                  <option value="10">November</option>
+                  <option value="11">December</option>
+                </select>
+                <input type="number" id="nwStartYearInput" aria-label="Net Worth Start Year" min="1970" max="2100" step="1" value="2026">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Liquid &amp; Invested Assets</span>
+                <span style="color:#38bdf8;">+$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="nwInvestedInput" inputmode="numeric" value="40,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Real Estate / Other Value</span>
+                <span style="color:#38bdf8;">+$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="nwPropertyValInput" inputmode="numeric" value="350,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Consumer &amp; Loan Debt</span>
+                <span style="color:#f87171;">-$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="nwConsumerDebtInput" inputmode="numeric" value="36,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Mortgage Debt Balance</span>
+                <span style="color:#f87171;">-$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="nwMortgageDebtInput" inputmode="numeric" value="265,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Monthly Investment Contrib.</span>
+                <span id="nwPortfolioReturnBadge" style="color:#34d399;">7.2% APY</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="nwMonthlyInvestInput" inputmode="numeric" value="1,300">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Monthly Debt Paydown</span>
+                <span id="nwDebtAprBadge" style="color:#fbbf24;">11.3% APR</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="nwMonthlyDebtPayInput" inputmode="numeric" value="1,120">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Monthly Cost of Living</span>
+                <span style="color:#a855f7;">Living</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="nwMonthlyColInput" inputmode="numeric" value="4,580">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">
+                <span>Expected Annual Inflation</span>
+                <span>CPI %</span>
+              </label>
+              <div class="input-wrapper has-suffix">
+                <input type="number" id="nwInflationInput" step="0.1" min="0" max="20" value="3.2">
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horizon Slider -->
+          <div style="margin-top:0.25rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:600; margin-bottom:0.35rem;">
+              <span>Projection Horizon:</span>
+              <span id="nwHorizonLabel" style="color:#a5b4fc;">10 Years</span>
+            </div>
+            <input type="range" id="nwHorizonSlider" min="1" max="30" step="1" value="10">
+          </div>
+
+          <!-- Smart Rollover Toggle -->
+          <label class="toggle-row">
+            <span><strong>Auto-Rollover Freed Debt Payments:</strong> Redirect monthly debt payments into investments once consumer debt hits $0</span>
+            <input type="checkbox" id="nwRolloverToggle" checked>
+          </label>
+
+          <!-- Historical CSV Fast-Forward Toggle -->
+          <label class="toggle-row">
+            <span><strong>Fast-Forward Older CSVs:</strong> If an imported CSV starts before the Snapshot Date (e.g. Mar 2021 → Oct 2026), simulate the months in between so balances reflect the Snapshot Date</span>
+            <input type="checkbox" id="nwFastForwardToggle" checked>
+          </label>
+        </div>
+
+        <!-- Right Panel: Net Worth Trajectory Chart & Milestones -->
+        <div class="nw-panel">
+          <div class="nw-panel-title">
+            <span>Net Worth Trajectory (Assets vs. Debt vs. Net Worth)</span>
+            <span id="nwDebtFreeBadge" style="font-size:0.75rem; color:#34d399; font-weight:600;">Consumer Debt Free: Yr 3</span>
+          </div>
+
+          <div class="canvas-container">
+            <canvas id="nwCanvas"></canvas>
+          </div>
+
+          <div class="chart-legend">
+            <div class="legend-item">
+              <span class="legend-color" style="background:#10b981;"></span>
+              <span style="color:#fff; font-weight:600;">Nominal Net Worth</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background:#fbbf24; border:1px dashed #fff;"></span>
+              <span>Real Net Worth (Today's $)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background:#38bdf8;"></span>
+              <span>Total Assets</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background:#f43f5e;"></span>
+              <span>Total Liabilities</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:auto;">
+            <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
+              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Safe 4% Annual Income (Yr 10)</div>
+              <div style="font-size:1.05rem; font-weight:700; color:#38bdf8; margin-top:0.15rem;" id="nwSwrCoverage">$0/mo</div>
+            </div>
+            <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
+              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Cost of Living Coverage</div>
+              <div style="font-size:1.05rem; font-weight:700; color:#34d399; margin-top:0.15rem;" id="nwColCoveragePct">0% of future spend</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Collapsible / Scrollable Year-by-Year Net Worth Table -->
+      <div class="table-container">
+        <table class="nw-table">
+          <thead>
+            <tr>
+              <th>Year / Date</th>
+              <th>Invested Assets</th>
+              <th>Real Estate Value</th>
+              <th>Total Assets</th>
+              <th>Total Liabilities</th>
+              <th>Nominal Net Worth</th>
+              <th>Real Net Worth (Today $)</th>
+              <th>Inflated Cost of Living</th>
+            </tr>
+          </thead>
+          <tbody id="nwScheduleTbody"></tbody>
+        </table>
+      </div>
+    </section>
 
     <!-- Application Tools Section -->
     <section>
@@ -527,14 +1352,14 @@
             <rect x="14" y="14" width="7" height="7"></rect>
             <rect x="3" y="14" width="7" height="7"></rect>
           </svg>
-          Active Financial Engines
+          Specialized Financial Engines
         </h2>
-        <p>Opens selected tools independently in a new tab</p>
+        <p>Launch any standalone module to build detailed schedules and export CSVs</p>
       </div>
 
       <div class="tools-grid">
         
-        <!-- Tool 1: Savings Calculator -->
+        <!-- Tool 1: Multi-Asset Investing & Portfolio Calculator -->
         <a href="./savings-calculator.html" target="_blank" rel="noopener noreferrer" class="tool-card card-savings">
           <div>
             <div class="card-top">
@@ -545,12 +1370,12 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Multi-Asset Savings</div>
-                <span class="tool-tag">Wealth Accumulation</span>
+                <div class="tool-title">Multi-Asset Investing &amp; Portfolio</div>
+                <span class="tool-tag">Wealth &amp; Compounding</span>
               </div>
             </div>
             <p class="tool-desc">
-              Model compound interest trajectories across multiple user-defined asset classes (HYSA, Index Funds, Crypto). Features frequency compounding, custom trajectories, and full portfolio amortizations.
+              Model compound returns across multiple investment vehicles (Index Funds, ETFs, HYSA, Crypto, Bonds). Features custom compounding frequencies, portfolio weighting, and full schedules.
             </p>
           </div>
           <div class="card-footer">
@@ -559,23 +1384,24 @@
           </div>
         </a>
 
-        <!-- Tool 2: Mortgage Calculator -->
-        <a href="./mortgage-calculator.html" target="_blank" rel="noopener noreferrer" class="tool-card card-mortgage">
+        <!-- Tool 2: Cost of Living & Cash Flow Budgeter (NEW) -->
+        <a href="./cost-of-living.html" target="_blank" rel="noopener noreferrer" class="tool-card card-col">
           <div>
             <div class="card-top">
-              <div class="tool-icon" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+              <div class="tool-icon" style="background: linear-gradient(135deg, #a855f7, #ec4899);">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Mortgage &amp; Amortization</div>
-                <span class="tool-tag">Real Estate Debt</span>
+                <div class="tool-title">Cost of Living &amp; Cash Flow</div>
+                <span class="tool-tag">Budget &amp; Inflation</span>
               </div>
             </div>
             <p class="tool-desc">
-              Calculate total monthly housing commitments including principal, interest, property taxes, homeowners insurance, and HOA fees. Includes dual annual/monthly amortization schedules.
+              Factor in your monthly living expenses across Essential Needs vs. Discretionary Wants. Benchmarks your 50/30/20 ratios, location cost multipliers, and category-specific inflation.
             </p>
           </div>
           <div class="card-footer">
@@ -600,7 +1426,7 @@
               </div>
             </div>
             <p class="tool-desc">
-              Accelerate debt freedom by testing the Debt Avalanche (highest APR first) versus the Debt Snowball (lowest balance first). Models extra payments and automated minimum-payment rollovers.
+              Accelerate debt freedom by comparing Debt Avalanche (highest APR first) against Debt Snowball (lowest balance first). Models extra monthly payments and automatic rollover cascades.
             </p>
           </div>
           <div class="card-footer">
@@ -609,7 +1435,32 @@
           </div>
         </a>
 
-        <!-- Tool 4: FIRE & Retirement Planner -->
+        <!-- Tool 4: Mortgage Calculator -->
+        <a href="./mortgage-calculator.html" target="_blank" rel="noopener noreferrer" class="tool-card card-mortgage">
+          <div>
+            <div class="card-top">
+              <div class="tool-icon" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+              <div class="tool-heading">
+                <div class="tool-title">Mortgage &amp; Amortization</div>
+                <span class="tool-tag">Real Estate Debt</span>
+              </div>
+            </div>
+            <p class="tool-desc">
+              Calculate total monthly housing commitments including principal, interest, property taxes, homeowners insurance, and HOA fees. Includes dual annual/monthly amortization schedules.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>Launch Engine</span>
+            <span class="action-badge">Open in new tab &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Tool 5: FIRE & Retirement Planner -->
         <a href="./retirement-fire.html" target="_blank" rel="noopener noreferrer" class="tool-card card-fire">
           <div>
             <div class="card-top">
@@ -633,7 +1484,7 @@
           </div>
         </a>
 
-        <!-- Tool 5: Emergency Fund Runway -->
+        <!-- Tool 6: Emergency Fund Runway -->
         <a href="./emergency-runway.html" target="_blank" rel="noopener noreferrer" class="tool-card card-runway">
           <div>
             <div class="card-top">
@@ -657,7 +1508,7 @@
           </div>
         </a>
 
-        <!-- Tool 6: Rent vs. Buy Comparator -->
+        <!-- Tool 7: Rent vs. Buy Comparator -->
         <a href="./rent-vs-buy.html" target="_blank" rel="noopener noreferrer" class="tool-card card-rent">
           <div>
             <div class="card-top">
@@ -683,6 +1534,31 @@
           </div>
         </a>
 
+        <!-- Tool 8: Monthly Net Worth Log & Reality Tracker (NEW) -->
+        <a href="./networth-tracker.html" target="_blank" rel="noopener noreferrer" class="tool-card card-tracker" style="border: 1px solid rgba(168, 85, 247, 0.4); background: linear-gradient(145deg, #131b2e, #1c1533);">
+          <div>
+            <div class="card-top">
+              <div class="tool-icon" style="background: linear-gradient(135deg, #a855f7, #6366f1);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </div>
+              <div class="tool-heading">
+                <div class="tool-title" style="color:#d8b4fe;">Monthly Progress Tracker</div>
+                <span class="tool-tag" style="background:rgba(168, 85, 247, 0.2); color:#c084fc;">Reality vs. Plan</span>
+              </div>
+            </div>
+            <p class="tool-desc">
+              Dedicated tracker module to log your real historical wealth month by month (1 entry per month). Upload your planned scenario from the Net Worth hub to compare actual progress against your projections.
+            </p>
+          </div>
+          <div class="card-footer" style="border-top:1px solid rgba(168, 85, 247, 0.25);">
+            <span style="color:#c084fc; font-weight:700;">Launch Tracker</span>
+            <span class="action-badge" style="background:rgba(168, 85, 247, 0.25); color:#e9d5ff;">Open in new tab &rarr;</span>
+          </div>
+        </a>
+
       </div>
     </section>
 
@@ -704,12 +1580,12 @@
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">1</span>
-            <span class="info-card-title">Establish Liquidity Defense</span>
+            <span class="info-card-title">Audit Cost of Living &amp; Runway</span>
           </div>
           <p class="info-card-body">
-            Before investing aggressively, calculate your monthly survival burn rate. Ensure you hold 3 to 6 months of lean living costs in an accessible High-Yield Savings Account.
+            Map your monthly Essential Needs vs. Discretionary Wants to uncover your true investable surplus, and keep 3 to 6 months of survival expenses in liquid HYSA reserves.
           </p>
-          <span class="info-rule-pill">Emergency Runway Tool</span>
+          <span class="info-rule-pill">Cost of Living &amp; Runway Tools</span>
         </div>
 
         <div class="info-card">
@@ -718,7 +1594,7 @@
             <span class="info-card-title">Eradicate Toxic High-APR Debt</span>
           </div>
           <p class="info-card-body">
-            Returns on high-interest debt (15–28%) mathematically outweigh potential stock market gains. Roll over extra payments aggressively using the Avalanche strategy.
+            Returns on high-interest debt (15–28%) mathematically outweigh average stock market gains. Roll over extra payments aggressively using the Avalanche strategy.
           </p>
           <span class="info-rule-pill">Debt Payoff Engine</span>
         </div>
@@ -737,34 +1613,34 @@
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">4</span>
-            <span class="info-card-title">Automate Asset Allocation</span>
+            <span class="info-card-title">Automate Multi-Asset Investing</span>
           </div>
           <p class="info-card-body">
-            Direct monthly surplus across diversified vehicles (HYSA, broad-market index funds, retirement accounts) to let compounding work uninterrupted over decades.
+            Direct monthly surplus and freed-up debt payments across diversified vehicles (Index Funds, ETFs, HYSA, Retirement) so compounding works uninterrupted over decades.
           </p>
-          <span class="info-rule-pill">Multi-Asset Savings Tool</span>
+          <span class="info-rule-pill">Multi-Asset Investing Tool</span>
         </div>
 
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">5</span>
-            <span class="info-card-title">Track Financial Independence</span>
+            <span class="info-card-title">Track Net Worth &amp; Independence</span>
           </div>
           <p class="info-card-body">
-            Target a portfolio balance equal to 25x to 30x your annual living expenses (the 3.3%–4.0% rule), allowing your capital to sustain your lifestyle indefinitely.
+            Sync your assets, liabilities, and living costs in the Net Worth Command Center and target a portfolio equal to 25x–30x your annual spending (the 4% rule).
           </p>
-          <span class="info-rule-pill">FIRE &amp; Retirement Tool</span>
+          <span class="info-rule-pill">Net Worth Hub &amp; FIRE Tool</span>
         </div>
 
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">6</span>
-            <span class="info-card-title">Maintain Sovereign Data</span>
+            <span class="info-card-title">Maintain Sovereign Offline Data</span>
           </div>
           <p class="info-card-body">
-            Keep your financial information private. Export periodic backup schedules as local CSVs and inspect them offline anytime without relying on cloud providers.
+            Keep your financial records 100% private. Export periodic CSV snapshots from each engine and reload them anytime without relying on external cloud providers.
           </p>
-          <span class="info-rule-pill">Local CSV Ecosystem</span>
+          <span class="info-rule-pill">Bi-Directional Local CSV</span>
         </div>
 
       </div>
@@ -783,7 +1659,7 @@
           </svg>
           Universal CSV Schedule Inspector
         </h2>
-        <p>Drop or select any CSV exported from this suite to preview its raw schedules offline</p>
+        <p>Drop or select any CSV exported from this suite to preview its raw schedules and tables offline</p>
       </div>
 
       <!-- Hidden Input & Interactive Dropzone -->
@@ -798,14 +1674,17 @@
           </svg>
         </div>
         <div class="dropzone-title">Click to browse or drop an exported CSV file here</div>
-        <div class="dropzone-subtitle">Compatible with Savings, Mortgage, Debt, FIRE, Runway, and Rent vs. Buy exports</div>
+        <div class="dropzone-subtitle">Compatible with Investing, Cost of Living, Net Worth, Debt, Mortgage, FIRE, Runway, and Rent vs. Buy exports</div>
       </div>
 
       <!-- Output Table View -->
       <div class="viewer-container" id="viewerContainer">
         <div class="viewer-meta">
           <div>File: <strong id="metaFileName" style="color:#fff;">--</strong> (<span id="metaRowCount">0</span> rows detected)</div>
-          <div>Detected Origin: <span class="viewer-tag" id="metaOrigin">General CSV</span></div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span>Detected Origin: <span class="viewer-tag" id="metaOrigin">General CSV</span></span>
+            <button type="button" class="btn btn-purple" id="btnSyncInspectorToNw" style="padding:0.3rem 0.65rem; font-size:0.76rem;">Sync into Net Worth Hub &uarr;</button>
+          </div>
         </div>
 
         <div class="table-container">
@@ -829,7 +1708,1001 @@
         window.location.reload();
       });
 
-      // --- Universal CSV File Parser & Viewer ---
+      // --- Helper Formatting & Parsing ---
+      function formatMoney(amount) {
+        if (isNaN(amount) || !isFinite(amount)) return '$0';
+        const sign = amount < 0 ? '-' : '';
+        return sign + '$' + Math.round(Math.abs(amount)).toLocaleString('en-US');
+      }
+
+      function parseNumber(val) {
+        if (typeof val === 'number') return val;
+        const cleaned = String(val || '').replace(/[^0-9.-]/g, '');
+        const num = parseFloat(cleaned);
+        return isNaN(num) ? 0 : num;
+      }
+
+      function clamp(val, min, max) {
+        return Math.min(Math.max(val, min), max);
+      }
+
+      function parseCSVLine(line) {
+        const result = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const c = line[i];
+          if (c === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              cur += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (c === ',' && !inQuotes) {
+            result.push(cur.trim());
+            cur = '';
+          } else {
+            cur += c;
+          }
+        }
+        result.push(cur.trim());
+        return result;
+      }
+
+      // =========================================================================
+      // NET WORTH COMMAND CENTER STATE & MULTI-MODULE SIMULATION ENGINE
+      // =========================================================================
+      let nwState = {
+        horizonYears: 10,
+        investedAssets: 40000,
+        propertyValue: 350000,
+        propertyAppreciation: 3.5,
+        consumerDebt: 36000,
+        mortgageDebt: 265000,
+        mortgageRate: 6.2,
+        mortgageMonthlyPI: 1620,
+        monthlyInvestContrib: 1300,
+        portfolioReturnApy: 7.2,
+        monthlyDebtPayment: 1120,
+        debtAvgApr: 11.3,
+        monthlyCostOfLiving: 4580,
+        inflationRate: 3.2,
+        rolloverFreedDebt: true,
+        // Detailed arrays when imported from Investing / Debt CSVs
+        importedAssets: [
+          { name: 'High-Yield Savings (HYSA)', balance: 15000, monthly: 500, apy: 4.5, freq: 12 },
+          { name: 'Stock Index Fund (S&P 500)', balance: 25000, monthly: 800, apy: 8.5, freq: 12 }
+        ],
+        importedDebts: [
+          { name: 'Credit Card (High APR)', balance: 6500, apr: 24.99, minPayment: 180 },
+          { name: 'Personal Loan', balance: 11000, apr: 11.5, minPayment: 260 },
+          { name: 'Auto Loan', balance: 18500, apr: 6.25, minPayment: 380 }
+        ],
+        importedDebtStrategy: 'avalanche',
+        importedDebtExtra: 300,
+        useDetailedAssets: true,
+        useDetailedDebts: true,
+        // Snapshot / evaluation date for the hub (0-11 month index, full year)
+        startMonth: new Date().getMonth(),
+        startYear: new Date().getFullYear(),
+        fastForwardHistorical: true
+      };
+
+      // --- Calendar & Historical Alignment Helpers ---
+      const NW_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      function nwDateLabel(monthOffset) {
+        const total = nwState.startYear * 12 + nwState.startMonth + monthOffset;
+        return `${NW_MONTHS[((total % 12) + 12) % 12]} ${Math.floor(total / 12)}`;
+      }
+
+      function fmtMonthYear(m, y) {
+        return `${NW_MONTHS[clamp(m, 0, 11)]} ${y}`;
+      }
+
+      // Reads "Start Month Index" (1-12) & "Start Year" rows from any suite CSV
+      function parseCsvStartDate(lines) {
+        let m = null;
+        let y = null;
+        for (let i = 0; i < Math.min(lines.length, 40); i++) {
+          const cols = parseCSVLine(lines[i]);
+          if (cols.length < 2) continue;
+          const k = cols[0].toLowerCase().trim();
+          if (k === 'start month index') {
+            const v = parseInt(cols[1], 10);
+            if (!isNaN(v) && v >= 1 && v <= 12) m = v - 1;
+          } else if (k === 'start year') {
+            const v = parseInt(cols[1], 10);
+            if (!isNaN(v) && v >= 1970 && v <= 2100) y = v;
+          }
+        }
+        return (m !== null && y !== null) ? { month: m, year: y } : null;
+      }
+
+      // Months from a CSV start date to the hub snapshot date (negative = CSV is in the future)
+      function monthsFromCsvToHub(csvStart) {
+        if (!csvStart) return 0;
+        return (nwState.startYear - csvStart.year) * 12 + (nwState.startMonth - csvStart.month);
+      }
+
+      function fastForwardAssets(assets, months) {
+        if (months <= 0) return assets;
+        return assets.map(a => {
+          const r = a.freq > 0 ? Math.pow(1 + (a.apy / 100) / a.freq, a.freq / 12) - 1 : 0;
+          let bal = a.balance;
+          for (let m = 0; m < months; m++) bal += bal * r + a.monthly;
+          return Object.assign({}, a, { balance: bal });
+        });
+      }
+
+      function fastForwardDebts(debts, months, strategy, extra) {
+        const ds = debts.map(d => Object.assign({}, d));
+        for (let m = 0; m < months; m++) {
+          const active = ds.filter(d => d.balance > 0.001);
+          if (active.length === 0) break;
+          active.forEach(d => { d.balance += d.balance * (d.apr / 100) / 12; });
+          active.forEach(d => {
+            const pay = Math.min(d.balance, d.minPayment);
+            d.balance -= pay;
+            if (d.balance <= 0.001) d.balance = 0;
+          });
+          let pool = extra + ds.filter(d => d.balance <= 0.001).reduce((s, d) => s + d.minPayment, 0);
+          const rem = ds.filter(d => d.balance > 0.001);
+          if (strategy === 'snowball') rem.sort((a, b) => a.balance - b.balance);
+          else rem.sort((a, b) => b.apr - a.apr);
+          for (const t of rem) {
+            if (pool <= 0.001) break;
+            const applied = Math.min(t.balance, pool);
+            t.balance -= applied;
+            pool -= applied;
+            if (t.balance <= 0.001) t.balance = 0;
+          }
+        }
+        return ds;
+      }
+
+      // Human-readable badge text describing how a CSV was aligned to the hub date
+      function alignmentNote(csvStart, months, didForward) {
+        if (!csvStart) return 'no start date in CSV';
+        const from = fmtMonthYear(csvStart.month, csvStart.year);
+        if (months === 0) return `dated ${from}`;
+        if (months > 0 && didForward) return `${from} → fast-forwarded +${months} mo`;
+        if (months > 0) return `dated ${from} (${months} mo old, not adjusted)`;
+        return `dated ${from} (${-months} mo after snapshot)`;
+      }
+
+      // DOM Elements for Net Worth Hub
+      const nwInvestedInput = document.getElementById('nwInvestedInput');
+      const nwPropertyValInput = document.getElementById('nwPropertyValInput');
+      const nwConsumerDebtInput = document.getElementById('nwConsumerDebtInput');
+      const nwMortgageDebtInput = document.getElementById('nwMortgageDebtInput');
+      const nwMonthlyInvestInput = document.getElementById('nwMonthlyInvestInput');
+      const nwMonthlyDebtPayInput = document.getElementById('nwMonthlyDebtPayInput');
+      const nwMonthlyColInput = document.getElementById('nwMonthlyColInput');
+      const nwInflationInput = document.getElementById('nwInflationInput');
+      const nwHorizonSlider = document.getElementById('nwHorizonSlider');
+      const nwHorizonLabel = document.getElementById('nwHorizonLabel');
+      const nwRolloverToggle = document.getElementById('nwRolloverToggle');
+      const nwFastForwardToggle = document.getElementById('nwFastForwardToggle');
+      const nwStartMonthSelect = document.getElementById('nwStartMonthSelect');
+      const nwStartYearInput = document.getElementById('nwStartYearInput');
+      const nwStartDateBadge = document.getElementById('nwStartDateBadge');
+
+      const nwPortfolioReturnBadge = document.getElementById('nwPortfolioReturnBadge');
+      const nwDebtAprBadge = document.getElementById('nwDebtAprBadge');
+      const nwDebtFreeBadge = document.getElementById('nwDebtFreeBadge');
+
+      const nwKpiCurrent = document.getElementById('nwKpiCurrent');
+      const nwKpiCurrentSub = document.getElementById('nwKpiCurrentSub');
+      const nwKpiAssetsLiab = document.getElementById('nwKpiAssetsLiab');
+      const nwKpiDebtRatio = document.getElementById('nwKpiDebtRatio');
+      const nwKpiProjected = document.getElementById('nwKpiProjected');
+      const nwKpiProjectedSub = document.getElementById('nwKpiProjectedSub');
+      const nwKpiReal = document.getElementById('nwKpiReal');
+      const nwKpiRealSub = document.getElementById('nwKpiRealSub');
+
+      const nwSwrCoverage = document.getElementById('nwSwrCoverage');
+      const nwColCoveragePct = document.getElementById('nwColCoveragePct');
+      const nwCanvas = document.getElementById('nwCanvas');
+      const nwScheduleTbody = document.getElementById('nwScheduleTbody');
+
+      const slotInvesting = document.getElementById('slotInvesting');
+      const pillInvesting = document.getElementById('pillInvesting');
+      const slotInvestingVal = document.getElementById('slotInvestingVal');
+      const slotInvestingSub = document.getElementById('slotInvestingSub');
+
+      const slotDebt = document.getElementById('slotDebt');
+      const pillDebt = document.getElementById('pillDebt');
+      const slotDebtVal = document.getElementById('slotDebtVal');
+      const slotDebtSub = document.getElementById('slotDebtSub');
+
+      const slotCol = document.getElementById('slotCol');
+      const pillCol = document.getElementById('pillCol');
+      const slotColVal = document.getElementById('slotColVal');
+      const slotColSub = document.getElementById('slotColSub');
+
+      const slotRealEstate = document.getElementById('slotRealEstate');
+      const pillRealEstate = document.getElementById('pillRealEstate');
+      const slotRealEstateVal = document.getElementById('slotRealEstateVal');
+      const slotRealEstateSub = document.getElementById('slotRealEstateSub');
+
+      const nwMultiCsvInput = document.getElementById('nwMultiCsvInput');
+      const btnImportModuleCSVs = document.getElementById('btnImportModuleCSVs');
+      const btnExportNwCSV = document.getElementById('btnExportNwCSV');
+
+      function simulateNetWorthTrajectory() {
+        const totalMonths = nwState.horizonYears * 12;
+
+        // Clone asset buckets or create a single blended bucket
+        let assets = [];
+        if (nwState.useDetailedAssets && nwState.importedAssets.length > 0) {
+          assets = nwState.importedAssets.map(a => ({
+            balance: a.balance,
+            monthly: a.monthly,
+            monthlyRate: a.freq > 0 ? Math.pow(1 + (a.apy / 100) / a.freq, a.freq / 12) - 1 : 0
+          }));
+        } else {
+          assets = [{
+            balance: nwState.investedAssets,
+            monthly: nwState.monthlyInvestContrib,
+            monthlyRate: (nwState.portfolioReturnApy / 100) / 12
+          }];
+        }
+
+        // Clone debt accounts or create a single blended debt
+        let debts = [];
+        if (nwState.useDetailedDebts && nwState.importedDebts.length > 0) {
+          debts = nwState.importedDebts.map(d => ({
+            balance: d.balance,
+            apr: d.apr,
+            minPayment: d.minPayment,
+            monthlyRate: (d.apr / 100) / 12
+          }));
+        } else {
+          debts = [{
+            balance: nwState.consumerDebt,
+            apr: nwState.debtAvgApr,
+            minPayment: nwState.monthlyDebtPayment,
+            monthlyRate: (nwState.debtAvgApr / 100) / 12
+          }];
+        }
+
+        let propVal = nwState.propertyValue;
+        const propMonthlyRate = Math.pow(1 + (nwState.propertyAppreciation / 100), 1 / 12) - 1;
+
+        let mortBal = nwState.mortgageDebt;
+        const mortMonthlyRate = (nwState.mortgageRate / 100) / 12;
+
+        const schedule = [];
+        let consumerDebtFreeMonth = debts.reduce((s, d) => s + d.balance, 0) <= 0.01 ? 0 : null;
+
+        // Record Year 0
+        const initInvested = assets.reduce((s, a) => s + a.balance, 0);
+        const initConsDebt = debts.reduce((s, d) => s + d.balance, 0);
+        const initTotalAssets = initInvested + propVal;
+        const initTotalLiab = initConsDebt + mortBal;
+        const initNw = initTotalAssets - initTotalLiab;
+
+        schedule.push({
+          year: 0,
+          calendarDate: nwDateLabel(0),
+          investedAssets: initInvested,
+          propertyValue: propVal,
+          totalAssets: initTotalAssets,
+          consumerDebt: initConsDebt,
+          mortgageDebt: mortBal,
+          totalLiabilities: initTotalLiab,
+          nominalNetWorth: initNw,
+          realNetWorth: initNw,
+          monthlyCostOfLiving: nwState.monthlyCostOfLiving
+        });
+
+        for (let m = 1; m <= totalMonths; m++) {
+          // 1. Consumer Debt step
+          let activeDebts = debts.filter(d => d.balance > 0.001);
+          let totalActualDebtSpendThisMonth = 0;
+
+          if (activeDebts.length > 0) {
+            activeDebts.forEach(d => {
+              d.balance += d.balance * d.monthlyRate;
+            });
+
+            activeDebts.forEach(d => {
+              const pay = Math.min(d.balance, d.minPayment);
+              d.balance -= pay;
+              totalActualDebtSpendThisMonth += pay;
+              if (d.balance <= 0.001) d.balance = 0;
+            });
+
+            const freedMins = debts.filter(d => d.balance <= 0.001).reduce((s, d) => s + d.minPayment, 0);
+            const extraBudget = nwState.useDetailedDebts
+              ? nwState.importedDebtExtra + freedMins
+              : Math.max(0, nwState.monthlyDebtPayment - totalActualDebtSpendThisMonth);
+
+            let extraPool = extraBudget;
+            const remDebts = debts.filter(d => d.balance > 0.001);
+            if (nwState.importedDebtStrategy === 'snowball') {
+              remDebts.sort((a, b) => a.balance - b.balance);
+            } else {
+              remDebts.sort((a, b) => b.apr - a.apr);
+            }
+
+            for (let i = 0; i < remDebts.length; i++) {
+              if (extraPool <= 0.001) break;
+              const target = remDebts[i];
+              const applied = Math.min(target.balance, extraPool);
+              target.balance -= applied;
+              extraPool -= applied;
+              totalActualDebtSpendThisMonth += applied;
+              if (target.balance <= 0.001) target.balance = 0;
+            }
+
+            if (debts.reduce((s, d) => s + d.balance, 0) <= 0.01 && consumerDebtFreeMonth === null) {
+              consumerDebtFreeMonth = m;
+            }
+          }
+
+          // Calculate freed debt cash flow available for investing rollover
+          let rolloverToInvest = 0;
+          if (nwState.rolloverFreedDebt && nwState.monthlyDebtPayment > totalActualDebtSpendThisMonth) {
+            rolloverToInvest = nwState.monthlyDebtPayment - totalActualDebtSpendThisMonth;
+          }
+
+          // 2. Invested Assets step
+          const totalMonthlyContrib = assets.reduce((s, a) => s + a.monthly, 0);
+          assets.forEach((a, idx) => {
+            a.balance += a.balance * a.monthlyRate + a.monthly;
+            // Distribute rollover proportionally or to highest-return bucket
+            if (rolloverToInvest > 0) {
+              const share = totalMonthlyContrib > 0 ? (a.monthly / totalMonthlyContrib) : (idx === assets.length - 1 ? 1 : 0);
+              a.balance += rolloverToInvest * share;
+            }
+          });
+
+          // 3. Real Estate & Mortgage step
+          if (propVal > 0) {
+            propVal *= (1 + propMonthlyRate);
+          }
+          if (mortBal > 0) {
+            const mortInterest = mortBal * mortMonthlyRate;
+            const pi = Math.max(mortInterest, nwState.mortgageMonthlyPI);
+            const principalPaid = Math.min(mortBal, Math.max(0, pi - mortInterest));
+            mortBal = Math.max(0, mortBal - principalPaid);
+          }
+
+          // Record Yearly Snapshot
+          if (m % 12 === 0) {
+            const yr = m / 12;
+            const curInvested = assets.reduce((s, a) => s + a.balance, 0);
+            const curConsDebt = debts.reduce((s, d) => s + d.balance, 0);
+            const curTotalAssets = curInvested + propVal;
+            const curTotalLiab = curConsDebt + mortBal;
+            const curNominalNw = curTotalAssets - curTotalLiab;
+            const discountFactor = Math.pow(1 + (nwState.inflationRate / 100), yr);
+            const curRealNw = curNominalNw / discountFactor;
+            const curCol = nwState.monthlyCostOfLiving * discountFactor;
+
+            schedule.push({
+              year: yr,
+              calendarDate: nwDateLabel(m),
+              investedAssets: curInvested,
+              propertyValue: propVal,
+              totalAssets: curTotalAssets,
+              consumerDebt: curConsDebt,
+              mortgageDebt: mortBal,
+              totalLiabilities: curTotalLiab,
+              nominalNetWorth: curNominalNw,
+              realNetWorth: curRealNw,
+              monthlyCostOfLiving: curCol
+            });
+          }
+        }
+
+        return {
+          schedule,
+          consumerDebtFreeMonth
+        };
+      }
+
+      function drawNetWorthChart(schedule) {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = nwCanvas.getBoundingClientRect();
+        nwCanvas.width = rect.width * dpr;
+        nwCanvas.height = rect.height * dpr;
+
+        const ctx = nwCanvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const w = rect.width;
+        const h = rect.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const padding = { top: 20, right: 20, bottom: 35, left: 70 };
+        const graphW = w - padding.left - padding.right;
+        const graphH = h - padding.top - padding.bottom;
+
+        let minVal = 0;
+        let maxVal = 10000;
+        schedule.forEach(pt => {
+          maxVal = Math.max(maxVal, pt.totalAssets, pt.nominalNetWorth, pt.totalLiabilities);
+          minVal = Math.min(minVal, pt.nominalNetWorth, pt.realNetWorth);
+        });
+
+        maxVal = Math.ceil(maxVal * 1.08);
+        minVal = minVal < 0 ? Math.floor(minVal * 1.1) : 0;
+        const range = Math.max(1, maxVal - minVal);
+
+        function valToY(v) {
+          return padding.top + graphH - ((v - minVal) / range) * graphH;
+        }
+
+        // Grid lines
+        const gridLines = 4;
+        ctx.strokeStyle = '#222e44';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px -apple-system, sans-serif';
+        ctx.textAlign = 'right';
+
+        for (let i = 0; i <= gridLines; i++) {
+          const yVal = minVal + (range / gridLines) * i;
+          const y = valToY(yVal);
+          ctx.beginPath();
+          ctx.moveTo(padding.left, y);
+          ctx.lineTo(w - padding.right, y);
+          ctx.stroke();
+          ctx.fillText(formatMoney(yVal), padding.left - 8, y + 3);
+        }
+
+        // Zero baseline if minVal < 0
+        if (minVal < 0) {
+          const zeroY = valToY(0);
+          ctx.beginPath();
+          ctx.moveTo(padding.left, zeroY);
+          ctx.lineTo(w - padding.right, zeroY);
+          ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+          ctx.stroke();
+        }
+
+        const numYears = nwState.horizonYears;
+        const stepX = Math.max(1, Math.floor(numYears / 5));
+        ctx.textAlign = 'center';
+
+        for (let yr = 0; yr <= numYears; yr += stepX) {
+          const x = padding.left + (yr / numYears) * graphW;
+          ctx.fillText(nwDateLabel(yr * 12), x, h - 12);
+        }
+
+        function drawSeries(key, color, lineWidth, dashed = false) {
+          ctx.beginPath();
+          schedule.forEach((pt, yr) => {
+            const x = padding.left + (yr / numYears) * graphW;
+            const y = valToY(pt[key]);
+            if (yr === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.strokeStyle = color;
+          ctx.lineWidth = lineWidth;
+          if (dashed) ctx.setLineDash([5, 4]);
+          else ctx.setLineDash([]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        drawSeries('totalAssets', '#38bdf8', 2);
+        drawSeries('totalLiabilities', '#f43f5e', 2);
+        drawSeries('realNetWorth', '#fbbf24', 2, true);
+        drawSeries('nominalNetWorth', '#10b981', 3);
+      }
+
+      function renderNetWorthTable(schedule) {
+        nwScheduleTbody.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+
+        schedule.forEach(r => {
+          const tr = document.createElement('tr');
+          const nwColor = r.nominalNetWorth >= 0 ? '#34d399' : '#f87171';
+          tr.innerHTML = `
+            <td style="font-weight:700;">Year ${r.year} <span style="color:var(--text-subtle); font-weight:500; font-size:0.76rem;">(${r.calendarDate})</span></td>
+            <td style="color:#38bdf8;">${formatMoney(r.investedAssets)}</td>
+            <td>${formatMoney(r.propertyValue)}</td>
+            <td style="font-weight:600; color:#e2e8f0;">${formatMoney(r.totalAssets)}</td>
+            <td style="color:#f43f5e;">${formatMoney(r.totalLiabilities)}</td>
+            <td style="font-weight:800; color:${nwColor};">${formatMoney(r.nominalNetWorth)}</td>
+            <td style="font-weight:700; color:#fbbf24;">${formatMoney(r.realNetWorth)}</td>
+            <td style="color:#d8b4fe;">${formatMoney(r.monthlyCostOfLiving)}/mo</td>
+          `;
+          fragment.appendChild(tr);
+        });
+
+        nwScheduleTbody.appendChild(fragment);
+      }
+
+      function updateNetWorthUI() {
+        // Sync inputs
+        nwInvestedInput.value = Math.round(nwState.investedAssets).toLocaleString();
+        nwPropertyValInput.value = Math.round(nwState.propertyValue).toLocaleString();
+        nwConsumerDebtInput.value = Math.round(nwState.consumerDebt).toLocaleString();
+        nwMortgageDebtInput.value = Math.round(nwState.mortgageDebt).toLocaleString();
+        nwMonthlyInvestInput.value = Math.round(nwState.monthlyInvestContrib).toLocaleString();
+        nwMonthlyDebtPayInput.value = Math.round(nwState.monthlyDebtPayment).toLocaleString();
+        nwMonthlyColInput.value = Math.round(nwState.monthlyCostOfLiving).toLocaleString();
+        nwInflationInput.value = nwState.inflationRate.toFixed(1);
+        nwHorizonSlider.value = nwState.horizonYears;
+        nwHorizonLabel.textContent = `${nwState.horizonYears} Year${nwState.horizonYears > 1 ? 's' : ''}`;
+        nwRolloverToggle.checked = nwState.rolloverFreedDebt;
+        nwFastForwardToggle.checked = nwState.fastForwardHistorical;
+        nwStartMonthSelect.value = String(nwState.startMonth);
+        nwStartYearInput.value = nwState.startYear;
+        nwStartDateBadge.textContent = nwDateLabel(0);
+
+        nwPortfolioReturnBadge.textContent = `${nwState.portfolioReturnApy.toFixed(1)}% APY`;
+        nwDebtAprBadge.textContent = `${nwState.debtAvgApr.toFixed(1)}% APR`;
+
+        // Update Sync Slot Cards
+        slotInvestingVal.textContent = `${formatMoney(nwState.investedAssets)} (+${formatMoney(nwState.monthlyInvestContrib)}/mo)`;
+        slotDebtVal.textContent = `${formatMoney(nwState.consumerDebt)} (-${formatMoney(nwState.monthlyDebtPayment)}/mo)`;
+        slotColVal.textContent = `${formatMoney(nwState.monthlyCostOfLiving)}/mo (${nwState.inflationRate.toFixed(1)}% inf)`;
+        const homeEq = nwState.propertyValue - nwState.mortgageDebt;
+        slotRealEstateVal.textContent = `${formatMoney(homeEq)} Equity`;
+
+        const { schedule, consumerDebtFreeMonth } = simulateNetWorthTrajectory();
+        const yr0 = schedule[0];
+        const yrFinal = schedule[nwState.horizonYears];
+        const startLbl = nwDateLabel(0);
+        const endLbl = nwDateLabel(nwState.horizonYears * 12);
+
+        // KPIs
+        nwKpiCurrent.textContent = formatMoney(yr0.nominalNetWorth);
+        nwKpiCurrent.style.color = yr0.nominalNetWorth >= 0 ? '#34d399' : '#f87171';
+        const liquidNet = nwState.investedAssets - nwState.consumerDebt;
+        nwKpiCurrentSub.textContent = `As of ${startLbl} · Liquid: ${formatMoney(liquidNet)} | Home Eq: ${formatMoney(homeEq)}`;
+
+        nwKpiAssetsLiab.textContent = `${formatMoney(yr0.totalAssets)} / ${formatMoney(yr0.totalLiabilities)}`;
+        const debtRatio = yr0.totalAssets > 0 ? ((yr0.totalLiabilities / yr0.totalAssets) * 100).toFixed(1) : 0;
+        nwKpiDebtRatio.textContent = `${debtRatio}% debt-to-asset ratio (${startLbl})`;
+
+        nwKpiProjected.textContent = formatMoney(yrFinal.nominalNetWorth);
+        const nwDelta = yrFinal.nominalNetWorth - yr0.nominalNetWorth;
+        nwKpiProjectedSub.textContent = `By ${endLbl} (${nwDelta >= 0 ? '+' : ''}${formatMoney(nwDelta)} growth)`;
+
+        nwKpiReal.textContent = formatMoney(yrFinal.realNetWorth);
+        nwKpiRealSub.textContent = `In ${startLbl} dollars (${nwState.inflationRate.toFixed(1)}%/yr inflation)`;
+
+        if (consumerDebtFreeMonth === 0) {
+          nwDebtFreeBadge.textContent = `Consumer Debt Free as of ${startLbl}`;
+        } else if (consumerDebtFreeMonth !== null) {
+          nwDebtFreeBadge.textContent = `Consumer Debt Free: ${nwDateLabel(consumerDebtFreeMonth)} (${(consumerDebtFreeMonth / 12).toFixed(1)} Yrs)`;
+        } else {
+          nwDebtFreeBadge.textContent = `Consumer Debt Extends Beyond ${endLbl}`;
+        }
+
+        // 4% Safe Withdrawal Coverage vs Cost of Living at Horizon
+        const swrMonthlyAtFinal = (Math.max(0, yrFinal.investedAssets) * 0.04) / 12;
+        nwSwrCoverage.textContent = `${formatMoney(swrMonthlyAtFinal)}/mo`;
+        const colCov = yrFinal.monthlyCostOfLiving > 0
+          ? ((swrMonthlyAtFinal / yrFinal.monthlyCostOfLiving) * 100).toFixed(1)
+          : 0;
+        nwColCoveragePct.textContent = `${colCov}% of ${endLbl} living costs`;
+
+        drawNetWorthChart(schedule);
+        renderNetWorthTable(schedule);
+      }
+
+      // --- Parse & Sync CSVs into Net Worth Command Center ---
+      function ingestCSVTextIntoNetWorth(rawText, fileName = 'Uploaded.csv') {
+        const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length === 0) return false;
+
+        const headerJoined = lines.slice(0, 12).join(' ').toLowerCase();
+        const csvStart = parseCsvStartDate(lines);
+
+        // 1. Detect Net Worth Master CSV
+        if (headerJoined.includes('holistic net worth command center')) {
+          nwState.useDetailedAssets = false;
+          nwState.useDetailedDebts = false;
+          if (csvStart) {
+            nwState.startMonth = csvStart.month;
+            nwState.startYear = csvStart.year;
+          }
+
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols.length < 2) return;
+            const k = cols[0].toLowerCase();
+            const v = cols[1];
+
+            if (k.includes('projection horizon')) nwState.horizonYears = clamp(parseInt(v, 10) || 10, 1, 30);
+            else if (k.includes('liquid & invested assets')) nwState.investedAssets = Math.max(0, parseNumber(v));
+            else if (k.includes('real estate / property value')) nwState.propertyValue = Math.max(0, parseNumber(v));
+            else if (k.includes('consumer & loan debt')) nwState.consumerDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('mortgage debt balance')) nwState.mortgageDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('monthly investment contribution')) nwState.monthlyInvestContrib = Math.max(0, parseNumber(v));
+            else if (k.includes('portfolio annual return')) nwState.portfolioReturnApy = clamp(parseNumber(v), 0, 30);
+            else if (k.includes('monthly debt paydown')) nwState.monthlyDebtPayment = Math.max(0, parseNumber(v));
+            else if (k.includes('consumer debt average apr')) nwState.debtAvgApr = clamp(parseNumber(v), 0, 50);
+            else if (k.includes('monthly cost of living')) nwState.monthlyCostOfLiving = Math.max(0, parseNumber(v));
+            else if (k.includes('expected annual inflation')) nwState.inflationRate = clamp(parseNumber(v), 0, 20);
+            else if (k.includes('auto-rollover freed debt')) nwState.rolloverFreedDebt = v.toLowerCase().includes('yes') || v.toLowerCase().includes('true');
+          });
+
+          slotRealEstate.classList.add('loaded');
+          pillRealEstate.textContent = 'Synced NW CSV';
+          slotRealEstateSub.textContent = `Restored from ${fileName}`;
+          updateNetWorthUI();
+          return 'Net Worth Snapshot';
+        }
+
+        // 2. Detect Investing / Multi-Asset Savings CSV
+        if (headerJoined.includes('portfolio savings') || headerJoined.includes('asset configuration') || headerJoined.includes('multi-asset investing')) {
+          const loadedAssets = [];
+          let inConfig = false;
+          let loadedHorizon = nwState.horizonYears;
+
+          for (let i = 0; i < lines.length; i++) {
+            const cols = parseCSVLine(lines[i]);
+            if (cols[0] && cols[0].toLowerCase().includes('investment horizon')) {
+              const h = parseInt(cols[1], 10);
+              if (!isNaN(h) && h >= 1) loadedHorizon = clamp(h, 1, 30);
+            }
+            if (cols[0] === 'ASSET CONFIGURATION') {
+              inConfig = true;
+              i++;
+              continue;
+            }
+            if (inConfig) {
+              if (cols[0] === 'YEAR-BY-YEAR PROJECTION SCHEDULE' || cols.length < 5) {
+                inConfig = false;
+                continue;
+              }
+              const name = cols[0].replace(/^"|"$/g, '');
+              const bal = Math.max(0, parseNumber(cols[1]));
+              const monthly = Math.max(0, parseNumber(cols[2]));
+              const apy = Math.max(0, parseNumber(cols[3]));
+              let freq = 12;
+              const fStr = (cols[4] || '').toLowerCase();
+              if (fStr.includes('daily')) freq = 365;
+              else if (fStr.includes('quarter')) freq = 4;
+              else if (fStr.includes('annual')) freq = 1;
+
+              loadedAssets.push({ name, balance: bal, monthly, apy, freq });
+            }
+          }
+
+          if (loadedAssets.length > 0) {
+            const gap = monthsFromCsvToHub(csvStart);
+            const doFF = nwState.fastForwardHistorical && gap > 0;
+            const alignedAssets = doFF ? fastForwardAssets(loadedAssets, gap) : loadedAssets;
+
+            nwState.importedAssets = alignedAssets;
+            nwState.useDetailedAssets = true;
+            nwState.horizonYears = loadedHorizon;
+            nwState.investedAssets = alignedAssets.reduce((s, a) => s + a.balance, 0);
+            nwState.monthlyInvestContrib = alignedAssets.reduce((s, a) => s + a.monthly, 0);
+            const weightDenom = nwState.investedAssets + (nwState.monthlyInvestContrib * 12) || 1;
+            const weightedApy = alignedAssets.reduce((s, a) => s + (a.balance + a.monthly * 12) * a.apy, 0) / weightDenom;
+            nwState.portfolioReturnApy = weightedApy;
+
+            slotInvesting.classList.add('loaded');
+            pillInvesting.textContent = `Synced (${loadedAssets.length} Assets)`;
+            slotInvestingSub.textContent = `${fileName} · ${alignmentNote(csvStart, gap, doFF)}`;
+            slotInvestingSub.title = slotInvestingSub.textContent;
+            updateNetWorthUI();
+            return 'Multi-Asset Investing';
+          }
+        }
+
+        // 3. Detect Debt Payoff Engine CSV
+        if (headerJoined.includes('debt payoff engine') || headerJoined.includes('debt accounts configuration')) {
+          const loadedDebts = [];
+          let inDebt = false;
+          let extraPay = 0;
+          let strat = 'avalanche';
+
+          for (let i = 0; i < lines.length; i++) {
+            const cols = parseCSVLine(lines[i]);
+            if (cols[0] && cols[0].toLowerCase().includes('selected strategy')) {
+              if ((cols[1] || '').toLowerCase().includes('snowball')) strat = 'snowball';
+            } else if (cols[0] && cols[0].toLowerCase().includes('extra monthly payment')) {
+              extraPay = Math.max(0, parseNumber(cols[1]));
+            }
+            if (cols[0] === 'DEBT ACCOUNTS CONFIGURATION') {
+              inDebt = true;
+              i++;
+              continue;
+            }
+            if (inDebt) {
+              if (cols[0] === 'ANNUAL PAYOFF SCHEDULE' || cols.length < 4) {
+                inDebt = false;
+                continue;
+              }
+              loadedDebts.push({
+                name: cols[0].replace(/^"|"$/g, ''),
+                balance: Math.max(0, parseNumber(cols[1])),
+                apr: Math.max(0, parseNumber(cols[2])),
+                minPayment: Math.max(0, parseNumber(cols[3]))
+              });
+            }
+          }
+
+          if (loadedDebts.length > 0) {
+            const gap = monthsFromCsvToHub(csvStart);
+            const doFF = nwState.fastForwardHistorical && gap > 0;
+            const alignedDebts = doFF ? fastForwardDebts(loadedDebts, gap, strat, extraPay) : loadedDebts;
+
+            nwState.importedDebts = alignedDebts;
+            nwState.importedDebtExtra = extraPay;
+            nwState.importedDebtStrategy = strat;
+            nwState.useDetailedDebts = true;
+
+            nwState.consumerDebt = alignedDebts.reduce((s, d) => s + d.balance, 0);
+            const minSum = loadedDebts.reduce((s, d) => s + d.minPayment, 0);
+            nwState.monthlyDebtPayment = minSum + extraPay;
+            const balDenom = nwState.consumerDebt || 1;
+            nwState.debtAvgApr = nwState.consumerDebt > 0
+              ? alignedDebts.reduce((s, d) => s + d.balance * d.apr, 0) / balDenom
+              : 0;
+
+            slotDebt.classList.add('loaded');
+            pillDebt.textContent = `Synced (${loadedDebts.length} Debts)`;
+            slotDebtSub.textContent = `${fileName} (${strat.toUpperCase()}) · ${alignmentNote(csvStart, gap, doFF)}`;
+            slotDebtSub.title = slotDebtSub.textContent;
+            updateNetWorthUI();
+            return 'Debt Payoff Engine';
+          }
+        }
+
+        // 4. Detect Cost of Living CSV
+        if (headerJoined.includes('cost of living') || headerJoined.includes('expense categories configuration')) {
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols.length < 2) return;
+            const k = cols[0].toLowerCase();
+            if (k.includes('current total monthly cost')) {
+              nwState.monthlyCostOfLiving = Math.max(0, parseNumber(cols[1]));
+            } else if (k.includes('blended annual expense inflation')) {
+              nwState.inflationRate = clamp(parseNumber(cols[1]), 0, 20);
+            }
+          });
+
+          slotCol.classList.add('loaded');
+          pillCol.textContent = 'Synced Budget';
+          {
+            const gap = monthsFromCsvToHub(csvStart);
+            const doFF = nwState.fastForwardHistorical && gap > 0;
+            if (doFF) {
+              nwState.monthlyCostOfLiving *= Math.pow(1 + nwState.inflationRate / 100, gap / 12);
+            }
+            slotColSub.textContent = `${fileName} · ${alignmentNote(csvStart, gap, doFF)}`;
+            slotColSub.title = slotColSub.textContent;
+          }
+          updateNetWorthUI();
+          return 'Cost of Living Budgeter';
+        }
+
+        // 5. Detect Mortgage Calculator CSV
+        if (headerJoined.includes('mortgage calculation') || headerJoined.includes('loan parameters')) {
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols.length < 2) return;
+            const k = cols[0].toLowerCase();
+            if (k === 'home price ($)') nwState.propertyValue = Math.max(0, parseNumber(cols[1]));
+            else if (k.includes('total loan amount')) nwState.mortgageDebt = Math.max(0, parseNumber(cols[1]));
+            else if (k.includes('interest rate')) nwState.mortgageRate = clamp(parseNumber(cols[1]), 0, 25);
+            else if (k.includes('principal & interest')) nwState.mortgageMonthlyPI = Math.max(0, parseNumber(cols[1]));
+          });
+
+          slotRealEstate.classList.add('loaded');
+          pillRealEstate.textContent = 'Synced Mortgage';
+          slotRealEstateSub.textContent = `From ${fileName}`;
+          updateNetWorthUI();
+          return 'Mortgage Calculator';
+        }
+
+        // 6. Detect Emergency Fund Runway CSV
+        if (headerJoined.includes('emergency fund runway') || headerJoined.includes('liquid reserves configuration')) {
+          let liquidTotal = 0;
+          let modBurn = 0;
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols.length < 2) return;
+            const k = cols[0].toLowerCase();
+            if (k.includes('total liquid reserves')) liquidTotal = Math.max(0, parseNumber(cols[1]));
+            else if (k.includes('tier 2')) modBurn = Math.max(0, parseNumber(cols[1]));
+          });
+          if (liquidTotal > 0) {
+            nwState.investedAssets = liquidTotal;
+            nwState.useDetailedAssets = false;
+          }
+          if (modBurn > 0) nwState.monthlyCostOfLiving = modBurn;
+
+          slotRealEstate.classList.add('loaded');
+          pillRealEstate.textContent = 'Synced Runway';
+          slotRealEstateSub.textContent = `From ${fileName}`;
+          updateNetWorthUI();
+          return 'Emergency Fund Runway';
+        }
+
+        return false;
+      }
+
+      // Export Net Worth CSV
+      function exportNetWorthCSV() {
+        const { schedule, consumerDebtFreeMonth } = simulateNetWorthTrajectory();
+        const yr0 = schedule[0];
+        const yrFinal = schedule[nwState.horizonYears];
+        const rows = [];
+
+        rows.push(['HOLISTIC NET WORTH COMMAND CENTER & FUTURE PROJECTION']);
+        rows.push(['Export Date', new Date().toLocaleDateString()]);
+        rows.push(['Start Date', nwDateLabel(0)]);
+        rows.push(['Start Month Index', nwState.startMonth + 1]);
+        rows.push(['Start Year', nwState.startYear]);
+        rows.push(['Projection Horizon (Years)', nwState.horizonYears]);
+        rows.push(['Projection End Date', nwDateLabel(nwState.horizonYears * 12)]);
+        rows.push(['Current Net Worth Today ($)', yr0.nominalNetWorth.toFixed(2)]);
+        rows.push(['Projected Nominal Net Worth ($)', yrFinal.nominalNetWorth.toFixed(2)]);
+        rows.push(['Projected Real Net Worth (Today $) ($)', yrFinal.realNetWorth.toFixed(2)]);
+        rows.push(['Consumer Debt Payoff Month', consumerDebtFreeMonth !== null ? consumerDebtFreeMonth : 'Beyond Horizon']);
+        rows.push(['Consumer Debt Payoff Date', consumerDebtFreeMonth !== null ? nwDateLabel(consumerDebtFreeMonth) : 'Beyond Horizon']);
+        rows.push([]);
+
+        rows.push(['NET WORTH CORE PARAMETERS']);
+        rows.push(['Liquid & Invested Assets ($)', nwState.investedAssets.toFixed(2)]);
+        rows.push(['Real Estate / Property Value ($)', nwState.propertyValue.toFixed(2)]);
+        rows.push(['Consumer & Loan Debt ($)', nwState.consumerDebt.toFixed(2)]);
+        rows.push(['Mortgage Debt Balance ($)', nwState.mortgageDebt.toFixed(2)]);
+        rows.push(['Monthly Investment Contribution ($)', nwState.monthlyInvestContrib.toFixed(2)]);
+        rows.push(['Portfolio Annual Return APY (%)', `${nwState.portfolioReturnApy.toFixed(2)}%`]);
+        rows.push(['Monthly Debt Paydown Commitment ($)', nwState.monthlyDebtPayment.toFixed(2)]);
+        rows.push(['Consumer Debt Average APR (%)', `${nwState.debtAvgApr.toFixed(2)}%`]);
+        rows.push(['Monthly Cost of Living ($)', nwState.monthlyCostOfLiving.toFixed(2)]);
+        rows.push(['Expected Annual Inflation (%)', `${nwState.inflationRate.toFixed(2)}%`]);
+        rows.push(['Auto-Rollover Freed Debt Payments', nwState.rolloverFreedDebt ? 'Yes' : 'No']);
+        rows.push([]);
+
+        rows.push(['YEAR-BY-YEAR NET WORTH PROJECTION SCHEDULE']);
+        rows.push(['Year', 'Calendar Date', 'Invested Assets ($)', 'Property Value ($)', 'Total Assets ($)', 'Consumer Debt ($)', 'Mortgage Debt ($)', 'Total Liabilities ($)', 'Nominal Net Worth ($)', 'Real Net Worth (Today $) ($)', 'Monthly Cost of Living ($)']);
+        schedule.forEach(r => {
+          rows.push([
+            r.year,
+            r.calendarDate,
+            r.investedAssets.toFixed(2),
+            r.propertyValue.toFixed(2),
+            r.totalAssets.toFixed(2),
+            r.consumerDebt.toFixed(2),
+            r.mortgageDebt.toFixed(2),
+            r.totalLiabilities.toFixed(2),
+            r.nominalNetWorth.toFixed(2),
+            r.realNetWorth.toFixed(2),
+            r.monthlyCostOfLiving.toFixed(2)
+          ]);
+        });
+
+        const csvContent = '\uFEFF' + rows.map(r => r.join(',')).join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Net_Worth_Projection_${nwState.horizonYears}Yrs.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
+      // Event Listeners for Manual Net Worth Edits
+      nwInvestedInput.addEventListener('change', (e) => {
+        nwState.investedAssets = Math.max(0, parseNumber(e.target.value));
+        nwState.useDetailedAssets = false;
+        pillInvesting.textContent = 'Manual Edit';
+        updateNetWorthUI();
+      });
+
+      nwPropertyValInput.addEventListener('change', (e) => {
+        nwState.propertyValue = Math.max(0, parseNumber(e.target.value));
+        pillRealEstate.textContent = 'Manual Edit';
+        updateNetWorthUI();
+      });
+
+      nwConsumerDebtInput.addEventListener('change', (e) => {
+        nwState.consumerDebt = Math.max(0, parseNumber(e.target.value));
+        nwState.useDetailedDebts = false;
+        pillDebt.textContent = 'Manual Edit';
+        updateNetWorthUI();
+      });
+
+      nwMortgageDebtInput.addEventListener('change', (e) => {
+        nwState.mortgageDebt = Math.max(0, parseNumber(e.target.value));
+        pillRealEstate.textContent = 'Manual Edit';
+        updateNetWorthUI();
+      });
+
+      nwMonthlyInvestInput.addEventListener('change', (e) => {
+        nwState.monthlyInvestContrib = Math.max(0, parseNumber(e.target.value));
+        nwState.useDetailedAssets = false;
+        pillInvesting.textContent = 'Manual Edit';
+        updateNetWorthUI();
+      });
+
+      nwMonthlyDebtPayInput.addEventListener('change', (e) => {
+        nwState.monthlyDebtPayment = Math.max(0, parseNumber(e.target.value));
+        nwState.useDetailedDebts = false;
+        pillDebt.textContent = 'Manual Edit';
+        updateNetWorthUI();
+      });
+
+      nwMonthlyColInput.addEventListener('change', (e) => {
+        nwState.monthlyCostOfLiving = Math.max(0, parseNumber(e.target.value));
+        pillCol.textContent = 'Manual Edit';
+        updateNetWorthUI();
+      });
+
+      nwInflationInput.addEventListener('change', (e) => {
+        nwState.inflationRate = clamp(parseNumber(e.target.value), 0, 20);
+        updateNetWorthUI();
+      });
+
+      nwHorizonSlider.addEventListener('input', (e) => {
+        nwState.horizonYears = parseInt(e.target.value, 10);
+        updateNetWorthUI();
+      });
+
+      nwRolloverToggle.addEventListener('change', (e) => {
+        nwState.rolloverFreedDebt = e.target.checked;
+        updateNetWorthUI();
+      });
+
+      nwFastForwardToggle.addEventListener('change', (e) => {
+        nwState.fastForwardHistorical = e.target.checked;
+        updateNetWorthUI();
+      });
+
+      // Changing the snapshot date relabels the timeline. Re-import older CSVs afterwards
+      // to have them fast-forwarded to the new date.
+      nwStartMonthSelect.addEventListener('change', (e) => {
+        nwState.startMonth = clamp(parseInt(e.target.value, 10) || 0, 0, 11);
+        updateNetWorthUI();
+      });
+
+      nwStartYearInput.addEventListener('change', (e) => {
+        nwState.startYear = clamp(parseInt(e.target.value, 10) || new Date().getFullYear(), 1970, 2100);
+        updateNetWorthUI();
+      });
+
+      // Slot Click Triggers Multi-File Upload
+      [slotInvesting, slotDebt, slotCol, slotRealEstate, btnImportModuleCSVs].forEach(el => {
+        el.addEventListener('click', () => {
+          nwMultiCsvInput.value = '';
+          nwMultiCsvInput.click();
+        });
+      });
+
+      nwMultiCsvInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            ingestCSVTextIntoNetWorth(evt.target.result, file.name);
+          };
+          reader.readAsText(file);
+        });
+      });
+
+      btnExportNwCSV.addEventListener('click', exportNetWorthCSV);
+
+      window.addEventListener('resize', () => {
+        const { schedule } = simulateNetWorthTrajectory();
+        drawNetWorthChart(schedule);
+      });
+
+      // =========================================================================
+      // UNIVERSAL CSV SCHEDULE INSPECTOR
+      // =========================================================================
       const dropzoneBox = document.getElementById('dropzoneBox');
       const universalCsvInput = document.getElementById('universalCsvInput');
       const viewerContainer = document.getElementById('viewerContainer');
@@ -838,13 +2711,16 @@
       const metaOrigin = document.getElementById('metaOrigin');
       const viewerThead = document.getElementById('viewerThead');
       const viewerTbody = document.getElementById('viewerTbody');
+      const btnSyncInspectorToNw = document.getElementById('btnSyncInspectorToNw');
+
+      let lastInspectedRawCSV = '';
+      let lastInspectedFileName = '';
 
       dropzoneBox.addEventListener('click', () => {
         universalCsvInput.value = '';
         universalCsvInput.click();
       });
 
-      // Drag and drop events
       ['dragenter', 'dragover'].forEach(evt => {
         dropzoneBox.addEventListener(evt, (e) => {
           e.preventDefault();
@@ -873,37 +2749,22 @@
         }
       });
 
-      function parseCSVLine(line) {
-        const result = [];
-        let cur = '';
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-          const c = line[i];
-          if (c === '"') {
-            if (inQuotes && line[i + 1] === '"') {
-              cur += '"';
-              i++;
-            } else {
-              inQuotes = !inQuotes;
-            }
-          } else if (c === ',' && !inQuotes) {
-            result.push(cur.trim());
-            cur = '';
-          } else {
-            cur += c;
-          }
+      btnSyncInspectorToNw.addEventListener('click', () => {
+        if (!lastInspectedRawCSV) return;
+        const synced = ingestCSVTextIntoNetWorth(lastInspectedRawCSV, lastInspectedFileName);
+        if (synced) {
+          document.querySelector('.nw-hub-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          alert('This CSV format does not contain Net Worth, Investing, Debt, Mortgage, or Cost of Living parameters.');
         }
-        result.push(cur.trim());
-        return result;
-      }
-
-      function escapeHtml(str) {
-        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-      }
+      });
 
       function detectToolType(firstFewLines) {
         const joined = firstFewLines.join(' ').toLowerCase();
-        if (joined.includes('portfolio savings') || joined.includes('asset configuration')) return 'Multi-Asset Savings App';
+        if (joined.includes('monthly net worth log & historical reality tracker') || joined.includes('chronological monthly net worth entries')) return 'Monthly Net Worth Log & Reality Tracker (History)';
+        if (joined.includes('holistic net worth command center')) return 'Net Worth Command Center';
+        if (joined.includes('cost of living') || joined.includes('expense categories')) return 'Cost of Living & Cash Flow Budgeter';
+        if (joined.includes('portfolio savings') || joined.includes('asset configuration') || joined.includes('multi-asset investing')) return 'Multi-Asset Investing & Portfolio';
         if (joined.includes('mortgage calculation') || joined.includes('loan parameters')) return 'Mortgage Calculator';
         if (joined.includes('debt payoff engine') || joined.includes('avalanche') || joined.includes('snowball')) return 'Debt Payoff Engine';
         if (joined.includes('fire & retirement') || joined.includes('fire milestone')) return 'FIRE & Retirement Planner';
@@ -919,6 +2780,9 @@
         reader.onload = function(e) {
           try {
             const raw = e.target.result;
+            lastInspectedRawCSV = raw;
+            lastInspectedFileName = file.name;
+
             const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
 
             if (lines.length === 0) {
@@ -929,18 +2793,15 @@
             const parsedRows = lines.map(parseCSVLine);
             const detectedOrigin = detectToolType(lines.slice(0, 10));
 
-            // Metadata updates
             metaFileName.textContent = file.name;
             metaRowCount.textContent = parsedRows.length;
             metaOrigin.textContent = detectedOrigin;
 
-            // Find maximum column count to format grid evenly
             let maxCols = 0;
             parsedRows.forEach(r => {
               if (r.length > maxCols) maxCols = r.length;
             });
 
-            // Render table header
             viewerThead.innerHTML = '';
             const headerRow = document.createElement('tr');
             for (let c = 0; c < maxCols; c++) {
@@ -950,7 +2811,6 @@
             }
             viewerThead.appendChild(headerRow);
 
-            // Render table body
             viewerTbody.innerHTML = '';
             const fragment = document.createDocumentFragment();
 
@@ -961,7 +2821,6 @@
                 const cellVal = row[c] !== undefined ? row[c].replace(/^"|"$/g, '') : '';
                 td.textContent = cellVal;
 
-                // Subtle visual highlighting for key metric numbers and headers
                 if (c === 0 && (cellVal.toUpperCase() === cellVal && cellVal.length > 3)) {
                   td.style.fontWeight = '700';
                   td.style.color = '#38bdf8';
@@ -973,8 +2832,6 @@
 
             viewerTbody.appendChild(fragment);
             viewerContainer.style.display = 'flex';
-
-            // Smooth scroll down to table view
             viewerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
           } catch (err) {
@@ -985,6 +2842,9 @@
 
         reader.readAsText(file);
       }
+
+      // Bootstrap Net Worth Command Center
+      updateNetWorthUI();
 
     })();
   </script>

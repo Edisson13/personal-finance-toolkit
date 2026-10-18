@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Net Worth Log &amp; Progress Tracker | Offline Suite</title>
+  <style>
+    :root {
+      --bg-base: #070b12;
+      --bg-surface: #0f172a;
+      --bg-card: #162032;
+      --bg-card-hover: #1e2c45;
+      --bg-input: #0b1120;
+      --border-color: #243048;
+      --border-focus: #6366f1;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      --accent-indigo: #6366f1;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a855f7;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 12px 30px -4px rgba(0, 0, 0, 0.55);
+      --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Top Navigation Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .suite-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #d8b4fe;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-purple);
+      box-shadow: 0 0 8px var(--accent-purple);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.55rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-hover);
+      border-color: #475569;
+    }
+
+    .btn-primary {
+      background: var(--accent-indigo);
+      border-color: var(--accent-indigo);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #4f46e5; }
+
+    .btn-success {
+      background: #065f46;
+      border-color: var(--accent-emerald);
+      color: #34d399;
+    }
+    .btn-success:hover { background: #047857; color: #fff; }
+
+    .btn-purple {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.45);
+      color: #d8b4fe;
+    }
+    .btn-purple:hover { background: var(--accent-purple); color: #fff; }
+
+    .btn-danger {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.76rem;
+    }
+    .btn-danger:hover { background: var(--accent-rose); color: #fff; }
+
+    .btn-edit {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #7dd3fc;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.76rem;
+    }
+    .btn-edit:hover { background: #0284c7; color: #fff; }
+
+    /* Header */
+    .hero {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      max-width: 760px;
+      line-height: 1.6;
+    }
+
+    /* Purpose Notice Banner */
+    .tracker-notice {
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: #e9d5ff;
+    }
+
+    .tracker-notice strong {
+      color: #fff;
+    }
+
+    .rule-callout {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fde68a;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* Plan Integration / Benchmark Strip */
+    .plan-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .plan-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .plan-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .benchmark-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(148, 163, 184, 0.15);
+      color: var(--text-muted);
+    }
+    .benchmark-badge.active {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .plan-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 960px) {
+      .plan-slots-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .plan-slots-grid { grid-template-columns: 1fr; }
+    }
+
+    .plan-slot {
+      background: var(--bg-card);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .plan-slot.loaded {
+      border-style: solid;
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .plan-slot-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .plan-slot-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .plan-slot-sub {
+      font-size: 0.74rem;
+      color: var(--text-subtle);
+    }
+
+    /* KPI Summary Row */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 920px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .kpi-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .kpi-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+    }
+
+    /* Split Main Layout: Logger Form + Progress Chart */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1040px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    /* Entry Form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+    }
+
+    @media (max-width: 540px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .field-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-prefix {
+      position: absolute;
+      left: 0.65rem;
+      color: var(--text-subtle);
+      font-size: 0.84rem;
+      pointer-events: none;
+      font-weight: 600;
+    }
+
+    input[type="text"], input[type="number"], select, textarea {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.48rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      width: 100%;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+    }
+
+    .input-wrapper.has-prefix input { padding-left: 1.6rem; }
+
+    /* Canvas Chart */
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 270px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* History Table */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 0.65rem 0.85rem;
+      white-space: nowrap;
+    }
+
+    th {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border-color);
+      background: #162032;
+    }
+
+    tbody tr { border-bottom: 1px solid rgba(51, 65, 85, 0.35); }
+    tbody tr:hover { background-color: rgba(99, 102, 241, 0.08); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="suite-badge">
+        <span class="status-dot"></span>
+        Monthly Progress &amp; Reality Tracker (One Entry Per Month)
+      </div>
+
+      <div class="top-actions">
+        <a href="./index.html" class="btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Main Suite
+        </a>
+
+        <!-- Hidden CSV File Inputs -->
+        <input type="file" id="trackerCsvInput" accept=".csv" style="display:none;">
+        <input type="file" id="planCsvInput" accept=".csv" multiple style="display:none;">
+
+        <button type="button" class="btn btn-purple" id="btnImportPlan" title="Upload Net Worth Command Center CSV or individual module CSVs to set target plan">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          Upload Planned Scenario (CSV)
+        </button>
+
+        <button type="button" class="btn" id="btnLoadTrackerCSV" title="Load your existing Historical Tracker CSV">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Load Tracker CSV
+        </button>
+
+        <button type="button" class="btn btn-success" id="btnExportTrackerCSV" title="Download your actual monthly log history and plan comparison to CSV">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export Tracker CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- Header Hero -->
+    <header class="hero">
+      <h1>Monthly Net Worth Log &amp; Progress Tracker</h1>
+      <p>
+        Record your actual monthly financial reality, maintain a permanent historical timeline, and compare real-world progress against your planned projections.
+      </p>
+    </header>
+
+    <!-- Important Notice: Planning vs Tracking Separation & 1 Entry Per Month Rule -->
+    <div class="tracker-notice">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div>
+        <strong>Tracker vs. Planning Separation:</strong> The calculators in the main suite (Investing, Debt Payoff, Cost of Living, Net Worth Command Center) are strictly <em>forward-looking planning tools</em>. This module is the dedicated <strong>Historical Tracker</strong>. Keep your Tracker CSV files separate from your scenario planning CSVs to preserve your authentic financial record.
+        <div class="rule-callout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span><strong>One Entry Per Month Rule:</strong> For statistical clarity and standard net worth tracking, log exactly <strong>one snapshot per calendar month</strong> (e.g. Month-End or 1st of the month). Saving an entry for an existing month will prompt you to update that month's record.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Planned Baseline Strip (Net Worth Command Center or Source Modules) -->
+    <section class="plan-card" aria-label="Planned Scenario Baseline">
+      <div class="plan-card-header">
+        <div class="plan-card-title">
+          <span>🎯 Active Planned Scenario Baseline</span>
+          <span class="benchmark-badge" id="planSourceBadge">Default Suite Assumptions</span>
+        </div>
+        <div style="font-size:0.78rem; color:var(--text-muted);" id="planDescriptionText">
+          Upload your <strong>Net Worth Command Center CSV</strong> (or single modules like Investing, Debt, or Mortgage) to compare your real timeline against your plan.
+        </div>
+      </div>
+
+      <div class="plan-slots-grid">
+        <div class="plan-slot" id="planSlotAssets">
+          <div class="plan-slot-top">
+            <span>Planned Total Assets</span>
+            <span id="planAssetRate">+7.2% APY</span>
+          </div>
+          <div class="plan-slot-val" id="planSlotAssetsVal">$390,000</div>
+          <div class="plan-slot-sub" id="planSlotAssetsSub">Invested + Real Estate</div>
+        </div>
+
+        <div class="plan-slot" id="planSlotLiab">
+          <div class="plan-slot-top">
+            <span>Planned Liabilities</span>
+            <span id="planDebtRate">Paydown: $2,740/mo</span>
+          </div>
+          <div class="plan-slot-val" id="planSlotLiabVal">$301,000</div>
+          <div class="plan-slot-sub" id="planSlotLiabSub">Consumer + Mortgage Debt</div>
+        </div>
+
+        <div class="plan-slot" id="planSlotNw">
+          <div class="plan-slot-top">
+            <span>Planned Net Worth</span>
+            <span style="color:#34d399;" id="planNwGrowth">Plan Benchmark</span>
+          </div>
+          <div class="plan-slot-val" id="planSlotNwVal" style="color:#34d399;">$89,000</div>
+          <div class="plan-slot-sub" id="planSlotNwSub">Baseline Target</div>
+        </div>
+
+        <div class="plan-slot" id="planSlotVariance">
+          <div class="plan-slot-top">
+            <span>Latest Reality vs. Plan</span>
+            <span id="planVariancePct">+0.0%</span>
+          </div>
+          <div class="plan-slot-val" id="planSlotVarianceVal">$0</div>
+          <div class="plan-slot-sub" id="planSlotVarianceSub">Comparing latest log to plan</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Latest Logged Net Worth</span>
+        <span class="kpi-val" id="kpiLatestNw" style="color:#34d399;">$0</span>
+        <span class="kpi-sub" id="kpiLatestDate">No entries recorded</span>
+      </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Historical Wealth Change</span>
+        <span class="kpi-val" id="kpiHistoricalDelta" style="color:#38bdf8;">$0</span>
+        <span class="kpi-sub" id="kpiHistoricalDeltaSub">Since first record</span>
+      </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Monthly Tracking Consistency</span>
+        <span class="kpi-val" id="kpiMonthsLogged" style="color:#c084fc;">0</span>
+        <span class="kpi-sub" id="kpiDateRange">0 months spanned</span>
+      </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Plan Execution Status</span>
+        <span class="kpi-val" id="kpiPlanStatus" style="color:#fbbf24;">On Track</span>
+        <span class="kpi-sub" id="kpiPlanStatusSub">Relative to planned curve</span>
+      </div>
+    </div>
+
+    <!-- Main Grid: Log Form + Timeline Chart -->
+    <div class="main-grid">
+
+      <!-- Left Panel: Log / Edit Monthly Entry -->
+      <section class="card" aria-label="Monthly Entry Logger">
+        <div class="card-title">
+          <span id="formTitleText">Record Monthly Financial Reality</span>
+          <span style="font-size:0.75rem; font-weight:500; color:#c084fc;">1 Entry Per Calendar Month</span>
+        </div>
+
+        <form id="entryForm" style="display:flex; flex-direction:column; gap:0.95rem;">
+          
+          <div class="field-group" style="background:rgba(99, 102, 241, 0.08); padding:0.65rem 0.8rem; border-radius:var(--radius-sm); border:1px solid rgba(99, 102, 241, 0.25);">
+            <label class="field-label" style="color:#a5b4fc;">
+              <span>Calendar Month (Unique Entry Key)</span>
+              <span>1 Per Month</span>
+            </label>
+            <div style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:0.5rem; margin-top:0.25rem;">
+              <select id="entryMonthSelect" aria-label="Entry Month">
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+              </select>
+              <input type="number" id="entryYearInput" min="1970" max="2100" step="1" value="2026" aria-label="Entry Year">
+            </div>
+            <div style="font-size:0.72rem; color:var(--text-subtle); margin-top:0.25rem;" id="monthEntryStatusText">
+              Ready to record a new month
+            </div>
+          </div>
+
+          <div class="form-grid">
+            
+            <div class="field-group">
+              <label class="field-label" for="entryLiquid">
+                <span>Liquid Cash &amp; HYSA</span>
+                <span style="color:#34d399;">+$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryLiquid" inputmode="numeric" value="15,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="entryInvested">
+                <span>Investments &amp; Retirement</span>
+                <span style="color:#38bdf8;">+$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryInvested" inputmode="numeric" value="45,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="entryRealEstate">
+                <span>Real Estate / Property</span>
+                <span style="color:#38bdf8;">+$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryRealEstate" inputmode="numeric" value="350,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="entryOtherAssets">
+                <span>Vehicles &amp; Other Assets</span>
+                <span style="color:#38bdf8;">+$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryOtherAssets" inputmode="numeric" value="20,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="entryConsumerDebt">
+                <span>Credit Cards &amp; Loans</span>
+                <span style="color:#f43f5e;">-$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryConsumerDebt" inputmode="numeric" value="12,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="entryMortgage">
+                <span>Mortgage Balance</span>
+                <span style="color:#f43f5e;">-$</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryMortgage" inputmode="numeric" value="260,000">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="entryMonthlySavings">
+                <span>Actual Monthly Savings</span>
+                <span style="color:#a855f7;">Flow</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryMonthlySavings" inputmode="numeric" value="1,400">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="entryMonthlyExpenses">
+                <span>Actual Monthly Spend</span>
+                <span style="color:#a855f7;">Spend</span>
+              </label>
+              <div class="input-wrapper has-prefix">
+                <span class="input-prefix">$</span>
+                <input type="text" id="entryMonthlyExpenses" inputmode="numeric" value="4,600">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="entryNotes">
+              <span>Milestone / Event Notes (Optional)</span>
+              <span>Memory Log</span>
+            </label>
+            <input type="text" id="entryNotes" placeholder="e.g. Annual bonus received, paid off car loan, vacation" maxlength="120">
+          </div>
+
+          <!-- Calculated Net Worth Preview for this Entry -->
+          <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.75rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Entry Computed Net Worth</div>
+              <div style="font-size:1.3rem; font-weight:800; color:#34d399;" id="formComputedNw">$0</div>
+            </div>
+            <div style="text-align:right; font-size:0.75rem; color:var(--text-subtle);">
+              <div>Assets: <span id="formPreviewAssets" style="color:#38bdf8; font-weight:600;">$0</span></div>
+              <div>Liabilities: <span id="formPreviewLiab" style="color:#f43f5e; font-weight:600;">$0</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:0.65rem; margin-top:0.25rem;">
+            <button type="submit" class="btn btn-primary" id="btnSaveEntry" style="flex:1; justify-content:center;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              Save Monthly Snapshot
+            </button>
+            <button type="button" class="btn" id="btnCancelEdit" style="display:none;" title="Cancel editing">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- Right Panel: Real Progress vs. Plan Trajectory Chart -->
+      <section class="card" aria-label="Progress vs Plan Trajectory">
+        <div class="card-title">
+          <span>Actual Net Worth Timeline vs. Planned Benchmark</span>
+          <span style="font-size:0.74rem; font-weight:600; color:#34d399;" id="chartProgressSummary">Tracking Active</span>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="trackerCanvas"></canvas>
+        </div>
+
+        <div class="chart-legend">
+          <div class="legend-item">
+            <span class="legend-color" style="background:#34d399;"></span>
+            <span style="color:#fff; font-weight:700;">Actual Net Worth (Logged Dots)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background:#6366f1; border-top:2px dashed #a5b4fc;"></span>
+            <span>Planned Scenario Trajectory</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background:#38bdf8;"></span>
+            <span>Actual Total Assets</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background:#f43f5e;"></span>
+            <span>Actual Liabilities</span>
+          </div>
+        </div>
+
+        <!-- Quick Comparison Insights -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:auto;">
+          <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
+            <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Average Monthly Wealth Growth</div>
+            <div style="font-size:1.05rem; font-weight:700; color:#34d399; margin-top:0.15rem;" id="insightAvgPace">$0/mo</div>
+          </div>
+          <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
+            <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Latest Reality vs Plan Delta</div>
+            <div style="font-size:1.05rem; font-weight:700; color:#fbbf24; margin-top:0.15rem;" id="insightDeltaPlan">$0</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bottom Section: Monthly Log History Table -->
+    <section class="card" aria-label="Monthly Log History Table">
+      <div class="card-title">
+        <div>
+          <span>Historical Monthly Log Timeline (<span id="tableCountBadge">0</span> Entries)</span>
+          <span style="font-size:0.74rem; font-weight:400; color:var(--text-muted); margin-left:0.5rem;">Chronological order (Oldest &rarr; Newest)</span>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <button type="button" class="btn btn-purple" id="btnLoadSampleData" style="font-size:0.74rem; padding:0.3rem 0.65rem;">
+            Load Sample History
+          </button>
+          <button type="button" class="btn btn-danger" id="btnClearAllLogs" style="font-size:0.74rem; padding:0.3rem 0.65rem;">
+            Clear All Logs
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Month / Year</th>
+              <th>Liquid Cash</th>
+              <th>Invested Assets</th>
+              <th>Real Estate</th>
+              <th>Total Assets</th>
+              <th>Total Debt</th>
+              <th>Actual Net Worth</th>
+              <th>Planned Net Worth</th>
+              <th>Variance vs Plan</th>
+              <th>Monthly Savings</th>
+              <th>Notes / Milestones</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="historyTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const FULL_MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+      // --- App State ---
+      let trackerState = {
+        entries: [], // Array of { year, month (0-11), liquid, invested, realEstate, otherAssets, consumerDebt, mortgage, monthlySavings, monthlyExpenses, notes }
+        plannedScenario: {
+          hasPlan: false,
+          sourceName: 'Default Assumptions',
+          startMonth: 2, // March
+          startYear: 2021,
+          horizonYears: 10,
+          investedAssets: 40000,
+          propertyValue: 350000,
+          consumerDebt: 36000,
+          mortgageDebt: 265000,
+          monthlyInvestContrib: 1300,
+          monthlyDebtPayment: 1120,
+          monthlyCostOfLiving: 4580,
+          portfolioReturnApy: 7.2,
+          debtAvgApr: 11.3,
+          inflationRate: 3.2,
+          mode: 'blended' // 'networth' | 'investing' | 'debt' | 'mortgage' | 'blended'
+        }
+      };
+
+      // --- Formatting Helpers ---
+      function formatMoney(amount) {
+        if (isNaN(amount) || !isFinite(amount)) return '$0';
+        const sign = amount < 0 ? '-' : '';
+        return sign + '$' + Math.round(Math.abs(amount)).toLocaleString('en-US');
+      }
+
+      function parseNumber(val) {
+        if (typeof val === 'number') return val;
+        const cleaned = String(val || '').replace(/[^0-9.-]/g, '');
+        const num = parseFloat(cleaned);
+        return isNaN(num) ? 0 : num;
+      }
+
+      function clamp(val, min, max) {
+        return Math.min(Math.max(val, min), max);
+      }
+
+      function escapeHtml(str) {
+        return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      }
+
+      function monthKey(year, month) {
+        return `${year}-${String(month + 1).padStart(2, '0')}`;
+      }
+
+      function formatMonthYear(year, month) {
+        return `${MONTH_NAMES[clamp(month, 0, 11)]} ${year}`;
+      }
+
+      function parseCSVLine(line) {
+        const result = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const c = line[i];
+          if (c === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              cur += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (c === ',' && !inQuotes) {
+            result.push(cur.trim());
+            cur = '';
+          } else {
+            cur += c;
+          }
+        }
+        result.push(cur.trim());
+        return result;
+      }
+
+      // --- DOM Elements ---
+      const entryMonthSelect = document.getElementById('entryMonthSelect');
+      const entryYearInput = document.getElementById('entryYearInput');
+      const entryLiquid = document.getElementById('entryLiquid');
+      const entryInvested = document.getElementById('entryInvested');
+      const entryRealEstate = document.getElementById('entryRealEstate');
+      const entryOtherAssets = document.getElementById('entryOtherAssets');
+      const entryConsumerDebt = document.getElementById('entryConsumerDebt');
+      const entryMortgage = document.getElementById('entryMortgage');
+      const entryMonthlySavings = document.getElementById('entryMonthlySavings');
+      const entryMonthlyExpenses = document.getElementById('entryMonthlyExpenses');
+      const entryNotes = document.getElementById('entryNotes');
+      const entryForm = document.getElementById('entryForm');
+
+      const monthEntryStatusText = document.getElementById('monthEntryStatusText');
+      const formComputedNw = document.getElementById('formComputedNw');
+      const formPreviewAssets = document.getElementById('formPreviewAssets');
+      const formPreviewLiab = document.getElementById('formPreviewLiab');
+      const btnSaveEntry = document.getElementById('btnSaveEntry');
+      const btnCancelEdit = document.getElementById('btnCancelEdit');
+      const formTitleText = document.getElementById('formTitleText');
+
+      const planSourceBadge = document.getElementById('planSourceBadge');
+      const planDescriptionText = document.getElementById('planDescriptionText');
+      const planSlotAssetsVal = document.getElementById('planSlotAssetsVal');
+      const planAssetRate = document.getElementById('planAssetRate');
+      const planSlotLiabVal = document.getElementById('planSlotLiabVal');
+      const planDebtRate = document.getElementById('planDebtRate');
+      const planSlotNwVal = document.getElementById('planSlotNwVal');
+      const planSlotVarianceVal = document.getElementById('planSlotVarianceVal');
+      const planVariancePct = document.getElementById('planVariancePct');
+
+      const kpiLatestNw = document.getElementById('kpiLatestNw');
+      const kpiLatestDate = document.getElementById('kpiLatestDate');
+      const kpiHistoricalDelta = document.getElementById('kpiHistoricalDelta');
+      const kpiHistoricalDeltaSub = document.getElementById('kpiHistoricalDeltaSub');
+      const kpiMonthsLogged = document.getElementById('kpiMonthsLogged');
+      const kpiDateRange = document.getElementById('kpiDateRange');
+      const kpiPlanStatus = document.getElementById('kpiPlanStatus');
+      const kpiPlanStatusSub = document.getElementById('kpiPlanStatusSub');
+
+      const trackerCanvas = document.getElementById('trackerCanvas');
+      const chartProgressSummary = document.getElementById('chartProgressSummary');
+      const insightAvgPace = document.getElementById('insightAvgPace');
+      const insightDeltaPlan = document.getElementById('insightDeltaPlan');
+
+      const tableCountBadge = document.getElementById('tableCountBadge');
+      const historyTbody = document.getElementById('historyTbody');
+
+      const trackerCsvInput = document.getElementById('trackerCsvInput');
+      const planCsvInput = document.getElementById('planCsvInput');
+      const btnImportPlan = document.getElementById('btnImportPlan');
+      const btnLoadTrackerCSV = document.getElementById('btnLoadTrackerCSV');
+      const btnExportTrackerCSV = document.getElementById('btnExportTrackerCSV');
+      const btnLoadSampleData = document.getElementById('btnLoadSampleData');
+      const btnClearAllLogs = document.getElementById('btnClearAllLogs');
+
+      // --- Plan Curve Generator (Projects expected curve from plan baseline) ---
+      function calculatePlannedNetWorthAt(year, month) {
+        const p = trackerState.plannedScenario;
+        const totalStartMonths = p.startYear * 12 + p.startMonth;
+        const totalTargetMonths = year * 12 + month;
+        const mElapsed = totalTargetMonths - totalStartMonths;
+
+        // If target date is before plan start, evaluate backward or flat baseline
+        const initInvest = p.investedAssets;
+        const initProp = p.propertyValue;
+        const initDebt = p.consumerDebt;
+        const initMort = p.mortgageDebt;
+
+        if (mElapsed <= 0) {
+          return {
+            plannedAssets: initInvest + initProp,
+            plannedLiabilities: initDebt + initMort,
+            plannedNw: (initInvest + initProp) - (initDebt + initMort)
+          };
+        }
+
+        // Project forward
+        const monthlyApyRate = Math.pow(1 + (p.portfolioReturnApy / 100), 1 / 12) - 1;
+        let runningInvest = initInvest;
+        let runningProp = initProp;
+        const propMonthlyRate = Math.pow(1 + 0.035, 1 / 12) - 1;
+
+        let runningConsumerDebt = initDebt;
+        const debtRate = (p.debtAvgApr / 100) / 12;
+        let runningMort = initMort;
+        const mortRate = 0.062 / 12;
+
+        for (let m = 1; m <= mElapsed; m++) {
+          // Invested
+          runningInvest += (runningInvest * monthlyApyRate) + p.monthlyInvestContrib;
+          runningProp *= (1 + propMonthlyRate);
+
+          // Debt paydown
+          if (runningConsumerDebt > 0) {
+            runningConsumerDebt += runningConsumerDebt * debtRate;
+            runningConsumerDebt = Math.max(0, runningConsumerDebt - p.monthlyDebtPayment);
+          }
+          if (runningMort > 0) {
+            const interest = runningMort * mortRate;
+            const pi = 1620;
+            const prin = Math.max(0, pi - interest);
+            runningMort = Math.max(0, runningMort - prin);
+          }
+        }
+
+        const assets = runningInvest + runningProp;
+        const liab = runningConsumerDebt + runningMort;
+        return {
+          plannedAssets: assets,
+          plannedLiabilities: liab,
+          plannedNw: assets - liab
+        };
+      }
+
+      // --- Form Live Calculation ---
+      function getFormValues() {
+        return {
+          month: clamp(parseInt(entryMonthSelect.value, 10) || 0, 0, 11),
+          year: clamp(parseInt(entryYearInput.value, 10) || 2026, 1970, 2100),
+          liquid: Math.max(0, parseNumber(entryLiquid.value)),
+          invested: Math.max(0, parseNumber(entryInvested.value)),
+          realEstate: Math.max(0, parseNumber(entryRealEstate.value)),
+          otherAssets: Math.max(0, parseNumber(entryOtherAssets.value)),
+          consumerDebt: Math.max(0, parseNumber(entryConsumerDebt.value)),
+          mortgage: Math.max(0, parseNumber(entryMortgage.value)),
+          monthlySavings: Math.max(0, parseNumber(entryMonthlySavings.value)),
+          monthlyExpenses: Math.max(0, parseNumber(entryMonthlyExpenses.value)),
+          notes: entryNotes.value.trim()
+        };
+      }
+
+      function updateFormPreview() {
+        const v = getFormValues();
+        const totalAssets = v.liquid + v.invested + v.realEstate + v.otherAssets;
+        const totalLiab = v.consumerDebt + v.mortgage;
+        const nw = totalAssets - totalLiab;
+
+        formPreviewAssets.textContent = formatMoney(totalAssets);
+        formPreviewLiab.textContent = formatMoney(totalLiab);
+        formComputedNw.textContent = formatMoney(nw);
+        formComputedNw.style.color = nw >= 0 ? '#34d399' : '#f87171';
+
+        // Check if an entry for this month already exists
+        const exists = trackerState.entries.find(e => e.year === v.year && e.month === v.month);
+        if (exists) {
+          monthEntryStatusText.innerHTML = `⚠️ <strong style="color:#fbbf24;">Entry exists for ${formatMonthYear(v.year, v.month)}</strong> (Net Worth: ${formatMoney((exists.liquid + exists.invested + exists.realEstate + exists.otherAssets) - (exists.consumerDebt + exists.mortgage))}). Saving will update this month.`;
+          btnSaveEntry.innerHTML = `
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Update ${formatMonthYear(v.year, v.month)} Record
+          `;
+          btnSaveEntry.classList.remove('btn-primary');
+          btnSaveEntry.classList.add('btn-purple');
+        } else {
+          monthEntryStatusText.innerHTML = `✅ Ready to record new entry for <strong>${formatMonthYear(v.year, v.month)}</strong>`;
+          btnSaveEntry.innerHTML = `
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Save Monthly Snapshot
+          `;
+          btnSaveEntry.classList.remove('btn-purple');
+          btnSaveEntry.classList.add('btn-primary');
+        }
+      }
+
+      // Attach input listeners
+      [entryLiquid, entryInvested, entryRealEstate, entryOtherAssets, entryConsumerDebt, entryMortgage, entryMonthlySavings, entryMonthlyExpenses].forEach(inp => {
+        inp.addEventListener('input', updateFormPreview);
+        inp.addEventListener('change', (e) => {
+          const num = parseNumber(e.target.value);
+          e.target.value = Math.round(num).toLocaleString('en-US');
+          updateFormPreview();
+        });
+      });
+
+      entryMonthSelect.addEventListener('change', updateFormPreview);
+      entryYearInput.addEventListener('change', updateFormPreview);
+
+      // --- Sort & Clean Entries Chronologically ---
+      function sortEntries() {
+        trackerState.entries.sort((a, b) => {
+          if (a.year !== b.year) return a.year - b.year;
+          return a.month - b.month;
+        });
+      }
+
+      // --- Draw Real Progress Canvas Chart ---
+      function drawChart() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = trackerCanvas.getBoundingClientRect();
+        trackerCanvas.width = rect.width * dpr;
+        trackerCanvas.height = rect.height * dpr;
+
+        const ctx = trackerCanvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const w = rect.width;
+        const h = rect.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const padding = { top: 25, right: 30, bottom: 40, left: 75 };
+        const graphW = w - padding.left - padding.right;
+        const graphH = h - padding.top - padding.bottom;
+
+        if (trackerState.entries.length === 0) {
+          ctx.fillStyle = '#64748b';
+          ctx.font = '13px -apple-system, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('No historical entries recorded yet.', w / 2, h / 2 - 10);
+          ctx.fillText('Log your monthly numbers on the left or click "Load Sample History" below.', w / 2, h / 2 + 15);
+          return;
+        }
+
+        sortEntries();
+
+        // Determine min and max dates across actual logs and plan start
+        const firstEntry = trackerState.entries[0];
+        const lastEntry = trackerState.entries[trackerState.entries.length - 1];
+
+        let minTotalMonths = firstEntry.year * 12 + firstEntry.month;
+        let maxTotalMonths = lastEntry.year * 12 + lastEntry.month;
+
+        if (trackerState.plannedScenario.hasPlan) {
+          const planStart = trackerState.plannedScenario.startYear * 12 + trackerState.plannedScenario.startMonth;
+          minTotalMonths = Math.min(minTotalMonths, planStart);
+          maxTotalMonths = Math.max(maxTotalMonths, planStart + 12);
+        }
+
+        const totalMonthSpan = Math.max(1, maxTotalMonths - minTotalMonths);
+
+        // Gather min and max values
+        let minVal = 0;
+        let maxVal = 10000;
+
+        trackerState.entries.forEach(e => {
+          const assets = e.liquid + e.invested + e.realEstate + e.otherAssets;
+          const liab = e.consumerDebt + e.mortgage;
+          const nw = assets - liab;
+          maxVal = Math.max(maxVal, assets, nw, liab);
+          minVal = Math.min(minVal, nw);
+        });
+
+        // Sample planned line along timeline
+        const planPoints = [];
+        for (let m = minTotalMonths; m <= maxTotalMonths; m += Math.max(1, Math.floor(totalMonthSpan / 15))) {
+          const y = Math.floor(m / 12);
+          const mon = m % 12;
+          const p = calculatePlannedNetWorthAt(y, mon);
+          planPoints.push({ m, nw: p.plannedNw });
+          maxVal = Math.max(maxVal, p.plannedNw);
+          minVal = Math.min(minVal, p.plannedNw);
+        }
+
+        maxVal = Math.ceil(maxVal * 1.12);
+        minVal = minVal < 0 ? Math.floor(minVal * 1.12) : 0;
+        const valRange = Math.max(1, maxVal - minVal);
+
+        function monthToX(m) {
+          return padding.left + ((m - minTotalMonths) / totalMonthSpan) * graphW;
+        }
+
+        function valToY(v) {
+          return padding.top + graphH - ((v - minVal) / valRange) * graphH;
+        }
+
+        // Horizontal Grid Lines
+        const gridLines = 4;
+        ctx.strokeStyle = '#222e44';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px -apple-system, sans-serif';
+        ctx.textAlign = 'right';
+
+        for (let i = 0; i <= gridLines; i++) {
+          const yVal = minVal + (valRange / gridLines) * i;
+          const y = valToY(yVal);
+          ctx.beginPath();
+          ctx.moveTo(padding.left, y);
+          ctx.lineTo(w - padding.right, y);
+          ctx.stroke();
+          ctx.fillText(formatMoney(yVal), padding.left - 8, y + 3);
+        }
+
+        // Zero Baseline if negative
+        if (minVal < 0) {
+          const zeroY = valToY(0);
+          ctx.beginPath();
+          ctx.moveTo(padding.left, zeroY);
+          ctx.lineTo(w - padding.right, zeroY);
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+          ctx.stroke();
+        }
+
+        // X-Axis Date Labels
+        ctx.textAlign = 'center';
+        const numLabels = Math.min(totalMonthSpan, 6);
+        const step = Math.max(1, Math.floor(totalMonthSpan / numLabels));
+        for (let m = minTotalMonths; m <= maxTotalMonths; m += step) {
+          const x = monthToX(m);
+          const y = Math.floor(m / 12);
+          const mon = m % 12;
+          ctx.fillText(formatMonthYear(y, mon), x, h - 14);
+        }
+
+        // 1. Draw Planned Trajectory Curve (Dashed line)
+        if (planPoints.length > 1) {
+          ctx.beginPath();
+          planPoints.forEach((pt, idx) => {
+            const x = monthToX(pt.m);
+            const y = valToY(pt.nw);
+            if (idx === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.strokeStyle = '#818cf8';
+          ctx.lineWidth = 2.2;
+          ctx.setLineDash([5, 5]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // 2. Draw Actual Total Assets Line
+        ctx.beginPath();
+        trackerState.entries.forEach((e, idx) => {
+          const m = e.year * 12 + e.month;
+          const x = monthToX(m);
+          const y = valToY(e.liquid + e.invested + e.realEstate + e.otherAssets);
+          if (idx === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        // 3. Draw Actual Total Liabilities Line
+        ctx.beginPath();
+        trackerState.entries.forEach((e, idx) => {
+          const m = e.year * 12 + e.month;
+          const x = monthToX(m);
+          const y = valToY(e.consumerDebt + e.mortgage);
+          if (idx === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.strokeStyle = '#f43f5e';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        // 4. Draw Actual Net Worth Line + Dots
+        ctx.beginPath();
+        trackerState.entries.forEach((e, idx) => {
+          const m = e.year * 12 + e.month;
+          const assets = e.liquid + e.invested + e.realEstate + e.otherAssets;
+          const liab = e.consumerDebt + e.mortgage;
+          const nw = assets - liab;
+          const x = monthToX(m);
+          const y = valToY(nw);
+          if (idx === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Draw Highlighted Dots for Each Actual Month Logged
+        trackerState.entries.forEach(e => {
+          const m = e.year * 12 + e.month;
+          const assets = e.liquid + e.invested + e.realEstate + e.otherAssets;
+          const liab = e.consumerDebt + e.mortgage;
+          const nw = assets - liab;
+          const x = monthToX(m);
+          const y = valToY(nw);
+
+          ctx.beginPath();
+          ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#34d399';
+          ctx.fill();
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = '#070b12';
+          ctx.stroke();
+        });
+      }
+
+      // --- Render History Table ---
+      function renderTable() {
+        historyTbody.innerHTML = '';
+        tableCountBadge.textContent = trackerState.entries.length;
+
+        if (trackerState.entries.length === 0) {
+          historyTbody.innerHTML = `
+            <tr>
+              <td colspan="12" style="text-align:center; padding:2rem; color:var(--text-subtle);">
+                No monthly entries logged yet. Record your first month above or upload a CSV!
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        trackerState.entries.forEach((e, idx) => {
+          const totalAssets = e.liquid + e.invested + e.realEstate + e.otherAssets;
+          const totalDebt = e.consumerDebt + e.mortgage;
+          const actualNw = totalAssets - totalDebt;
+
+          const plan = calculatePlannedNetWorthAt(e.year, e.month);
+          const delta = actualNw - plan.plannedNw;
+          const deltaColor = delta >= 0 ? '#34d399' : '#f87171';
+          const nwColor = actualNw >= 0 ? '#34d399' : '#f87171';
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-weight:700; color:#fff;">
+              ${formatMonthYear(e.year, e.month)}
+            </td>
+            <td>${formatMoney(e.liquid)}</td>
+            <td style="color:#38bdf8;">${formatMoney(e.invested)}</td>
+            <td>${formatMoney(e.realEstate + e.otherAssets)}</td>
+            <td style="font-weight:600; color:#e2e8f0;">${formatMoney(totalAssets)}</td>
+            <td style="color:#f43f5e;">${formatMoney(totalDebt)}</td>
+            <td style="font-weight:800; color:${nwColor};">${formatMoney(actualNw)}</td>
+            <td style="color:#818cf8; font-weight:600;">${formatMoney(plan.plannedNw)}</td>
+            <td style="font-weight:700; color:${deltaColor};">
+              ${delta >= 0 ? '+' : ''}${formatMoney(delta)}
+            </td>
+            <td style="color:#c084fc;">${formatMoney(e.monthlySavings)}/mo</td>
+            <td style="font-size:0.75rem; color:var(--text-muted); max-width:180px; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(e.notes)}">
+              ${escapeHtml(e.notes) || '<span style="color:#475569;">--</span>'}
+            </td>
+            <td>
+              <div style="display:flex; gap:0.35rem;">
+                <button type="button" class="btn btn-edit" data-idx="${idx}" title="Edit this month's record">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-danger" data-idx="${idx}" title="Delete this entry">
+                  ✕
+                </button>
+              </div>
+            </td>
+          `;
+
+          // Edit Handler
+          tr.querySelector('.btn-edit').addEventListener('click', () => {
+            loadEntryIntoForm(e);
+          });
+
+          // Delete Handler
+          tr.querySelector('.btn-danger').addEventListener('click', () => {
+            if (confirm(`Delete the entry for ${formatMonthYear(e.year, e.month)}?`)) {
+              trackerState.entries.splice(idx, 1);
+              updateAllUI();
+            }
+          });
+
+          fragment.appendChild(tr);
+        });
+
+        historyTbody.appendChild(fragment);
+      }
+
+      function loadEntryIntoForm(e) {
+        entryMonthSelect.value = String(e.month);
+        entryYearInput.value = e.year;
+        entryLiquid.value = Math.round(e.liquid).toLocaleString();
+        entryInvested.value = Math.round(e.invested).toLocaleString();
+        entryRealEstate.value = Math.round(e.realEstate).toLocaleString();
+        entryOtherAssets.value = Math.round(e.otherAssets).toLocaleString();
+        entryConsumerDebt.value = Math.round(e.consumerDebt).toLocaleString();
+        entryMortgage.value = Math.round(e.mortgage).toLocaleString();
+        entryMonthlySavings.value = Math.round(e.monthlySavings).toLocaleString();
+        entryMonthlyExpenses.value = Math.round(e.monthlyExpenses).toLocaleString();
+        entryNotes.value = e.notes || '';
+
+        formTitleText.textContent = `Edit Record for ${formatMonthYear(e.year, e.month)}`;
+        btnCancelEdit.style.display = 'inline-flex';
+        updateFormPreview();
+        window.scrollTo({ top: entryForm.offsetTop - 80, behavior: 'smooth' });
+      }
+
+      btnCancelEdit.addEventListener('click', () => {
+        formTitleText.textContent = 'Record Monthly Financial Reality';
+        btnCancelEdit.style.display = 'none';
+        entryForm.reset();
+        const now = new Date();
+        entryMonthSelect.value = String(now.getMonth());
+        entryYearInput.value = now.getFullYear();
+        updateFormPreview();
+      });
+
+      // --- Update All KPI Summaries ---
+      function updateAllUI() {
+        sortEntries();
+
+        // 1. Plan Baseline Slots
+        const p = trackerState.plannedScenario;
+        planSourceBadge.textContent = p.hasPlan ? `Plan: ${p.sourceName}` : 'Default Suite Assumptions';
+        planSourceBadge.className = `benchmark-badge ${p.hasPlan ? 'active' : ''}`;
+
+        const planStartFmt = formatMonthYear(p.startYear, p.startMonth);
+        planDescriptionText.innerHTML = `Baseline scenario started in <strong>${planStartFmt}</strong> (${p.sourceName}). Comparing your logged reality against this curve.`;
+
+        const initAssets = p.investedAssets + p.propertyValue;
+        const initLiab = p.consumerDebt + p.mortgageDebt;
+        const initNw = initAssets - initLiab;
+
+        planSlotAssetsVal.textContent = formatMoney(initAssets);
+        planAssetRate.textContent = `${p.portfolioReturnApy.toFixed(1)}% APY`;
+        planSlotLiabVal.textContent = formatMoney(initLiab);
+        planDebtRate.textContent = `Paydown: ${formatMoney(p.monthlyDebtPayment)}/mo`;
+        planSlotNwVal.textContent = formatMoney(initNw);
+
+        // 2. Entries KPIs
+        const count = trackerState.entries.length;
+        kpiMonthsLogged.textContent = count;
+
+        if (count > 0) {
+          const first = trackerState.entries[0];
+          const latest = trackerState.entries[count - 1];
+
+          const firstAssets = first.liquid + first.invested + first.realEstate + first.otherAssets;
+          const firstDebt = first.consumerDebt + first.mortgage;
+          const firstNw = firstAssets - firstDebt;
+
+          const latestAssets = latest.liquid + latest.invested + latest.realEstate + latest.otherAssets;
+          const latestDebt = latest.consumerDebt + latest.mortgage;
+          const latestNw = latestAssets - latestDebt;
+
+          kpiLatestNw.textContent = formatMoney(latestNw);
+          kpiLatestNw.style.color = latestNw >= 0 ? '#34d399' : '#f87171';
+          kpiLatestDate.textContent = `As of ${formatMonthYear(latest.year, latest.month)}`;
+
+          const deltaAllTime = latestNw - firstNw;
+          kpiHistoricalDelta.textContent = `${deltaAllTime >= 0 ? '+' : ''}${formatMoney(deltaAllTime)}`;
+          kpiHistoricalDelta.style.color = deltaAllTime >= 0 ? '#38bdf8' : '#f87171';
+          kpiHistoricalDeltaSub = `From ${formatMonthYear(first.year, first.month)} (${count} mos)`;
+
+          const monthsBetween = Math.max(1, (latest.year * 12 + latest.month) - (first.year * 12 + first.month));
+          kpiDateRange.textContent = `${monthsBetween + 1} months calendar span`;
+
+          // Comparison to plan
+          const planAtLatest = calculatePlannedNetWorthAt(latest.year, latest.month);
+          const variance = latestNw - planAtLatest.plannedNw;
+          const varPct = planAtLatest.plannedNw !== 0 ? ((variance / Math.abs(planAtLatest.plannedNw)) * 100) : 0;
+
+          planSlotVarianceVal.textContent = `${variance >= 0 ? '+' : ''}${formatMoney(variance)}`;
+          planSlotVarianceVal.style.color = variance >= 0 ? '#34d399' : '#f87171';
+          planVariancePct.textContent = `${variance >= 0 ? '+' : ''}${varPct.toFixed(1)}%`;
+          planVariancePct.style.color = variance >= 0 ? '#34d399' : '#f87171';
+
+          if (variance >= 0) {
+            kpiPlanStatus.textContent = 'Ahead of Plan';
+            kpiPlanStatus.style.color = '#34d399';
+            kpiPlanStatusSub = `${formatMoney(variance)} above target curve`;
+          } else if (Math.abs(variance) < 5000) {
+            kpiPlanStatus.textContent = 'On Track';
+            kpiPlanStatus.style.color = '#fbbf24';
+            kpiPlanStatusSub = `Within ${formatMoney(Math.abs(variance))} of target`;
+          } else {
+            kpiPlanStatus.textContent = 'Behind Plan';
+            kpiPlanStatus.style.color = '#f87171';
+            kpiPlanStatusSub = `${formatMoney(Math.abs(variance))} below target`;
+          }
+
+          // Insights
+          const avgMonthly = deltaAllTime / monthsBetween;
+          insightAvgPace.textContent = `${avgMonthly >= 0 ? '+' : ''}${formatMoney(avgMonthly)}/mo`;
+          insightAvgPace.style.color = avgMonthly >= 0 ? '#34d399' : '#f87171';
+
+          insightDeltaPlan.textContent = `${variance >= 0 ? '+' : ''}${formatMoney(variance)} (${formatMonthYear(latest.year, latest.month)})`;
+          insightDeltaPlan.style.color = variance >= 0 ? '#34d399' : '#f87171';
+
+          chartProgressSummary.textContent = `${formatMonthYear(first.year, first.month)} → ${formatMonthYear(latest.year, latest.month)} (${count} Months)`;
+        } else {
+          kpiLatestNw.textContent = '$0';
+          kpiLatestDate.textContent = 'No entries recorded';
+          kpiHistoricalDelta.textContent = '$0';
+          kpiDateRange.textContent = '0 months spanned';
+          planSlotVarianceVal.textContent = '$0';
+          planVariancePct.textContent = '+0.0%';
+          insightAvgPace.textContent = '$0/mo';
+          insightDeltaPlan.textContent = '$0';
+          chartProgressSummary.textContent = 'Awaiting Entries';
+        }
+
+        drawChart();
+        renderTable();
+      }
+
+      // --- Save Entry Handler ---
+      entryForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const v = getFormValues();
+
+        // Check if entry for this month already exists (Enforce 1 entry per month)
+        const existingIdx = trackerState.entries.findIndex(entry => entry.year === v.year && entry.month === v.month);
+
+        if (existingIdx >= 0) {
+          trackerState.entries[existingIdx] = v;
+        } else {
+          trackerState.entries.push(v);
+        }
+
+        // Reset edit mode
+        formTitleText.textContent = 'Record Monthly Financial Reality';
+        btnCancelEdit.style.display = 'none';
+
+        // Auto increment to next month for user convenience
+        let nextM = v.month + 1;
+        let nextY = v.year;
+        if (nextM > 11) {
+          nextM = 0;
+          nextY++;
+        }
+        entryMonthSelect.value = String(nextM);
+        entryYearInput.value = nextY;
+        entryNotes.value = '';
+
+        updateFormPreview();
+        updateAllUI();
+      });
+
+      // --- Export Tracker to CSV ---
+      function exportTrackerCSV() {
+        if (trackerState.entries.length === 0) {
+          alert('No tracker entries to export. Add at least one monthly log entry first!');
+          return;
+        }
+
+        sortEntries();
+        const rows = [];
+        const first = trackerState.entries[0];
+        const latest = trackerState.entries[trackerState.entries.length - 1];
+
+        rows.push(['MONTHLY NET WORTH LOG & HISTORICAL REALITY TRACKER']);
+        rows.push(['Export Date', new Date().toLocaleDateString()]);
+        rows.push(['File Purpose', 'Historical Log Tracker (Keep separate from forward planning scenarios)']);
+        rows.push(['Total Monthly Entries', trackerState.entries.length]);
+        rows.push(['First Logged Date', formatMonthYear(first.year, first.month)]);
+        rows.push(['Latest Logged Date', formatMonthYear(latest.year, latest.month)]);
+        rows.push(['Associated Plan Source', trackerState.plannedScenario.sourceName]);
+        rows.push([]);
+
+        rows.push(['PLANNED BENCHMARK METADATA']);
+        rows.push(['Plan Start Date', formatMonthYear(trackerState.plannedScenario.startYear, trackerState.plannedScenario.startMonth)]);
+        rows.push(['Plan Start Month Index', trackerState.plannedScenario.startMonth + 1]);
+        rows.push(['Plan Start Year', trackerState.plannedScenario.startYear]);
+        rows.push(['Plan Baseline Assets ($)', (trackerState.plannedScenario.investedAssets + trackerState.plannedScenario.propertyValue).toFixed(2)]);
+        rows.push(['Plan Baseline Debt ($)', (trackerState.plannedScenario.consumerDebt + trackerState.plannedScenario.mortgageDebt).toFixed(2)]);
+        rows.push(['Plan Annual Return APY (%)', `${trackerState.plannedScenario.portfolioReturnApy.toFixed(2)}%`]);
+        rows.push([]);
+
+        rows.push(['CHRONOLOGICAL MONTHLY NET WORTH ENTRIES (ONE PER MONTH)']);
+        rows.push([
+          'Year',
+          'Month Index (1-12)',
+          'Calendar Month',
+          'Liquid Cash ($)',
+          'Invested Assets ($)',
+          'Real Estate ($)',
+          'Other Assets ($)',
+          'Total Assets ($)',
+          'Consumer Debt ($)',
+          'Mortgage Balance ($)',
+          'Total Liabilities ($)',
+          'Actual Net Worth ($)',
+          'Planned Net Worth ($)',
+          'Variance vs Plan ($)',
+          'Monthly Savings ($)',
+          'Monthly Expenses ($)',
+          'Milestones & Notes'
+        ]);
+
+        trackerState.entries.forEach(e => {
+          const totalAssets = e.liquid + e.invested + e.realEstate + e.otherAssets;
+          const totalDebt = e.consumerDebt + e.mortgage;
+          const nw = totalAssets - totalDebt;
+          const plan = calculatePlannedNetWorthAt(e.year, e.month);
+          const delta = nw - plan.plannedNw;
+
+          rows.push([
+            e.year,
+            e.month + 1,
+            formatMonthYear(e.year, e.month),
+            e.liquid.toFixed(2),
+            e.invested.toFixed(2),
+            e.realEstate.toFixed(2),
+            e.otherAssets.toFixed(2),
+            totalAssets.toFixed(2),
+            e.consumerDebt.toFixed(2),
+            e.mortgage.toFixed(2),
+            totalDebt.toFixed(2),
+            nw.toFixed(2),
+            plan.plannedNw.toFixed(2),
+            delta.toFixed(2),
+            e.monthlySavings.toFixed(2),
+            e.monthlyExpenses.toFixed(2),
+            `"${(e.notes || '').replace(/"/g, '""')}"`
+          ]);
+        });
+
+        const csvContent = '\uFEFF' + rows.map(r => r.join(',')).join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Net_Worth_Tracker_History_${first.year}_${latest.year}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
+      // --- Load / Parse Tracker CSV ---
+      function handleTrackerCSVFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          try {
+            const text = evt.target.result;
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            const headerJoined = lines.slice(0, 10).join(' ').toLowerCase();
+
+            // Detect if this is an actual Tracker CSV
+            if (!headerJoined.includes('monthly net worth log & historical reality tracker') && !headerJoined.includes('chronological monthly net worth entries')) {
+              if (confirm('This file does not appear to be an exported Tracker CSV. Did you mean to upload it as a Planned Scenario? Click OK to load as Plan.')) {
+                ingestPlannedScenarioCSV(text, file.name);
+                return;
+              }
+            }
+
+            const parsedEntries = [];
+            let inEntries = false;
+
+            for (let i = 0; i < lines.length; i++) {
+              const cols = parseCSVLine(lines[i]);
+              if (cols[0] === 'CHRONOLOGICAL MONTHLY NET WORTH ENTRIES (ONE PER MONTH)') {
+                inEntries = true;
+                i++; // skip column headers
+                continue;
+              }
+
+              if (inEntries) {
+                if (cols.length < 12) continue;
+                const year = parseInt(cols[0], 10);
+                const monthIdx = parseInt(cols[1], 10);
+                if (isNaN(year) || isNaN(monthIdx) || monthIdx < 1 || monthIdx > 12) continue;
+
+                parsedEntries.push({
+                  year: year,
+                  month: monthIdx - 1,
+                  liquid: Math.max(0, parseNumber(cols[3])),
+                  invested: Math.max(0, parseNumber(cols[4])),
+                  realEstate: Math.max(0, parseNumber(cols[5])),
+                  otherAssets: Math.max(0, parseNumber(cols[6])),
+                  consumerDebt: Math.max(0, parseNumber(cols[8])),
+                  mortgage: Math.max(0, parseNumber(cols[9])),
+                  monthlySavings: cols[14] ? Math.max(0, parseNumber(cols[14])) : 0,
+                  monthlyExpenses: cols[15] ? Math.max(0, parseNumber(cols[15])) : 0,
+                  notes: cols[16] ? cols[16].replace(/^"|"$/g, '') : ''
+                });
+              }
+            }
+
+            if (parsedEntries.length > 0) {
+              trackerState.entries = parsedEntries;
+              updateAllUI();
+              alert(`Successfully loaded ${parsedEntries.length} monthly tracker entries from ${file.name}!`);
+            } else {
+              alert('Could not find valid monthly entry rows in this CSV.');
+            }
+
+          } catch (err) {
+            console.error(err);
+            alert('Error parsing Tracker CSV file.');
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // --- Ingest Planned Scenario CSV (Net Worth Hub, Investing, Debt, or Mortgage) ---
+      function ingestPlannedScenarioCSV(rawText, fileName) {
+        const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length === 0) return;
+        const headerJoined = lines.slice(0, 15).join(' ').toLowerCase();
+
+        // 1. Net Worth Command Center CSV (Primary Master Plan)
+        if (headerJoined.includes('holistic net worth command center')) {
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols.length < 2) return;
+            const k = cols[0].toLowerCase();
+            const v = cols[1];
+
+            if (k === 'start month index') trackerState.plannedScenario.startMonth = clamp(parseInt(v, 10) - 1, 0, 11);
+            else if (k === 'start year') trackerState.plannedScenario.startYear = clamp(parseInt(v, 10), 1970, 2100);
+            else if (k.includes('liquid & invested assets')) trackerState.plannedScenario.investedAssets = Math.max(0, parseNumber(v));
+            else if (k.includes('real estate / property value')) trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(v));
+            else if (k.includes('consumer & loan debt')) trackerState.plannedScenario.consumerDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('mortgage debt balance')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('monthly investment contribution')) trackerState.plannedScenario.monthlyInvestContrib = Math.max(0, parseNumber(v));
+            else if (k.includes('portfolio annual return')) trackerState.plannedScenario.portfolioReturnApy = clamp(parseNumber(v), 0, 30);
+            else if (k.includes('monthly debt paydown')) trackerState.plannedScenario.monthlyDebtPayment = Math.max(0, parseNumber(v));
+            else if (k.includes('consumer debt average apr')) trackerState.plannedScenario.debtAvgApr = clamp(parseNumber(v), 0, 50);
+          });
+
+          trackerState.plannedScenario.hasPlan = true;
+          trackerState.plannedScenario.sourceName = `Net Worth Hub (${fileName})`;
+          trackerState.plannedScenario.mode = 'networth';
+          updateAllUI();
+          alert(`Successfully synced Master Planned Scenario from ${fileName}!`);
+          return;
+        }
+
+        // 2. Multi-Asset Investing CSV
+        if (headerJoined.includes('portfolio savings') || headerJoined.includes('asset configuration') || headerJoined.includes('multi-asset investing')) {
+          let totalBal = 0;
+          let totalContrib = 0;
+          let inConfig = false;
+          let mIdx = null;
+          let yVal = null;
+
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols[0] && cols[0].toLowerCase() === 'start month index') mIdx = parseInt(cols[1], 10);
+            if (cols[0] && cols[0].toLowerCase() === 'start year') yVal = parseInt(cols[1], 10);
+
+            if (cols[0] === 'ASSET CONFIGURATION') { inConfig = true; return; }
+            if (inConfig) {
+              if (cols[0] === 'YEAR-BY-YEAR PROJECTION SCHEDULE' || cols.length < 4) { inConfig = false; return; }
+              totalBal += Math.max(0, parseNumber(cols[1]));
+              totalContrib += Math.max(0, parseNumber(cols[2]));
+            }
+          });
+
+          if (totalBal > 0) {
+            trackerState.plannedScenario.investedAssets = totalBal;
+            trackerState.plannedScenario.monthlyInvestContrib = totalContrib;
+            if (mIdx !== null && yVal !== null) {
+              trackerState.plannedScenario.startMonth = clamp(mIdx - 1, 0, 11);
+              trackerState.plannedScenario.startYear = yVal;
+            }
+            trackerState.plannedScenario.hasPlan = true;
+            trackerState.plannedScenario.sourceName = `Investing Plan (${fileName})`;
+            trackerState.plannedScenario.mode = 'investing';
+            updateAllUI();
+            alert(`Updated Planned Invested Assets (${formatMoney(totalBal)}) from ${fileName}!`);
+            return;
+          }
+        }
+
+        // 3. Debt Payoff CSV
+        if (headerJoined.includes('debt payoff engine') || headerJoined.includes('debt accounts configuration')) {
+          let totalDebt = 0;
+          let totalMin = 0;
+          let extra = 0;
+          let inDebt = false;
+          let mIdx = null;
+          let yVal = null;
+
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols[0] && cols[0].toLowerCase() === 'start month index') mIdx = parseInt(cols[1], 10);
+            if (cols[0] && cols[0].toLowerCase() === 'start year') yVal = parseInt(cols[1], 10);
+            if (cols[0] && cols[0].toLowerCase().includes('extra monthly payment')) extra = Math.max(0, parseNumber(cols[1]));
+
+            if (cols[0] === 'DEBT ACCOUNTS CONFIGURATION') { inDebt = true; return; }
+            if (inDebt) {
+              if (cols[0] === 'ANNUAL PAYOFF SCHEDULE' || cols.length < 4) { inDebt = false; return; }
+              totalDebt += Math.max(0, parseNumber(cols[1]));
+              totalMin += Math.max(0, parseNumber(cols[3]));
+            }
+          });
+
+          if (totalDebt > 0) {
+            trackerState.plannedScenario.consumerDebt = totalDebt;
+            trackerState.plannedScenario.monthlyDebtPayment = totalMin + extra;
+            if (mIdx !== null && yVal !== null) {
+              trackerState.plannedScenario.startMonth = clamp(mIdx - 1, 0, 11);
+              trackerState.plannedScenario.startYear = yVal;
+            }
+            trackerState.plannedScenario.hasPlan = true;
+            trackerState.plannedScenario.sourceName = `Debt Plan (${fileName})`;
+            trackerState.plannedScenario.mode = 'debt';
+            updateAllUI();
+            alert(`Updated Planned Debt Paydown (${formatMoney(totalDebt)}) from ${fileName}!`);
+            return;
+          }
+        }
+
+        // 4. Mortgage CSV
+        if (headerJoined.includes('mortgage calculation') || headerJoined.includes('loan parameters')) {
+          lines.forEach(line => {
+            const cols = parseCSVLine(line);
+            if (cols.length < 2) return;
+            const k = cols[0].toLowerCase();
+            if (k === 'home price ($)') trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(cols[1]));
+            else if (k.includes('total loan amount')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(cols[1]));
+          });
+          trackerState.plannedScenario.hasPlan = true;
+          trackerState.plannedScenario.sourceName = `Mortgage Plan (${fileName})`;
+          trackerState.plannedScenario.mode = 'mortgage';
+          updateAllUI();
+          alert(`Updated Planned Real Estate & Mortgage from ${fileName}!`);
+          return;
+        }
+
+        alert('Uploaded file did not match any recognizable financial suite plan format.');
+      }
+
+      // --- Buttons & Action Listeners ---
+      btnExportTrackerCSV.addEventListener('click', exportTrackerCSV);
+
+      btnLoadTrackerCSV.addEventListener('click', () => {
+        trackerCsvInput.value = '';
+        trackerCsvInput.click();
+      });
+
+      trackerCsvInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleTrackerCSVFile(e.target.files[0]);
+        }
+      });
+
+      btnImportPlan.addEventListener('click', () => {
+        planCsvInput.value = '';
+        planCsvInput.click();
+      });
+
+      planCsvInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files || []);
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            ingestPlannedScenarioCSV(evt.target.result, file.name);
+          };
+          reader.readAsText(file);
+        });
+      });
+
+      btnClearAllLogs.addEventListener('click', () => {
+        if (trackerState.entries.length === 0) return;
+        if (confirm('Are you sure you want to delete ALL historical entries? (Export to CSV first if you want a backup)')) {
+          trackerState.entries = [];
+          updateAllUI();
+        }
+      });
+
+      // Load Sample History (Demo starting March 2021 through current date)
+      btnLoadSampleData.addEventListener('click', () => {
+        trackerState.entries = [
+          { year: 2021, month: 2, liquid: 12000, invested: 28000, realEstate: 350000, otherAssets: 15000, consumerDebt: 36000, mortgage: 265000, monthlySavings: 1100, monthlyExpenses: 4400, notes: 'Suite baseline start' },
+          { year: 2021, month: 5, liquid: 13500, invested: 32000, realEstate: 353000, otherAssets: 15000, consumerDebt: 33000, mortgage: 263500, monthlySavings: 1200, monthlyExpenses: 4450, notes: 'Q2 check-in' },
+          { year: 2021, month: 8, liquid: 14200, invested: 36500, realEstate: 356000, otherAssets: 14500, consumerDebt: 30000, mortgage: 262000, monthlySavings: 1250, monthlyExpenses: 4500, notes: 'Debt payoff snowball rolling' },
+          { year: 2021, month: 11, liquid: 15000, invested: 41000, realEstate: 360000, otherAssets: 14000, consumerDebt: 265000 * 0 + 27000, mortgage: 260500, monthlySavings: 1400, monthlyExpenses: 4600, notes: 'Year-end review' },
+          { year: 2022, month: 3, liquid: 16500, invested: 45000, realEstate: 365000, otherAssets: 14000, consumerDebt: 22000, mortgage: 258500, monthlySavings: 1350, monthlyExpenses: 4700, notes: 'Annual promotion raise' },
+          { year: 2022, month: 9, liquid: 15000, invested: 49000, realEstate: 370000, otherAssets: 13500, consumerDebt: 16000, mortgage: 256000, monthlySavings: 1400, monthlyExpenses: 4750, notes: 'Market correction dip buying' },
+          { year: 2023, month: 2, liquid: 17000, invested: 58000, realEstate: 375000, otherAssets: 13000, consumerDebt: 10000, mortgage: 253500, monthlySavings: 1500, monthlyExpenses: 4800, notes: 'Credit card fully paid off' },
+          { year: 2023, month: 8, liquid: 18500, invested: 69000, realEstate: 380000, otherAssets: 13000, consumerDebt: 4000, mortgage: 251000, monthlySavings: 1600, monthlyExpenses: 4850, notes: 'Personal loan nearly done' },
+          { year: 2024, month: 1, liquid: 20000, invested: 82000, realEstate: 388000, otherAssets: 12500, consumerDebt: 0, mortgage: 248000, monthlySavings: 2100, monthlyExpenses: 4900, notes: 'CONSUMER DEBT FREE! Rolled into HYSA & S&P500' },
+          { year: 2024, month: 7, liquid: 22000, invested: 96000, realEstate: 395000, otherAssets: 12000, consumerDebt: 0, mortgage: 245000, monthlySavings: 2200, monthlyExpenses: 4950, notes: 'High compounding phase' },
+          { year: 2025, month: 1, liquid: 24000, invested: 112000, realEstate: 402000, otherAssets: 12000, consumerDebt: 0, mortgage: 242000, monthlySavings: 2300, monthlyExpenses: 5000, notes: '$100k+ invested milestone' },
+          { year: 2025, month: 8, liquid: 25500, invested: 129000, realEstate: 410000, otherAssets: 11500, consumerDebt: 0, mortgage: 239000, monthlySavings: 2350, monthlyExpenses: 5050, notes: 'Strong compounding year' },
+          { year: 2026, month: 2, liquid: 27000, invested: 145000, realEstate: 418000, otherAssets: 11000, consumerDebt: 0, mortgage: 236000, monthlySavings: 2400, monthlyExpenses: 5100, notes: '5 years of tracking complete!' }
+        ];
+        updateAllUI();
+      });
+
+      window.addEventListener('resize', () => {
+        drawChart();
+      });
+
+      // --- Initialization ---
+      const nowInit = new Date();
+      entryMonthSelect.value = String(nowInit.getMonth());
+      entryYearInput.value = nowInit.getFullYear();
+      updateFormPreview();
+      updateAllUI();
+
+    })();
+  </script>
+</body>
+</html>
+

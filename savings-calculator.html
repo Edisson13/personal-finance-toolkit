@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Asset Savings Calculator</title>
+  <title>Multi-Asset Investing &amp; Portfolio Calculator</title>
   <style>
     :root {
       --bg-base: #090d16;
@@ -521,8 +521,8 @@
           </svg>
         </div>
         <div>
-          <h1>Multi-Asset Portfolio Savings</h1>
-          <p>Compound growth estimator for HYSA, Stocks, Crypto &amp; Custom Assets</p>
+          <h1>Multi-Asset Investing &amp; Portfolio</h1>
+          <p>Compound growth &amp; asset allocation engine for Stocks, ETFs, HYSA, Crypto &amp; Custom Vehicles</p>
         </div>
       </div>
 
@@ -1072,7 +1072,7 @@
         const { yearlyAggregates, assetHistories } = computeProjections();
         const rows = [];
 
-        rows.push(['Multi-Asset Portfolio Savings Projection']);
+        rows.push(['Multi-Asset Investing & Portfolio Savings Projection']);
         rows.push(['Investment Horizon (Years)', state.horizonYears]);
         rows.push(['Total Projected Value', formatMoney(yearlyAggregates[state.horizonYears].totalBalance)]);
         rows.push(['Total Deposits', formatMoney(yearlyAggregates[state.horizonYears].totalPrincipal)]);
@@ -1124,7 +1124,7 @@
 
         const link = document.createElement('a');
         link.href = url;
-        link.download = `Portfolio_Savings_${state.horizonYears}Yrs.csv`;
+        link.download = `Investing_Portfolio_${state.horizonYears}Yrs.csv`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
