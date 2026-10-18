@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Fund Runway Calculator</title>
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #111827;
+      --bg-card: #1a2234;
+      --bg-card-hover: #222d44;
+      --bg-input: #0b1120;
+      --border-color: #2e384d;
+      --border-focus: #6366f1;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      --accent-primary: #6366f1;
+      --accent-success: #10b981;
+      --accent-warning: #f59e0b;
+      --accent-danger: #ef4444;
+      --accent-cyan: #06b6d4;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0ea5e9, #10b981);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background-color: var(--bg-card-hover);
+      border-color: #475569;
+    }
+
+    .btn-success {
+      background-color: #065f46;
+      border-color: var(--accent-success);
+      color: #34d399;
+    }
+    .btn-success:hover { background-color: #047857; color: #fff; }
+
+    .btn-secondary {
+      background-color: #1e293b;
+      border-color: #334155;
+      color: #cbd5e1;
+    }
+    .btn-secondary:hover { background-color: #334155; color: #fff; }
+
+    /* Top KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-value {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-subtext {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      margin-top: 0.25rem;
+    }
+
+    /* Runway Tier Summary Boxes */
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .tiers-grid { grid-template-columns: 1fr; }
+    }
+
+    .tier-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: relative;
+    }
+
+    .tier-box.highlight {
+      border-color: var(--accent-success);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .tier-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tier-value {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .tier-desc {
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-main);
+    }
+
+    /* Section Subheadings */
+    .input-section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--accent-cyan);
+      margin: 1.2rem 0 0.6rem 0;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .input-section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .input-label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .input-field-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .input-prefix, .input-suffix {
+      position: absolute;
+      color: var(--text-subtle);
+      font-size: 0.85rem;
+      pointer-events: none;
+      font-weight: 500;
+    }
+
+    .input-prefix { left: 0.65rem; }
+    .input-suffix { right: 0.65rem; }
+
+    input[type="text"], input[type="number"] {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.45rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: right;
+      width: 130px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+    }
+
+    .input-field-wrapper.has-prefix input { padding-left: 1.6rem; }
+    .input-field-wrapper.has-suffix input { padding-right: 1.8rem; }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #232d42;
+      outline: none;
+      cursor: pointer;
+      margin-top: 0.35rem;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      border: 2px solid #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Trajectory Canvas */
+    .chart-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 310px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    /* Callouts */
+    .summary-callouts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .callout-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .callout-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-subtle);
+    }
+
+    .callout-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Amortization Table */
+    .table-container {
+      max-height: 440px;
+      overflow-y: auto;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: right;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: #162032;
+      z-index: 5;
+    }
+
+    th, td {
+      padding: 0.65rem 0.85rem;
+      white-space: nowrap;
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+    tbody tr { border-bottom: 1px solid rgba(51, 65, 85, 0.35); }
+    tbody tr:hover { background-color: rgba(99, 102, 241, 0.08); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>Emergency Fund Runway Calculator</h1>
+          <p>Survival runway across Lean, Moderate &amp; Baseline burn tiers</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Return to Main Hub -->
+        <a href="./index.html" class="btn btn-secondary" title="Return to Main Suite">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Main Hub
+        </a>
+
+        <!-- Hidden CSV File Input -->
+        <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
+
+        <!-- Load CSV Button -->
+        <button type="button" class="btn btn-secondary" id="btnLoadCSV" title="Load an emergency runway scenario from CSV">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Load CSV
+        </button>
+
+        <!-- Export CSV Button -->
+        <button type="button" class="btn btn-success" id="btnExportCSV" title="Export complete runway projections to CSV/Excel">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export CSV
+        </button>
+      </div>
+    </header>
+
+    <!-- Top KPI Row -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Lean Survival Runway</div>
+        <div class="kpi-value" id="kpiLeanRunway" style="color: #34d399;">0.0 Mo</div>
+        <div class="kpi-subtext" id="kpiLeanDate">Until Month 0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Comfortable Runway</div>
+        <div class="kpi-value" id="kpiModerateRunway" style="color: #38bdf8;">0.0 Mo</div>
+        <div class="kpi-subtext" id="kpiModDate">Until Month 0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Liquid Reserves</div>
+        <div class="kpi-value" id="kpiTotalLiquidity">$0</div>
+        <div class="kpi-subtext">Cash + HYSA + Taxable</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Bridge / Side Income</div>
+        <div class="kpi-value" id="kpiBridgeIncome" style="color: #fbbf24;">$0/mo</div>
+        <div class="kpi-subtext" id="kpiSeveranceSub">Includes $0 severance</div>
+      </div>
+    </div>
+
+    <!-- Three-Tier Summary Boxes -->
+    <div class="tiers-grid">
+      <div class="tier-box highlight">
+        <div class="tier-title">
+          <span>Tier 1: Lean Survival</span>
+          <span style="color:#34d399;" id="tierLeanBurnLabel">$0/mo</span>
+        </div>
+        <div class="tier-value" id="tierLeanMonths">0.0 Months</div>
+        <div class="tier-desc">Absolute essentials only (Rent, Food, Healthcare, Utilities)</div>
+      </div>
+      <div class="tier-box">
+        <div class="tier-title">
+          <span>Tier 2: Moderate Comfort</span>
+          <span style="color:#38bdf8;" id="tierModBurnLabel">$0/mo</span>
+        </div>
+        <div class="tier-value" id="tierModMonths">0.0 Months</div>
+        <div class="tier-desc">Essentials + Transportation, Commute, Basic Services</div>
+      </div>
+      <div class="tier-box">
+        <div class="tier-title">
+          <span>Tier 3: Full Current Spend</span>
+          <span style="color:#f59e0b;" id="tierFullBurnLabel">$0/mo</span>
+        </div>
+        <div class="tier-value" id="tierFullMonths">0.0 Months</div>
+        <div class="tier-desc">Zero lifestyle spending cutbacks</div>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+
+      <!-- Left Column: Parameters -->
+      <section class="card" aria-label="Runway Inputs">
+        <h2 class="card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+          </svg>
+          Financial Reserves &amp; Monthly Burn Rates
+        </h2>
+
+        <!-- Reserves -->
+        <div class="input-section-title">Available Cash &amp; Liquid Reserves</div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label for="cashCheckingInput" class="input-label">Checking Account (Zero Yield)</label>
+            <div class="input-field-wrapper has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="cashCheckingInput" inputmode="numeric" value="6,000">
+            </div>
+          </div>
+          <input type="range" id="cashCheckingSlider" min="0" max="50000" step="500" value="6000">
+        </div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label for="hysaInput" class="input-label">High-Yield Savings / Money Market</label>
+            <div class="input-field-wrapper has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="hysaInput" inputmode="numeric" value="28,000">
+            </div>
+          </div>
+          <input type="range" id="hysaSlider" min="0" max="150000" step="1000" value="28000">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="input-group">
+            <label for="hysaApyInput" class="input-label" style="display:block; margin-bottom:0.3rem;">HYSA APY Yield</label>
+            <div class="input-field-wrapper has-suffix" style="width:100%;">
+              <input type="number" id="hysaApyInput" min="0" max="10" step="0.1" value="4.2" style="width:100%;">
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="severanceInput" class="input-label" style="display:block; margin-bottom:0.3rem;">One-Time Severance</label>
+            <div class="input-field-wrapper has-prefix" style="width:100%;">
+              <span class="input-prefix">$</span>
+              <input type="text" id="severanceInput" inputmode="numeric" value="5,000" style="width:100%;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Expenses Tiers -->
+        <div class="input-section-title">Monthly Expense Tiers</div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label for="leanBurnInput" class="input-label">Tier 1: Lean Survival Spend (Shelter, Groceries, Meds)</label>
+            <div class="input-field-wrapper has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="leanBurnInput" inputmode="numeric" value="2,400">
+            </div>
+          </div>
+          <input type="range" id="leanBurnSlider" min="500" max="15000" step="100" value="2400">
+        </div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label for="modBurnInput" class="input-label">Tier 2: Moderate Comfortable Spend (+Transport, Subscriptions)</label>
+            <div class="input-field-wrapper has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="modBurnInput" inputmode="numeric" value="3,600">
+            </div>
+          </div>
+          <input type="range" id="modBurnSlider" min="500" max="20000" step="100" value="3600">
+        </div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label for="fullBurnInput" class="input-label">Tier 3: Current Baseline Spend (Full Discretionary)</label>
+            <div class="input-field-wrapper has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="fullBurnInput" inputmode="numeric" value="4,800">
+            </div>
+          </div>
+          <input type="range" id="fullBurnSlider" min="500" max="25000" step="100" value="4800">
+        </div>
+
+        <!-- Bridge Inflow -->
+        <div class="input-section-title">Ongoing Monthly Bridge Income</div>
+
+        <div class="input-group" style="margin-bottom:0;">
+          <div class="input-header">
+            <label for="bridgeIncomeInput" class="input-label">Part-Time / Side-Gig / Unemployment Assistance</label>
+            <div class="input-field-wrapper has-prefix">
+              <span class="input-prefix">$</span>
+              <input type="text" id="bridgeIncomeInput" inputmode="numeric" value="600">
+            </div>
+          </div>
+          <input type="range" id="bridgeIncomeSlider" min="0" max="6000" step="50" value="600">
+        </div>
+
+      </section>
+
+      <!-- Right Column: Canvas Chart & Callouts -->
+      <section class="card" aria-label="Depletion Trajectory">
+        <h2 class="card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline>
+            <polyline points="16 17 22 17 22 11"></polyline>
+          </svg>
+          Reserve Depletion Trajectory
+        </h2>
+
+        <div class="chart-box">
+          <div class="canvas-container">
+            <canvas id="runwayCanvas"></canvas>
+          </div>
+          <div class="chart-legend" id="chartLegend"></div>
+        </div>
+
+        <!-- Summary Callouts -->
+        <div class="summary-callouts">
+          <div class="callout-item">
+            <span class="callout-title">Net Lean Monthly Burn</span>
+            <span class="callout-value" id="calloutNetLeanBurn" style="color:#34d399;">$0/mo</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);">After $600 bridge income</span>
+          </div>
+          <div class="callout-item">
+            <span class="callout-title">Target 6-Month Reserve</span>
+            <span class="callout-value" id="calloutTarget6Mo" style="color:#38bdf8;">$0</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);">Moderate tier benchmark</span>
+          </div>
+          <div class="callout-item">
+            <span class="callout-title">Interest Accrued During Burn</span>
+            <span class="callout-value" id="calloutInterestEarned" style="color:#fbbf24;">$0</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);">From HYSA before depletion</span>
+          </div>
+          <div class="callout-item">
+            <span class="callout-title">Funding Ratio (vs 6 Mo)</span>
+            <span class="callout-value" id="calloutFundingRatio" style="color:#a855f7;">0%</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);">Financial resilience score</span>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Bottom Section: Month-by-Month Depletion Schedule -->
+    <section class="card" aria-label="Month by Month Schedule">
+      <div class="card-title">
+        <span>Month-by-Month Reserve Depletion (Lean Survival Tier)</span>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Starting Balance</th>
+              <th>Interest Accrued</th>
+              <th>Bridge Inflows</th>
+              <th>Living Expenses</th>
+              <th>Net Outflow</th>
+              <th>Remaining Reserves</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // --- State ---
+      const state = {
+        cashChecking: 6000,
+        hysaBalance: 28000,
+        hysaApy: 4.2,
+        severance: 5000,
+        leanBurn: 2400,
+        modBurn: 3600,
+        fullBurn: 4800,
+        bridgeIncome: 600
+      };
+
+      // --- Helpers ---
+      function formatMoney(amount) {
+        if (isNaN(amount) || !isFinite(amount)) return '$0';
+        return '$' + Math.round(amount).toLocaleString('en-US');
+      }
+
+      function parseCleanNumber(val) {
+        if (typeof val === 'number') return val;
+        const cleaned = String(val).replace(/[^0-9.-]/g, '');
+        const num = parseFloat(cleaned);
+        return isNaN(num) ? 0 : num;
+      }
+
+      function clamp(val, min, max) {
+        return Math.min(Math.max(val, min), max);
+      }
+
+      // --- Simulation Engine ---
+      function simulateDepletion(monthlyBurn) {
+        let checking = state.cashChecking;
+        let hysa = state.hysaBalance + state.severance;
+        const monthlyYield = (state.hysaApy / 100) / 12;
+
+        let month = 0;
+        const maxMonths = 120; // 10 years cap
+        const trajectory = [checking + hysa];
+        const monthlyRows = [];
+
+        let cumulativeInterest = 0;
+
+        while ((checking + hysa) > 0.01 && month < maxMonths) {
+          month++;
+          const startTotal = checking + hysa;
+
+          // 1. Earn interest on remaining HYSA
+          const interest = hysa * monthlyYield;
+          hysa += interest;
+          cumulativeInterest += interest;
+
+          // 2. Add bridge income to checking
+          checking += state.bridgeIncome;
+
+          // 3. Withdraw expenses
+          let needed = monthlyBurn;
+          const fromChecking = Math.min(checking, needed);
+          checking -= fromChecking;
+          needed -= fromChecking;
+
+          const fromHysa = Math.min(hysa, needed);
+          hysa -= fromHysa;
+          needed -= fromHysa;
+
+          const endTotal = Math.max(0, checking + hysa);
+          trajectory.push(endTotal);
+
+          monthlyRows.push({
+            month,
+            startTotal,
+            interest,
+            bridgeInflow: state.bridgeIncome,
+            expenses: monthlyBurn,
+            netOutflow: monthlyBurn - state.bridgeIncome - interest,
+            endTotal
+          });
+
+          if (endTotal <= 0) break;
+        }
+
+        // Calculate precise fractional months
+        let exactMonths = month;
+        if (monthlyRows.length > 0) {
+          const last = monthlyRows[monthlyRows.length - 1];
+          if (last.endTotal <= 0 && last.startTotal > 0) {
+            const netBurn = last.expenses - last.bridgeInflow - last.interest;
+            const fraction = netBurn > 0 ? (last.startTotal / netBurn) : 1;
+            exactMonths = (month - 1) + Math.min(1, Math.max(0, fraction));
+          }
+        }
+
+        return {
+          months: exactMonths,
+          trajectory,
+          monthlyRows,
+          cumulativeInterest
+        };
+      }
+
+      // --- DOM Elements ---
+      const cashCheckingInput = document.getElementById('cashCheckingInput');
+      const cashCheckingSlider = document.getElementById('cashCheckingSlider');
+      const hysaInput = document.getElementById('hysaInput');
+      const hysaSlider = document.getElementById('hysaSlider');
+      const hysaApyInput = document.getElementById('hysaApyInput');
+      const severanceInput = document.getElementById('severanceInput');
+
+      const leanBurnInput = document.getElementById('leanBurnInput');
+      const leanBurnSlider = document.getElementById('leanBurnSlider');
+      const modBurnInput = document.getElementById('modBurnInput');
+      const modBurnSlider = document.getElementById('modBurnSlider');
+      const fullBurnInput = document.getElementById('fullBurnInput');
+      const fullBurnSlider = document.getElementById('fullBurnSlider');
+      const bridgeIncomeInput = document.getElementById('bridgeIncomeInput');
+      const bridgeIncomeSlider = document.getElementById('bridgeIncomeSlider');
+
+      const kpiLeanRunway = document.getElementById('kpiLeanRunway');
+      const kpiLeanDate = document.getElementById('kpiLeanDate');
+      const kpiModerateRunway = document.getElementById('kpiModerateRunway');
+      const kpiModDate = document.getElementById('kpiModDate');
+      const kpiTotalLiquidity = document.getElementById('kpiTotalLiquidity');
+      const kpiBridgeIncome = document.getElementById('kpiBridgeIncome');
+      const kpiSeveranceSub = document.getElementById('kpiSeveranceSub');
+
+      const tierLeanBurnLabel = document.getElementById('tierLeanBurnLabel');
+      const tierLeanMonths = document.getElementById('tierLeanMonths');
+      const tierModBurnLabel = document.getElementById('tierModBurnLabel');
+      const tierModMonths = document.getElementById('tierModMonths');
+      const tierFullBurnLabel = document.getElementById('tierFullBurnLabel');
+      const tierFullMonths = document.getElementById('tierFullMonths');
+
+      const calloutNetLeanBurn = document.getElementById('calloutNetLeanBurn');
+      const calloutTarget6Mo = document.getElementById('calloutTarget6Mo');
+      const calloutInterestEarned = document.getElementById('calloutInterestEarned');
+      const calloutFundingRatio = document.getElementById('calloutFundingRatio');
+
+      const runwayCanvas = document.getElementById('runwayCanvas');
+      const chartLegend = document.getElementById('chartLegend');
+      const scheduleTbody = document.getElementById('scheduleTbody');
+
+      const csvFileInput = document.getElementById('csvFileInput');
+      const btnLoadCSV = document.getElementById('btnLoadCSV');
+      const btnExportCSV = document.getElementById('btnExportCSV');
+
+      // --- Chart Engine (HTML5 Canvas) ---
+      function drawChart(trajLean, trajMod, trajFull) {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = runwayCanvas.getBoundingClientRect();
+        runwayCanvas.width = rect.width * dpr;
+        runwayCanvas.height = rect.height * dpr;
+
+        const ctx = runwayCanvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const w = rect.width;
+        const h = rect.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const padding = { top: 25, right: 25, bottom: 35, left: 75 };
+        const graphW = w - padding.left - padding.right;
+        const graphH = h - padding.top - padding.bottom;
+
+        const maxPoints = Math.max(trajLean.length, trajMod.length, trajFull.length, 6);
+        let maxVal = Math.max(trajLean[0] || 1000, 5000);
+        maxVal = Math.ceil(maxVal * 1.05);
+
+        // Horizontal grid lines
+        const gridLines = 4;
+        ctx.strokeStyle = '#222e44';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px -apple-system, sans-serif';
+        ctx.textAlign = 'right';
+
+        for (let i = 0; i <= gridLines; i++) {
+          const yVal = (maxVal / gridLines) * i;
+          const y = padding.top + graphH - (yVal / maxVal) * graphH;
+          ctx.beginPath();
+          ctx.moveTo(padding.left, y);
+          ctx.lineTo(w - padding.right, y);
+          ctx.stroke();
+          ctx.fillText(formatMoney(yVal), padding.left - 8, y + 3);
+        }
+
+        // X-axis (Months)
+        ctx.textAlign = 'center';
+        const step = Math.max(1, Math.floor(maxPoints / 6));
+
+        for (let m = 0; m < maxPoints; m += step) {
+          const x = padding.left + (m / (maxPoints - 1)) * graphW;
+          ctx.fillText(`Mo ${m}`, x, h - 12);
+        }
+
+        // Draw trajectory helper
+        function drawCurve(traj, color, lineWidth, isDashed = false) {
+          ctx.beginPath();
+          traj.forEach((val, i) => {
+            const x = padding.left + (i / (maxPoints - 1)) * graphW;
+            const y = padding.top + graphH - (val / maxVal) * graphH;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.strokeStyle = color;
+          ctx.lineWidth = lineWidth;
+          if (isDashed) ctx.setLineDash([4, 4]);
+          else ctx.setLineDash([]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        drawCurve(trajFull, '#f59e0b', 2, true);
+        drawCurve(trajMod, '#38bdf8', 2.2);
+        drawCurve(trajLean, '#34d399', 2.8);
+
+        chartLegend.innerHTML = `
+          <div class="legend-item">
+            <span class="legend-color" style="background:#34d399;"></span>
+            <span>Tier 1: Lean Survival</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background:#38bdf8;"></span>
+            <span>Tier 2: Moderate Comfort</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background:#f59e0b; border:1px dashed #fff;"></span>
+            <span>Tier 3: Full Spend</span>
+          </div>
+        `;
+      }
+
+      // --- Schedule Table Renderer ---
+      function renderScheduleTable(rows) {
+        scheduleTbody.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+
+        rows.forEach(r => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-weight:700;">Month ${r.month}</td>
+            <td>${formatMoney(r.startTotal)}</td>
+            <td style="color:#fbbf24;">+${formatMoney(r.interest)}</td>
+            <td style="color:#34d399;">+${formatMoney(r.bridgeInflow)}</td>
+            <td style="color:#f87171;">-${formatMoney(r.expenses)}</td>
+            <td style="font-weight:600; color:#cbd5e1;">-${formatMoney(r.netOutflow)}</td>
+            <td style="font-weight:700; color:#38bdf8;">${formatMoney(r.endTotal)}</td>
+          `;
+          fragment.appendChild(tr);
+        });
+
+        scheduleTbody.appendChild(fragment);
+      }
+
+      // --- Date Projection Helper ---
+      function getDepletionDate(months) {
+        const d = new Date();
+        d.setMonth(d.getMonth() + Math.round(months));
+        return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      }
+
+      // --- Recalculate Orchestrator ---
+      function recalculateAll() {
+        // Enforce logical burn hierarchy
+        if (state.modBurn < state.leanBurn) state.modBurn = state.leanBurn;
+        if (state.fullBurn < state.modBurn) state.fullBurn = state.modBurn;
+
+        // Sync inputs
+        cashCheckingInput.value = Math.round(state.cashChecking).toLocaleString();
+        cashCheckingSlider.value = state.cashChecking;
+        hysaInput.value = Math.round(state.hysaBalance).toLocaleString();
+        hysaSlider.value = state.hysaBalance;
+        hysaApyInput.value = state.hysaApy.toFixed(1);
+        severanceInput.value = Math.round(state.severance).toLocaleString();
+
+        leanBurnInput.value = Math.round(state.leanBurn).toLocaleString();
+        leanBurnSlider.value = state.leanBurn;
+        modBurnInput.value = Math.round(state.modBurn).toLocaleString();
+        modBurnSlider.value = state.modBurn;
+        fullBurnInput.value = Math.round(state.fullBurn).toLocaleString();
+        fullBurnSlider.value = state.fullBurn;
+        bridgeIncomeInput.value = Math.round(state.bridgeIncome).toLocaleString();
+        bridgeIncomeSlider.value = state.bridgeIncome;
+
+        // Run simulations
+        const simLean = simulateDepletion(state.leanBurn);
+        const simMod = simulateDepletion(state.modBurn);
+        const simFull = simulateDepletion(state.fullBurn);
+
+        // Update KPIs
+        const totalLiquidity = state.cashChecking + state.hysaBalance + state.severance;
+        kpiTotalLiquidity.textContent = formatMoney(totalLiquidity);
+
+        kpiLeanRunway.textContent = `${simLean.months.toFixed(1)} Mo`;
+        kpiLeanDate.textContent = `Until ${getDepletionDate(simLean.months)}`;
+
+        kpiModerateRunway.textContent = `${simMod.months.toFixed(1)} Mo`;
+        kpiModDate.textContent = `Until ${getDepletionDate(simMod.months)}`;
+
+        kpiBridgeIncome.textContent = `${formatMoney(state.bridgeIncome)}/mo`;
+        kpiSeveranceSub.textContent = `Includes ${formatMoney(state.severance)} severance`;
+
+        // Update Tiers
+        tierLeanBurnLabel.textContent = `${formatMoney(state.leanBurn)}/mo`;
+        tierLeanMonths.textContent = `${simLean.months.toFixed(1)} Months`;
+
+        tierModBurnLabel.textContent = `${formatMoney(state.modBurn)}/mo`;
+        tierModMonths.textContent = `${simMod.months.toFixed(1)} Months`;
+
+        tierFullBurnLabel.textContent = `${formatMoney(state.fullBurn)}/mo`;
+        tierFullMonths.textContent = `${simFull.months.toFixed(1)} Months`;
+
+        // Update Callouts
+        const netLean = Math.max(0, state.leanBurn - state.bridgeIncome);
+        calloutNetLeanBurn.textContent = `${formatMoney(netLean)}/mo`;
+
+        const target6Mo = (state.modBurn - state.bridgeIncome) * 6;
+        calloutTarget6Mo.textContent = formatMoney(target6Mo);
+
+        calloutInterestEarned.textContent = formatMoney(simLean.cumulativeInterest);
+
+        const fundingPct = target6Mo > 0 ? ((totalLiquidity / target6Mo) * 100).toFixed(0) : 0;
+        calloutFundingRatio.textContent = `${fundingPct}%`;
+
+        // Visuals
+        drawChart(simLean.trajectory, simMod.trajectory, simFull.trajectory);
+        renderScheduleTable(simLean.monthlyRows);
+      }
+
+      // --- Export to CSV ---
+      function exportToCSV() {
+        const simLean = simulateDepletion(state.leanBurn);
+        const simMod = simulateDepletion(state.modBurn);
+        const simFull = simulateDepletion(state.fullBurn);
+        const totalLiquidity = state.cashChecking + state.hysaBalance + state.severance;
+
+        const rows = [];
+        rows.push(['EMERGENCY FUND RUNWAY SIMULATION']);
+        rows.push(['Export Date', new Date().toLocaleDateString()]);
+        rows.push([]);
+
+        rows.push(['LIQUID RESERVES CONFIGURATION']);
+        rows.push(['Checking Balance ($)', state.cashChecking.toFixed(2)]);
+        rows.push(['HYSA Balance ($)', state.hysaBalance.toFixed(2)]);
+        rows.push(['HYSA APY (%)', `${state.hysaApy.toFixed(2)}%`]);
+        rows.push(['One-Time Severance ($)', state.severance.toFixed(2)]);
+        rows.push(['Total Liquid Reserves ($)', totalLiquidity.toFixed(2)]);
+        rows.push(['Monthly Bridge Income ($)', state.bridgeIncome.toFixed(2)]);
+        rows.push([]);
+
+        rows.push(['MONTHLY EXPENSE TIERS']);
+        rows.push(['Tier 1 (Lean Survival Burn) ($)', state.leanBurn.toFixed(2), `${simLean.months.toFixed(1)} Months Runway`]);
+        rows.push(['Tier 2 (Moderate Comfort Burn) ($)', state.modBurn.toFixed(2), `${simMod.months.toFixed(1)} Months Runway`]);
+        rows.push(['Tier 3 (Full Current Spend) ($)', state.fullBurn.toFixed(2), `${simFull.months.toFixed(1)} Months Runway`]);
+        rows.push([]);
+
+        rows.push(['MONTH-BY-MONTH DEPLETION SCHEDULE (LEAN SURVIVAL)']);
+        rows.push(['Month', 'Starting Balance ($)', 'Interest Accrued ($)', 'Bridge Inflow ($)', 'Expenses ($)', 'Net Outflow ($)', 'Ending Balance ($)']);
+        simLean.monthlyRows.forEach(r => {
+          rows.push([
+            r.month,
+            r.startTotal.toFixed(2),
+            r.interest.toFixed(2),
+            r.bridgeInflow.toFixed(2),
+            r.expenses.toFixed(2),
+            r.netOutflow.toFixed(2),
+            r.endTotal.toFixed(2)
+          ]);
+        });
+
+        const csvContent = '\uFEFF' + rows.map(r => r.join(',')).join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Emergency_Runway_${simLean.months.toFixed(1)}Mo_Lean.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
+      // --- CSV Parser Helper ---
+      function parseCSVLine(line) {
+        const result = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const c = line[i];
+          if (c === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              cur += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (c === ',' && !inQuotes) {
+            result.push(cur.trim());
+            cur = '';
+          } else {
+            cur += c;
+          }
+        }
+        result.push(cur.trim());
+        return result;
+      }
+
+      // --- Load / Import CSV ---
+      function handleCSVFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const text = e.target.result;
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+
+            let detected = 0;
+
+            lines.forEach(line => {
+              const cols = parseCSVLine(line);
+              if (cols.length < 2) return;
+
+              const label = cols[0].toLowerCase();
+              const rawVal = cols[1];
+
+              if (label.includes('checking balance')) {
+                state.cashChecking = Math.max(0, parseCleanNumber(rawVal));
+                detected++;
+              } else if (label.includes('hysa balance')) {
+                state.hysaBalance = Math.max(0, parseCleanNumber(rawVal));
+                detected++;
+              } else if (label.includes('hysa apy')) {
+                state.hysaApy = clamp(parseCleanNumber(rawVal), 0, 15.0);
+                detected++;
+              } else if (label.includes('severance')) {
+                state.severance = Math.max(0, parseCleanNumber(rawVal));
+                detected++;
+              } else if (label.includes('monthly bridge income')) {
+                state.bridgeIncome = Math.max(0, parseCleanNumber(rawVal));
+                detected++;
+              } else if (label.includes('tier 1')) {
+                state.leanBurn = Math.max(100, parseCleanNumber(rawVal));
+                detected++;
+              } else if (label.includes('tier 2')) {
+                state.modBurn = Math.max(100, parseCleanNumber(rawVal));
+                detected++;
+              } else if (label.includes('tier 3')) {
+                state.fullBurn = Math.max(100, parseCleanNumber(rawVal));
+                detected++;
+              }
+            });
+
+            if (detected >= 4) {
+              recalculateAll();
+            } else {
+              alert('Could not detect valid emergency runway parameters in the CSV file.');
+            }
+          } catch (err) {
+            console.error(err);
+            alert('Error parsing CSV file. Please make sure it is a valid emergency fund export.');
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // --- Event Listeners ---
+      cashCheckingSlider.addEventListener('input', (e) => {
+        state.cashChecking = parseFloat(e.target.value);
+        recalculateAll();
+      });
+      cashCheckingInput.addEventListener('change', (e) => {
+        state.cashChecking = Math.max(0, parseCleanNumber(e.target.value));
+        recalculateAll();
+      });
+
+      hysaSlider.addEventListener('input', (e) => {
+        state.hysaBalance = parseFloat(e.target.value);
+        recalculateAll();
+      });
+      hysaInput.addEventListener('change', (e) => {
+        state.hysaBalance = Math.max(0, parseCleanNumber(e.target.value));
+        recalculateAll();
+      });
+
+      hysaApyInput.addEventListener('change', (e) => {
+        state.hysaApy = clamp(parseCleanNumber(e.target.value), 0, 15.0);
+        recalculateAll();
+      });
+
+      severanceInput.addEventListener('change', (e) => {
+        state.severance = Math.max(0, parseCleanNumber(e.target.value));
+        recalculateAll();
+      });
+
+      leanBurnSlider.addEventListener('input', (e) => {
+        state.leanBurn = parseFloat(e.target.value);
+        recalculateAll();
+      });
+      leanBurnInput.addEventListener('change', (e) => {
+        state.leanBurn = Math.max(100, parseCleanNumber(e.target.value));
+        recalculateAll();
+      });
+
+      modBurnSlider.addEventListener('input', (e) => {
+        state.modBurn = parseFloat(e.target.value);
+        recalculateAll();
+      });
+      modBurnInput.addEventListener('change', (e) => {
+        state.modBurn = Math.max(100, parseCleanNumber(e.target.value));
+        recalculateAll();
+      });
+
+      fullBurnSlider.addEventListener('input', (e) => {
+        state.fullBurn = parseFloat(e.target.value);
+        recalculateAll();
+      });
+      fullBurnInput.addEventListener('change', (e) => {
+        state.fullBurn = Math.max(100, parseCleanNumber(e.target.value));
+        recalculateAll();
+      });
+
+      bridgeIncomeSlider.addEventListener('input', (e) => {
+        state.bridgeIncome = parseFloat(e.target.value);
+        recalculateAll();
+      });
+      bridgeIncomeInput.addEventListener('change', (e) => {
+        state.bridgeIncome = Math.max(0, parseCleanNumber(e.target.value));
+        recalculateAll();
+      });
+
+      btnExportCSV.addEventListener('click', exportToCSV);
+
+      btnLoadCSV.addEventListener('click', () => {
+        csvFileInput.value = '';
+        csvFileInput.click();
+      });
+
+      csvFileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleCSVFile(e.target.files[0]);
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        const simLean = simulateDepletion(state.leanBurn);
+        const simMod = simulateDepletion(state.modBurn);
+        const simFull = simulateDepletion(state.fullBurn);
+        drawChart(simLean.trajectory, simMod.trajectory, simFull.trajectory);
+      });
+
+      // Initial Bootstrap
+      recalculateAll();
+
+    })();
+  </script>
+</body>
+</html>
