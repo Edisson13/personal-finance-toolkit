@@ -1717,7 +1717,21 @@
 
       function parseNumber(val) {
         if (typeof val === 'number') return val;
-        const cleaned = String(val || '').replace(/[^0-9.-]/g, '');
+        if (!val) return 0;
+        let str = String(val).trim().replace(/[$€£\s"']/g, '');
+        // Handle European vs US decimals
+        if (str.includes(',') && !str.includes('.')) {
+          str = str.replace(',', '.');
+        } else if (str.includes('.') && str.includes(',')) {
+          if (str.lastIndexOf(',') > str.lastIndexOf('.')) {
+            str = str.replace(/\./g, '').replace(',', '.');
+          } else {
+            str = str.replace(/,/g, '');
+          }
+        } else if (str.includes(',')) {
+          str = str.replace(/,/g, '');
+        }
+        const cleaned = str.replace(/[^0-9.-]/g, '');
         const num = parseFloat(cleaned);
         return isNaN(num) ? 0 : num;
       }
@@ -1726,7 +1740,18 @@
         return Math.min(Math.max(val, min), max);
       }
 
-      function parseCSVLine(line) {
+      function detectDelimiter(input) {
+        const text = Array.isArray(input) ? input.slice(0, 25).join('\n') : String(input || '');
+        const sample = text.slice(0, 5000);
+        const tabCount = (sample.match(/\t/g) || []).length;
+        const semiCount = (sample.match(/;/g) || []).length;
+        const commaCount = (sample.match(/,/g) || []).length;
+        if (tabCount > semiCount && tabCount > commaCount) return '\t';
+        if (semiCount > commaCount && semiCount > tabCount) return ';';
+        return ',';
+      }
+
+      function parseCSVLine(line, delimiter = ',') {
         const result = [];
         let cur = '';
         let inQuotes = false;
@@ -1739,7 +1764,7 @@
             } else {
               inQuotes = !inQuotes;
             }
-          } else if (c === ',' && !inQuotes) {
+          } else if (c === delimiter && !inQuotes) {
             result.push(cur.trim());
             cur = '';
           } else {
@@ -1801,23 +1826,54 @@
         return `${NW_MONTHS[clamp(m, 0, 11)]} ${y}`;
       }
 
-      // Reads "Start Month Index" (1-12) & "Start Year" rows from any suite CSV
-      function parseCsvStartDate(lines) {
+      // Reads "Start Month Index" (1-12) & "Start Year" rows from any suite CSV, with Export Date fallback
+      function parseCsvStartDate(lines, delimiter = ',') {
         let m = null;
         let y = null;
-        for (let i = 0; i < Math.min(lines.length, 40); i++) {
-          const cols = parseCSVLine(lines[i]);
+        let fallbackM = null;
+        let fallbackY = null;
+
+        for (let i = 0; i < Math.min(lines.length, 45); i++) {
+          const cols = parseCSVLine(lines[i], delimiter);
           if (cols.length < 2) continue;
           const k = cols[0].toLowerCase().trim();
-          if (k === 'start month index') {
+
+          if (k === 'start month index' || k === 'plan start month index') {
             const v = parseInt(cols[1], 10);
             if (!isNaN(v) && v >= 1 && v <= 12) m = v - 1;
-          } else if (k === 'start year') {
+          } else if (k === 'start year' || k === 'plan start year') {
             const v = parseInt(cols[1], 10);
             if (!isNaN(v) && v >= 1970 && v <= 2100) y = v;
+          } else if (k === 'export date' && fallbackM === null) {
+            const rawDate = cols[1].trim();
+            // Try D/M/Y or M/D/Y or YYYY-MM-DD
+            const dmyMatch = rawDate.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+            if (dmyMatch) {
+              const p1 = parseInt(dmyMatch[1], 10);
+              const p2 = parseInt(dmyMatch[2], 10);
+              const pYr = parseInt(dmyMatch[3], 10);
+              if (p1 > 12) {
+                fallbackM = clamp(p2 - 1, 0, 11);
+                fallbackY = pYr;
+              } else if (p2 > 12) {
+                fallbackM = clamp(p1 - 1, 0, 11);
+                fallbackY = pYr;
+              } else {
+                fallbackM = clamp(p2 - 1, 0, 11);
+                fallbackY = pYr;
+              }
+            } else {
+              const d = new Date(rawDate);
+              if (!isNaN(d.getTime())) {
+                fallbackM = d.getMonth();
+                fallbackY = d.getFullYear();
+              }
+            }
           }
         }
-        return (m !== null && y !== null) ? { month: m, year: y } : null;
+        if (m !== null && y !== null) return { month: m, year: y };
+        if (fallbackM !== null && fallbackY !== null) return { month: fallbackM, year: fallbackY };
+        return null;
       }
 
       // Months from a CSV start date to the hub snapshot date (negative = CSV is in the future)
@@ -2295,8 +2351,9 @@
         const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
         if (lines.length === 0) return false;
 
-        const headerJoined = lines.slice(0, 12).join(' ').toLowerCase();
-        const csvStart = parseCsvStartDate(lines);
+        const delimiter = detectDelimiter(lines);
+        const headerJoined = lines.slice(0, 15).join(' ').toLowerCase();
+        const csvStart = parseCsvStartDate(lines, delimiter);
 
         // 1. Detect Net Worth Master CSV
         if (headerJoined.includes('holistic net worth command center')) {
@@ -2308,7 +2365,7 @@
           }
 
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
             const v = cols[1];
@@ -2316,8 +2373,11 @@
             if (k.includes('projection horizon')) nwState.horizonYears = clamp(parseInt(v, 10) || 10, 1, 30);
             else if (k.includes('liquid & invested assets')) nwState.investedAssets = Math.max(0, parseNumber(v));
             else if (k.includes('real estate / property value')) nwState.propertyValue = Math.max(0, parseNumber(v));
+            else if (k.includes('property annual appreciation')) nwState.propertyAppreciation = clamp(parseNumber(v), 0, 20);
             else if (k.includes('consumer & loan debt')) nwState.consumerDebt = Math.max(0, parseNumber(v));
             else if (k.includes('mortgage debt balance')) nwState.mortgageDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('mortgage interest rate')) nwState.mortgageRate = clamp(parseNumber(v), 0, 25);
+            else if (k.includes('mortgage monthly p&i')) nwState.mortgageMonthlyPI = Math.max(0, parseNumber(v));
             else if (k.includes('monthly investment contribution')) nwState.monthlyInvestContrib = Math.max(0, parseNumber(v));
             else if (k.includes('portfolio annual return')) nwState.portfolioReturnApy = clamp(parseNumber(v), 0, 30);
             else if (k.includes('monthly debt paydown')) nwState.monthlyDebtPayment = Math.max(0, parseNumber(v));
@@ -2341,7 +2401,7 @@
           let loadedHorizon = nwState.horizonYears;
 
           for (let i = 0; i < lines.length; i++) {
-            const cols = parseCSVLine(lines[i]);
+            const cols = parseCSVLine(lines[i], delimiter);
             if (cols[0] && cols[0].toLowerCase().includes('investment horizon')) {
               const h = parseInt(cols[1], 10);
               if (!isNaN(h) && h >= 1) loadedHorizon = clamp(h, 1, 30);
@@ -2401,7 +2461,7 @@
           let strat = 'avalanche';
 
           for (let i = 0; i < lines.length; i++) {
-            const cols = parseCSVLine(lines[i]);
+            const cols = parseCSVLine(lines[i], delimiter);
             if (cols[0] && cols[0].toLowerCase().includes('selected strategy')) {
               if ((cols[1] || '').toLowerCase().includes('snowball')) strat = 'snowball';
             } else if (cols[0] && cols[0].toLowerCase().includes('extra monthly payment')) {
@@ -2456,7 +2516,7 @@
         // 4. Detect Cost of Living CSV
         if (headerJoined.includes('cost of living') || headerJoined.includes('expense categories configuration')) {
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
             if (k.includes('current total monthly cost')) {
@@ -2484,7 +2544,7 @@
         // 5. Detect Mortgage Calculator CSV
         if (headerJoined.includes('mortgage calculation') || headerJoined.includes('loan parameters')) {
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
             if (k === 'home price ($)') nwState.propertyValue = Math.max(0, parseNumber(cols[1]));
@@ -2505,7 +2565,7 @@
           let liquidTotal = 0;
           let modBurn = 0;
           lines.forEach(line => {
-            const cols = parseCSVLine(line);
+            const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
             if (k.includes('total liquid reserves')) liquidTotal = Math.max(0, parseNumber(cols[1]));
@@ -2551,8 +2611,11 @@
         rows.push(['NET WORTH CORE PARAMETERS']);
         rows.push(['Liquid & Invested Assets ($)', nwState.investedAssets.toFixed(2)]);
         rows.push(['Real Estate / Property Value ($)', nwState.propertyValue.toFixed(2)]);
+        rows.push(['Property Annual Appreciation (%)', `${nwState.propertyAppreciation.toFixed(2)}%`]);
         rows.push(['Consumer & Loan Debt ($)', nwState.consumerDebt.toFixed(2)]);
         rows.push(['Mortgage Debt Balance ($)', nwState.mortgageDebt.toFixed(2)]);
+        rows.push(['Mortgage Interest Rate (%)', `${nwState.mortgageRate.toFixed(2)}%`]);
+        rows.push(['Mortgage Monthly P&I Payment ($)', nwState.mortgageMonthlyPI.toFixed(2)]);
         rows.push(['Monthly Investment Contribution ($)', nwState.monthlyInvestContrib.toFixed(2)]);
         rows.push(['Portfolio Annual Return APY (%)', `${nwState.portfolioReturnApy.toFixed(2)}%`]);
         rows.push(['Monthly Debt Paydown Commitment ($)', nwState.monthlyDebtPayment.toFixed(2)]);
@@ -2565,9 +2628,11 @@
         rows.push(['YEAR-BY-YEAR NET WORTH PROJECTION SCHEDULE']);
         rows.push(['Year', 'Calendar Date', 'Invested Assets ($)', 'Property Value ($)', 'Total Assets ($)', 'Consumer Debt ($)', 'Mortgage Debt ($)', 'Total Liabilities ($)', 'Nominal Net Worth ($)', 'Real Net Worth (Today $) ($)', 'Monthly Cost of Living ($)']);
         schedule.forEach(r => {
+          const totalM = nwState.startYear * 12 + nwState.startMonth + r.year * 12;
+          const cleanCal = `${Math.floor(totalM / 12)}-${String((totalM % 12) + 1).padStart(2, '0')} (${NW_MONTHS[totalM % 12]})`;
           rows.push([
             r.year,
-            r.calendarDate,
+            cleanCal,
             r.investedAssets.toFixed(2),
             r.propertyValue.toFixed(2),
             r.totalAssets.toFixed(2),
@@ -2751,6 +2816,13 @@
 
       btnSyncInspectorToNw.addEventListener('click', () => {
         if (!lastInspectedRawCSV) return;
+        const origin = detectToolType(lastInspectedRawCSV.split(/\r?\n/).slice(0, 10));
+        if (origin.includes('Reality Tracker')) {
+          if (confirm('This file is an exported Historical Tracker CSV containing your monthly reality logs. Tracker files should be loaded in the dedicated "Monthly Net Worth Log & Reality Tracker" module. Would you like to open it now?')) {
+            window.open('./networth-tracker.html', '_blank');
+          }
+          return;
+        }
         const synced = ingestCSVTextIntoNetWorth(lastInspectedRawCSV, lastInspectedFileName);
         if (synced) {
           document.querySelector('.nw-hub-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2790,7 +2862,8 @@
               return;
             }
 
-            const parsedRows = lines.map(parseCSVLine);
+            const delimiter = detectDelimiter(lines);
+            const parsedRows = lines.map(line => parseCSVLine(line, delimiter));
             const detectedOrigin = detectToolType(lines.slice(0, 10));
 
             metaFileName.textContent = file.name;

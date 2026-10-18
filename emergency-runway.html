@@ -785,7 +785,21 @@
 
       function parseCleanNumber(val) {
         if (typeof val === 'number') return val;
-        const cleaned = String(val).replace(/[^0-9.-]/g, '');
+        if (!val) return 0;
+        let str = String(val).trim().replace(/[$€£\s"']/g, '');
+        // Handle European vs US decimals
+        if (str.includes(',') && !str.includes('.')) {
+          str = str.replace(',', '.');
+        } else if (str.includes('.') && str.includes(',')) {
+          if (str.lastIndexOf(',') > str.lastIndexOf('.')) {
+            str = str.replace(/\./g, '').replace(',', '.');
+          } else {
+            str = str.replace(/,/g, '');
+          }
+        } else if (str.includes(',')) {
+          str = str.replace(/,/g, '');
+        }
+        const cleaned = str.replace(/[^0-9.-]/g, '');
         const num = parseFloat(cleaned);
         return isNaN(num) ? 0 : num;
       }
@@ -1146,8 +1160,19 @@
         URL.revokeObjectURL(url);
       }
 
+      function detectDelimiter(input) {
+        const text = Array.isArray(input) ? input.slice(0, 25).join('\n') : String(input || '');
+        const sample = text.slice(0, 5000);
+        const tabCount = (sample.match(/\t/g) || []).length;
+        const semiCount = (sample.match(/;/g) || []).length;
+        const commaCount = (sample.match(/,/g) || []).length;
+        if (tabCount > semiCount && tabCount > commaCount) return '\t';
+        if (semiCount > commaCount && semiCount > tabCount) return ';';
+        return ',';
+      }
+
       // --- CSV Parser Helper ---
-      function parseCSVLine(line) {
+      function parseCSVLine(line, delimiter = ',') {
         const result = [];
         let cur = '';
         let inQuotes = false;
@@ -1160,7 +1185,7 @@
             } else {
               inQuotes = !inQuotes;
             }
-          } else if (c === ',' && !inQuotes) {
+          } else if (c === delimiter && !inQuotes) {
             result.push(cur.trim());
             cur = '';
           } else {
@@ -1179,11 +1204,12 @@
           try {
             const text = e.target.result;
             const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            const delimiter = detectDelimiter(lines);
 
             let detected = 0;
 
             lines.forEach(line => {
-              const cols = parseCSVLine(line);
+              const cols = parseCSVLine(line, delimiter);
               if (cols.length < 2) return;
 
               const label = cols[0].toLowerCase();

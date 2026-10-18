@@ -957,6 +957,9 @@
           monthlyCostOfLiving: 4580,
           portfolioReturnApy: 7.2,
           debtAvgApr: 11.3,
+          propertyAppreciation: 3.5,
+          mortgageRate: 6.2,
+          mortgageMonthlyPI: 0,
           inflationRate: 3.2,
           mode: 'blended' // 'networth' | 'investing' | 'debt' | 'mortgage' | 'blended'
         }
@@ -1175,12 +1178,18 @@
         const monthlyApyRate = Math.pow(1 + (p.portfolioReturnApy / 100), 1 / 12) - 1;
         let runningInvest = initInvest;
         let runningProp = initProp;
-        const propMonthlyRate = Math.pow(1 + 0.035, 1 / 12) - 1;
+        const propMonthlyRate = Math.pow(1 + ((p.propertyAppreciation || 3.5) / 100), 1 / 12) - 1;
 
         let runningConsumerDebt = initDebt;
         const debtRate = (p.debtAvgApr / 100) / 12;
         let runningMort = initMort;
-        const mortRate = 0.062 / 12;
+        const mortRate = ((p.mortgageRate || 6.2) / 100) / 12;
+        const totalMortMonths = 360;
+        const dynamicPI = p.mortgageMonthlyPI > 0
+          ? p.mortgageMonthlyPI
+          : (initMort > 0 && mortRate > 0
+              ? (initMort * (mortRate * Math.pow(1 + mortRate, totalMortMonths))) / (Math.pow(1 + mortRate, totalMortMonths) - 1)
+              : (initMort / totalMortMonths));
 
         for (let m = 1; m <= mElapsed; m++) {
           // Invested
@@ -1194,8 +1203,7 @@
           }
           if (runningMort > 0) {
             const interest = runningMort * mortRate;
-            const pi = 1620;
-            const prin = Math.max(0, pi - interest);
+            const prin = Math.min(runningMort, Math.max(0, dynamicPI - interest));
             runningMort = Math.max(0, runningMort - prin);
           }
         }
@@ -1752,6 +1760,8 @@
         rows.push(['Plan Baseline Assets ($)', (trackerState.plannedScenario.investedAssets + trackerState.plannedScenario.propertyValue).toFixed(2)]);
         rows.push(['Plan Baseline Debt ($)', (trackerState.plannedScenario.consumerDebt + trackerState.plannedScenario.mortgageDebt).toFixed(2)]);
         rows.push(['Plan Annual Return APY (%)', `${trackerState.plannedScenario.portfolioReturnApy.toFixed(2)}%`]);
+        rows.push(['Plan Mortgage Rate (%)', `${(trackerState.plannedScenario.mortgageRate || 6.2).toFixed(2)}%`]);
+        rows.push(['Plan Property Appreciation (%)', `${(trackerState.plannedScenario.propertyAppreciation || 3.5).toFixed(2)}%`]);
         rows.push([]);
 
         rows.push(['CHRONOLOGICAL MONTHLY NET WORTH ENTRIES (ONE PER MONTH)']);
@@ -1914,6 +1924,9 @@
             else if (k.includes('real estate / property value')) trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(v));
             else if (k.includes('consumer & loan debt')) trackerState.plannedScenario.consumerDebt = Math.max(0, parseNumber(v));
             else if (k.includes('mortgage debt balance')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('mortgage interest rate')) trackerState.plannedScenario.mortgageRate = clamp(parseNumber(v), 0, 25);
+            else if (k.includes('mortgage monthly p&i')) trackerState.plannedScenario.mortgageMonthlyPI = Math.max(0, parseNumber(v));
+            else if (k.includes('property annual appreciation')) trackerState.plannedScenario.propertyAppreciation = clamp(parseNumber(v), 0, 20);
             else if (k.includes('monthly investment contribution')) trackerState.plannedScenario.monthlyInvestContrib = Math.max(0, parseNumber(v));
             else if (k.includes('portfolio annual return')) trackerState.plannedScenario.portfolioReturnApy = clamp(parseNumber(v), 0, 30);
             else if (k.includes('monthly debt paydown')) trackerState.plannedScenario.monthlyDebtPayment = Math.max(0, parseNumber(v));
@@ -2012,6 +2025,8 @@
             const k = cols[0].toLowerCase();
             if (k === 'home price ($)') trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(cols[1]));
             else if (k.includes('total loan amount')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(cols[1]));
+            else if (k.includes('interest rate')) trackerState.plannedScenario.mortgageRate = clamp(parseNumber(cols[1]), 0, 25);
+            else if (k.includes('principal & interest')) trackerState.plannedScenario.mortgageMonthlyPI = Math.max(0, parseNumber(cols[1]));
           });
           trackerState.plannedScenario.hasPlan = true;
           trackerState.plannedScenario.sourceName = `Mortgage Plan (${fileName})`;
@@ -2084,6 +2099,14 @@
 
       window.addEventListener('resize', () => {
         drawChart();
+      });
+
+      // Prevent accidental data loss on refresh/close if records are present
+      window.addEventListener('beforeunload', (e) => {
+        if (trackerState.entries.length > 0) {
+          e.preventDefault();
+          e.returnValue = '';
+        }
       });
 
       // --- Initialization ---
