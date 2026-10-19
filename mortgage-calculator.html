@@ -35,6 +35,33 @@
       --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead { background-color: #e2e8f0 !important; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value, html[data-theme="light"] .hero-payment-amount, html[data-theme="light"] .monthly-amount { color: var(--text-main); }
+    html[data-theme="light"] .hero-banner, html[data-theme="light"] .monthly-payment-hero { background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #cbd5e1; }
+    html[data-theme="light"] .summary-card { background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); }
+    html[data-theme="light"] .btn-secondary, html[data-theme="light"] .toggle-btn { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .toggle-group { background: #e2e8f0; border-color: #cbd5e1; }
+    html[data-theme="light"] .btn-success, html[data-theme="light"] .btn-export { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover, html[data-theme="light"] .btn-export:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] td[style*="color:#ffffff"], html[data-theme="light"] td[style*="color: #ffffff"], html[data-theme="light"] td[style*="color:#e2e8f0"] { color: #0f172a !important; }
+    html[data-theme="light"] .term-btn.unselected { background-color: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+    html[data-theme="light"] .stacked-bar, html[data-theme="light"] .progress-track { background-color: #e2e8f0; }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -436,7 +463,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.75rem;
-      padding-top: 1.2rem;
+      padding-top: 1.1rem;
       border-top: 1px solid var(--border-color);
     }
 
@@ -458,6 +485,141 @@
 
     .metric-box-val {
       font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Amortization Trajectory Graph & Cost of Living Style Breakdown */
+    .chart-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-top: 1.15rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .chart-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 245px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+    }
+
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    .benchmark-box {
+      background: var(--bg-input);
+      border: 1px solid rgba(51, 65, 85, 0.7);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1rem;
+      margin-top: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .benchmark-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .benchmark-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .benchmark-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.79rem;
+      font-weight: 600;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+
+    .insight-box {
+      background: var(--bg-input);
+      border: 1px solid rgba(51, 65, 85, 0.65);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .insight-label {
+      font-size: 0.69rem;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      font-weight: 600;
+    }
+
+    .insight-val {
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-main);
     }
@@ -603,6 +765,67 @@
         justify-content: flex-start;
       }
     }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -618,20 +841,31 @@
           </svg>
         </div>
         <div>
-          <h1>Mortgage Calculator</h1>
-          <p>Instant breakdown, amortization schedule &amp; export</p>
+          <h1 id="appTitle">Mortgage Calculator</h1>
+          <p id="appSubtitle">Instant breakdown, amortization schedule &amp; export</p>
         </div>
       </div>
 
       <div class="header-actions">
         <!-- Return to Main Hub -->
-        <a href="./index.html" class="btn btn-secondary" title="Return to Main Suite">
+        <a href="./index.html" class="btn btn-secondary" id="btnMainHub" title="Return to Main Suite">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          Main Hub
+          <span id="lblMainHub">Main Hub</span>
         </a>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="btn btn-secondary" id="btnThemeToggle" title="Toggle Light/Dark Mode">
+          ☀️ Light
+        </button>
+
+        <!-- Language Selector -->
+        <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" aria-label="Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
 
         <!-- Hidden CSV File Input -->
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
@@ -643,7 +877,7 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          Load CSV
+          <span id="lblLoadCSV">Load CSV</span>
         </button>
 
         <!-- Export CSV Button -->
@@ -653,7 +887,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Export CSV
+          <span id="lblExportCSV">Export CSV</span>
         </button>
       </div>
     </header>
@@ -667,13 +901,13 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
           </svg>
-          Loan Parameters
+          <span id="lblLoanParams">Loan Parameters</span>
         </h2>
 
         <!-- Home Price -->
         <div class="input-group">
           <div class="input-header">
-            <label for="homePriceInput" class="input-label">Home Price</label>
+            <label for="homePriceInput" class="input-label" id="lblHomePrice">Home Price</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="homePriceInput" inputmode="numeric" value="400,000">
@@ -691,7 +925,7 @@
         <!-- Down Payment (Synced $ & %) -->
         <div class="input-group">
           <div class="input-header">
-            <label for="downPaymentDollarInput" class="input-label">Down Payment</label>
+            <label for="downPaymentDollarInput" class="input-label" id="lblDownPayment">Down Payment</label>
             <div class="dual-input-row">
               <div class="input-field-wrapper has-prefix">
                 <span class="input-prefix">$</span>
@@ -715,7 +949,7 @@
         <!-- Interest Rate -->
         <div class="input-group">
           <div class="input-header">
-            <label for="interestRateInput" class="input-label">Interest Rate</label>
+            <label for="interestRateInput" class="input-label" id="lblInterestRate">Interest Rate</label>
             <div class="input-field-wrapper has-suffix">
               <input type="number" id="interestRateInput" min="0.1" max="15" step="0.05" value="6.5">
               <span class="input-suffix">%</span>
@@ -733,18 +967,18 @@
         <!-- Loan Term: Editable manual input + synchronized slider + quick-preset buttons -->
         <div class="input-group">
           <div class="input-header">
-            <label for="loanTermInput" class="input-label">Loan Term (Duration)</label>
+            <label for="loanTermInput" class="input-label" id="lblLoanTerm">Loan Term (Duration)</label>
             <div class="input-field-wrapper has-suffix">
               <input type="number" id="loanTermInput" min="1" max="50" step="1" value="30">
-              <span class="input-suffix">Yrs</span>
+              <span class="input-suffix" id="lblYrsSuffix">Yrs</span>
             </div>
           </div>
           <div class="slider-container">
             <input type="range" id="loanTermSlider" min="1" max="40" step="1" value="30">
           </div>
           <div class="range-limits">
-            <span>1 Year</span>
-            <span>40 Years</span>
+            <span id="lblRange1Yr">1 Year</span>
+            <span id="lblRange40Yrs">40 Years</span>
           </div>
           <div class="term-selector">
             <button type="button" class="term-btn active" data-term="10">10 Yrs</button>
@@ -757,7 +991,7 @@
         <!-- Property Tax -->
         <div class="input-group">
           <div class="input-header">
-            <label for="propertyTaxDollarInput" class="input-label">Annual Property Tax</label>
+            <label for="propertyTaxDollarInput" class="input-label" id="lblPropertyTax">Annual Property Tax</label>
             <div class="dual-input-row">
               <div class="input-field-wrapper has-prefix">
                 <span class="input-prefix">$</span>
@@ -774,14 +1008,14 @@
         <!-- Homeowners Insurance & HOA Fees -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="input-group" style="margin-bottom:0; padding-bottom:0; border:none;">
-            <label for="insuranceInput" class="input-label" style="display:block; margin-bottom:0.4rem;">Annual Insurance</label>
+            <label for="insuranceInput" class="input-label" id="lblAnnualInsurance" style="display:block; margin-bottom:0.4rem;">Annual Insurance</label>
             <div class="input-field-wrapper has-prefix" style="width: 100%;">
               <span class="input-prefix">$</span>
               <input type="text" id="insuranceInput" inputmode="numeric" value="1,200" style="width: 100%;">
             </div>
           </div>
           <div class="input-group" style="margin-bottom:0; padding-bottom:0; border:none;">
-            <label for="hoaInput" class="input-label" style="display:block; margin-bottom:0.4rem;">Monthly HOA</label>
+            <label for="hoaInput" class="input-label" id="lblMonthlyHOA" style="display:block; margin-bottom:0.4rem;">Monthly HOA</label>
             <div class="input-field-wrapper has-prefix" style="width: 100%;">
               <span class="input-prefix">$</span>
               <input type="text" id="hoaInput" inputmode="numeric" value="0" style="width: 100%;">
@@ -798,11 +1032,11 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>
             </svg>
-            Payment Breakdown
+            <span id="lblPaymentBreakdown">Payment Breakdown</span>
           </h2>
 
           <div class="monthly-payment-hero">
-            <div class="monthly-label">Total Monthly Payment</div>
+            <div class="monthly-label" id="lblTotalMonthlyPayment">Total Monthly Payment</div>
             <div class="monthly-amount" id="totalMonthlyDisplay">$0</div>
             <div class="monthly-subtext" id="loanSummarySubtitle">Based on 30-year fixed loan</div>
           </div>
@@ -820,28 +1054,28 @@
             <div class="breakdown-item">
               <span class="breakdown-item-name">
                 <span class="breakdown-color-indicator" style="background-color: var(--color-pi);"></span>
-                Principal &amp; Interest
+                <span id="lblBreakdownPI">Principal &amp; Interest</span>
               </span>
               <span class="breakdown-item-val" id="monthlyPIDisplay">$0</span>
             </div>
             <div class="breakdown-item">
               <span class="breakdown-item-name">
                 <span class="breakdown-color-indicator" style="background-color: var(--color-tax);"></span>
-                Property Taxes
+                <span id="lblBreakdownTax">Property Taxes</span>
               </span>
               <span class="breakdown-item-val" id="monthlyTaxDisplay">$0</span>
             </div>
             <div class="breakdown-item">
               <span class="breakdown-item-name">
                 <span class="breakdown-color-indicator" style="background-color: var(--color-ins);"></span>
-                Homeowners Insurance
+                <span id="lblBreakdownIns">Homeowners Insurance</span>
               </span>
               <span class="breakdown-item-val" id="monthlyInsDisplay">$0</span>
             </div>
             <div class="breakdown-item">
               <span class="breakdown-item-name">
                 <span class="breakdown-color-indicator" style="background-color: var(--color-hoa);"></span>
-                HOA Fees
+                <span id="lblBreakdownHOA">HOA Fees</span>
               </span>
               <span class="breakdown-item-val" id="monthlyHOADisplay">$0</span>
             </div>
@@ -851,16 +1085,83 @@
         <!-- Totals Grid -->
         <div class="totals-grid">
           <div class="total-metric-box">
-            <div class="metric-box-label">Loan Amount</div>
+            <div class="metric-box-label" id="lblTotalLoanAmount">Loan Amount</div>
             <div class="metric-box-val" id="totalLoanAmountDisplay">$0</div>
           </div>
           <div class="total-metric-box">
-            <div class="metric-box-label">Total Interest</div>
+            <div class="metric-box-label" id="lblTotalInterest">Total Interest</div>
             <div class="metric-box-val col-interest" id="totalInterestDisplay">$0</div>
           </div>
           <div class="total-metric-box">
-            <div class="metric-box-label">Total Loan Cost</div>
+            <div class="metric-box-label" id="lblTotalLoanCost">Total Loan Cost</div>
             <div class="metric-box-val" id="totalLoanCostDisplay">$0</div>
+          </div>
+        </div>
+
+        <!-- Amortization Trajectory Graph (Remaining Debt, Remaining Interest & Cumulative Split) -->
+        <div class="chart-box">
+          <div class="chart-header-row">
+            <span id="lblChartTitle" style="font-size:0.84rem; font-weight:700; color:var(--text-main);">Loan &amp; Interest Trajectory Over Time</span>
+            <div class="toggle-group" role="tablist">
+              <button type="button" class="toggle-opt-btn active" id="btnChartBalances" style="padding:0.25rem 0.6rem; font-size:0.72rem;">Balances &amp; Debt</button>
+              <button type="button" class="toggle-opt-btn" id="btnChartAnnualSplit" style="padding:0.25rem 0.6rem; font-size:0.72rem;">Annual P&amp;I Split</button>
+            </div>
+          </div>
+          <div class="canvas-container">
+            <canvas id="mortgageCanvas"></canvas>
+          </div>
+          <div class="chart-legend" id="mortgageChartLegend"></div>
+        </div>
+
+        <!-- Lifetime Loan Cost Percentage Breakdown (Cost of Living Style) -->
+        <div class="benchmark-box">
+          <div class="benchmark-box-header">
+            <span id="lblLifetimeAllocHeader">Lifetime Cost Allocation Breakdown</span>
+            <span id="lblPctTotalOutflow">% of Total Outflow</span>
+          </div>
+
+          <div class="benchmark-row">
+            <div class="benchmark-top">
+              <span id="lblBenchPrincipalTitle" style="color:#38bdf8;">Principal Loan Paydown (Equity Built)</span>
+              <span id="benchPrincipalLabel">0% ($0)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="benchPrincipalBar" style="width:0%; background:#38bdf8;"></div>
+            </div>
+          </div>
+
+          <div class="benchmark-row">
+            <div class="benchmark-top">
+              <span id="lblBenchInterestTitle" style="color:#f43f5e;">Cumulative Bank Interest Cost</span>
+              <span id="benchInterestLabel">0% ($0)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="benchInterestBar" style="width:0%; background:#f43f5e;"></div>
+            </div>
+          </div>
+
+          <div class="benchmark-row">
+            <div class="benchmark-top">
+              <span id="lblBenchEscrowTitle" style="color:#f59e0b;">Taxes, Home Insurance &amp; HOA Fees</span>
+              <span id="benchEscrowLabel">0% ($0)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="benchEscrowBar" style="width:0%; background:#f59e0b;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amortization Insights Callouts -->
+        <div class="insights-grid">
+          <div class="insight-box">
+            <span class="insight-label" id="lblInsightCrossoverTitle">Principal &gt; Interest Tipping Point</span>
+            <span class="insight-val" id="insightCrossoverYear" style="color:#34d399;">Year 1</span>
+            <span style="font-size:0.71rem; color:var(--text-muted);" id="insightCrossoverSub">When principal paydown exceeds interest</span>
+          </div>
+          <div class="insight-box">
+            <span class="insight-label" id="lblInsightInterestLoadTitle">Interest Load &amp; 50% Payoff</span>
+            <span class="insight-val" id="insightInterestRatio" style="color:#fbbf24;">0% of Loan</span>
+            <span style="font-size:0.71rem; color:var(--text-muted);" id="insightHalfwaySub">Halfway debt balance reached at Year --</span>
           </div>
         </div>
       </section>
@@ -877,7 +1178,7 @@
             <line x1="8" y1="2" x2="8" y2="6"/>
             <line x1="3" y1="10" x2="21" y2="10"/>
           </svg>
-          Amortization Schedule
+          <span id="lblAmortizationSchedule">Amortization Schedule</span>
         </h2>
 
         <div class="toggle-group" role="tablist">
@@ -891,11 +1192,11 @@
           <thead>
             <tr>
               <th id="periodColHeader">Period</th>
-              <th>Starting Balance</th>
-              <th>Payment</th>
-              <th>Principal</th>
-              <th>Interest</th>
-              <th>Remaining Balance</th>
+              <th id="thStartBal">Starting Balance</th>
+              <th id="thPayment">Payment</th>
+              <th id="thPrincipal">Principal</th>
+              <th id="thInterest">Interest</th>
+              <th id="thRemBal">Remaining Balance</th>
             </tr>
           </thead>
           <tbody id="scheduleTableBody">
@@ -910,6 +1211,173 @@
   <script>
     (function() {
       'use strict';
+
+      const I18N = {
+        en: {
+          pageTitle: 'Mortgage & Amortization Calculator',
+          appTitle: 'Mortgage Calculator',
+          appSubtitle: 'Instant breakdown, amortization schedule & export',
+          mainHub: 'Main Hub',
+          mainHubTitle: 'Return to Main Suite',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          loadCSV: 'Load CSV',
+          loadCSVTitle: 'Load and visualize a previously exported CSV mortgage schedule',
+          exportCSV: 'Export CSV',
+          exportCSVTitle: 'Export complete mortgage schedule and summary to CSV/Excel',
+          loanParams: 'Loan Parameters',
+          homePrice: 'Home Price',
+          downPayment: 'Down Payment',
+          interestRate: 'Interest Rate',
+          loanTerm: 'Loan Term (Duration)',
+          yrsSuffix: 'Yrs',
+          range1Yr: '1 Year',
+          range40Yrs: '40 Years',
+          termBtn: (n) => `${n} Yrs`,
+          propertyTax: 'Annual Property Tax',
+          annualInsurance: 'Annual Insurance',
+          monthlyHOA: 'Monthly HOA',
+          paymentBreakdown: 'Payment Breakdown',
+          totalMonthlyPayment: 'Total Monthly Payment',
+          loanSummarySub: (yrs, rate) => `Based on a ${yrs}-year fixed rate loan at ${rate}%`,
+          stackedBarTitle: 'Payment Components Proportion',
+          breakdownPI: 'Principal & Interest',
+          breakdownTax: 'Property Taxes',
+          breakdownIns: 'Homeowners Insurance',
+          breakdownHOA: 'HOA Fees',
+          totalLoanAmount: 'Loan Amount',
+          totalInterest: 'Total Interest',
+          totalLoanCost: 'Total Loan Cost',
+          chartTitle: 'Loan & Interest Trajectory Over Time',
+          chartBalancesBtn: 'Balances & Debt',
+          chartAnnualSplitBtn: 'Annual P&I Split',
+          lifetimeAllocHeader: 'Lifetime Cost Allocation Breakdown',
+          pctTotalOutflow: '% of Total Outflow',
+          benchPrincipalTitle: 'Principal Loan Paydown (Equity Built)',
+          benchInterestTitle: 'Cumulative Bank Interest Cost',
+          benchEscrowTitle: 'Taxes, Home Insurance & HOA Fees',
+          insightCrossoverTitle: 'Principal > Interest Tipping Point',
+          insightInterestLoadTitle: 'Interest Load & 50% Payoff',
+          crossoverYrMo1: 'Year 1 (Mo 1)',
+          crossoverYrMo: (y, m) => `Year ${y} (Mo ${m})`,
+          crossoverSubMo1: 'Principal exceeds interest from Month 1',
+          crossoverSubYr: (y) => `Principal paydown overtakes interest in Yr ${y}`,
+          interestRatioOfLoan: (pct) => `${pct}% of Loan`,
+          halfwaySubYr: (y) => `50% of debt eliminated at Year ${y}`,
+          amortizationSchedule: 'Amortization Schedule',
+          annualSummaryBtn: 'Annual Summary',
+          monthlyScheduleBtn: 'Monthly Schedule',
+          thYear: 'Year',
+          thMonth: 'Month',
+          thStartBal: 'Starting Balance',
+          thPayment: 'Payment',
+          thPrincipal: 'Principal',
+          thInterest: 'Interest',
+          thRemBal: 'Remaining Balance',
+          yrAxis: (y) => `Yr ${y}`,
+          yearRow: (y) => `Year ${y}`,
+          monthRow: (m) => `Month ${m}`,
+          legRemPrincipal: 'Remaining Principal Debt',
+          legRemInterest: 'Remaining Interest Owed',
+          legPrincPaid: 'Principal Paid (Equity)',
+          legCumInterest: 'Cumulative Interest Paid',
+          legAnnPrincipal: 'Annual Principal Paid ($/yr)',
+          legAnnInterest: 'Annual Interest Paid ($/yr)',
+          csvAlertNoParams: 'Could not detect valid mortgage parameters in the selected CSV file.',
+          csvAlertParseErr: 'Error parsing CSV file. Please make sure it is a valid mortgage calculator export.'
+        },
+        es: {
+          pageTitle: 'Calculadora de Hipoteca y Amortización',
+          appTitle: 'Calculadora de Hipoteca',
+          appSubtitle: 'Desglose instantáneo, cronograma de amortización y exportación',
+          mainHub: 'Panel Principal',
+          mainHubTitle: 'Volver al Panel Principal',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          loadCSV: 'Cargar CSV',
+          loadCSVTitle: 'Cargar y visualizar un cronograma hipotecario CSV exportado previamente',
+          exportCSV: 'Exportar CSV',
+          exportCSVTitle: 'Exportar cronograma hipotecario completo y resumen a CSV/Excel',
+          loanParams: 'Parámetros del Préstamo',
+          homePrice: 'Precio de la Vivienda',
+          downPayment: 'Pago Inicial (Enganche)',
+          interestRate: 'Tasa de Interés',
+          loanTerm: 'Plazo del Préstamo (Duración)',
+          yrsSuffix: 'Años',
+          range1Yr: '1 Año',
+          range40Yrs: '40 Años',
+          termBtn: (n) => `${n} Años`,
+          propertyTax: 'Impuesto Predial Anual',
+          annualInsurance: 'Seguro Anual',
+          monthlyHOA: 'HOA Mensual',
+          paymentBreakdown: 'Desglose del Pago',
+          totalMonthlyPayment: 'Pago Mensual Total',
+          loanSummarySub: (yrs, rate) => `Basado en un préstamo a tasa fija de ${yrs} años al ${rate}%`,
+          stackedBarTitle: 'Proporción de Componentes del Pago',
+          breakdownPI: 'Capital e Intereses',
+          breakdownTax: 'Impuestos a la Propiedad',
+          breakdownIns: 'Seguro de Vivienda',
+          breakdownHOA: 'Cuotas de HOA',
+          totalLoanAmount: 'Monto del Préstamo',
+          totalInterest: 'Interés Total',
+          totalLoanCost: 'Costo Total del Préstamo',
+          chartTitle: 'Trayectoria del Préstamo e Intereses en el Tiempo',
+          chartBalancesBtn: 'Saldos y Deuda',
+          chartAnnualSplitBtn: 'División Anual C&I',
+          lifetimeAllocHeader: 'Desglose de Costos Durante la Vida del Préstamo',
+          pctTotalOutflow: '% del Desembolso Total',
+          benchPrincipalTitle: 'Pago de Capital del Préstamo (Patrimonio)',
+          benchInterestTitle: 'Costo Acumulado de Intereses Bancarios',
+          benchEscrowTitle: 'Impuestos, Seguro de Vivienda y HOA',
+          insightCrossoverTitle: 'Punto de Inflexión Capital > Interés',
+          insightInterestLoadTitle: 'Carga de Interés y 50% Pagado',
+          crossoverYrMo1: 'Año 1 (Mes 1)',
+          crossoverYrMo: (y, m) => `Año ${y} (Mes ${m})`,
+          crossoverSubMo1: 'El capital supera al interés desde el Mes 1',
+          crossoverSubYr: (y) => `El pago de capital supera al interés en el Año ${y}`,
+          interestRatioOfLoan: (pct) => `${pct}% del Préstamo`,
+          halfwaySubYr: (y) => `50% de la deuda eliminada en el Año ${y}`,
+          amortizationSchedule: 'Cronograma de Amortización',
+          annualSummaryBtn: 'Resumen Anual',
+          monthlyScheduleBtn: 'Cronograma Mensual',
+          thYear: 'Año',
+          thMonth: 'Mes',
+          thStartBal: 'Saldo Inicial',
+          thPayment: 'Pago',
+          thPrincipal: 'Capital',
+          thInterest: 'Interés',
+          thRemBal: 'Saldo Restante',
+          yrAxis: (y) => `Año ${y}`,
+          yearRow: (y) => `Año ${y}`,
+          monthRow: (m) => `Mes ${m}`,
+          legRemPrincipal: 'Deuda de Capital Restante',
+          legRemInterest: 'Interés Restante Adeudado',
+          legPrincPaid: 'Capital Pagado (Patrimonio)',
+          legCumInterest: 'Interés Acumulado Pagado',
+          legAnnPrincipal: 'Capital Anual Pagado ($/año)',
+          legAnnInterest: 'Interés Anual Pagado ($/año)',
+          csvAlertNoParams: 'No se pudieron detectar parámetros hipotecarios válidos en el archivo CSV seleccionado.',
+          csvAlertParseErr: 'Error al analizar el archivo CSV. Asegúrate de que sea una exportación válida de la calculadora de hipoteca.'
+        }
+      };
+
+      let currentLang = localStorage.getItem('finance_suite_lang') || 'en';
+      if (!I18N[currentLang]) currentLang = 'en';
+
+      let currentTheme = localStorage.getItem('finance_suite_theme') || 'dark';
+      if (currentTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+
+      function t() {
+        return I18N[currentLang] || I18N.en;
+      }
+
+      function isLightMode() {
+        return document.documentElement.getAttribute('data-theme') === 'light';
+      }
 
       // --- State ---
       const state = {
@@ -970,6 +1438,143 @@
       const csvFileInput = document.getElementById('csvFileInput');
       const btnLoadCSV = document.getElementById('btnLoadCSV');
       const btnExportCSV = document.getElementById('btnExportCSV');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+      const langSelect = document.getElementById('langSelect');
+
+      function setElWithTip(id, text, infoEn, infoEs) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (!infoEn) {
+          el.textContent = text;
+          return;
+        }
+        el.innerHTML = `${text} <span class="info-icon" data-info-en="${infoEn}" data-info-es="${infoEs}">i</span>`;
+      }
+
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = currentLang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs
+            ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en'))
+            : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) {
+            left = window.innerWidth - tipRect.width - 10;
+          }
+
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
+
+      function updateThemeButtonLabel() {
+        const dict = t();
+        btnThemeToggle.textContent = isLightMode() ? dict.themeDark : dict.themeLight;
+      }
+
+      function applyStaticTranslations() {
+        const dict = t();
+        document.documentElement.lang = currentLang;
+        document.title = dict.pageTitle;
+        document.getElementById('appTitle').textContent = dict.appTitle;
+        document.getElementById('appSubtitle').textContent = dict.appSubtitle;
+        document.getElementById('lblMainHub').textContent = dict.mainHub;
+        document.getElementById('btnMainHub').title = dict.mainHubTitle;
+        document.getElementById('lblLoadCSV').textContent = dict.loadCSV;
+        btnLoadCSV.title = dict.loadCSVTitle;
+        document.getElementById('lblExportCSV').textContent = dict.exportCSV;
+        btnExportCSV.title = dict.exportCSVTitle;
+        document.getElementById('lblLoanParams').textContent = dict.loanParams;
+
+        setElWithTip('lblHomePrice', dict.homePrice, 'The total purchase or appraisal price of the home.', 'El precio total de compra o tasación de la propiedad.');
+        setElWithTip('lblDownPayment', dict.downPayment, 'Upfront cash paid toward purchase. 20% or more avoids private mortgage insurance (PMI).', 'Efectivo inicial aportado al comprar. 20% o más evita el seguro hipotecario privado (PMI).');
+        setElWithTip('lblInterestRate', dict.interestRate, 'Annual fixed interest rate charged by the mortgage lender.', 'Tasa de interés fija anual cobrada por la entidad financiera.');
+        setElWithTip('lblLoanTerm', dict.loanTerm, 'Total amortization repayment period in years (typically 15 or 30 years).', 'Período total de amortización en años (habitualmente 15 o 30 años).');
+        document.getElementById('lblYrsSuffix').textContent = dict.yrsSuffix;
+        document.getElementById('lblRange1Yr').textContent = dict.range1Yr;
+        document.getElementById('lblRange40Yrs').textContent = dict.range40Yrs;
+        termButtons.forEach(btn => {
+          btn.textContent = dict.termBtn(btn.dataset.term);
+        });
+        setElWithTip('lblPropertyTax', dict.propertyTax, 'Annual local property tax levied by municipal/county tax assessors.', 'Impuesto predial local anual cobrado por el municipio o condado.');
+        setElWithTip('lblAnnualInsurance', dict.annualInsurance, 'Annual homeowner hazard and casualty insurance policy premium.', 'Prima anual de la póliza de seguro de riesgos y daños del hogar.');
+        setElWithTip('lblMonthlyHOA', dict.monthlyHOA, 'Monthly Homeowners Association or building maintenance assessment fee.', 'Cuota mensual de la asociación de propietarios o gastos comunes del edificio.');
+        setElWithTip('lblPaymentBreakdown', dict.paymentBreakdown, 'Visual breakdown of monthly payment into principal, interest, taxes, and insurance.', 'Desglose visual del pago mensual en capital, intereses, impuestos y seguros.');
+        setElWithTip('lblTotalMonthlyPayment', dict.totalMonthlyPayment, 'Complete monthly housing obligation combining P&I, property tax, hazard insurance, and HOA.', 'Pago mensual total de vivienda combinando capital, interés, impuestos, seguro y HOA.');
+        document.getElementById('stackedBar').title = dict.stackedBarTitle;
+        setElWithTip('lblBreakdownPI', dict.breakdownPI, 'Direct loan amortization (principal paydown) plus bank borrowing cost (interest).', 'Amortización directa del préstamo (capital) más el costo del financiamiento bancario (interés).');
+        setElWithTip('lblBreakdownTax', dict.breakdownTax, 'Monthly escrow installment saved for municipal property taxes.', 'Cuota mensual en depósito en garantía (escrow) guardada para impuestos a la propiedad.');
+        setElWithTip('lblBreakdownIns', dict.breakdownIns, 'Monthly escrow portion reserved for hazard/homeowner insurance.', 'Porción mensual en depósito en garantía (escrow) reservada para seguro del inmueble.');
+        setElWithTip('lblBreakdownHOA', dict.breakdownHOA, 'Monthly condominium or homeowners association maintenance charge.', 'Cuota mensual de mantenimiento de la asociación de copropietarios o condominio.');
+        setElWithTip('lblTotalLoanAmount', dict.totalLoanAmount, 'Total borrowed principal debt (Home price minus cash down payment).', 'Deuda de capital total financiada (Precio de compra menos pago inicial).');
+        setElWithTip('lblTotalInterest', dict.totalInterest, 'Total bank financing cost paid over the entire life of the mortgage loan.', 'Costo total de financiamiento pagado al banco durante toda la vida de la hipoteca.');
+        setElWithTip('lblTotalLoanCost', dict.totalLoanCost, 'Grand total of principal and all bank interest paid to complete the mortgage.', 'Suma total de capital más todos los intereses bancarios pagados hasta cancelar la hipoteca.');
+        setElWithTip('lblChartTitle', dict.chartTitle, 'Year-by-year trajectory of remaining debt, remaining interest, and equity split.', 'Trayectoria anual de deuda pendiente, intereses restantes y división de patrimonio.');
+        document.getElementById('btnChartBalances').textContent = dict.chartBalancesBtn;
+        document.getElementById('btnChartAnnualSplit').textContent = dict.chartAnnualSplitBtn;
+        setElWithTip('lblLifetimeAllocHeader', dict.lifetimeAllocHeader, 'Proportion of lifetime housing cash going toward building net worth vs unrecoverable costs.', 'Proporción del gasto total que construye patrimonio neto frente a costos irrecuperables.');
+        document.getElementById('lblPctTotalOutflow').textContent = dict.pctTotalOutflow;
+        setElWithTip('lblBenchPrincipalTitle', dict.benchPrincipalTitle, 'Share of money directly building home equity ownership.', 'Porción del dinero que construye propiedad y patrimonio neto en la vivienda.');
+        setElWithTip('lblBenchInterestTitle', dict.benchInterestTitle, 'Cumulative borrowing cost paid to the lending institution.', 'Costo de financiamiento acumulado pagado a la institución financiera.');
+        setElWithTip('lblBenchEscrowTitle', dict.benchEscrowTitle, 'Cumulative carrying costs for property taxes, insurance, and HOA dues.', 'Costos fijos acumulados de impuestos, póliza de seguro y cuotas de comunidad.');
+        setElWithTip('lblInsightCrossoverTitle', dict.insightCrossoverTitle, 'The milestone month when monthly principal paydown begins to exceed interest cost.', 'Mes crucial en que el pago mensual de capital supera por primera vez al costo de interés.');
+        setElWithTip('lblInsightInterestLoadTitle', dict.insightInterestLoadTitle, 'Bank interest expressed as a percentage of principal borrowed and year when 50% is paid.', 'Interés bancario como porcentaje del préstamo y año en que se cancela el 50% del capital.');
+        document.getElementById('lblAmortizationSchedule').textContent = dict.amortizationSchedule;
+        btnAnnualView.textContent = dict.annualSummaryBtn;
+        btnMonthlyView.textContent = dict.monthlyScheduleBtn;
+        setElWithTip('thStartBal', dict.thStartBal, 'Outstanding balance at the start of this period.', 'Saldo de capital adeudado al inicio de este período.');
+        setElWithTip('thPayment', dict.thPayment, 'Total scheduled principal and interest payment in this period.', 'Pago total programado de capital e intereses en este período.');
+        setElWithTip('thPrincipal', dict.thPrincipal, 'Portion of payment reducing the loan balance.', 'Porción del pago que amortiza y reduce la deuda.');
+        setElWithTip('thInterest', dict.thInterest, 'Cost paid to lender for borrowing money during this period.', 'Costo financiero pagado al banco por intereses durante este período.');
+        setElWithTip('thRemBal', dict.thRemBal, 'Remaining principal debt balance after this payment.', 'Saldo de capital pendiente tras aplicar este pago.');
+        updateThemeButtonLabel();
+      }
 
       // --- Helpers ---
       function formatCurrency(val) {
@@ -1111,38 +1716,253 @@
         };
       }
 
+      let chartDisplayMode = 'balances'; // 'balances' | 'annualSplit'
+
       // --- UI Updaters ---
       function updateVisualComponents(data) {
+        const dict = t();
         totalMonthlyDisplay.textContent = formatCurrency(data.totalMonthly);
-        loanSummarySubtitle.textContent = `Based on a ${state.loanTermYears}-year fixed rate loan at ${state.interestRate.toFixed(2)}%`;
+        loanSummarySubtitle.textContent = dict.loanSummarySub(state.loanTermYears, state.interestRate.toFixed(2));
 
-        monthlyPIDisplay.textContent = formatCurrency(data.monthlyPI);
-        monthlyTaxDisplay.textContent = formatCurrency(data.monthlyTax);
-        monthlyInsDisplay.textContent = formatCurrency(data.monthlyInsurance);
-        monthlyHOADisplay.textContent = formatCurrency(data.monthlyHOA);
+        // Stacked Proportion Bar & Monthly Percentages
+        const tTotal = data.totalMonthly || 1;
+        const pPI = ((data.monthlyPI / tTotal) * 100).toFixed(1);
+        const pTax = ((data.monthlyTax / tTotal) * 100).toFixed(1);
+        const pIns = ((data.monthlyInsurance / tTotal) * 100).toFixed(1);
+        const pHOA = ((data.monthlyHOA / tTotal) * 100).toFixed(1);
+
+        monthlyPIDisplay.innerHTML = `<span style="color:var(--text-muted); font-weight:500; font-size:0.8rem; margin-right:0.35rem;">(${pPI}%)</span>${formatCurrency(data.monthlyPI)}`;
+        monthlyTaxDisplay.innerHTML = `<span style="color:var(--text-muted); font-weight:500; font-size:0.8rem; margin-right:0.35rem;">(${pTax}%)</span>${formatCurrency(data.monthlyTax)}`;
+        monthlyInsDisplay.innerHTML = `<span style="color:var(--text-muted); font-weight:500; font-size:0.8rem; margin-right:0.35rem;">(${pIns}%)</span>${formatCurrency(data.monthlyInsurance)}`;
+        monthlyHOADisplay.innerHTML = `<span style="color:var(--text-muted); font-weight:500; font-size:0.8rem; margin-right:0.35rem;">(${pHOA}%)</span>${formatCurrency(data.monthlyHOA)}`;
 
         totalLoanAmountDisplay.textContent = formatCurrency(data.loanAmount);
         totalInterestDisplay.textContent = formatCurrency(data.totalInterest);
         totalLoanCostDisplay.textContent = formatCurrency(data.totalCostOfLoan);
-
-        // Stacked Proportion Bar
-        const t = data.totalMonthly || 1;
-        const pPI = ((data.monthlyPI / t) * 100).toFixed(1);
-        const pTax = ((data.monthlyTax / t) * 100).toFixed(1);
-        const pIns = ((data.monthlyInsurance / t) * 100).toFixed(1);
-        const pHOA = ((data.monthlyHOA / t) * 100).toFixed(1);
 
         barPI.style.width = `${pPI}%`;
         barTax.style.width = `${pTax}%`;
         barIns.style.width = `${pIns}%`;
         barHOA.style.width = `${pHOA}%`;
 
+        // Lifetime Cost Breakdown Bars
+        const totalCost = Math.max(1, data.totalCostOfLoan);
+        const totalEscrow = Math.max(0, data.totalCostOfLoan - data.loanAmount - data.totalInterest);
+        const lifePrincPct = (data.loanAmount / totalCost) * 100;
+        const lifeIntPct = (data.totalInterest / totalCost) * 100;
+        const lifeEscrowPct = (totalEscrow / totalCost) * 100;
+
+        const benchPrincipalLabel = document.getElementById('benchPrincipalLabel');
+        const benchPrincipalBar = document.getElementById('benchPrincipalBar');
+        const benchInterestLabel = document.getElementById('benchInterestLabel');
+        const benchInterestBar = document.getElementById('benchInterestBar');
+        const benchEscrowLabel = document.getElementById('benchEscrowLabel');
+        const benchEscrowBar = document.getElementById('benchEscrowBar');
+
+        if (benchPrincipalLabel) {
+          benchPrincipalLabel.textContent = `${lifePrincPct.toFixed(1)}% ($${formatNumberNoDecimals(data.loanAmount)})`;
+          benchPrincipalBar.style.width = `${Math.min(100, lifePrincPct)}%`;
+          benchInterestLabel.textContent = `${lifeIntPct.toFixed(1)}% ($${formatNumberNoDecimals(data.totalInterest)})`;
+          benchInterestBar.style.width = `${Math.min(100, lifeIntPct)}%`;
+          benchEscrowLabel.textContent = `${lifeEscrowPct.toFixed(1)}% ($${formatNumberNoDecimals(totalEscrow)})`;
+          benchEscrowBar.style.width = `${Math.min(100, lifeEscrowPct)}%`;
+        }
+
+        // Insights: Crossover Month/Year & 50% Principal Paydown Year
+        let crossoverMonth = 1;
+        let halfwayMonth = state.loanTermYears * 12;
+        const halfPrincipal = data.loanAmount / 2;
+        let foundCrossover = false;
+        let foundHalfway = false;
+
+        for (let i = 0; i < data.monthsData.length; i++) {
+          const mObj = data.monthsData[i];
+          if (!foundCrossover && mObj.principalPaid >= mObj.interestPaid && mObj.payment > 0) {
+            crossoverMonth = mObj.month;
+            foundCrossover = true;
+          }
+          if (!foundHalfway && mObj.endBalance <= halfPrincipal) {
+            halfwayMonth = mObj.month;
+            foundHalfway = true;
+          }
+        }
+
+        const crossYr = Math.ceil(crossoverMonth / 12);
+        const halfYr = (halfwayMonth / 12).toFixed(1);
+        const intToLoanPct = data.loanAmount > 0 ? ((data.totalInterest / data.loanAmount) * 100).toFixed(1) : '0.0';
+
+        const insightCrossoverYear = document.getElementById('insightCrossoverYear');
+        const insightCrossoverSub = document.getElementById('insightCrossoverSub');
+        const insightInterestRatio = document.getElementById('insightInterestRatio');
+        const insightHalfwaySub = document.getElementById('insightHalfwaySub');
+
+        if (insightCrossoverYear) {
+          insightCrossoverYear.textContent = crossoverMonth <= 1 ? dict.crossoverYrMo1 : dict.crossoverYrMo(crossYr, crossoverMonth);
+          insightCrossoverSub.textContent = crossoverMonth <= 1
+            ? dict.crossoverSubMo1
+            : dict.crossoverSubYr(crossYr);
+          insightInterestRatio.textContent = dict.interestRatioOfLoan(intToLoanPct);
+          insightHalfwaySub.textContent = dict.halfwaySubYr(halfYr);
+        }
+
+        drawMortgageChart(data);
         renderAmortizationTable(data);
       }
 
+      function drawMortgageChart(data) {
+        const dict = t();
+        const light = isLightMode();
+        const canvas = document.getElementById('mortgageCanvas');
+        const legend = document.getElementById('mortgageChartLegend');
+        if (!canvas || !legend) return;
+
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) return;
+
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const w = rect.width;
+        const h = rect.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const padding = { top: 18, right: 18, bottom: 32, left: 64 };
+        const graphW = w - padding.left - padding.right;
+        const graphH = h - padding.top - padding.bottom;
+        const numYears = Math.max(1, state.loanTermYears);
+
+        // Build Year 0 .. Year N points
+        const points = [
+          {
+            year: 0,
+            remDebt: data.loanAmount,
+            remInterest: data.totalInterest,
+            cumPrincipal: 0,
+            cumInterest: 0,
+            annPrincipal: 0,
+            annInterest: 0
+          }
+        ];
+
+        let runPrinc = 0;
+        let runInt = 0;
+        data.yearsData.forEach(yRow => {
+          runPrinc += yRow.principalPaid;
+          runInt += yRow.interestPaid;
+          points.push({
+            year: yRow.year,
+            remDebt: Math.max(0, yRow.endBalance),
+            remInterest: Math.max(0, data.totalInterest - runInt),
+            cumPrincipal: runPrinc,
+            cumInterest: runInt,
+            annPrincipal: yRow.principalPaid,
+            annInterest: yRow.interestPaid
+          });
+        });
+
+        let maxVal = 1000;
+        if (chartDisplayMode === 'balances') {
+          maxVal = Math.max(data.loanAmount, data.totalInterest, 1000);
+        } else {
+          data.yearsData.forEach(yRow => {
+            if (yRow.principalPaid > maxVal) maxVal = yRow.principalPaid;
+            if (yRow.interestPaid > maxVal) maxVal = yRow.interestPaid;
+          });
+        }
+        maxVal = Math.ceil(maxVal * 1.08);
+
+        // Grid lines
+        const gridLines = 4;
+        ctx.strokeStyle = light ? '#cbd5e1' : '#222e44';
+        ctx.lineWidth = 1;
+        ctx.fillStyle = light ? '#475569' : '#64748b';
+        ctx.font = '10px -apple-system, sans-serif';
+        ctx.textAlign = 'right';
+
+        for (let i = 0; i <= gridLines; i++) {
+          const yVal = (maxVal / gridLines) * i;
+          const y = padding.top + graphH - (yVal / maxVal) * graphH;
+          ctx.beginPath();
+          ctx.moveTo(padding.left, y);
+          ctx.lineTo(w - padding.right, y);
+          ctx.stroke();
+          ctx.fillText('$' + formatNumberNoDecimals(yVal), padding.left - 6, y + 3);
+        }
+
+        // X-axis labels
+        ctx.textAlign = 'center';
+        const stepX = Math.max(1, Math.floor(numYears / 5));
+        for (let yr = 0; yr <= numYears; yr += stepX) {
+          const x = padding.left + (yr / numYears) * graphW;
+          ctx.fillText(dict.yrAxis(yr), x, h - 10);
+        }
+
+        function plotSeries(arr, key, color, lineWidth, dashed = false) {
+          ctx.beginPath();
+          arr.forEach((pt, idx) => {
+            const x = padding.left + (pt.year / numYears) * graphW;
+            const y = padding.top + graphH - (Math.max(0, pt[key]) / maxVal) * graphH;
+            if (idx === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.strokeStyle = color;
+          ctx.lineWidth = lineWidth;
+          if (dashed) ctx.setLineDash([4, 4]);
+          else ctx.setLineDash([]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        if (chartDisplayMode === 'balances') {
+          plotSeries(points, 'remDebt', '#38bdf8', 2.5, false);
+          plotSeries(points, 'remInterest', '#f59e0b', 2, true);
+          plotSeries(points, 'cumPrincipal', '#10b981', 2, false);
+          plotSeries(points, 'cumInterest', '#f43f5e', 2, false);
+
+          legend.innerHTML = `
+            <div class="legend-item">
+              <span class="legend-color" style="background:#38bdf8;"></span>
+              <span style="color:var(--text-main); font-weight:600;">${dict.legRemPrincipal}</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background:#f59e0b; border:1px dashed var(--text-main);"></span>
+              <span>${dict.legRemInterest}</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background:#10b981;"></span>
+              <span>${dict.legPrincPaid}</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background:#f43f5e;"></span>
+              <span>${dict.legCumInterest}</span>
+            </div>
+          `;
+        } else {
+          const annualPts = points.slice(1);
+          plotSeries(annualPts, 'annPrincipal', '#10b981', 2.5, false);
+          plotSeries(annualPts, 'annInterest', '#f43f5e', 2.5, false);
+
+          legend.innerHTML = `
+            <div class="legend-item">
+              <span class="legend-color" style="background:#10b981;"></span>
+              <span style="color:var(--text-main); font-weight:600;">${dict.legAnnPrincipal}</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background:#f43f5e;"></span>
+              <span style="color:var(--text-main); font-weight:600;">${dict.legAnnInterest}</span>
+            </div>
+          `;
+        }
+      }
+
       function renderAmortizationTable(data) {
+        const dict = t();
         const isAnnual = state.viewMode === 'annual';
-        periodColHeader.textContent = isAnnual ? 'Year' : 'Month';
+        periodColHeader.innerHTML = `${isAnnual ? dict.thYear : dict.thMonth} <span class="info-icon" data-info-en="Amortization timeline period (Year or Month)." data-info-es="Período cronológico de la amortización (Año o Mes).">i</span>`;
         scheduleTableBody.innerHTML = '';
 
         const rows = isAnnual ? data.yearsData : data.monthsData;
@@ -1151,7 +1971,7 @@
         for (let i = 0; i < rows.length; i++) {
           const row = rows[i];
           const tr = document.createElement('tr');
-          const periodLabel = isAnnual ? `Year ${row.year}` : `Month ${row.month}`;
+          const periodLabel = isAnnual ? dict.yearRow(row.year) : dict.monthRow(row.month);
 
           tr.innerHTML = `
             <td style="font-weight:600;">${periodLabel}</td>
@@ -1219,63 +2039,123 @@
       function exportMortgageToCSV() {
         const results = computeSchedule();
         const rows = [];
+        const isEs = currentLang === 'es';
 
-        rows.push(['MORTGAGE CALCULATION SUMMARY & AMORTIZATION']);
-        rows.push(['Export Date', new Date().toLocaleDateString()]);
-        rows.push([]);
+        if (isEs) {
+          rows.push(['RESUMEN DE CÁLCULO HIPOTECARIO Y TABLA DE AMORTIZACIÓN']);
+          rows.push(['Fecha de Exportación', new Date().toLocaleDateString('es-ES')]);
+          rows.push([]);
 
-        rows.push(['LOAN PARAMETERS']);
-        rows.push(['Home Price ($)', state.homePrice.toFixed(2)]);
-        rows.push(['Down Payment ($)', state.downPayment.toFixed(2)]);
-        rows.push(['Down Payment (%)', `${state.downPaymentPercent.toFixed(2)}%`]);
-        rows.push(['Total Loan Amount ($)', results.loanAmount.toFixed(2)]);
-        rows.push(['Interest Rate (%)', `${state.interestRate.toFixed(2)}%`]);
-        rows.push(['Loan Term (Years)', state.loanTermYears]);
-        rows.push(['Annual Property Tax ($)', state.propertyTaxAnnual.toFixed(2)]);
-        rows.push(['Annual Homeowners Insurance ($)', state.insuranceAnnual.toFixed(2)]);
-        rows.push(['Monthly HOA Fees ($)', state.hoaMonthly.toFixed(2)]);
-        rows.push([]);
+          rows.push(['PARÁMETROS DEL PRÉSTAMO']);
+          rows.push(['Precio de la Vivienda ($)', state.homePrice.toFixed(2)]);
+          rows.push(['Pago Inicial ($)', state.downPayment.toFixed(2)]);
+          rows.push(['Pago Inicial (%)', `${state.downPaymentPercent.toFixed(2)}%`]);
+          rows.push(['Monto Total del Préstamo ($)', results.loanAmount.toFixed(2)]);
+          rows.push(['Tasa de Interés (%)', `${state.interestRate.toFixed(2)}%`]);
+          rows.push(['Plazo del Préstamo (Años)', state.loanTermYears]);
+          rows.push(['Impuesto Predial Anual ($)', state.propertyTaxAnnual.toFixed(2)]);
+          rows.push(['Seguro de Vivienda Anual ($)', state.insuranceAnnual.toFixed(2)]);
+          rows.push(['Cuotas Mensuales de HOA ($)', state.hoaMonthly.toFixed(2)]);
+          rows.push([]);
 
-        rows.push(['MONTHLY PAYMENT BREAKDOWN']);
-        rows.push(['Principal & Interest ($)', results.monthlyPI.toFixed(2)]);
-        rows.push(['Property Tax (Monthly) ($)', results.monthlyTax.toFixed(2)]);
-        rows.push(['Home Insurance (Monthly) ($)', results.monthlyInsurance.toFixed(2)]);
-        rows.push(['HOA Fees (Monthly) ($)', results.monthlyHOA.toFixed(2)]);
-        rows.push(['Total Monthly Payment ($)', results.totalMonthly.toFixed(2)]);
-        rows.push([]);
+          rows.push(['DESGLOSE DEL PAGO MENSUAL']);
+          rows.push(['Capital e Intereses ($)', results.monthlyPI.toFixed(2)]);
+          rows.push(['Impuesto Predial (Mensual) ($)', results.monthlyTax.toFixed(2)]);
+          rows.push(['Seguro de Vivienda (Mensual) ($)', results.monthlyInsurance.toFixed(2)]);
+          rows.push(['Cuotas de HOA (Mensual) ($)', results.monthlyHOA.toFixed(2)]);
+          rows.push(['Pago Mensual Total ($)', results.totalMonthly.toFixed(2)]);
+          rows.push([]);
 
-        rows.push(['LIFETIME TOTALS']);
-        rows.push(['Total Principal Paid ($)', results.loanAmount.toFixed(2)]);
-        rows.push(['Total Interest Paid ($)', results.totalInterest.toFixed(2)]);
-        rows.push(['Total Cost of Loan ($)', results.totalCostOfLoan.toFixed(2)]);
-        rows.push([]);
+          rows.push(['TOTALES DURANTE LA VIDA DEL PRÉSTAMO']);
+          rows.push(['Capital Total Pagado ($)', results.loanAmount.toFixed(2)]);
+          rows.push(['Interés Total Pagado ($)', results.totalInterest.toFixed(2)]);
+          rows.push(['Costo Total del Préstamo ($)', results.totalCostOfLoan.toFixed(2)]);
+          rows.push([]);
 
-        rows.push(['ANNUAL AMORTIZATION SCHEDULE']);
-        rows.push(['Year', 'Starting Balance ($)', 'Total Payment ($)', 'Principal Paid ($)', 'Interest Paid ($)', 'Remaining Balance ($)']);
-        results.yearsData.forEach(y => {
-          rows.push([
-            `Year ${y.year}`,
-            y.startBalance.toFixed(2),
-            y.payment.toFixed(2),
-            y.principalPaid.toFixed(2),
-            y.interestPaid.toFixed(2),
-            y.endBalance.toFixed(2)
-          ]);
-        });
-        rows.push([]);
+          rows.push(['CRONOGRAMA DE AMORTIZACIÓN ANUAL']);
+          rows.push(['Año', 'Saldo Inicial ($)', 'Pago Total ($)', 'Capital Pagado ($)', 'Interés Pagado ($)', 'Saldo Restante ($)']);
+          results.yearsData.forEach(y => {
+            rows.push([
+              `Año ${y.year}`,
+              y.startBalance.toFixed(2),
+              y.payment.toFixed(2),
+              y.principalPaid.toFixed(2),
+              y.interestPaid.toFixed(2),
+              y.endBalance.toFixed(2)
+            ]);
+          });
+          rows.push([]);
 
-        rows.push(['MONTHLY AMORTIZATION SCHEDULE']);
-        rows.push(['Month', 'Starting Balance ($)', 'Payment ($)', 'Principal ($)', 'Interest ($)', 'Remaining Balance ($)']);
-        results.monthsData.forEach(m => {
-          rows.push([
-            `Month ${m.month}`,
-            m.startBalance.toFixed(2),
-            m.payment.toFixed(2),
-            m.principalPaid.toFixed(2),
-            m.interestPaid.toFixed(2),
-            m.endBalance.toFixed(2)
-          ]);
-        });
+          rows.push(['TABLA DE AMORTIZACIÓN MES A MES']);
+          rows.push(['Mes', 'Saldo Inicial ($)', 'Pago ($)', 'Capital ($)', 'Interés ($)', 'Saldo Restante ($)']);
+          results.monthsData.forEach(m => {
+            rows.push([
+              `Mes ${m.month}`,
+              m.startBalance.toFixed(2),
+              m.payment.toFixed(2),
+              m.principalPaid.toFixed(2),
+              m.interestPaid.toFixed(2),
+              m.endBalance.toFixed(2)
+            ]);
+          });
+        } else {
+          rows.push(['MORTGAGE CALCULATION SUMMARY & AMORTIZATION']);
+          rows.push(['Export Date', new Date().toLocaleDateString()]);
+          rows.push([]);
+
+          rows.push(['LOAN PARAMETERS']);
+          rows.push(['Home Price ($)', state.homePrice.toFixed(2)]);
+          rows.push(['Down Payment ($)', state.downPayment.toFixed(2)]);
+          rows.push(['Down Payment (%)', `${state.downPaymentPercent.toFixed(2)}%`]);
+          rows.push(['Total Loan Amount ($)', results.loanAmount.toFixed(2)]);
+          rows.push(['Interest Rate (%)', `${state.interestRate.toFixed(2)}%`]);
+          rows.push(['Loan Term (Years)', state.loanTermYears]);
+          rows.push(['Annual Property Tax ($)', state.propertyTaxAnnual.toFixed(2)]);
+          rows.push(['Annual Homeowners Insurance ($)', state.insuranceAnnual.toFixed(2)]);
+          rows.push(['Monthly HOA Fees ($)', state.hoaMonthly.toFixed(2)]);
+          rows.push([]);
+
+          rows.push(['MONTHLY PAYMENT BREAKDOWN']);
+          rows.push(['Principal & Interest ($)', results.monthlyPI.toFixed(2)]);
+          rows.push(['Property Tax (Monthly) ($)', results.monthlyTax.toFixed(2)]);
+          rows.push(['Home Insurance (Monthly) ($)', results.monthlyInsurance.toFixed(2)]);
+          rows.push(['HOA Fees (Monthly) ($)', results.monthlyHOA.toFixed(2)]);
+          rows.push(['Total Monthly Payment ($)', results.totalMonthly.toFixed(2)]);
+          rows.push([]);
+
+          rows.push(['LIFETIME TOTALS']);
+          rows.push(['Total Principal Paid ($)', results.loanAmount.toFixed(2)]);
+          rows.push(['Total Interest Paid ($)', results.totalInterest.toFixed(2)]);
+          rows.push(['Total Cost of Loan ($)', results.totalCostOfLoan.toFixed(2)]);
+          rows.push([]);
+
+          rows.push(['ANNUAL AMORTIZATION SCHEDULE']);
+          rows.push(['Year', 'Starting Balance ($)', 'Total Payment ($)', 'Principal Paid ($)', 'Interest Paid ($)', 'Remaining Balance ($)']);
+          results.yearsData.forEach(y => {
+            rows.push([
+              `Year ${y.year}`,
+              y.startBalance.toFixed(2),
+              y.payment.toFixed(2),
+              y.principalPaid.toFixed(2),
+              y.interestPaid.toFixed(2),
+              y.endBalance.toFixed(2)
+            ]);
+          });
+          rows.push([]);
+
+          rows.push(['MONTHLY AMORTIZATION SCHEDULE']);
+          rows.push(['Month', 'Starting Balance ($)', 'Payment ($)', 'Principal ($)', 'Interest ($)', 'Remaining Balance ($)']);
+          results.monthsData.forEach(m => {
+            rows.push([
+              `Month ${m.month}`,
+              m.startBalance.toFixed(2),
+              m.payment.toFixed(2),
+              m.principalPaid.toFixed(2),
+              m.interestPaid.toFixed(2),
+              m.endBalance.toFixed(2)
+            ]);
+          });
+        }
 
         const csvContent = '\uFEFF' + rows.map(r => r.join(',')).join('\r\n');
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1289,6 +2169,8 @@
         document.body.removeChild(downloadLink);
         URL.revokeObjectURL(url);
       }
+
+      const exportToCSV = exportMortgageToCSV;
 
       function detectDelimiter(input) {
         const text = Array.isArray(input) ? input.slice(0, 25).join('\n') : String(input || '');
@@ -1342,31 +2224,51 @@
               const cols = parseCSVLine(line, delimiter);
               if (cols.length < 2) return;
 
-              const label = cols[0].toLowerCase();
+              const label = cols[0].toLowerCase().trim();
               const rawVal = cols[1];
 
-              if (label.includes('home price')) {
+              if (label.includes('home price') || label.includes('precio de la vivienda') || label.includes('precio de vivienda')) {
                 state.homePrice = Math.max(0, parseCleanNumber(rawVal));
                 detectedParameters++;
-              } else if (label.includes('down payment ($)')) {
+              } else if (
+                label.includes('down payment ($)') ||
+                label.includes('pago inicial ($)') ||
+                label.includes('enganche ($)')
+              ) {
                 state.downPayment = Math.max(0, parseCleanNumber(rawVal));
                 detectedParameters++;
-              } else if (label.includes('down payment (%)')) {
+              } else if (
+                label.includes('down payment (%)') ||
+                label.includes('pago inicial (%)') ||
+                label.includes('enganche (%)')
+              ) {
                 state.downPaymentPercent = clamp(parseCleanNumber(rawVal), 0, 100);
                 detectedParameters++;
-              } else if (label.includes('interest rate')) {
+              } else if (label.includes('interest rate') || label.includes('tasa de interés') || label.includes('tasa de interes')) {
                 state.interestRate = clamp(parseCleanNumber(rawVal), 0.01, 30);
                 detectedParameters++;
-              } else if (label.includes('loan term')) {
+              } else if (label.includes('loan term') || label.includes('plazo del préstamo') || label.includes('plazo del prestamo')) {
                 state.loanTermYears = clamp(parseInt(rawVal, 10) || 30, 1, 50);
                 detectedParameters++;
-              } else if (label.includes('annual property tax')) {
+              } else if (
+                label.includes('annual property tax') ||
+                label.includes('impuesto predial anual') ||
+                label.includes('impuestos a la propiedad anual')
+              ) {
                 state.propertyTaxAnnual = Math.max(0, parseCleanNumber(rawVal));
                 detectedParameters++;
-              } else if (label.includes('annual homeowners insurance')) {
+              } else if (
+                label.includes('annual homeowners insurance') ||
+                label.includes('seguro de vivienda anual') ||
+                label.includes('seguro anual')
+              ) {
                 state.insuranceAnnual = Math.max(0, parseCleanNumber(rawVal));
                 detectedParameters++;
-              } else if (label.includes('monthly hoa')) {
+              } else if (
+                label.includes('monthly hoa') ||
+                label.includes('cuotas mensuales de hoa') ||
+                label.includes('hoa mensual')
+              ) {
                 state.hoaMonthly = Math.max(0, parseCleanNumber(rawVal));
                 detectedParameters++;
               }
@@ -1384,17 +2286,37 @@
               renderInputs();
               recalculateAll();
             } else {
-              alert('Could not detect valid mortgage parameters in the selected CSV file.');
+              alert(t().csvAlertNoParams);
             }
           } catch (err) {
             console.error(err);
-            alert('Error parsing CSV file. Please make sure it is a valid mortgage calculator export.');
+            alert(t().csvAlertParseErr);
           }
         };
         reader.readAsText(file);
       }
 
       // --- Event Handlers & Sync Logic ---
+      btnThemeToggle.addEventListener('click', () => {
+        if (isLightMode()) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('finance_suite_theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('finance_suite_theme', 'light');
+        }
+        updateThemeButtonLabel();
+        recalculateAll(false);
+      });
+
+      langSelect.value = currentLang;
+      langSelect.addEventListener('change', (e) => {
+        currentLang = e.target.value === 'es' ? 'es' : 'en';
+        localStorage.setItem('finance_suite_lang', currentLang);
+        applyStaticTranslations();
+        renderInputs();
+        recalculateAll(false);
+      });
 
       homePriceSlider.addEventListener('input', (e) => {
         state.homePrice = parseFloat(e.target.value);
@@ -1539,7 +2461,30 @@
         recalculateAll();
       });
 
-      btnExportCSV.addEventListener('click', exportMortgageToCSV);
+      const btnChartBalances = document.getElementById('btnChartBalances');
+      const btnChartAnnualSplit = document.getElementById('btnChartAnnualSplit');
+
+      if (btnChartBalances && btnChartAnnualSplit) {
+        btnChartBalances.addEventListener('click', () => {
+          chartDisplayMode = 'balances';
+          btnChartBalances.classList.add('active');
+          btnChartAnnualSplit.classList.remove('active');
+          recalculateAll();
+        });
+
+        btnChartAnnualSplit.addEventListener('click', () => {
+          chartDisplayMode = 'annualSplit';
+          btnChartAnnualSplit.classList.add('active');
+          btnChartBalances.classList.remove('active');
+          recalculateAll();
+        });
+      }
+
+      window.addEventListener('resize', () => {
+        recalculateAll();
+      });
+
+      btnExportCSV.addEventListener('click', exportToCSV);
 
       btnLoadCSV.addEventListener('click', () => {
         csvFileInput.value = '';
@@ -1553,6 +2498,8 @@
       });
 
       // Initial run
+      initInfoTooltips();
+      applyStaticTranslations();
       renderInputs();
       recalculateAll();
     })();

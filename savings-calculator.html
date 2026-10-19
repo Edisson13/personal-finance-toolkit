@@ -193,6 +193,11 @@
       gap: 1.5rem;
     }
 
+    .main-grid > .card {
+      display: flex;
+      flex-direction: column;
+    }
+
     @media (max-width: 1024px) {
       .main-grid { grid-template-columns: 1fr; }
     }
@@ -235,9 +240,17 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      max-height: 600px;
+      flex: 1 1 0;
+      min-height: 420px;
       overflow-y: auto;
       padding-right: 0.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .assets-list {
+        flex: none;
+        max-height: 620px;
+      }
     }
 
     .asset-item {
@@ -452,12 +465,104 @@
       border-radius: 999px;
       overflow: hidden;
       background: #20293d;
-      margin: 0.5rem 0 1rem 0;
+      margin: 0.35rem 0 0.85rem 0;
     }
 
     .alloc-seg {
       height: 100%;
       transition: width 0.3s ease;
+    }
+
+    /* Asset Percentage Breakdown Box (Cost of Living Style) */
+    .benchmark-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .benchmark-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .benchmark-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+    }
+
+    .benchmark-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.81rem;
+      font-weight: 600;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .benchmark-sub {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-input);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.9rem;
+    }
+
+    .insight-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .insight-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      font-weight: 600;
+    }
+
+    .insight-val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
     }
 
     /* Amortization Table */
@@ -505,6 +610,92 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    /* Light Mode Theme */
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead { background-color: #e2e8f0 !important; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value { color: var(--text-main); }
+    html[data-theme="light"] .btn-secondary { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] .alloc-bar { background: #e2e8f0; }
+    html[data-theme="light"] .benchmark-box-header { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] td[style*="color:#ffffff"], html[data-theme="light"] td[style*="color: #ffffff"] { color: #0f172a !important; }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -521,20 +712,31 @@
           </svg>
         </div>
         <div>
-          <h1>Multi-Asset Investing &amp; Portfolio</h1>
-          <p>Compound growth &amp; asset allocation engine for Stocks, ETFs, HYSA, Crypto &amp; Custom Vehicles</p>
+          <h1 id="appTitle">Multi-Asset Investing &amp; Portfolio</h1>
+          <p id="appSubtitle">Compound growth &amp; asset allocation engine for Stocks, ETFs, HYSA, Crypto &amp; Custom Vehicles</p>
         </div>
       </div>
 
       <div class="header-actions">
         <!-- Return to Main Hub Button -->
-        <a href="./index.html" class="btn btn-secondary" title="Return to Main Suite">
+        <a href="./index.html" class="btn btn-secondary" id="btnMainHub" title="Return to Main Suite">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          Main Hub
+          <span id="btnMainHubText">Main Hub</span>
         </a>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="btn btn-secondary" id="btnThemeToggle" title="Toggle Light / Dark Mode">
+          ☀️ Light
+        </button>
+
+        <!-- Language Selector -->
+        <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" aria-label="Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
 
         <!-- Hidden file input for CSV Upload -->
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
@@ -546,7 +748,7 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          Load CSV
+          <span id="btnLoadCSVText">Load CSV</span>
         </button>
 
         <!-- Export CSV Button -->
@@ -556,7 +758,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Export CSV
+          <span id="btnExportCSVText">Export CSV</span>
         </button>
 
         <!-- Add Asset Button -->
@@ -565,7 +767,7 @@
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          Add Asset
+          <span id="btnAddAssetText">Add Asset</span>
         </button>
       </div>
     </header>
@@ -573,22 +775,22 @@
     <!-- KPI Summary Row -->
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-label">Projected Portfolio Value</div>
+        <div class="kpi-label" id="kpiTitleTotalValue">Projected Portfolio Value</div>
         <div class="kpi-value" id="kpiTotalValue">$0</div>
         <div class="kpi-subtext" id="kpiHorizonSub">At year 10</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Total Principal Invested</div>
+        <div class="kpi-label" id="kpiTitleTotalDeposits">Total Principal Invested</div>
         <div class="kpi-value" id="kpiTotalDeposits" style="color: #38bdf8;">$0</div>
-        <div class="kpi-subtext">Starting cash + ongoing deposits</div>
+        <div class="kpi-subtext" id="kpiPrincipalSub">Starting cash + ongoing deposits</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Total Compound Interest</div>
+        <div class="kpi-label" id="kpiTitleTotalInterest">Total Compound Interest</div>
         <div class="kpi-value" id="kpiTotalInterest" style="color: #34d399;">$0</div>
         <div class="kpi-subtext" id="kpiInterestRatio">0% of total wealth</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Combined Monthly Cash Flow</div>
+        <div class="kpi-label" id="kpiTitleMonthlyDeposits">Combined Monthly Cash Flow</div>
         <div class="kpi-value" id="kpiMonthlyDeposits" style="color: #fbbf24;">$0/mo</div>
         <div class="kpi-subtext" id="kpiAssetCount">Across 2 assets</div>
       </div>
@@ -603,15 +805,15 @@
         <!-- Global Horizon -->
         <div class="horizon-box">
           <div class="horizon-header">
-            <span style="font-size: 0.85rem; font-weight:600; color:var(--text-main);">Investment Horizon:</span>
+            <span style="font-size: 0.85rem; font-weight:600; color:var(--text-main);" id="lblInvestmentHorizon">Investment Horizon:</span>
             <span style="font-size: 1rem; font-weight:700; color:var(--accent-primary);" id="horizonDisplay">10 Years</span>
           </div>
           <input type="range" id="horizonSlider" min="1" max="40" step="1" value="10">
         </div>
 
         <div class="card-title">
-          <span>Configured Assets (<span id="assetCountBadge">2</span>)</span>
-          <span style="font-size:0.75rem; font-weight:400; color:var(--text-muted);">Click titles to rename</span>
+          <span><span id="leftCardTitleText">Configured Assets</span> (<span id="assetCountBadge">2</span>)</span>
+          <span style="font-size:0.75rem; font-weight:400; color:var(--text-muted);" id="leftCardHint">Click titles to rename</span>
         </div>
 
         <!-- Dynamic Container for N Assets -->
@@ -621,11 +823,14 @@
       <!-- Right Column: Visual Charts & Allocation -->
       <section class="card" aria-label="Visual Growth Breakdown">
         <div class="card-title">
-          <span>Portfolio Trajectory &amp; Allocation</span>
+          <span id="rightCardTitleText">Portfolio Trajectory &amp; Asset Allocation</span>
         </div>
 
         <!-- Allocation Breakdown Bar -->
-        <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.2rem;">Final Asset Weighting:</div>
+        <div style="display:flex; justify-content:space-between; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.2rem;">
+          <span id="allocBarTitle">Combined Asset Allocation Stacked Bar</span>
+          <span id="allocHorizonLabel">At Year 10</span>
+        </div>
         <div class="alloc-bar" id="allocBar"></div>
 
         <!-- Native HTML5 Canvas Chart -->
@@ -635,6 +840,29 @@
           </div>
           <div class="chart-legend" id="chartLegend"></div>
         </div>
+
+        <!-- Detailed Asset Percentage Breakdown Below Graph -->
+        <div class="benchmark-box">
+          <div class="benchmark-box-header">
+            <span id="assetBreakdownHeaderLeft">Asset Share &amp; Compounding Breakdown</span>
+            <span id="assetBreakdownHeaderRight">% of Final Portfolio</span>
+          </div>
+          <div id="assetPercentagesList" style="display:flex; flex-direction:column; gap:0.75rem;"></div>
+        </div>
+
+        <!-- Portfolio Insights Callouts -->
+        <div class="insights-grid">
+          <div class="insight-box">
+            <span class="insight-label" id="insightWeightedAPYLabel">Weighted Portfolio APY</span>
+            <span class="insight-val" id="insightWeightedAPY" style="color:#38bdf8;">0.00%</span>
+            <span style="font-size:0.73rem; color:var(--text-muted);" id="insightWeightedSub">Blended return across assets</span>
+          </div>
+          <div class="insight-box">
+            <span class="insight-label" id="insightMultiplierLabel">Portfolio Wealth Multiplier</span>
+            <span class="insight-val" id="insightMultiplier" style="color:#34d399;">1.00x</span>
+            <span style="font-size:0.73rem; color:var(--text-muted);" id="insightTopAssetSub">Ending value vs. principal</span>
+          </div>
+        </div>
       </section>
 
     </div>
@@ -642,7 +870,7 @@
     <!-- Bottom Section: Detailed Year-by-Year Table -->
     <section class="card" aria-label="Yearly Projection Schedule">
       <div class="card-title">
-        <span>Year-by-Year Multi-Asset Amortization</span>
+        <span id="tableSectionTitle">Year-by-Year Multi-Asset Amortization</span>
       </div>
 
       <div class="table-container">
@@ -664,12 +892,149 @@
         '#ec4899', '#8b5cf6', '#14b8a6', '#f97316'
       ];
 
+      let currentLang = localStorage.getItem('finance_suite_lang') === 'es' ? 'es' : 'en';
+      let currentTheme = localStorage.getItem('finance_suite_theme') === 'light' ? 'light' : 'dark';
+
+      const DEFAULT_ASSET_NAMES = {
+        asset_1: {
+          en: 'High-Yield Savings (HYSA)',
+          es: 'Cuenta de Ahorros de Alto Rendimiento (HYSA)'
+        },
+        asset_2: {
+          en: 'Stock Index Fund (S&P 500)',
+          es: 'Fondo Indexado de Acciones (S&P 500)'
+        }
+      };
+
+      const I18N = {
+        en: {
+          pageTitle: 'Multi-Asset Investing & Portfolio Calculator',
+          appTitle: 'Multi-Asset Investing & Portfolio',
+          appSubtitle: 'Compound growth & asset allocation engine for Stocks, ETFs, HYSA, Crypto & Custom Vehicles',
+          mainHub: 'Main Hub',
+          mainHubTitle: 'Return to Main Suite',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          loadCSV: 'Load CSV',
+          loadCSVTitle: 'Load and visualize a previously exported CSV file',
+          exportCSV: 'Export CSV',
+          exportCSVTitle: 'Export portfolio projection to CSV for Excel',
+          addAsset: 'Add Asset',
+          kpiTitleTotalValue: 'Projected Portfolio Value',
+          kpiTitleTotalDeposits: 'Total Principal Invested',
+          kpiPrincipalSub: 'Starting cash + ongoing deposits',
+          kpiTitleTotalInterest: 'Total Compound Interest',
+          kpiTitleMonthlyDeposits: 'Combined Monthly Cash Flow',
+          lblInvestmentHorizon: 'Investment Horizon:',
+          leftCardTitleText: 'Configured Assets',
+          leftCardHint: 'Click titles to rename',
+          rightCardTitleText: 'Portfolio Trajectory & Asset Allocation',
+          allocBarTitle: 'Combined Asset Allocation Stacked Bar',
+          assetBreakdownHeaderLeft: 'Asset Share & Compounding Breakdown',
+          assetBreakdownHeaderRight: '% of Final Portfolio',
+          insightWeightedAPYLabel: 'Weighted Portfolio APY',
+          insightMultiplierLabel: 'Portfolio Wealth Multiplier',
+          tableSectionTitle: 'Year-by-Year Multi-Asset Amortization',
+          horizonDisplay: (yrs) => `${yrs} Year${yrs > 1 ? 's' : ''}`,
+          kpiHorizonSub: (yrs) => `At year ${yrs}`,
+          allocHorizonLabel: (yrs) => `At Year ${yrs}`,
+          kpiInterestRatio: (pct) => `${pct}% earned from compound interest`,
+          kpiAssetCount: (n) => `Across ${n} active asset${n > 1 ? 's' : ''}`,
+          moSuffix: '/mo',
+          assetPlaceholder: 'Asset Name',
+          removeAssetTitle: 'Remove Asset',
+          lblInitBalance: 'Initial Balance',
+          lblMonthlyContribution: 'Monthly Contribution',
+          lblAnnualReturn: 'Annual Return (APY)',
+          lblCompounding: 'Compounding',
+          freqMonthly: 'Monthly',
+          freqDaily: 'Daily',
+          freqQuarterly: 'Quarterly',
+          freqAnnually: 'Annually',
+          untitledAsset: 'Untitled Asset',
+          newAssetDefault: (n) => `Asset ${n}`,
+          chartAxisYr: (yr) => `Yr ${yr}`,
+          legendTotalPortfolio: 'Total Portfolio (100%)',
+          assetRowSubLeft: (initPct, apy) => `Initial Share: ${initPct}% &bull; APY: ${apy}%`,
+          assetRowSubRight: (gain) => `+${gain} compound gain`,
+          insightWeightedSub: (yrs) => `Weighted by Year ${yrs} asset share`,
+          insightMultiplierVal: (mult) => `${mult}x Principal`,
+          insightTopAssetSub: (name, pct) => `Lead driver: ${name} (${pct}%)`,
+          tableHeadersFixed: ['Year', 'Total Balance', 'Total Principal', 'Total Interest'],
+          tableYearRow: (yr) => `Year ${yr}`,
+          csvAlertNoAssets: 'Could not detect valid asset configuration in the selected CSV file.',
+          csvAlertParseError: 'Error parsing CSV file. Please make sure it is a valid portfolio export.'
+        },
+        es: {
+          pageTitle: 'Calculadora de Inversión Multi-Activos y Portafolio',
+          appTitle: 'Inversión Multi-Activos y Portafolio',
+          appSubtitle: 'Motor de interés compuesto y asignación de activos para Acciones, ETFs, HYSA, Cripto y Vehículos Personalizados',
+          mainHub: 'Panel Principal',
+          mainHubTitle: 'Volver al Panel Principal',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          loadCSV: 'Cargar CSV',
+          loadCSVTitle: 'Cargar y visualizar un archivo CSV exportado previamente',
+          exportCSV: 'Exportar CSV',
+          exportCSVTitle: 'Exportar proyección de portafolio a CSV para Excel',
+          addAsset: 'Añadir Activo',
+          kpiTitleTotalValue: 'Valor Proyectado del Portafolio',
+          kpiTitleTotalDeposits: 'Capital Total Invertido',
+          kpiPrincipalSub: 'Capital inicial + aportes periódicos',
+          kpiTitleTotalInterest: 'Interés Compuesto Total',
+          kpiTitleMonthlyDeposits: 'Flujo de Aporte Mensual Combinado',
+          lblInvestmentHorizon: 'Horizonte de Inversión:',
+          leftCardTitleText: 'Activos Configurados',
+          leftCardHint: 'Haz clic en el título para renombrar',
+          rightCardTitleText: 'Trayectoria del Portafolio y Asignación de Activos',
+          allocBarTitle: 'Barra Apilada de Asignación Combinada de Activos',
+          assetBreakdownHeaderLeft: 'Participación por Activo y Desglose Compuesto',
+          assetBreakdownHeaderRight: '% del Portafolio Final',
+          insightWeightedAPYLabel: 'APY Ponderado del Portafolio',
+          insightMultiplierLabel: 'Multiplicador de Patrimonio',
+          tableSectionTitle: 'Amortización Multi-Activos Año por Año',
+          horizonDisplay: (yrs) => `${yrs} Año${yrs > 1 ? 's' : ''}`,
+          kpiHorizonSub: (yrs) => `En el año ${yrs}`,
+          allocHorizonLabel: (yrs) => `En el Año ${yrs}`,
+          kpiInterestRatio: (pct) => `${pct}% generado por interés compuesto`,
+          kpiAssetCount: (n) => `En ${n} activo${n > 1 ? 's' : ''} activo${n > 1 ? 's' : ''}`,
+          moSuffix: '/mes',
+          assetPlaceholder: 'Nombre del Activo',
+          removeAssetTitle: 'Eliminar Activo',
+          lblInitBalance: 'Saldo Inicial',
+          lblMonthlyContribution: 'Aporte Mensual',
+          lblAnnualReturn: 'Rendimiento Anual (APY)',
+          lblCompounding: 'Capitalización',
+          freqMonthly: 'Mensual',
+          freqDaily: 'Diaria',
+          freqQuarterly: 'Trimestral',
+          freqAnnually: 'Anual',
+          untitledAsset: 'Activo sin título',
+          newAssetDefault: (n) => `Activo ${n}`,
+          chartAxisYr: (yr) => `Año ${yr}`,
+          legendTotalPortfolio: 'Portafolio Total (100%)',
+          assetRowSubLeft: (initPct, apy) => `Peso Inicial: ${initPct}% &bull; APY: ${apy}%`,
+          assetRowSubRight: (gain) => `+${gain} ganancia compuesta`,
+          insightWeightedSub: (yrs) => `Ponderado por participación en el Año ${yrs}`,
+          insightMultiplierVal: (mult) => `${mult}x Capital`,
+          insightTopAssetSub: (name, pct) => `Motor principal: ${name} (${pct}%)`,
+          tableHeadersFixed: ['Año', 'Saldo Total', 'Capital Total', 'Interés Total'],
+          tableYearRow: (yr) => `Año ${yr}`,
+          csvAlertNoAssets: 'No se pudo detectar una configuración válida de activos en el archivo CSV seleccionado.',
+          csvAlertParseError: 'Error al leer el archivo CSV. Asegúrate de que sea una exportación válida de portafolio.'
+        }
+      };
+
+      function t() {
+        return I18N[currentLang] || I18N.en;
+      }
+
       let state = {
         horizonYears: 10,
         assets: [
           {
             id: 'asset_1',
-            name: 'High-Yield Savings (HYSA)',
+            name: DEFAULT_ASSET_NAMES.asset_1[currentLang],
             color: COLOR_PALETTE[0],
             initialDeposit: 15000,
             monthlyDeposit: 500,
@@ -678,7 +1043,7 @@
           },
           {
             id: 'asset_2',
-            name: 'Stock Index Fund (S&P 500)',
+            name: DEFAULT_ASSET_NAMES.asset_2[currentLang],
             color: COLOR_PALETTE[1],
             initialDeposit: 25000,
             monthlyDeposit: 800,
@@ -698,7 +1063,6 @@
         if (typeof val === 'number') return val;
         if (!val) return 0;
         let str = String(val).trim().replace(/[$€£\s"']/g, '');
-        // Handle European vs US decimals
         if (str.includes(',') && !str.includes('.')) {
           str = str.replace(',', '.');
         } else if (str.includes('.') && str.includes(',')) {
@@ -792,11 +1156,86 @@
       const btnLoadCSV = document.getElementById('btnLoadCSV');
       const btnExportCSV = document.getElementById('btnExportCSV');
       const btnAddAsset = document.getElementById('btnAddAsset');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+      const langSelect = document.getElementById('langSelect');
+
+      function applyTheme() {
+        if (currentTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        updateThemeButtonText();
+      }
+
+      function updateThemeButtonText() {
+        const tr = t();
+        btnThemeToggle.textContent = currentTheme === 'light' ? tr.themeDark : tr.themeLight;
+      }
+
+      function translateDefaultAssetNames(prevLang, nextLang) {
+        state.assets.forEach(asset => {
+          if (DEFAULT_ASSET_NAMES[asset.id] && asset.name === DEFAULT_ASSET_NAMES[asset.id][prevLang]) {
+            asset.name = DEFAULT_ASSET_NAMES[asset.id][nextLang];
+          } else {
+            const matchEn = /^Asset (\d+)$/i.exec(asset.name);
+            const matchEs = /^Activo (\d+)$/i.exec(asset.name);
+            if (nextLang === 'es' && matchEn) {
+              asset.name = `Activo ${matchEn[1]}`;
+            } else if (nextLang === 'en' && matchEs) {
+              asset.name = `Asset ${matchEs[1]}`;
+            }
+          }
+        });
+      }
+
+      function applyStaticTranslations() {
+        const tr = t();
+        document.documentElement.lang = currentLang;
+        document.title = tr.pageTitle;
+        document.getElementById('appTitle').textContent = tr.appTitle;
+        document.getElementById('appSubtitle').textContent = tr.appSubtitle;
+        document.getElementById('btnMainHubText').textContent = tr.mainHub;
+        document.getElementById('btnMainHub').title = tr.mainHubTitle;
+        document.getElementById('btnLoadCSVText').textContent = tr.loadCSV;
+        btnLoadCSV.title = tr.loadCSVTitle;
+        document.getElementById('btnExportCSVText').textContent = tr.exportCSV;
+        btnExportCSV.title = tr.exportCSVTitle;
+        document.getElementById('btnAddAssetText').textContent = tr.addAsset;
+
+        const setElWithTip = (id, text, infoEn, infoEs) => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.innerHTML = `${escapeHtml(text)} <span class="info-icon" data-info-en="${infoEn}" data-info-es="${infoEs}">i</span>`;
+          }
+        };
+
+        setElWithTip('kpiTitleTotalValue', tr.kpiTitleTotalValue, 'Total projected portfolio value at the end of the investment horizon.', 'Valor total proyectado del portafolio al término del horizonte de inversión.');
+        setElWithTip('kpiTitleTotalDeposits', tr.kpiTitleTotalDeposits, 'Cumulative cash principal contributed from initial deposits and monthly additions.', 'Capital total en efectivo aportado sumando depósitos iniciales y cuotas mensuales.');
+        document.getElementById('kpiPrincipalSub').textContent = tr.kpiPrincipalSub;
+        setElWithTip('kpiTitleTotalInterest', tr.kpiTitleTotalInterest, 'Total growth generated purely from compounding annual interest and investment yields.', 'Crecimiento acumulado generado exclusivamente por el interés compuesto y rendimientos.');
+        setElWithTip('kpiTitleMonthlyDeposits', tr.kpiTitleMonthlyDeposits, 'Sum of monthly contributions across all active assets.', 'Suma total de aportes mensuales combinados de todos los activos.');
+
+        setElWithTip('lblInvestmentHorizon', tr.lblInvestmentHorizon, 'Number of years assets are allowed to compound.', 'Años que se deja crecer el capital generando rendimientos.');
+        setElWithTip('leftCardTitleText', tr.leftCardTitleText, 'Customizable portfolio assets with distinct APYs, compounding frequencies, and deposits.', 'Activos del portafolio configurables con rendimientos (APY), frecuencia de capitalización y aportes independientes.');
+        document.getElementById('leftCardHint').textContent = tr.leftCardHint;
+        setElWithTip('rightCardTitleText', tr.rightCardTitleText, 'Visual projection of multi-asset wealth accumulation and compound growth.', 'Proyección visual de la acumulación de riqueza y crecimiento compuesto de tus activos.');
+        setElWithTip('allocBarTitle', tr.allocBarTitle, 'Visual distribution of final portfolio value across assets.', 'Distribución visual del valor final del portafolio entre cada activo.');
+        setElWithTip('assetBreakdownHeaderLeft', tr.assetBreakdownHeaderLeft, "Breakdown of each asset's principal vs. compound interest share in the final portfolio.", 'Desglose de capital aportado frente a interés compuesto de cada activo en el balance final.');
+        document.getElementById('assetBreakdownHeaderRight').textContent = tr.assetBreakdownHeaderRight;
+
+        setElWithTip('insightWeightedAPYLabel', tr.insightWeightedAPYLabel, 'Portfolio-wide average annual return weighted by current asset balances.', 'Rendimiento anual promedio ponderado según el peso de cada activo en el portafolio.');
+        setElWithTip('insightMultiplierLabel', tr.insightMultiplierLabel, 'How many times your invested cash was multiplied through compound growth.', 'Factor por el cual se multiplicó el dinero real aportado gracias al interés compuesto.');
+        setElWithTip('tableSectionTitle', tr.tableSectionTitle, 'Year-by-year multi-asset amortization and compound trajectory.', 'Cronograma anual de amortización y trayectoria compuesta multiactivo.');
+
+        updateThemeButtonText();
+      }
 
       function renderAssetInputs() {
+        const tr = t();
         assetsContainer.innerHTML = '';
         assetCountBadge.textContent = state.assets.length;
-        kpiAssetCount.textContent = `Across ${state.assets.length} active asset${state.assets.length > 1 ? 's' : ''}`;
+        kpiAssetCount.textContent = tr.kpiAssetCount(state.assets.length);
 
         state.assets.forEach((asset) => {
           const item = document.createElement('div');
@@ -807,11 +1246,11 @@
             <div class="asset-header">
               <div class="asset-title-group">
                 <span class="asset-color-badge" style="background-color: ${asset.color};"></span>
-                <input type="text" class="asset-name-input" value="${escapeHtml(asset.name)}" placeholder="Asset Name" data-field="name">
+                <input type="text" class="asset-name-input" value="${escapeHtml(asset.name)}" placeholder="${escapeHtml(tr.assetPlaceholder)}" data-field="name">
               </div>
               <div class="asset-actions">
                 ${state.assets.length > 1 ? `
-                  <button type="button" class="btn-icon btn-delete" title="Remove Asset" data-id="${asset.id}">
+                  <button type="button" class="btn-icon btn-delete" title="${escapeHtml(tr.removeAssetTitle)}" data-id="${asset.id}">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <polyline points="3 6 5 6 21 6"></polyline>
                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -823,7 +1262,7 @@
 
             <div class="asset-controls-grid">
               <div class="field-group">
-                <label class="field-label">Initial Balance</label>
+                <label class="field-label">${escapeHtml(tr.lblInitBalance)} <span class="info-icon" data-info-en="Initial lump-sum balance invested at day one." data-info-es="Saldo o capital inicial aportado desde el primer día.">i</span></label>
                 <div class="input-wrapper has-prefix">
                   <span class="input-prefix">$</span>
                   <input type="text" inputmode="numeric" value="${Math.round(asset.initialDeposit).toLocaleString()}" data-field="initialDeposit">
@@ -831,7 +1270,7 @@
               </div>
 
               <div class="field-group">
-                <label class="field-label">Monthly Contribution</label>
+                <label class="field-label">${escapeHtml(tr.lblMonthlyContribution)} <span class="info-icon" data-info-en="Recurring cash contributed into this asset every month." data-info-es="Aporte en efectivo recurrente agregado cada mes a este activo.">i</span></label>
                 <div class="input-wrapper has-prefix">
                   <span class="input-prefix">$</span>
                   <input type="text" inputmode="numeric" value="${Math.round(asset.monthlyDeposit).toLocaleString()}" data-field="monthlyDeposit">
@@ -839,7 +1278,7 @@
               </div>
 
               <div class="field-group">
-                <label class="field-label">Annual Return (APY)</label>
+                <label class="field-label">${escapeHtml(tr.lblAnnualReturn)} <span class="info-icon" data-info-en="Annual Percentage Yield (APY) or projected annual investment return rate." data-info-es="Rendimiento porcentual anual (APY) o tasa esperada de ganancia anual.">i</span></label>
                 <div class="input-wrapper has-suffix">
                   <input type="number" step="0.1" min="0" max="100" value="${asset.annualRate}" data-field="annualRate">
                   <span class="input-suffix">%</span>
@@ -847,12 +1286,12 @@
               </div>
 
               <div class="field-group">
-                <label class="field-label">Compounding</label>
+                <label class="field-label">${escapeHtml(tr.lblCompounding)} <span class="info-icon" data-info-en="How often interest is calculated and reinvested back into the principal." data-info-es="Frecuencia con que los intereses generados se capitalizan y reinvierten.">i</span></label>
                 <select data-field="frequency">
-                  <option value="12" ${asset.frequency === 12 ? 'selected' : ''}>Monthly</option>
-                  <option value="365" ${asset.frequency === 365 ? 'selected' : ''}>Daily</option>
-                  <option value="4" ${asset.frequency === 4 ? 'selected' : ''}>Quarterly</option>
-                  <option value="1" ${asset.frequency === 1 ? 'selected' : ''}>Annually</option>
+                  <option value="12" ${asset.frequency === 12 ? 'selected' : ''}>${escapeHtml(tr.freqMonthly)}</option>
+                  <option value="365" ${asset.frequency === 365 ? 'selected' : ''}>${escapeHtml(tr.freqDaily)}</option>
+                  <option value="4" ${asset.frequency === 4 ? 'selected' : ''}>${escapeHtml(tr.freqQuarterly)}</option>
+                  <option value="1" ${asset.frequency === 1 ? 'selected' : ''}>${escapeHtml(tr.freqAnnually)}</option>
                 </select>
               </div>
             </div>
@@ -873,7 +1312,7 @@
 
           const nameInput = card.querySelector('[data-field="name"]');
           nameInput.addEventListener('input', (e) => {
-            asset.name = e.target.value || 'Untitled Asset';
+            asset.name = e.target.value || t().untitledAsset;
             recalculateApp(false);
           });
 
@@ -905,6 +1344,8 @@
       }
 
       function drawChart(yearlyAggregates, assetHistories) {
+        const tr = t();
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
         const dpr = window.devicePixelRatio || 1;
         const rect = growthCanvas.getBoundingClientRect();
         growthCanvas.width = rect.width * dpr;
@@ -928,9 +1369,9 @@
         maxVal = Math.ceil(maxVal * 1.08);
 
         const gridLines = 4;
-        ctx.strokeStyle = '#222e44';
+        ctx.strokeStyle = isLight ? '#cbd5e1' : '#222e44';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = isLight ? '#475569' : '#64748b';
         ctx.font = '10px -apple-system, sans-serif';
         ctx.textAlign = 'right';
 
@@ -950,7 +1391,7 @@
 
         for (let yr = 0; yr <= numYears; yr += stepX) {
           const x = padding.left + (yr / numYears) * graphW;
-          ctx.fillText(`Yr ${yr}`, x, h - 12);
+          ctx.fillText(tr.chartAxisYr(yr), x, h - 12);
         }
 
         state.assets.forEach(asset => {
@@ -976,60 +1417,130 @@
           else ctx.lineTo(x, y);
         });
 
-        ctx.strokeStyle = '#ffffff';
+        const totalLineColor = isLight ? '#0f172a' : '#ffffff';
+        ctx.strokeStyle = totalLineColor;
         ctx.lineWidth = 2.5;
         ctx.setLineDash([4, 3]);
         ctx.stroke();
         ctx.setLineDash([]);
 
+        const totalFinalVal = yearlyAggregates[state.horizonYears].totalBalance || 0;
+
         chartLegend.innerHTML = '';
         state.assets.forEach(asset => {
+          const finalAssetVal = assetHistories[asset.id].yearlyBalances[state.horizonYears] || 0;
+          const pctStr = totalFinalVal > 0 ? ((finalAssetVal / totalFinalVal) * 100).toFixed(1) + '%' : '0.0%';
           const item = document.createElement('div');
           item.className = 'legend-item';
-          item.innerHTML = `<span class="legend-color" style="background:${asset.color};"></span><span>${escapeHtml(asset.name)}</span>`;
+          item.innerHTML = `<span class="legend-color" style="background:${asset.color};"></span><span>${escapeHtml(asset.name)} <strong style="color:var(--text-main);">(${pctStr})</strong></span>`;
           chartLegend.appendChild(item);
         });
 
         const totalLegend = document.createElement('div');
         totalLegend.className = 'legend-item';
-        totalLegend.innerHTML = `<span class="legend-color" style="background:#ffffff; border:1px dashed #000;"></span><span style="color:#fff; font-weight:600;">Total Portfolio</span>`;
+        totalLegend.innerHTML = `<span class="legend-color" style="background:${totalLineColor}; border:1px dashed var(--border-color);"></span><span style="color:var(--text-main); font-weight:600;">${escapeHtml(tr.legendTotalPortfolio)}</span>`;
         chartLegend.appendChild(totalLegend);
       }
 
-      function renderAllocationBar(assetHistories) {
+      function renderAllocationBar(assetHistories, yearlyAggregates) {
+        const tr = t();
         allocBar.innerHTML = '';
+        const assetPercentagesList = document.getElementById('assetPercentagesList');
+        const allocHorizonLabel = document.getElementById('allocHorizonLabel');
+        const insightWeightedAPY = document.getElementById('insightWeightedAPY');
+        const insightWeightedSub = document.getElementById('insightWeightedSub');
+        const insightMultiplier = document.getElementById('insightMultiplier');
+        const insightTopAssetSub = document.getElementById('insightTopAssetSub');
+
+        if (allocHorizonLabel) {
+          allocHorizonLabel.textContent = tr.allocHorizonLabel(state.horizonYears);
+        }
+
         let totalFinal = 0;
+        let totalInitial = 0;
+        let weightedApyNumer = 0;
+        let topAssetName = '';
+        let topAssetPct = -1;
+
         state.assets.forEach(asset => {
           const finalVal = assetHistories[asset.id].yearlyBalances[state.horizonYears];
           totalFinal += finalVal;
+          totalInitial += asset.initialDeposit;
+          weightedApyNumer += finalVal * asset.annualRate;
         });
 
-        if (totalFinal <= 0) return;
+        if (assetPercentagesList) assetPercentagesList.innerHTML = '';
 
         state.assets.forEach(asset => {
           const finalVal = assetHistories[asset.id].yearlyBalances[state.horizonYears];
-          const pct = ((finalVal / totalFinal) * 100).toFixed(1);
-          if (pct <= 0) return;
+          const principalInvested = asset.initialDeposit + (asset.monthlyDeposit * 12 * state.horizonYears);
+          const interestEarned = Math.max(0, finalVal - principalInvested);
+          const finalPctNum = totalFinal > 0 ? (finalVal / totalFinal) * 100 : 0;
+          const initPctNum = totalInitial > 0 ? (asset.initialDeposit / totalInitial) * 100 : 0;
+          const pct = finalPctNum.toFixed(1);
 
-          const seg = document.createElement('div');
-          seg.className = 'alloc-seg';
-          seg.style.width = `${pct}%`;
-          seg.style.backgroundColor = asset.color;
-          seg.title = `${asset.name}: ${formatMoney(finalVal)} (${pct}%)`;
-          allocBar.appendChild(seg);
+          if (finalPctNum > topAssetPct) {
+            topAssetPct = finalPctNum;
+            topAssetName = asset.name;
+          }
+
+          if (finalPctNum > 0) {
+            const seg = document.createElement('div');
+            seg.className = 'alloc-seg';
+            seg.style.width = `${pct}%`;
+            seg.style.backgroundColor = asset.color;
+            seg.title = `${asset.name}: ${formatMoney(finalVal)} (${pct}%)`;
+            allocBar.appendChild(seg);
+          }
+
+          if (assetPercentagesList) {
+            const row = document.createElement('div');
+            row.className = 'benchmark-row';
+            row.innerHTML = `
+              <div class="benchmark-top">
+                <span style="display:inline-flex; align-items:center; gap:0.45rem; color:${asset.color};">
+                  <span style="width:10px; height:10px; border-radius:3px; background:${asset.color}; display:inline-block;"></span>
+                  ${escapeHtml(asset.name)}
+                </span>
+                <span style="color:var(--text-main);">${pct}% (${formatMoney(finalVal)})</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width:${Math.min(100, finalPctNum)}%; background:${asset.color};"></div>
+              </div>
+              <div class="benchmark-sub">
+                <span>${tr.assetRowSubLeft(initPctNum.toFixed(1), asset.annualRate)}</span>
+                <span style="color:#10b981;">${tr.assetRowSubRight(formatMoney(interestEarned))}</span>
+              </div>
+            `;
+            assetPercentagesList.appendChild(row);
+          }
         });
+
+        const blendedApy = totalFinal > 0 ? (weightedApyNumer / totalFinal) : 0;
+        if (insightWeightedAPY) insightWeightedAPY.textContent = `${blendedApy.toFixed(2)}% APY`;
+        if (insightWeightedSub) insightWeightedSub.textContent = tr.insightWeightedSub(state.horizonYears);
+
+        const finalYearObj = yearlyAggregates ? yearlyAggregates[state.horizonYears] : null;
+        const mult = (finalYearObj && finalYearObj.totalPrincipal > 0)
+          ? (finalYearObj.totalBalance / finalYearObj.totalPrincipal)
+          : 1;
+        if (insightMultiplier) insightMultiplier.textContent = tr.insightMultiplierVal(mult.toFixed(2));
+        if (insightTopAssetSub && topAssetName) {
+          insightTopAssetSub.textContent = tr.insightTopAssetSub(topAssetName, topAssetPct.toFixed(1));
+        }
       }
 
       function renderTable(yearlyAggregates, assetHistories) {
+        const tr = t();
         let theadHtml = `
           <tr>
-            <th>Year</th>
-            <th>Total Balance</th>
-            <th>Total Principal</th>
-            <th>Total Interest</th>
+            <th>${escapeHtml(tr.tableHeadersFixed[0])} <span class="info-icon" data-info-en="Year index of projection." data-info-es="Año de proyección.">i</span></th>
+            <th>${escapeHtml(tr.tableHeadersFixed[1])} <span class="info-icon" data-info-en="Combined portfolio ending balance at that year." data-info-es="Saldo final total acumulado del portafolio al término de ese año.">i</span></th>
+            <th>${escapeHtml(tr.tableHeadersFixed[2])} <span class="info-icon" data-info-en="Cumulative cash principal contributed up to that year." data-info-es="Capital total aportado acumulado hasta ese año.">i</span></th>
+            <th>${escapeHtml(tr.tableHeadersFixed[3])} <span class="info-icon" data-info-en="Cumulative compound interest and investment gains earned." data-info-es="Interés compuesto total acumulado generado hasta ese año.">i</span></th>
         `;
         state.assets.forEach(asset => {
-          theadHtml += `<th style="color: ${asset.color};">${escapeHtml(asset.name)}</th>`;
+          theadHtml += `<th style="color: ${asset.color};">${escapeHtml(asset.name)} <span class="info-icon" data-info-en="Projected year-end balance for ${escapeHtml(asset.name)}." data-info-es="Saldo proyectado al cierre de año para ${escapeHtml(asset.name)}.">i</span></th>`;
         });
         theadHtml += `</tr>`;
         projectionThead.innerHTML = theadHtml;
@@ -1038,10 +1549,10 @@
         yearlyAggregates.forEach((pt, yr) => {
           tbodyHtml += `
             <tr>
-              <td style="font-weight:700;">Year ${yr}</td>
+              <td style="font-weight:700;">${tr.tableYearRow(yr)}</td>
               <td style="font-weight:700; color:#ffffff;">${formatMoney(pt.totalBalance)}</td>
               <td style="color:#38bdf8;">${formatMoney(pt.totalPrincipal)}</td>
-              <td style="color:#34d399;">${formatMoney(pt.totalInterest)}</td>
+              <td style="color:#10b981;">${formatMoney(pt.totalInterest)}</td>
           `;
 
           state.assets.forEach(asset => {
@@ -1055,11 +1566,13 @@
       }
 
       function recalculateApp(rebuildInputs = false) {
+        const tr = t();
         if (rebuildInputs) renderAssetInputs();
+        else kpiAssetCount.textContent = tr.kpiAssetCount(state.assets.length);
 
         horizonSlider.value = state.horizonYears;
-        horizonDisplay.textContent = `${state.horizonYears} Year${state.horizonYears > 1 ? 's' : ''}`;
-        kpiHorizonSub.textContent = `At year ${state.horizonYears}`;
+        horizonDisplay.textContent = tr.horizonDisplay(state.horizonYears);
+        kpiHorizonSub.textContent = tr.kpiHorizonSub(state.horizonYears);
 
         const { assetHistories, yearlyAggregates } = computeProjections();
 
@@ -1071,53 +1584,90 @@
         const interestPct = finalYear.totalBalance > 0 
           ? ((finalYear.totalInterest / finalYear.totalBalance) * 100).toFixed(1) 
           : 0;
-        kpiInterestRatio.textContent = `${interestPct}% earned from compound interest`;
+        kpiInterestRatio.textContent = tr.kpiInterestRatio(interestPct);
 
         const monthlySum = state.assets.reduce((sum, a) => sum + a.monthlyDeposit, 0);
-        kpiMonthlyDeposits.textContent = `${formatMoney(monthlySum)}/mo`;
+        kpiMonthlyDeposits.textContent = `${formatMoney(monthlySum)}${tr.moSuffix}`;
 
         drawChart(yearlyAggregates, assetHistories);
-        renderAllocationBar(assetHistories);
+        renderAllocationBar(assetHistories, yearlyAggregates);
         renderTable(yearlyAggregates, assetHistories);
       }
+
+      const recalculateAll = recalculateApp;
 
       // --- Export to CSV ---
       function exportToCSV() {
         const { yearlyAggregates, assetHistories } = computeProjections();
         const rows = [];
 
-        rows.push(['Multi-Asset Investing & Portfolio Savings Projection']);
-        rows.push(['Export Date', new Date().toLocaleDateString()]);
-        rows.push(['Investment Horizon (Years)', state.horizonYears]);
-        rows.push(['Total Projected Value', formatMoney(yearlyAggregates[state.horizonYears].totalBalance)]);
-        rows.push(['Total Deposits', formatMoney(yearlyAggregates[state.horizonYears].totalPrincipal)]);
-        rows.push(['Total Interest Earned', formatMoney(yearlyAggregates[state.horizonYears].totalInterest)]);
-        rows.push([]);
+        if (currentLang === 'es') {
+          rows.push(['Proyección de Inversión Multi-Activos y Portafolio de Ahorros']);
+          rows.push(['Fecha de Exportación', new Date().toLocaleDateString()]);
+          rows.push(['Horizonte de Inversión (Años)', state.horizonYears]);
+          rows.push(['Valor Total Proyectado', formatMoney(yearlyAggregates[state.horizonYears].totalBalance)]);
+          rows.push(['Capital Total Invertido', formatMoney(yearlyAggregates[state.horizonYears].totalPrincipal)]);
+          rows.push(['Interés Total Generado', formatMoney(yearlyAggregates[state.horizonYears].totalInterest)]);
+          rows.push([]);
 
-        rows.push(['ASSET CONFIGURATION']);
-        rows.push(['Asset Name', 'Initial Balance ($)', 'Monthly Deposit ($)', 'Annual APY (%)', 'Compounding Frequency']);
-        state.assets.forEach(a => {
-          let freqLabel = 'Monthly';
-          if (a.frequency === 365) freqLabel = 'Daily';
-          if (a.frequency === 4) freqLabel = 'Quarterly';
-          if (a.frequency === 1) freqLabel = 'Annually';
+          rows.push(['CONFIGURACIÓN DE PORTAFOLIO DE ACTIVOS']);
+          rows.push(['Nombre del Activo', 'Saldo Inicial ($)', 'Aporte Mensual ($)', 'APY Anual (%)', 'Frecuencia de Capitalización']);
+          state.assets.forEach(a => {
+            let freqLabel = 'Mensual';
+            if (a.frequency === 365) freqLabel = 'Diaria';
+            if (a.frequency === 4) freqLabel = 'Trimestral';
+            if (a.frequency === 1) freqLabel = 'Anual';
 
-          rows.push([
-            `"${a.name.replace(/"/g, '""')}"`,
-            a.initialDeposit,
-            a.monthlyDeposit,
-            `${a.annualRate}%`,
-            freqLabel
-          ]);
-        });
-        rows.push([]);
+            rows.push([
+              `"${a.name.replace(/"/g, '""')}"`,
+              a.initialDeposit,
+              a.monthlyDeposit,
+              `${a.annualRate}%`,
+              freqLabel
+            ]);
+          });
+          rows.push([]);
 
-        rows.push(['YEAR-BY-YEAR PROJECTION SCHEDULE']);
-        const headerRow = ['Year', 'Total Balance ($)', 'Total Deposits ($)', 'Total Interest ($)'];
-        state.assets.forEach(a => {
-          headerRow.push(`"${a.name.replace(/"/g, '""')} Balance ($)"`);
-        });
-        rows.push(headerRow);
+          rows.push(['CRONOGRAMA AÑO POR AÑO DE PROYECCIÓN']);
+          const headerRow = ['Año', 'Saldo Total ($)', 'Capital Total ($)', 'Interés Total ($)'];
+          state.assets.forEach(a => {
+            headerRow.push(`"Saldo ${a.name.replace(/"/g, '""')} ($)"`);
+          });
+          rows.push(headerRow);
+        } else {
+          rows.push(['Multi-Asset Investing & Portfolio Savings Projection']);
+          rows.push(['Export Date', new Date().toLocaleDateString()]);
+          rows.push(['Investment Horizon (Years)', state.horizonYears]);
+          rows.push(['Total Projected Value', formatMoney(yearlyAggregates[state.horizonYears].totalBalance)]);
+          rows.push(['Total Deposits', formatMoney(yearlyAggregates[state.horizonYears].totalPrincipal)]);
+          rows.push(['Total Interest Earned', formatMoney(yearlyAggregates[state.horizonYears].totalInterest)]);
+          rows.push([]);
+
+          rows.push(['ASSET PORTFOLIO CONFIGURATION']);
+          rows.push(['Asset Name', 'Initial Balance ($)', 'Monthly Deposit ($)', 'Annual APY (%)', 'Compounding Frequency']);
+          state.assets.forEach(a => {
+            let freqLabel = 'Monthly';
+            if (a.frequency === 365) freqLabel = 'Daily';
+            if (a.frequency === 4) freqLabel = 'Quarterly';
+            if (a.frequency === 1) freqLabel = 'Annually';
+
+            rows.push([
+              `"${a.name.replace(/"/g, '""')}"`,
+              a.initialDeposit,
+              a.monthlyDeposit,
+              `${a.annualRate}%`,
+              freqLabel
+            ]);
+          });
+          rows.push([]);
+
+          rows.push(['YEAR-BY-YEAR PROJECTION SCHEDULE']);
+          const headerRow = ['Year', 'Total Balance ($)', 'Total Deposits ($)', 'Total Interest ($)'];
+          state.assets.forEach(a => {
+            headerRow.push(`"${a.name.replace(/"/g, '""')} Balance ($)"`);
+          });
+          rows.push(headerRow);
+        }
 
         yearlyAggregates.forEach((pt, yr) => {
           const row = [
@@ -1182,7 +1732,7 @@
         return result;
       }
 
-      // --- Import / Load CSV ---
+      // --- Import / Load CSV (Supports both EN and ES exports) ---
       function handleCSVFile(file) {
         if (!file) return;
         const reader = new FileReader();
@@ -1199,15 +1749,29 @@
             for (let i = 0; i < lines.length; i++) {
               const line = lines[i];
               const cols = parseCSVLine(line, delimiter);
+              if (!cols[0]) continue;
+              const col0Upper = cols[0].toUpperCase();
+              const label = cols[0].toLowerCase();
 
-              // Extract Horizon
-              if (cols[0] && cols[0].toLowerCase().includes('investment horizon')) {
+              // Extract Horizon (EN or ES)
+              if (
+                label.includes('investment horizon') ||
+                label.includes('horizonte de inversión') ||
+                label.includes('horizonte de inversion')
+              ) {
                 const parsedH = parseInt(cols[1], 10);
                 if (!isNaN(parsedH) && parsedH >= 1) loadedHorizon = parsedH;
               }
 
-              // Detect Section Start
-              if (cols[0] === 'ASSET CONFIGURATION') {
+              // Detect Section Start (EN or ES)
+              if (
+                col0Upper === 'ASSET CONFIGURATION' ||
+                col0Upper === 'ASSET PORTFOLIO CONFIGURATION' ||
+                col0Upper === 'CONFIGURACIÓN DE PORTAFOLIO DE ACTIVOS' ||
+                col0Upper === 'CONFIGURACION DE PORTAFOLIO DE ACTIVOS' ||
+                col0Upper === 'CONFIGURACIÓN DE ACTIVOS' ||
+                col0Upper === 'CONFIGURACION DE ACTIVOS'
+              ) {
                 inAssetConfig = true;
                 i++; // skip header row
                 continue;
@@ -1215,7 +1779,12 @@
 
               // Detect Section End
               if (inAssetConfig) {
-                if (cols[0] === 'YEAR-BY-YEAR PROJECTION SCHEDULE' || cols.length < 5) {
+                if (
+                  col0Upper.includes('YEAR-BY-YEAR') ||
+                  col0Upper.includes('CRONOGRAMA AÑO POR AÑO') ||
+                  col0Upper.includes('AÑO POR AÑO') ||
+                  cols.length < 5
+                ) {
                   inAssetConfig = false;
                   continue;
                 }
@@ -1227,13 +1796,13 @@
                 
                 let freq = 12;
                 const freqStr = (cols[4] || '').toLowerCase();
-                if (freqStr.includes('daily')) freq = 365;
-                else if (freqStr.includes('quarter')) freq = 4;
-                else if (freqStr.includes('annual')) freq = 1;
+                if (freqStr.includes('daily') || freqStr.includes('diari')) freq = 365;
+                else if (freqStr.includes('quarter') || freqStr.includes('trimestral')) freq = 4;
+                else if (freqStr.includes('annual') || freqStr.includes('anual')) freq = 1;
 
                 loadedAssets.push({
                   id: 'asset_' + (Date.now() + Math.random().toString(36).substr(2, 5)),
-                  name: name || `Asset ${loadedAssets.length + 1}`,
+                  name: name || t().newAssetDefault(loadedAssets.length + 1),
                   color: COLOR_PALETTE[loadedAssets.length % COLOR_PALETTE.length],
                   initialDeposit: initBal,
                   monthlyDeposit: monthly,
@@ -1249,18 +1818,37 @@
               renderAssetInputs();
               recalculateApp(false);
             } else {
-              alert('Could not detect valid asset configuration in the selected CSV file.');
+              alert(t().csvAlertNoAssets);
             }
 
           } catch (err) {
             console.error(err);
-            alert('Error parsing CSV file. Please make sure it is a valid portfolio export.');
+            alert(t().csvAlertParseError);
           }
         };
         reader.readAsText(file);
       }
 
       // --- Event Listeners ---
+      btnThemeToggle.addEventListener('click', () => {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('finance_suite_theme', currentTheme);
+        applyTheme();
+        recalculateAll(false);
+      });
+
+      langSelect.addEventListener('change', (e) => {
+        const nextLang = e.target.value === 'es' ? 'es' : 'en';
+        if (nextLang === currentLang) return;
+        const prevLang = currentLang;
+        currentLang = nextLang;
+        localStorage.setItem('finance_suite_lang', currentLang);
+        translateDefaultAssetNames(prevLang, currentLang);
+        applyStaticTranslations();
+        renderAssetInputs();
+        recalculateAll(false);
+      });
+
       horizonSlider.addEventListener('input', (e) => {
         state.horizonYears = parseInt(e.target.value, 10);
         recalculateApp(false);
@@ -1272,7 +1860,7 @@
         
         state.assets.push({
           id: nextId,
-          name: `Asset ${state.assets.length + 1}`,
+          name: t().newAssetDefault(state.assets.length + 1),
           color: color,
           initialDeposit: 5000,
           monthlyDeposit: 250,
@@ -1302,7 +1890,63 @@
         drawChart(yearlyAggregates, assetHistories);
       });
 
+      // Tooltip Floating Bubble Initializer
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = currentLang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en')) : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) left = window.innerWidth - tipRect.width - 10;
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
+
       // Bootstrap
+      initInfoTooltips();
+      langSelect.value = currentLang;
+      applyTheme();
+      applyStaticTranslations();
       renderAssetInputs();
       recalculateApp(false);
 

@@ -472,6 +472,88 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead { background-color: #e2e8f0 !important; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value { color: var(--text-main); }
+    html[data-theme="light"] .btn-secondary { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] td[style*="color:#ffffff"], html[data-theme="light"] td[style*="color: #ffffff"], html[data-theme="light"] td[style*="color:#e2e8f0"], html[data-theme="light"] td[style*="color:#cbd5e1"] { color: #0f172a !important; }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -487,20 +569,29 @@
           </svg>
         </div>
         <div>
-          <h1>Emergency Fund Runway Calculator</h1>
-          <p>Survival runway across Lean, Moderate &amp; Baseline burn tiers</p>
+          <h1 data-i18n="appTitle">Emergency Fund Runway Calculator</h1>
+          <p data-i18n="appSubtitle">Survival runway across Lean, Moderate &amp; Baseline burn tiers</p>
         </div>
       </div>
 
       <div class="header-actions">
         <!-- Return to Main Hub -->
-        <a href="./index.html" class="btn btn-secondary" title="Return to Main Suite">
+        <a href="./index.html" class="btn btn-secondary" id="btnMainHub" title="Return to Main Suite">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          Main Hub
+          <span data-i18n="btnMainHub">Main Hub</span>
         </a>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="btn btn-secondary" id="btnThemeToggle" title="Toggle Light/Dark Mode">☀️ Light</button>
+
+        <!-- Language Selector -->
+        <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" title="Select Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
 
         <!-- Hidden CSV File Input -->
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
@@ -512,7 +603,7 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          Load CSV
+          <span data-i18n="btnLoadCSV">Load CSV</span>
         </button>
 
         <!-- Export CSV Button -->
@@ -522,7 +613,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Export CSV
+          <span data-i18n="btnExportCSV">Export CSV</span>
         </button>
       </div>
     </header>
@@ -530,22 +621,22 @@
     <!-- Top KPI Row -->
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-label">Lean Survival Runway</div>
+        <div class="kpi-label" data-i18n="kpiLeanRunwayLabel" data-info-en="Months your cash reserves will last under absolute minimum survival spending." data-info-es="Meses que durarán tus reservas con un presupuesto mínimo estricto de supervivencia.">Lean Survival Runway</div>
         <div class="kpi-value" id="kpiLeanRunway" style="color: #34d399;">0.0 Mo</div>
         <div class="kpi-subtext" id="kpiLeanDate">Until Month 0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Comfortable Runway</div>
+        <div class="kpi-label" data-i18n="kpiModRunwayLabel" data-info-en="Months your reserves will last maintaining standard essentials and basic comforts." data-info-es="Meses que durarán tus fondos manteniendo gastos esenciales y comodidades básicas.">Comfortable Runway</div>
         <div class="kpi-value" id="kpiModerateRunway" style="color: #38bdf8;">0.0 Mo</div>
         <div class="kpi-subtext" id="kpiModDate">Until Month 0</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Total Liquid Reserves</div>
+        <div class="kpi-label" data-i18n="kpiTotalLiqLabel" data-info-en="Total immediate liquid cash available across checking, HYSA, and severance." data-info-es="Total de efectivo líquido inmediato disponible en cuentas corrientes, HYSA e indemnización.">Total Liquid Reserves</div>
         <div class="kpi-value" id="kpiTotalLiquidity">$0</div>
-        <div class="kpi-subtext">Cash + HYSA + Taxable</div>
+        <div class="kpi-subtext" data-i18n="kpiTotalLiqSub">Cash + HYSA + Taxable</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Bridge / Side Income</div>
+        <div class="kpi-label" data-i18n="kpiBridgeLabel" data-info-en="Monthly recurring income expected from freelancing, side gigs, or unemployment assistance." data-info-es="Ingresos mensuales esperados por trabajos independientes, proyectos o subsidios.">Bridge / Side Income</div>
         <div class="kpi-value" id="kpiBridgeIncome" style="color: #fbbf24;">$0/mo</div>
         <div class="kpi-subtext" id="kpiSeveranceSub">Includes $0 severance</div>
       </div>
@@ -555,27 +646,27 @@
     <div class="tiers-grid">
       <div class="tier-box highlight">
         <div class="tier-title">
-          <span>Tier 1: Lean Survival</span>
+          <span data-i18n="tier1Title" data-info-en="Minimal spend needed to stay housed, fed, and healthy." data-info-es="Gasto mínimo para mantener techo, comida y salud.">Tier 1: Lean Survival</span>
           <span style="color:#34d399;" id="tierLeanBurnLabel">$0/mo</span>
         </div>
         <div class="tier-value" id="tierLeanMonths">0.0 Months</div>
-        <div class="tier-desc">Absolute essentials only (Rent, Food, Healthcare, Utilities)</div>
+        <div class="tier-desc" data-i18n="tier1Desc">Absolute essentials only (Rent, Food, Healthcare, Utilities)</div>
       </div>
       <div class="tier-box">
         <div class="tier-title">
-          <span>Tier 2: Moderate Comfort</span>
+          <span data-i18n="tier2Title" data-info-en="Balanced spend with essentials plus transport and connectivity." data-info-es="Gasto equilibrado con esenciales más transporte e internet.">Tier 2: Moderate Comfort</span>
           <span style="color:#38bdf8;" id="tierModBurnLabel">$0/mo</span>
         </div>
         <div class="tier-value" id="tierModMonths">0.0 Months</div>
-        <div class="tier-desc">Essentials + Transportation, Commute, Basic Services</div>
+        <div class="tier-desc" data-i18n="tier2Desc">Essentials + Transportation, Commute, Basic Services</div>
       </div>
       <div class="tier-box">
         <div class="tier-title">
-          <span>Tier 3: Full Current Spend</span>
+          <span data-i18n="tier3Title" data-info-en="Current lifestyle spend without cutting any discretionary expenses." data-info-es="Gasto actual completo sin recortar compras discrecionales.">Tier 3: Full Current Spend</span>
           <span style="color:#f59e0b;" id="tierFullBurnLabel">$0/mo</span>
         </div>
         <div class="tier-value" id="tierFullMonths">0.0 Months</div>
-        <div class="tier-desc">Zero lifestyle spending cutbacks</div>
+        <div class="tier-desc" data-i18n="tier3Desc">Zero lifestyle spending cutbacks</div>
       </div>
     </div>
 
@@ -593,15 +684,15 @@
             <line x1="20" y1="21" x2="20" y2="16"></line>
             <line x1="20" y1="12" x2="20" y2="3"></line>
           </svg>
-          Financial Reserves &amp; Monthly Burn Rates
+          <span data-i18n="paramsTitle">Financial Reserves &amp; Monthly Burn Rates</span>
         </h2>
 
         <!-- Reserves -->
-        <div class="input-section-title">Available Cash &amp; Liquid Reserves</div>
+        <div class="input-section-title" data-i18n="reservesSectionTitle">Available Cash &amp; Liquid Reserves</div>
 
         <div class="input-group">
           <div class="input-header">
-            <label for="cashCheckingInput" class="input-label">Checking Account (Zero Yield)</label>
+            <label for="cashCheckingInput" class="input-label" data-i18n="lblChecking" data-info-en="Immediately accessible checking account funds." data-info-es="Fondos en cuenta corriente de acceso inmediato.">Checking Account (Zero Yield)</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="cashCheckingInput" inputmode="numeric" value="6,000">
@@ -612,7 +703,7 @@
 
         <div class="input-group">
           <div class="input-header">
-            <label for="hysaInput" class="input-label">High-Yield Savings / Money Market</label>
+            <label for="hysaInput" class="input-label" data-i18n="lblHysa" data-info-en="High-Yield Savings or money market deposits that generate interest." data-info-es="Depósitos en cuenta de ahorro de alto rendimiento o fondos monetarios que generan intereses.">High-Yield Savings / Money Market</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="hysaInput" inputmode="numeric" value="28,000">
@@ -623,14 +714,14 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="input-group">
-            <label for="hysaApyInput" class="input-label" style="display:block; margin-bottom:0.3rem;">HYSA APY Yield</label>
+            <label for="hysaApyInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblHysaApy" data-info-en="Annual percentage yield earned on your high-yield savings balances." data-info-es="Tasa de rendimiento anual generada por tus ahorros en HYSA.">HYSA APY Yield</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="hysaApyInput" min="0" max="10" step="0.1" value="4.2" style="width:100%;">
               <span class="input-suffix">%</span>
             </div>
           </div>
           <div class="input-group">
-            <label for="severanceInput" class="input-label" style="display:block; margin-bottom:0.3rem;">One-Time Severance</label>
+            <label for="severanceInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblSeverance" data-info-en="One-time severance payout or initial lump-sum emergency cushion." data-info-es="Pago único de liquidación laboral o reserva inicial en efectivo.">One-Time Severance</label>
             <div class="input-field-wrapper has-prefix" style="width:100%;">
               <span class="input-prefix">$</span>
               <input type="text" id="severanceInput" inputmode="numeric" value="5,000" style="width:100%;">
@@ -639,11 +730,11 @@
         </div>
 
         <!-- Monthly Expenses Tiers -->
-        <div class="input-section-title">Monthly Expense Tiers</div>
+        <div class="input-section-title" data-i18n="burnSectionTitle">Monthly Expense Tiers</div>
 
         <div class="input-group">
           <div class="input-header">
-            <label for="leanBurnInput" class="input-label">Tier 1: Lean Survival Spend (Shelter, Groceries, Meds)</label>
+            <label for="leanBurnInput" class="input-label" data-i18n="lblLeanBurn" data-info-en="Minimum monthly spend for shelter, groceries, utilities, and medicine." data-info-es="Gasto mensual mínimo para vivienda, comida, servicios y salud.">Tier 1: Lean Survival Spend (Shelter, Groceries, Meds)</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="leanBurnInput" inputmode="numeric" value="2,400">
@@ -654,7 +745,7 @@
 
         <div class="input-group">
           <div class="input-header">
-            <label for="modBurnInput" class="input-label">Tier 2: Moderate Comfortable Spend (+Transport, Subscriptions)</label>
+            <label for="modBurnInput" class="input-label" data-i18n="lblModBurn" data-info-en="Monthly outlay covering essentials plus modest transport and connectivity." data-info-es="Gasto mensual que cubre esenciales más transporte modesto y conectividad.">Tier 2: Moderate Comfortable Spend (+Transport, Subscriptions)</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="modBurnInput" inputmode="numeric" value="3,600">
@@ -665,7 +756,7 @@
 
         <div class="input-group">
           <div class="input-header">
-            <label for="fullBurnInput" class="input-label">Tier 3: Current Baseline Spend (Full Discretionary)</label>
+            <label for="fullBurnInput" class="input-label" data-i18n="lblFullBurn" data-info-en="Current total monthly living expenses without any spending cuts." data-info-es="Gasto mensual total actual sin realizar ningún recorte de presupuesto.">Tier 3: Current Baseline Spend (Full Discretionary)</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="fullBurnInput" inputmode="numeric" value="4,800">
@@ -675,11 +766,11 @@
         </div>
 
         <!-- Bridge Inflow -->
-        <div class="input-section-title">Ongoing Monthly Bridge Income</div>
+        <div class="input-section-title" data-i18n="bridgeSectionTitle">Ongoing Monthly Bridge Income</div>
 
         <div class="input-group" style="margin-bottom:0;">
           <div class="input-header">
-            <label for="bridgeIncomeInput" class="input-label">Part-Time / Side-Gig / Unemployment Assistance</label>
+            <label for="bridgeIncomeInput" class="input-label" data-i18n="lblBridgeIncome" data-info-en="Monthly income earned during runway (freelance, side-gigs, benefits)." data-info-es="Ingresos mensuales obtenidos durante la transición (freelance, proyectos, subsidios).">Part-Time / Side-Gig / Unemployment Assistance</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="bridgeIncomeInput" inputmode="numeric" value="600">
@@ -697,7 +788,7 @@
             <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline>
             <polyline points="16 17 22 17 22 11"></polyline>
           </svg>
-          Reserve Depletion Trajectory
+          <span data-i18n="chartTitle" data-info-en="Depletion trajectories across all 3 spending tiers until reserves reach zero." data-info-es="Trayectorias de agotamiento de los 3 niveles de gasto hasta llegar a cero.">Reserve Depletion Trajectory</span>
         </h2>
 
         <div class="chart-box">
@@ -710,24 +801,24 @@
         <!-- Summary Callouts -->
         <div class="summary-callouts">
           <div class="callout-item">
-            <span class="callout-title">Net Lean Monthly Burn</span>
+            <span class="callout-title" data-i18n="calloutNetLeanTitle" data-info-en="Net monthly burn rate after applying bridge income to survival spend." data-info-es="Gasto mensual neto tras aplicar los ingresos puente al presupuesto de supervivencia.">Net Lean Monthly Burn</span>
             <span class="callout-value" id="calloutNetLeanBurn" style="color:#34d399;">$0/mo</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">After $600 bridge income</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" id="calloutNetLeanSub">After $600 bridge income</span>
           </div>
           <div class="callout-item">
-            <span class="callout-title">Target 6-Month Reserve</span>
+            <span class="callout-title" data-i18n="calloutTarget6MoTitle" data-info-en="Recommended 6-month buffer under the moderate spending tier." data-info-es="Reserva recomendada de 6 meses bajo el nivel de gasto moderado.">Target 6-Month Reserve</span>
             <span class="callout-value" id="calloutTarget6Mo" style="color:#38bdf8;">$0</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">Moderate tier benchmark</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" data-i18n="calloutTarget6MoSub">Moderate tier benchmark</span>
           </div>
           <div class="callout-item">
-            <span class="callout-title">Interest Accrued During Burn</span>
+            <span class="callout-title" data-i18n="calloutInterestTitle" data-info-en="Cumulative interest earned on remaining savings throughout the depletion period." data-info-es="Intereses acumulados generados por los ahorros durante el período de agotamiento.">Interest Accrued During Burn</span>
             <span class="callout-value" id="calloutInterestEarned" style="color:#fbbf24;">$0</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">From HYSA before depletion</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" data-i18n="calloutInterestSub">From HYSA before depletion</span>
           </div>
           <div class="callout-item">
-            <span class="callout-title">Funding Ratio (vs 6 Mo)</span>
+            <span class="callout-title" data-i18n="calloutFundingTitle" data-info-en="Current total liquid reserves divided by target 6-month reserve." data-info-es="Reservas líquidas actuales divididas entre el objetivo de 6 meses.">Funding Ratio (vs 6 Mo)</span>
             <span class="callout-value" id="calloutFundingRatio" style="color:#a855f7;">0%</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">Financial resilience score</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" data-i18n="calloutFundingSub">Financial resilience score</span>
           </div>
         </div>
 
@@ -738,20 +829,20 @@
     <!-- Bottom Section: Month-by-Month Depletion Schedule -->
     <section class="card" aria-label="Month by Month Schedule">
       <div class="card-title">
-        <span>Month-by-Month Reserve Depletion (Lean Survival Tier)</span>
+        <span data-i18n="tableTitle" data-info-en="Detailed monthly ledger showing reserve depletion, interest earned, and net outflows." data-info-es="Libro mayor mensual detallado que muestra agotamiento de reservas, intereses y egresos netos.">Month-by-Month Reserve Depletion (Lean Survival Tier)</span>
       </div>
 
       <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th>Month</th>
-              <th>Starting Balance</th>
-              <th>Interest Accrued</th>
-              <th>Bridge Inflows</th>
-              <th>Living Expenses</th>
-              <th>Net Outflow</th>
-              <th>Remaining Reserves</th>
+              <th data-i18n="thMonth" data-info-en="Month of the emergency runway projection." data-info-es="Mes de la proyección de reserva de emergencia.">Month</th>
+              <th data-i18n="thStartBal" data-info-en="Cash reserves available at start of month." data-info-es="Reservas de efectivo disponibles al inicio del mes.">Starting Balance</th>
+              <th data-i18n="thInterest" data-info-en="Monthly interest accrued on HYSA balance." data-info-es="Interés mensual devengado por el saldo en HYSA.">Interest Accrued</th>
+              <th data-i18n="thBridge" data-info-en="Bridge income received during the month." data-info-es="Ingresos puente recibidos durante el mes.">Bridge Inflows</th>
+              <th data-i18n="thExpenses" data-info-en="Monthly living expenses withdrawn." data-info-es="Gastos mensuales de subsistencia desembolsados.">Living Expenses</th>
+              <th data-i18n="thNetOutflow" data-info-en="Net outflow deducted from cash reserves (Expenses - Bridge - Interest)." data-info-es="Egreso neto deducido de las reservas (Gastos - Ingresos puente - Intereses).">Net Outflow</th>
+              <th data-i18n="thRemaining" data-info-en="Remaining liquid cash reserves at month end." data-info-es="Reservas líquidas restantes al final del mes.">Remaining Reserves</th>
             </tr>
           </thead>
           <tbody id="scheduleTbody"></tbody>
@@ -765,6 +856,186 @@
     (function() {
       'use strict';
 
+      // --- I18N Dictionary ---
+      const I18N = {
+        en: {
+          pageTitle: 'Emergency Fund Runway Calculator',
+          appTitle: 'Emergency Fund Runway Calculator',
+          appSubtitle: 'Survival runway across Lean, Moderate & Baseline burn tiers',
+          btnMainHub: 'Main Hub',
+          btnMainHubTitle: 'Return to Main Suite',
+          btnLoadCSV: 'Load CSV',
+          btnLoadCSVTitle: 'Load an emergency runway scenario from CSV',
+          btnExportCSV: 'Export CSV',
+          btnExportCSVTitle: 'Export complete runway projections to CSV/Excel',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          kpiLeanRunwayLabel: 'Lean Survival Runway',
+          kpiModRunwayLabel: 'Comfortable Runway',
+          kpiTotalLiqLabel: 'Total Liquid Reserves',
+          kpiTotalLiqSub: 'Cash + HYSA + Taxable',
+          kpiBridgeLabel: 'Bridge / Side Income',
+          tier1Title: 'Tier 1: Lean Survival',
+          tier1Desc: 'Absolute essentials only (Rent, Food, Healthcare, Utilities)',
+          tier2Title: 'Tier 2: Moderate Comfort',
+          tier2Desc: 'Essentials + Transportation, Commute, Basic Services',
+          tier3Title: 'Tier 3: Full Current Spend',
+          tier3Desc: 'Zero lifestyle spending cutbacks',
+          paramsTitle: 'Financial Reserves & Monthly Burn Rates',
+          reservesSectionTitle: 'Available Cash & Liquid Reserves',
+          lblChecking: 'Checking Account (Zero Yield)',
+          lblHysa: 'High-Yield Savings / Money Market',
+          lblHysaApy: 'HYSA APY Yield',
+          lblSeverance: 'One-Time Severance',
+          burnSectionTitle: 'Monthly Expense Tiers',
+          lblLeanBurn: 'Tier 1: Lean Survival Spend (Shelter, Groceries, Meds)',
+          lblModBurn: 'Tier 2: Moderate Comfortable Spend (+Transport, Subscriptions)',
+          lblFullBurn: 'Tier 3: Current Baseline Spend (Full Discretionary)',
+          bridgeSectionTitle: 'Ongoing Monthly Bridge Income',
+          lblBridgeIncome: 'Part-Time / Side-Gig / Unemployment Assistance',
+          chartTitle: 'Reserve Depletion Trajectory',
+          calloutNetLeanTitle: 'Net Lean Monthly Burn',
+          calloutTarget6MoTitle: 'Target 6-Month Reserve',
+          calloutTarget6MoSub: 'Moderate tier benchmark',
+          calloutInterestTitle: 'Interest Accrued During Burn',
+          calloutInterestSub: 'From HYSA before depletion',
+          calloutFundingTitle: 'Funding Ratio (vs 6 Mo)',
+          calloutFundingSub: 'Financial resilience score',
+          tableTitle: 'Month-by-Month Reserve Depletion (Lean Survival Tier)',
+          thMonth: 'Month',
+          thStartBal: 'Starting Balance',
+          thInterest: 'Interest Accrued',
+          thBridge: 'Bridge Inflows',
+          thExpenses: 'Living Expenses',
+          thNetOutflow: 'Net Outflow',
+          thRemaining: 'Remaining Reserves',
+          moShort: 'Mo',
+          monthsWord: 'Months',
+          monthWord: 'Month',
+          moSuffix: '/mo',
+          untilDate: (dt) => `Until ${dt}`,
+          includesSeverance: (amt) => `Includes ${amt} severance`,
+          afterBridgeIncome: (amt) => `After ${amt} bridge income`,
+          legendTier1: 'Tier 1: Lean Survival',
+          legendTier2: 'Tier 2: Moderate Comfort',
+          legendTier3: 'Tier 3: Full Spend',
+          statusSolvent: 'Solvent',
+          statusDepleted: 'Depleted',
+          csvTitle: 'EMERGENCY FUND RUNWAY SIMULATION',
+          csvExportDate: 'Export Date',
+          csvReservesHeader: 'LIQUID RESERVES CONFIGURATION',
+          csvChecking: 'Checking Balance ($)',
+          csvHysa: 'HYSA Balance ($)',
+          csvHysaApy: 'HYSA APY (%)',
+          csvSeverance: 'One-Time Severance ($)',
+          csvTotalLiq: 'Total Liquid Reserves ($)',
+          csvBridge: 'Monthly Bridge Income ($)',
+          csvTiersHeader: 'MONTHLY EXPENSE TIERS',
+          csvTier1: 'Tier 1 (Lean Survival Burn) ($)',
+          csvTier2: 'Tier 2 (Moderate Comfort Burn) ($)',
+          csvTier3: 'Tier 3 (Full Current Spend) ($)',
+          csvRunwaySuffix: 'Months Runway',
+          csvScheduleHeader: 'MONTH-BY-MONTH DEPLETION SCHEDULE (LEAN SURVIVAL)',
+          csvColMonth: 'Month',
+          csvColStart: 'Starting Balance ($)',
+          csvColInterest: 'Interest Accrued ($)',
+          csvColBridge: 'Bridge Inflow ($)',
+          csvColExpenses: 'Expenses ($)',
+          csvColNetOutflow: 'Net Outflow ($)',
+          csvColEnding: 'Ending Balance ($)',
+          errCsvInvalid: 'Could not detect valid emergency runway parameters in the CSV file.',
+          errCsvParse: 'Error parsing CSV file. Please make sure it is a valid emergency fund export.'
+        },
+        es: {
+          pageTitle: 'Calculadora de Fondo de Emergencia y Liquidez',
+          appTitle: 'Calculadora de Fondo de Emergencia y Liquidez',
+          appSubtitle: 'Tiempo de supervivencia en niveles Esencial, Moderado y Actual',
+          btnMainHub: 'Panel Principal',
+          btnMainHubTitle: 'Volver al Panel Principal',
+          btnLoadCSV: 'Cargar CSV',
+          btnLoadCSVTitle: 'Cargar un escenario de fondo de emergencia desde CSV',
+          btnExportCSV: 'Exportar CSV',
+          btnExportCSVTitle: 'Exportar proyecciones completas de liquidez a CSV/Excel',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          kpiLeanRunwayLabel: 'Autonomía Nivel Esencial',
+          kpiModRunwayLabel: 'Autonomía Nivel Cómodo',
+          kpiTotalLiqLabel: 'Reservas Líquidas Totales',
+          kpiTotalLiqSub: 'Efectivo + HYSA + Liquidez',
+          kpiBridgeLabel: 'Ingreso Puente / Extra',
+          tier1Title: 'Nivel 1: Supervivencia Esencial',
+          tier1Desc: 'Solo gastos indispensables (Vivienda, Comida, Salud, Servicios)',
+          tier2Title: 'Nivel 2: Confort Moderado',
+          tier2Desc: 'Esenciales + Transporte, Desplazamiento, Servicios Básicos',
+          tier3Title: 'Nivel 3: Gasto Total Actual',
+          tier3Desc: 'Sin recortes en estilo de vida',
+          paramsTitle: 'Reservas Financieras y Gasto Mensual',
+          reservesSectionTitle: 'Efectivo Disponible y Reservas Líquidas',
+          lblChecking: 'Cuenta Corriente (Sin Rendimiento)',
+          lblHysa: 'Ahorro de Alto Rendimiento (HYSA) / Mercado Monetario',
+          lblHysaApy: 'Rendimiento Anual HYSA (APY)',
+          lblSeverance: 'Indemnización / Liquidación Única',
+          burnSectionTitle: 'Niveles de Gasto Mensual',
+          lblLeanBurn: 'Nivel 1: Gasto Esencial (Vivienda, Supermercado, Salud)',
+          lblModBurn: 'Nivel 2: Gasto Moderado (+Transporte, Suscripciones)',
+          lblFullBurn: 'Nivel 3: Gasto Actual Completo (Discrecional Total)',
+          bridgeSectionTitle: 'Ingreso Mensual Puente Continuo',
+          lblBridgeIncome: 'Medio Tiempo / Trabajos Extra / Subsidio por Desempleo',
+          chartTitle: 'Trayectoria de Agotamiento de Reservas',
+          calloutNetLeanTitle: 'Gasto Neto Mensual Esencial',
+          calloutTarget6MoTitle: 'Reserva Objetivo de 6 Meses',
+          calloutTarget6MoSub: 'Referencia de nivel moderado',
+          calloutInterestTitle: 'Intereses Ganados Durante el Uso',
+          calloutInterestSub: 'Generados por HYSA antes de agotarse',
+          calloutFundingTitle: 'Ratio de Cobertura (vs 6 Meses)',
+          calloutFundingSub: 'Puntuación de resiliencia financiera',
+          tableTitle: 'Desglose Mensual de Agotamiento de Reservas (Nivel Esencial)',
+          thMonth: 'Mes',
+          thStartBal: 'Saldo Inicial',
+          thInterest: 'Interés Ganado',
+          thBridge: 'Ingresos Puente',
+          thExpenses: 'Gastos de Vida',
+          thNetOutflow: 'Flujo Neto',
+          thRemaining: 'Reservas Restantes',
+          moShort: 'Meses',
+          monthsWord: 'Meses',
+          monthWord: 'Mes',
+          moSuffix: '/mes',
+          untilDate: (dt) => `Hasta ${dt}`,
+          includesSeverance: (amt) => `Incluye ${amt} de liquidación`,
+          afterBridgeIncome: (amt) => `Tras ${amt} de ingreso puente`,
+          legendTier1: 'Nivel 1: Supervivencia Esencial',
+          legendTier2: 'Nivel 2: Confort Moderado',
+          legendTier3: 'Nivel 3: Gasto Actual',
+          statusSolvent: 'Solvente',
+          statusDepleted: 'Agotado',
+          csvTitle: 'SIMULACIÓN DE FONDO DE EMERGENCIA Y LIQUIDEZ',
+          csvExportDate: 'Fecha de Exportación',
+          csvReservesHeader: 'CONFIGURACIÓN DE RESERVAS LÍQUIDAS',
+          csvChecking: 'Saldo en Cuenta Corriente ($)',
+          csvHysa: 'Saldo HYSA ($)',
+          csvHysaApy: 'Rendimiento HYSA APY (%)',
+          csvSeverance: 'Indemnización Única ($)',
+          csvTotalLiq: 'Reservas Líquidas Totales ($)',
+          csvBridge: 'Ingreso Mensual Puente ($)',
+          csvTiersHeader: 'NIVELES DE GASTO MENSUAL',
+          csvTier1: 'Nivel 1 (Gasto de Supervivencia Esencial) ($)',
+          csvTier2: 'Nivel 2 (Gasto de Confort Moderado) ($)',
+          csvTier3: 'Nivel 3 (Gasto Total Actual) ($)',
+          csvRunwaySuffix: 'Meses de Autonomía',
+          csvScheduleHeader: 'CRONOGRAMA MENSUAL DE AGOTAMIENTO (SUPERVIVENCIA ESENCIAL)',
+          csvColMonth: 'Mes',
+          csvColStart: 'Saldo Inicial ($)',
+          csvColInterest: 'Interés Ganado ($)',
+          csvColBridge: 'Ingreso Puente ($)',
+          csvColExpenses: 'Gastos ($)',
+          csvColNetOutflow: 'Flujo Neto ($)',
+          csvColEnding: 'Saldo Final ($)',
+          errCsvInvalid: 'No se pudieron detectar parámetros válidos de fondo de emergencia en el archivo CSV.',
+          errCsvParse: 'Error al analizar el archivo CSV. Asegúrese de que sea una exportación válida de fondo de emergencia.'
+        }
+      };
+
       // --- State ---
       const state = {
         cashChecking: 6000,
@@ -774,8 +1045,15 @@
         leanBurn: 2400,
         modBurn: 3600,
         fullBurn: 4800,
-        bridgeIncome: 600
+        bridgeIncome: 600,
+        lang: localStorage.getItem('finance_suite_lang') || 'en',
+        theme: localStorage.getItem('finance_suite_theme') || 'dark'
       };
+
+      function t(key) {
+        const dict = I18N[state.lang] || I18N.en;
+        return dict[key] !== undefined ? dict[key] : I18N.en[key];
+      }
 
       // --- Helpers ---
       function formatMoney(amount) {
@@ -911,6 +1189,7 @@
       const tierFullMonths = document.getElementById('tierFullMonths');
 
       const calloutNetLeanBurn = document.getElementById('calloutNetLeanBurn');
+      const calloutNetLeanSub = document.getElementById('calloutNetLeanSub');
       const calloutTarget6Mo = document.getElementById('calloutTarget6Mo');
       const calloutInterestEarned = document.getElementById('calloutInterestEarned');
       const calloutFundingRatio = document.getElementById('calloutFundingRatio');
@@ -922,6 +1201,107 @@
       const csvFileInput = document.getElementById('csvFileInput');
       const btnLoadCSV = document.getElementById('btnLoadCSV');
       const btnExportCSV = document.getElementById('btnExportCSV');
+      const btnMainHub = document.getElementById('btnMainHub');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+      const langSelect = document.getElementById('langSelect');
+
+      // --- Tooltip System ---
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = state.lang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs
+            ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en'))
+            : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) {
+            left = window.innerWidth - tipRect.width - 10;
+          }
+
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
+
+      // --- Theme & Language Updaters ---
+      function applyThemeAndLangUI() {
+        if (state.theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        document.documentElement.lang = state.lang;
+        document.title = t('pageTitle');
+
+        if (btnThemeToggle) {
+          btnThemeToggle.textContent = state.theme === 'light' ? t('themeDark') : t('themeLight');
+        }
+        if (langSelect) {
+          langSelect.value = state.lang;
+        }
+        if (btnMainHub) btnMainHub.title = t('btnMainHubTitle');
+        if (btnLoadCSV) btnLoadCSV.title = t('btnLoadCSVTitle');
+        if (btnExportCSV) btnExportCSV.title = t('btnExportCSVTitle');
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          const val = t(key);
+          if (typeof val === 'string') {
+            const tipEn = el.getAttribute('data-info-en');
+            const tipEs = el.getAttribute('data-info-es');
+            if (tipEn) {
+              el.innerHTML = `${val} <span class="info-icon" data-info-en="${tipEn}" data-info-es="${tipEs}">i</span>`;
+            } else {
+              el.textContent = val;
+            }
+          }
+        });
+      }
 
       // --- Chart Engine (HTML5 Canvas) ---
       function drawChart(trajLean, trajMod, trajFull) {
@@ -945,11 +1325,13 @@
         let maxVal = Math.max(trajLean[0] || 1000, 5000);
         maxVal = Math.ceil(maxVal * 1.05);
 
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
         // Horizontal grid lines
         const gridLines = 4;
-        ctx.strokeStyle = '#222e44';
+        ctx.strokeStyle = isLight ? '#cbd5e1' : '#222e44';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = isLight ? '#475569' : '#64748b';
         ctx.font = '10px -apple-system, sans-serif';
         ctx.textAlign = 'right';
 
@@ -969,7 +1351,7 @@
 
         for (let m = 0; m < maxPoints; m += step) {
           const x = padding.left + (m / (maxPoints - 1)) * graphW;
-          ctx.fillText(`Mo ${m}`, x, h - 12);
+          ctx.fillText(`${t('monthWord')} ${m}`, x, h - 12);
         }
 
         // Draw trajectory helper
@@ -996,15 +1378,15 @@
         chartLegend.innerHTML = `
           <div class="legend-item">
             <span class="legend-color" style="background:#34d399;"></span>
-            <span>Tier 1: Lean Survival</span>
+            <span>${t('legendTier1')}</span>
           </div>
           <div class="legend-item">
             <span class="legend-color" style="background:#38bdf8;"></span>
-            <span>Tier 2: Moderate Comfort</span>
+            <span>${t('legendTier2')}</span>
           </div>
           <div class="legend-item">
             <span class="legend-color" style="background:#f59e0b; border:1px dashed #fff;"></span>
-            <span>Tier 3: Full Spend</span>
+            <span>${t('legendTier3')}</span>
           </div>
         `;
       }
@@ -1016,14 +1398,20 @@
 
         rows.forEach(r => {
           const tr = document.createElement('tr');
+          const isSolvent = r.endTotal > 0;
+          const badgeStyle = isSolvent
+            ? 'display:inline-block; margin-left:0.4rem; padding:0.1rem 0.4rem; border-radius:4px; font-size:0.68rem; background:rgba(16,185,129,0.15); color:#10b981;'
+            : 'display:inline-block; margin-left:0.4rem; padding:0.1rem 0.4rem; border-radius:4px; font-size:0.68rem; background:rgba(239,68,68,0.15); color:#ef4444;';
+          const statusLabel = isSolvent ? t('statusSolvent') : t('statusDepleted');
+
           tr.innerHTML = `
-            <td style="font-weight:700;">Month ${r.month}</td>
+            <td style="font-weight:700;">${t('monthWord')} ${r.month}</td>
             <td>${formatMoney(r.startTotal)}</td>
             <td style="color:#fbbf24;">+${formatMoney(r.interest)}</td>
             <td style="color:#34d399;">+${formatMoney(r.bridgeInflow)}</td>
             <td style="color:#f87171;">-${formatMoney(r.expenses)}</td>
             <td style="font-weight:600; color:#cbd5e1;">-${formatMoney(r.netOutflow)}</td>
-            <td style="font-weight:700; color:#38bdf8;">${formatMoney(r.endTotal)}</td>
+            <td style="font-weight:700; color:#38bdf8;">${formatMoney(r.endTotal)} <span style="${badgeStyle}">${statusLabel}</span></td>
           `;
           fragment.appendChild(tr);
         });
@@ -1035,11 +1423,14 @@
       function getDepletionDate(months) {
         const d = new Date();
         d.setMonth(d.getMonth() + Math.round(months));
-        return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        const locale = state.lang === 'es' ? 'es-ES' : 'en-US';
+        return d.toLocaleDateString(locale, { month: 'short', year: 'numeric' });
       }
 
       // --- Recalculate Orchestrator ---
       function recalculateAll() {
+        applyThemeAndLangUI();
+
         // Enforce logical burn hierarchy
         if (state.modBurn < state.leanBurn) state.modBurn = state.leanBurn;
         if (state.fullBurn < state.modBurn) state.fullBurn = state.modBurn;
@@ -1070,28 +1461,31 @@
         const totalLiquidity = state.cashChecking + state.hysaBalance + state.severance;
         kpiTotalLiquidity.textContent = formatMoney(totalLiquidity);
 
-        kpiLeanRunway.textContent = `${simLean.months.toFixed(1)} Mo`;
-        kpiLeanDate.textContent = `Until ${getDepletionDate(simLean.months)}`;
+        kpiLeanRunway.textContent = `${simLean.months.toFixed(1)} ${t('moShort')}`;
+        kpiLeanDate.textContent = t('untilDate')(getDepletionDate(simLean.months));
 
-        kpiModerateRunway.textContent = `${simMod.months.toFixed(1)} Mo`;
-        kpiModDate.textContent = `Until ${getDepletionDate(simMod.months)}`;
+        kpiModerateRunway.textContent = `${simMod.months.toFixed(1)} ${t('moShort')}`;
+        kpiModDate.textContent = t('untilDate')(getDepletionDate(simMod.months));
 
-        kpiBridgeIncome.textContent = `${formatMoney(state.bridgeIncome)}/mo`;
-        kpiSeveranceSub.textContent = `Includes ${formatMoney(state.severance)} severance`;
+        kpiBridgeIncome.textContent = `${formatMoney(state.bridgeIncome)}${t('moSuffix')}`;
+        kpiSeveranceSub.textContent = t('includesSeverance')(formatMoney(state.severance));
 
         // Update Tiers
-        tierLeanBurnLabel.textContent = `${formatMoney(state.leanBurn)}/mo`;
-        tierLeanMonths.textContent = `${simLean.months.toFixed(1)} Months`;
+        tierLeanBurnLabel.textContent = `${formatMoney(state.leanBurn)}${t('moSuffix')}`;
+        tierLeanMonths.textContent = `${simLean.months.toFixed(1)} ${t('monthsWord')}`;
 
-        tierModBurnLabel.textContent = `${formatMoney(state.modBurn)}/mo`;
-        tierModMonths.textContent = `${simMod.months.toFixed(1)} Months`;
+        tierModBurnLabel.textContent = `${formatMoney(state.modBurn)}${t('moSuffix')}`;
+        tierModMonths.textContent = `${simMod.months.toFixed(1)} ${t('monthsWord')}`;
 
-        tierFullBurnLabel.textContent = `${formatMoney(state.fullBurn)}/mo`;
-        tierFullMonths.textContent = `${simFull.months.toFixed(1)} Months`;
+        tierFullBurnLabel.textContent = `${formatMoney(state.fullBurn)}${t('moSuffix')}`;
+        tierFullMonths.textContent = `${simFull.months.toFixed(1)} ${t('monthsWord')}`;
 
         // Update Callouts
         const netLean = Math.max(0, state.leanBurn - state.bridgeIncome);
-        calloutNetLeanBurn.textContent = `${formatMoney(netLean)}/mo`;
+        calloutNetLeanBurn.textContent = `${formatMoney(netLean)}${t('moSuffix')}`;
+        if (calloutNetLeanSub) {
+          calloutNetLeanSub.textContent = t('afterBridgeIncome')(formatMoney(state.bridgeIncome));
+        }
 
         const target6Mo = (state.modBurn - state.bridgeIncome) * 6;
         calloutTarget6Mo.textContent = formatMoney(target6Mo);
@@ -1114,27 +1508,35 @@
         const totalLiquidity = state.cashChecking + state.hysaBalance + state.severance;
 
         const rows = [];
-        rows.push(['EMERGENCY FUND RUNWAY SIMULATION']);
-        rows.push(['Export Date', new Date().toLocaleDateString()]);
+        rows.push([t('csvTitle')]);
+        rows.push([t('csvExportDate'), new Date().toLocaleDateString()]);
         rows.push([]);
 
-        rows.push(['LIQUID RESERVES CONFIGURATION']);
-        rows.push(['Checking Balance ($)', state.cashChecking.toFixed(2)]);
-        rows.push(['HYSA Balance ($)', state.hysaBalance.toFixed(2)]);
-        rows.push(['HYSA APY (%)', `${state.hysaApy.toFixed(2)}%`]);
-        rows.push(['One-Time Severance ($)', state.severance.toFixed(2)]);
-        rows.push(['Total Liquid Reserves ($)', totalLiquidity.toFixed(2)]);
-        rows.push(['Monthly Bridge Income ($)', state.bridgeIncome.toFixed(2)]);
+        rows.push([t('csvReservesHeader')]);
+        rows.push([t('csvChecking'), state.cashChecking.toFixed(2)]);
+        rows.push([t('csvHysa'), state.hysaBalance.toFixed(2)]);
+        rows.push([t('csvHysaApy'), `${state.hysaApy.toFixed(2)}%`]);
+        rows.push([t('csvSeverance'), state.severance.toFixed(2)]);
+        rows.push([t('csvTotalLiq'), totalLiquidity.toFixed(2)]);
+        rows.push([t('csvBridge'), state.bridgeIncome.toFixed(2)]);
         rows.push([]);
 
-        rows.push(['MONTHLY EXPENSE TIERS']);
-        rows.push(['Tier 1 (Lean Survival Burn) ($)', state.leanBurn.toFixed(2), `${simLean.months.toFixed(1)} Months Runway`]);
-        rows.push(['Tier 2 (Moderate Comfort Burn) ($)', state.modBurn.toFixed(2), `${simMod.months.toFixed(1)} Months Runway`]);
-        rows.push(['Tier 3 (Full Current Spend) ($)', state.fullBurn.toFixed(2), `${simFull.months.toFixed(1)} Months Runway`]);
+        rows.push([t('csvTiersHeader')]);
+        rows.push([t('csvTier1'), state.leanBurn.toFixed(2), `${simLean.months.toFixed(1)} ${t('csvRunwaySuffix')}`]);
+        rows.push([t('csvTier2'), state.modBurn.toFixed(2), `${simMod.months.toFixed(1)} ${t('csvRunwaySuffix')}`]);
+        rows.push([t('csvTier3'), state.fullBurn.toFixed(2), `${simFull.months.toFixed(1)} ${t('csvRunwaySuffix')}`]);
         rows.push([]);
 
-        rows.push(['MONTH-BY-MONTH DEPLETION SCHEDULE (LEAN SURVIVAL)']);
-        rows.push(['Month', 'Starting Balance ($)', 'Interest Accrued ($)', 'Bridge Inflow ($)', 'Expenses ($)', 'Net Outflow ($)', 'Ending Balance ($)']);
+        rows.push([t('csvScheduleHeader')]);
+        rows.push([
+          t('csvColMonth'),
+          t('csvColStart'),
+          t('csvColInterest'),
+          t('csvColBridge'),
+          t('csvColExpenses'),
+          t('csvColNetOutflow'),
+          t('csvColEnding')
+        ]);
         simLean.monthlyRows.forEach(r => {
           rows.push([
             r.month,
@@ -1196,7 +1598,7 @@
         return result;
       }
 
-      // --- Load / Import CSV ---
+      // --- Load / Import CSV (Supports both EN and ES exports) ---
       function handleCSVFile(file) {
         if (!file) return;
         const reader = new FileReader();
@@ -1215,28 +1617,28 @@
               const label = cols[0].toLowerCase();
               const rawVal = cols[1];
 
-              if (label.includes('checking balance')) {
+              if (label.includes('checking balance') || label.includes('cuenta corriente')) {
                 state.cashChecking = Math.max(0, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('hysa balance')) {
+              } else if (label.includes('hysa balance') || label.includes('saldo hysa')) {
                 state.hysaBalance = Math.max(0, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('hysa apy')) {
+              } else if (label.includes('hysa apy') || label.includes('rendimiento hysa')) {
                 state.hysaApy = clamp(parseCleanNumber(rawVal), 0, 15.0);
                 detected++;
-              } else if (label.includes('severance')) {
+              } else if (label.includes('severance') || label.includes('indemnización') || label.includes('indemnizacion') || label.includes('liquidación')) {
                 state.severance = Math.max(0, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('monthly bridge income')) {
+              } else if (label.includes('monthly bridge income') || label.includes('ingreso mensual puente')) {
                 state.bridgeIncome = Math.max(0, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('tier 1')) {
+              } else if (label.includes('tier 1') || label.includes('nivel 1')) {
                 state.leanBurn = Math.max(100, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('tier 2')) {
+              } else if (label.includes('tier 2') || label.includes('nivel 2')) {
                 state.modBurn = Math.max(100, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('tier 3')) {
+              } else if (label.includes('tier 3') || label.includes('nivel 3')) {
                 state.fullBurn = Math.max(100, parseCleanNumber(rawVal));
                 detected++;
               }
@@ -1245,17 +1647,29 @@
             if (detected >= 4) {
               recalculateAll();
             } else {
-              alert('Could not detect valid emergency runway parameters in the CSV file.');
+              alert(t('errCsvInvalid'));
             }
           } catch (err) {
             console.error(err);
-            alert('Error parsing CSV file. Please make sure it is a valid emergency fund export.');
+            alert(t('errCsvParse'));
           }
         };
         reader.readAsText(file);
       }
 
       // --- Event Listeners ---
+      btnThemeToggle.addEventListener('click', () => {
+        state.theme = state.theme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('finance_suite_theme', state.theme);
+        recalculateAll();
+      });
+
+      langSelect.addEventListener('change', (e) => {
+        state.lang = e.target.value === 'es' ? 'es' : 'en';
+        localStorage.setItem('finance_suite_lang', state.lang);
+        recalculateAll();
+      });
+
       cashCheckingSlider.addEventListener('input', (e) => {
         state.cashChecking = parseFloat(e.target.value);
         recalculateAll();
@@ -1341,6 +1755,7 @@
       });
 
       // Initial Bootstrap
+      initInfoTooltips();
       recalculateAll();
 
     })();

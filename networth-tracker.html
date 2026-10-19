@@ -515,6 +515,105 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead,
+    html[data-theme="light"] th { background-color: #e2e8f0 !important; color: #1e293b; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value,
+    html[data-theme="light"] .kpi-val,
+    html[data-theme="light"] .plan-slot-val,
+    html[data-theme="light"] .plan-card-title,
+    html[data-theme="light"] .card-title { color: var(--text-main); }
+    html[data-theme="light"] .card-title { border-bottom-color: #e2e8f0; }
+    html[data-theme="light"] .btn-secondary { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] .btn-purple { background-color: #f3e8ff; border-color: #a855f7; color: #6b21a8; }
+    html[data-theme="light"] .btn-purple:hover { background-color: #a855f7; color: #ffffff; }
+    html[data-theme="light"] .btn-edit { background-color: #e0f2fe; border-color: #38bdf8; color: #0369a1; }
+    html[data-theme="light"] .btn-danger { background-color: #ffe4e6; border-color: #fb7185; color: #be123c; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] .hero h1 { background: linear-gradient(135deg, #0f172a 40%, #7e22ce 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    html[data-theme="light"] .suite-badge { background: rgba(168, 85, 247, 0.12); color: #6b21a8; }
+    html[data-theme="light"] .tracker-notice { background: #faf5ff; border-color: #d8b4fe; color: #4c1d95; }
+    html[data-theme="light"] .tracker-notice strong { color: #2e1065; }
+    html[data-theme="light"] .rule-callout { background: #fef3c7; border-color: #f59e0b; color: #78350f; }
+
+    /* Tooltip & Info Icon */
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -525,17 +624,24 @@
     <div class="top-bar">
       <div class="suite-badge">
         <span class="status-dot"></span>
-        Monthly Progress &amp; Reality Tracker (One Entry Per Month)
+        <span id="txtSuiteBadge">Monthly Progress &amp; Reality Tracker (One Entry Per Month)</span>
       </div>
 
       <div class="top-actions">
-        <a href="./index.html" class="btn">
+        <a href="./index.html" class="btn" id="btnBackSuite" title="Return to Main Suite">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          Back to Main Suite
+          <span id="txtBackSuite">Back to Main Suite</span>
         </a>
+
+        <button type="button" id="btnThemeToggle" class="btn btn-secondary" style="padding:0.45rem 0.75rem;" title="Toggle Light / Dark Mode">☀️ Light</button>
+
+        <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" aria-label="Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
 
         <!-- Hidden CSV File Inputs -->
         <input type="file" id="trackerCsvInput" accept=".csv" style="display:none;">
@@ -547,7 +653,7 @@
             <polyline points="2 17 12 22 22 17"></polyline>
             <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
-          Upload Planned Scenario (CSV)
+          <span id="txtImportPlan">Upload Planned Scenario (CSV)</span>
         </button>
 
         <button type="button" class="btn" id="btnLoadTrackerCSV" title="Load your existing Historical Tracker CSV">
@@ -556,7 +662,7 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          Load Tracker CSV
+          <span id="txtLoadTrackerCSV">Load Tracker CSV</span>
         </button>
 
         <button type="button" class="btn btn-success" id="btnExportTrackerCSV" title="Download your actual monthly log history and plan comparison to CSV">
@@ -565,15 +671,15 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Export Tracker CSV
+          <span id="txtExportTrackerCSV">Export Tracker CSV</span>
         </button>
       </div>
     </div>
 
     <!-- Header Hero -->
     <header class="hero">
-      <h1>Monthly Net Worth Log &amp; Progress Tracker</h1>
-      <p>
+      <h1 id="heroTitle">Monthly Net Worth Log &amp; Progress Tracker</h1>
+      <p id="heroDesc">
         Record your actual monthly financial reality, maintain a permanent historical timeline, and compare real-world progress against your planned projections.
       </p>
     </header>
@@ -586,7 +692,7 @@
         <line x1="12" y1="16" x2="12.01" y2="16"></line>
       </svg>
       <div>
-        <strong>Tracker vs. Planning Separation:</strong> The calculators in the main suite (Investing, Debt Payoff, Cost of Living, Net Worth Command Center) are strictly <em>forward-looking planning tools</em>. This module is the dedicated <strong>Historical Tracker</strong>. Keep your Tracker CSV files separate from your scenario planning CSVs to preserve your authentic financial record.
+        <span id="txtNoticeTitle"><strong>Tracker vs. Planning Separation:</strong></span> <span id="txtNoticeBody">The calculators in the main suite (Investing, Debt Payoff, Cost of Living, Net Worth Command Center) are strictly <em>forward-looking planning tools</em>. This module is the dedicated <strong>Historical Tracker</strong>. Keep your Tracker CSV files separate from your scenario planning CSVs to preserve your authentic financial record.</span>
         <div class="rule-callout">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -594,7 +700,7 @@
             <line x1="8" y1="2" x2="8" y2="6"></line>
             <line x1="3" y1="10" x2="21" y2="10"></line>
           </svg>
-          <span><strong>One Entry Per Month Rule:</strong> For statistical clarity and standard net worth tracking, log exactly <strong>one snapshot per calendar month</strong> (e.g. Month-End or 1st of the month). Saving an entry for an existing month will prompt you to update that month's record.</span>
+          <span id="txtNoticeRule"><strong>One Entry Per Month Rule:</strong> For statistical clarity and standard net worth tracking, log exactly <strong>one snapshot per calendar month</strong> (e.g. Month-End or 1st of the month). Saving an entry for an existing month will prompt you to update that month's record.</span>
         </div>
       </div>
     </div>
@@ -603,7 +709,7 @@
     <section class="plan-card" aria-label="Planned Scenario Baseline">
       <div class="plan-card-header">
         <div class="plan-card-title">
-          <span>🎯 Active Planned Scenario Baseline</span>
+          <span id="txtPlanCardTitle">🎯 Active Planned Scenario Baseline</span>
           <span class="benchmark-badge" id="planSourceBadge">Default Suite Assumptions</span>
         </div>
         <div style="font-size:0.78rem; color:var(--text-muted);" id="planDescriptionText">
@@ -614,38 +720,50 @@
       <div class="plan-slots-grid">
         <div class="plan-slot" id="planSlotAssets">
           <div class="plan-slot-top">
-            <span>Planned Total Assets</span>
+            <span>
+              <span id="lblPlanAssets">Planned Total Assets</span>
+              <span class="info-icon" data-info-en="Benchmark portfolio and real estate target assets from your planned scenario." data-info-es="Activos objetivo de portafolio e inmuebles según tu escenario planificado.">i</span>
+            </span>
             <span id="planAssetRate">+7.2% APY</span>
           </div>
           <div class="plan-slot-val" id="planSlotAssetsVal">$390,000</div>
-          <div class="plan-slot-sub" id="planSlotAssetsSub">Invested + Real Estate</div>
+          <div class="plan-slot-sub" id="lblPlanAssetsSub">Invested + Real Estate</div>
         </div>
 
         <div class="plan-slot" id="planSlotLiab">
           <div class="plan-slot-top">
-            <span>Planned Liabilities</span>
+            <span>
+              <span id="lblPlanLiab">Planned Liabilities</span>
+              <span class="info-icon" data-info-en="Projected remaining debt balance along the planned amortization trajectory." data-info-es="Saldo proyectado de deuda remanente según la trayectoria de amortización planificada.">i</span>
+            </span>
             <span id="planDebtRate">Paydown: $2,740/mo</span>
           </div>
           <div class="plan-slot-val" id="planSlotLiabVal">$301,000</div>
-          <div class="plan-slot-sub" id="planSlotLiabSub">Consumer + Mortgage Debt</div>
+          <div class="plan-slot-sub" id="lblPlanLiabSub">Consumer + Mortgage Debt</div>
         </div>
 
         <div class="plan-slot" id="planSlotNw">
           <div class="plan-slot-top">
-            <span>Planned Net Worth</span>
+            <span>
+              <span id="lblPlanNw">Planned Net Worth</span>
+              <span class="info-icon" data-info-en="Planned benchmark target for your net worth (Assets minus Liabilities)." data-info-es="Meta patrimonial de referencia proyectada en tu plan (Activos menos Pasivos).">i</span>
+            </span>
             <span style="color:#34d399;" id="planNwGrowth">Plan Benchmark</span>
           </div>
           <div class="plan-slot-val" id="planSlotNwVal" style="color:#34d399;">$89,000</div>
-          <div class="plan-slot-sub" id="planSlotNwSub">Baseline Target</div>
+          <div class="plan-slot-sub" id="lblPlanNwSub">Baseline Target</div>
         </div>
 
         <div class="plan-slot" id="planSlotVariance">
           <div class="plan-slot-top">
-            <span>Latest Reality vs. Plan</span>
+            <span>
+              <span id="lblPlanVariance">Latest Reality vs. Plan</span>
+              <span class="info-icon" data-info-en="Dollar difference between your latest logged net worth and what your plan anticipated for this date." data-info-es="Diferencia en dólares entre tu patrimonio real más reciente y lo que tu plan anticipaba para esta fecha.">i</span>
+            </span>
             <span id="planVariancePct">+0.0%</span>
           </div>
           <div class="plan-slot-val" id="planSlotVarianceVal">$0</div>
-          <div class="plan-slot-sub" id="planSlotVarianceSub">Comparing latest log to plan</div>
+          <div class="plan-slot-sub" id="lblPlanVarianceSub">Comparing latest log to plan</div>
         </div>
       </div>
     </section>
@@ -653,25 +771,37 @@
     <!-- Top KPIs -->
     <div class="kpi-grid">
       <div class="kpi-card">
-        <span class="kpi-label">Latest Logged Net Worth</span>
+        <span class="kpi-label">
+          <span id="lblKpiLatestNw">Latest Logged Net Worth</span>
+          <span class="info-icon" data-info-en="Net worth from the most recent historical month logged (Total Assets minus Total Liabilities)." data-info-es="Patrimonio neto del mes histórico más reciente registrado (Activos Totales menos Pasivos Totales).">i</span>
+        </span>
         <span class="kpi-val" id="kpiLatestNw" style="color:#34d399;">$0</span>
         <span class="kpi-sub" id="kpiLatestDate">No entries recorded</span>
       </div>
 
       <div class="kpi-card">
-        <span class="kpi-label">Historical Wealth Change</span>
+        <span class="kpi-label">
+          <span id="lblKpiHistoricalDelta">Historical Wealth Change</span>
+          <span class="info-icon" data-info-en="Net worth gain or loss since your very first recorded monthly entry in this tracker." data-info-es="Ganancia o pérdida patrimonial neta acumulada desde el primer mes registrado en este historial.">i</span>
+        </span>
         <span class="kpi-val" id="kpiHistoricalDelta" style="color:#38bdf8;">$0</span>
         <span class="kpi-sub" id="kpiHistoricalDeltaSub">Since first record</span>
       </div>
 
       <div class="kpi-card">
-        <span class="kpi-label">Monthly Tracking Consistency</span>
+        <span class="kpi-label">
+          <span id="lblKpiMonthsLogged">Monthly Tracking Consistency</span>
+          <span class="info-icon" data-info-en="Total count of unique calendar months recorded in your historical timeline." data-info-es="Cantidad total de meses calendario individuales registrados en tu historial.">i</span>
+        </span>
         <span class="kpi-val" id="kpiMonthsLogged" style="color:#c084fc;">0</span>
         <span class="kpi-sub" id="kpiDateRange">0 months spanned</span>
       </div>
 
       <div class="kpi-card">
-        <span class="kpi-label">Plan Execution Status</span>
+        <span class="kpi-label">
+          <span id="lblKpiPlanStatus">Plan Execution Status</span>
+          <span class="info-icon" data-info-en="Indicates whether your actual financial reality is running Ahead, On Track, or Behind your planned benchmark trajectory." data-info-es="Indica si tu realidad financiera avanza Adelantada, En Meta o Atrasada respecto a la curva de tu plan.">i</span>
+        </span>
         <span class="kpi-val" id="kpiPlanStatus" style="color:#fbbf24;">On Track</span>
         <span class="kpi-sub" id="kpiPlanStatusSub">Relative to planned curve</span>
       </div>
@@ -684,15 +814,18 @@
       <section class="card" aria-label="Monthly Entry Logger">
         <div class="card-title">
           <span id="formTitleText">Record Monthly Financial Reality</span>
-          <span style="font-size:0.75rem; font-weight:500; color:#c084fc;">1 Entry Per Calendar Month</span>
+          <span style="font-size:0.75rem; font-weight:500; color:#c084fc;" id="txtOnePerMonth">1 Entry Per Calendar Month</span>
         </div>
 
         <form id="entryForm" style="display:flex; flex-direction:column; gap:0.95rem;">
           
           <div class="field-group" style="background:rgba(99, 102, 241, 0.08); padding:0.65rem 0.8rem; border-radius:var(--radius-sm); border:1px solid rgba(99, 102, 241, 0.25);">
             <label class="field-label" style="color:#a5b4fc;">
-              <span>Calendar Month (Unique Entry Key)</span>
-              <span>1 Per Month</span>
+              <span>
+                <span id="lblCalendarMonth">Calendar Month (Unique Entry Key)</span>
+                <span class="info-icon" data-info-en="The calendar month being recorded. Each month has exactly one entry to keep your timeline clean and accurate." data-info-es="El mes calendario registrado. Cada mes tiene un único registro para mantener tu historial limpio y preciso.">i</span>
+              </span>
+              <span id="lblOnePerMonthBadge">1 Per Month</span>
             </label>
             <div style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:0.5rem; margin-top:0.25rem;">
               <select id="entryMonthSelect" aria-label="Entry Month">
@@ -720,7 +853,10 @@
             
             <div class="field-group">
               <label class="field-label" for="entryLiquid">
-                <span>Liquid Cash &amp; HYSA</span>
+                <span>
+                  <span id="lblEntryLiquid">Liquid Cash &amp; HYSA</span>
+                  <span class="info-icon" data-info-en="Checking, cash reserves, and high-yield savings available immediately." data-info-es="Cuentas corrientes, reservas de efectivo y cuentas de alto rendimiento disponibles de inmediato.">i</span>
+                </span>
                 <span style="color:#34d399;">+$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -731,7 +867,10 @@
 
             <div class="field-group">
               <label class="field-label" for="entryInvested">
-                <span>Investments &amp; Retirement</span>
+                <span>
+                  <span id="lblEntryInvested">Investments &amp; Retirement</span>
+                  <span class="info-icon" data-info-en="Index funds, stocks, brokerage, retirement accounts, and crypto." data-info-es="Fondos indexados, acciones bursátiles, cuentas de jubilación y criptoactivos.">i</span>
+                </span>
                 <span style="color:#38bdf8;">+$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -742,7 +881,10 @@
 
             <div class="field-group">
               <label class="field-label" for="entryRealEstate">
-                <span>Real Estate / Property</span>
+                <span>
+                  <span id="lblEntryRealEstate">Real Estate / Property</span>
+                  <span class="info-icon" data-info-en="Estimated market value of home, land, or properties (without subtracting mortgage)." data-info-es="Valor estimado de mercado de tu vivienda o inmuebles (sin descontar la hipoteca).">i</span>
+                </span>
                 <span style="color:#38bdf8;">+$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -753,7 +895,10 @@
 
             <div class="field-group">
               <label class="field-label" for="entryOtherAssets">
-                <span>Vehicles &amp; Other Assets</span>
+                <span>
+                  <span id="lblEntryOtherAssets">Vehicles &amp; Other Assets</span>
+                  <span class="info-icon" data-info-en="Conservative resale value of vehicles, private equity, or personal property." data-info-es="Valor de reventa conservador de vehículos u otros bienes materiales de valor.">i</span>
+                </span>
                 <span style="color:#38bdf8;">+$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -764,7 +909,10 @@
 
             <div class="field-group">
               <label class="field-label" for="entryConsumerDebt">
-                <span>Credit Cards &amp; Loans</span>
+                <span>
+                  <span id="lblEntryConsumerDebt">Credit Cards &amp; Loans</span>
+                  <span class="info-icon" data-info-en="Credit cards, personal loans, student debt, and auto loan balances." data-info-es="Tarjetas de crédito, préstamos personales, deudas de auto o préstamos de consumo.">i</span>
+                </span>
                 <span style="color:#f43f5e;">-$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -775,7 +923,10 @@
 
             <div class="field-group">
               <label class="field-label" for="entryMortgage">
-                <span>Mortgage Balance</span>
+                <span>
+                  <span id="lblEntryMortgage">Mortgage Balance</span>
+                  <span class="info-icon" data-info-en="Principal balance still owed on real estate mortgages." data-info-es="Saldo de capital principal que aún resta pagar en tus hipotecas inmobiliarias.">i</span>
+                </span>
                 <span style="color:#f43f5e;">-$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -786,7 +937,10 @@
 
             <div class="field-group">
               <label class="field-label" for="entryMonthlySavings">
-                <span>Actual Monthly Savings</span>
+                <span>
+                  <span id="lblEntrySavings">Actual Monthly Savings</span>
+                  <span class="info-icon" data-info-en="Cash saved or added to investments during this recorded month." data-info-es="Dinero real ahorrado o aportado a inversiones durante este mes registrado.">i</span>
+                </span>
                 <span style="color:#a855f7;">Flow</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -797,7 +951,10 @@
 
             <div class="field-group">
               <label class="field-label" for="entryMonthlyExpenses">
-                <span>Actual Monthly Spend</span>
+                <span>
+                  <span id="lblEntryExpenses">Actual Monthly Spend</span>
+                  <span class="info-icon" data-info-en="Total expenses paid out for living costs and lifestyle during this month." data-info-es="Gasto total desembolsado en manutención y estilo de vida durante este mes.">i</span>
+                </span>
                 <span style="color:#a855f7;">Spend</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -810,8 +967,11 @@
 
           <div class="field-group">
             <label class="field-label" for="entryNotes">
-              <span>Milestone / Event Notes (Optional)</span>
-              <span>Memory Log</span>
+              <span>
+                <span id="lblEntryNotes">Milestone / Event Notes (Optional)</span>
+                <span class="info-icon" data-info-en="Note bonuses, raises, market drops, vacations, or debt freedom milestones." data-info-es="Anota ascensos, primas, caídas del mercado, vacaciones o hitos de cancelación de deuda.">i</span>
+              </span>
+              <span id="lblEntryNotesSub">Memory Log</span>
             </label>
             <input type="text" id="entryNotes" placeholder="e.g. Annual bonus received, paid off car loan, vacation" maxlength="120">
           </div>
@@ -819,12 +979,12 @@
           <!-- Calculated Net Worth Preview for this Entry -->
           <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.75rem; display:flex; justify-content:space-between; align-items:center;">
             <div>
-              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Entry Computed Net Worth</div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;" id="lblComputedNwTitle">Entry Computed Net Worth</div>
               <div style="font-size:1.3rem; font-weight:800; color:#34d399;" id="formComputedNw">$0</div>
             </div>
             <div style="text-align:right; font-size:0.75rem; color:var(--text-subtle);">
-              <div>Assets: <span id="formPreviewAssets" style="color:#38bdf8; font-weight:600;">$0</span></div>
-              <div>Liabilities: <span id="formPreviewLiab" style="color:#f43f5e; font-weight:600;">$0</span></div>
+              <div><span id="lblPreviewAssets">Assets:</span> <span id="formPreviewAssets" style="color:#38bdf8; font-weight:600;">$0</span></div>
+              <div><span id="lblPreviewLiab">Liabilities:</span> <span id="formPreviewLiab" style="color:#f43f5e; font-weight:600;">$0</span></div>
             </div>
           </div>
 
@@ -835,10 +995,10 @@
                 <polyline points="17 21 17 13 7 13 7 21"></polyline>
                 <polyline points="7 3 7 8 15 8"></polyline>
               </svg>
-              Save Monthly Snapshot
+              <span id="txtBtnSaveEntry">Save Monthly Snapshot</span>
             </button>
             <button type="button" class="btn" id="btnCancelEdit" style="display:none;" title="Cancel editing">
-              Cancel
+              <span id="txtBtnCancelEdit">Cancel</span>
             </button>
           </div>
 
@@ -848,7 +1008,7 @@
       <!-- Right Panel: Real Progress vs. Plan Trajectory Chart -->
       <section class="card" aria-label="Progress vs Plan Trajectory">
         <div class="card-title">
-          <span>Actual Net Worth Timeline vs. Planned Benchmark</span>
+          <span id="lblChartTitle">Actual Net Worth Timeline vs. Planned Benchmark</span>
           <span style="font-size:0.74rem; font-weight:600; color:#34d399;" id="chartProgressSummary">Tracking Active</span>
         </div>
 
@@ -859,30 +1019,40 @@
         <div class="chart-legend">
           <div class="legend-item">
             <span class="legend-color" style="background:#34d399;"></span>
-            <span style="color:#fff; font-weight:700;">Actual Net Worth (Logged Dots)</span>
+            <span style="color:#fff; font-weight:700;" id="legActualNw">Actual Net Worth (Logged Dots)</span>
+            <span class="info-icon" data-info-en="Green dots represent your real recorded net worth points on each month." data-info-es="Puntos verdes que representan tu patrimonio neto real registrado en cada mes.">i</span>
           </div>
           <div class="legend-item">
             <span class="legend-color" style="background:#6366f1; border-top:2px dashed #a5b4fc;"></span>
-            <span>Planned Scenario Trajectory</span>
+            <span id="legPlannedTraj">Planned Scenario Trajectory</span>
+            <span class="info-icon" data-info-en="The benchmark trajectory curve from your forward-looking financial plan." data-info-es="Curva de referencia proyectada por tu plan financiero original.">i</span>
           </div>
           <div class="legend-item">
             <span class="legend-color" style="background:#38bdf8;"></span>
-            <span>Actual Total Assets</span>
+            <span id="legActualAssets">Actual Total Assets</span>
+            <span class="info-icon" data-info-en="Sum of real cash, investments, real estate, and other assets logged." data-info-es="Suma de efectivo real, inversiones, inmuebles y otros bienes registrados.">i</span>
           </div>
           <div class="legend-item">
             <span class="legend-color" style="background:#f43f5e;"></span>
-            <span>Actual Liabilities</span>
+            <span id="legActualLiab">Actual Liabilities</span>
+            <span class="info-icon" data-info-en="Sum of consumer debt and mortgage balances logged." data-info-es="Suma de deudas de consumo y saldo de hipoteca registrados.">i</span>
           </div>
         </div>
 
         <!-- Quick Comparison Insights -->
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:auto;">
           <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
-            <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Average Monthly Wealth Growth</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">
+              <span id="lblInsightPaceTitle">Average Monthly Wealth Growth</span>
+              <span class="info-icon" data-info-en="Average rate at which your real net worth has expanded per month across all logged records." data-info-es="Tasa mensual promedio a la que ha crecido tu patrimonio real a lo largo de los registros.">i</span>
+            </div>
             <div style="font-size:1.05rem; font-weight:700; color:#34d399; margin-top:0.15rem;" id="insightAvgPace">$0/mo</div>
           </div>
           <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
-            <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Latest Reality vs Plan Delta</div>
+            <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">
+              <span id="lblInsightDeltaTitle">Latest Reality vs Plan Delta</span>
+              <span class="info-icon" data-info-en="How much more (or less) net worth you currently possess compared to what your plan forecasted." data-info-es="Cuánto más (o menos) patrimonio posees hoy comparado con lo proyectado por tu plan.">i</span>
+            </div>
             <div style="font-size:1.05rem; font-weight:700; color:#fbbf24; margin-top:0.15rem;" id="insightDeltaPlan">$0</div>
           </div>
         </div>
@@ -894,15 +1064,15 @@
     <section class="card" aria-label="Monthly Log History Table">
       <div class="card-title">
         <div>
-          <span>Historical Monthly Log Timeline (<span id="tableCountBadge">0</span> Entries)</span>
-          <span style="font-size:0.74rem; font-weight:400; color:var(--text-muted); margin-left:0.5rem;">Chronological order (Oldest &rarr; Newest)</span>
+          <span><span id="lblTableTimelineTitle">Historical Monthly Log Timeline</span> (<span id="tableCountBadge">0</span> <span id="lblTableEntriesWord">Entries</span>)</span>
+          <span style="font-size:0.74rem; font-weight:400; color:var(--text-muted); margin-left:0.5rem;" id="lblTableChronOrder">Chronological order (Oldest &rarr; Newest)</span>
         </div>
         <div style="display:flex; gap:0.5rem;">
           <button type="button" class="btn btn-purple" id="btnLoadSampleData" style="font-size:0.74rem; padding:0.3rem 0.65rem;">
-            Load Sample History
+            <span id="txtLoadSampleData">Load Sample History</span>
           </button>
           <button type="button" class="btn btn-danger" id="btnClearAllLogs" style="font-size:0.74rem; padding:0.3rem 0.65rem;">
-            Clear All Logs
+            <span id="txtClearAllLogs">Clear All Logs</span>
           </button>
         </div>
       </div>
@@ -911,18 +1081,51 @@
         <table>
           <thead>
             <tr>
-              <th>Month / Year</th>
-              <th>Liquid Cash</th>
-              <th>Invested Assets</th>
-              <th>Real Estate</th>
-              <th>Total Assets</th>
-              <th>Total Debt</th>
-              <th>Actual Net Worth</th>
-              <th>Planned Net Worth</th>
-              <th>Variance vs Plan</th>
-              <th>Monthly Savings</th>
-              <th>Notes / Milestones</th>
-              <th>Actions</th>
+              <th>
+                <span id="thLogMonthYear">Month / Year</span>
+                <span class="info-icon" data-info-en="Recorded calendar month and year." data-info-es="Mes y año calendario registrado.">i</span>
+              </th>
+              <th>
+                <span id="thLogLiquid">Liquid Cash</span>
+                <span class="info-icon" data-info-en="Cash and high-yield savings." data-info-es="Efectivo disponible y cuentas de alto rendimiento.">i</span>
+              </th>
+              <th>
+                <span id="thLogInvested">Invested Assets</span>
+                <span class="info-icon" data-info-en="Stocks, retirement, and fund balances." data-info-es="Acciones, fondos y saldo en cuentas de retiro.">i</span>
+              </th>
+              <th>
+                <span id="thLogRealEstate">Real Estate</span>
+                <span class="info-icon" data-info-en="Home and property market valuation." data-info-es="Valoración de mercado de inmuebles y propiedades.">i</span>
+              </th>
+              <th>
+                <span id="thLogTotalAssets">Total Assets</span>
+                <span class="info-icon" data-info-en="Sum of all liquid, invested, property, and vehicle assets." data-info-es="Suma de activos líquidos, invertidos, inmuebles y vehículos.">i</span>
+              </th>
+              <th>
+                <span id="thLogTotalDebt">Total Debt</span>
+                <span class="info-icon" data-info-en="Consumer debt plus mortgage balance." data-info-es="Deuda de consumo más saldo pendiente de hipoteca.">i</span>
+              </th>
+              <th>
+                <span id="thLogActualNw">Actual Net Worth</span>
+                <span class="info-icon" data-info-en="Total Assets minus Total Liabilities for this month." data-info-es="Activos Totales menos Pasivos Totales de este mes.">i</span>
+              </th>
+              <th>
+                <span id="thLogPlannedNw">Planned Net Worth</span>
+                <span class="info-icon" data-info-en="Benchmark target projected by the plan for this exact date." data-info-es="Meta proyectada por el plan para esta fecha exacta.">i</span>
+              </th>
+              <th>
+                <span id="thLogVariance">Variance vs Plan</span>
+                <span class="info-icon" data-info-en="Difference between actual and planned net worth (+ ahead / - behind)." data-info-es="Diferencia entre patrimonio real y planificado (+ adelante / - atrás).">i</span>
+              </th>
+              <th>
+                <span id="thLogSavings">Monthly Savings</span>
+                <span class="info-icon" data-info-en="Cash saved or added to wealth this month." data-info-es="Dinero aportado o ahorrado este mes.">i</span>
+              </th>
+              <th>
+                <span id="thLogNotes">Notes / Milestones</span>
+                <span class="info-icon" data-info-en="Personal notes, life events, or raises." data-info-es="Notas personales, eventos de vida o aumentos.">i</span>
+              </th>
+              <th><span id="thLogActions">Actions</span></th>
             </tr>
           </thead>
           <tbody id="historyTbody"></tbody>
@@ -935,6 +1138,455 @@
   <script>
     (function() {
       'use strict';
+
+      // --- Internationalization (i18n) & Theme Management ---
+      let currentTheme = localStorage.getItem('finance_suite_theme') || 'dark';
+      let currentLang = localStorage.getItem('finance_suite_lang') || 'en';
+
+      const MONTH_NAMES_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const MONTH_NAMES_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      const FULL_MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const FULL_MONTHS_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+      function getMonthNames() {
+        return currentLang === 'es' ? MONTH_NAMES_ES : MONTH_NAMES_EN;
+      }
+      function getFullMonthNames() {
+        return currentLang === 'es' ? FULL_MONTHS_ES : FULL_MONTHS_EN;
+      }
+
+      const I18N = {
+        en: {
+          suiteBadge: 'Monthly Progress & Reality Tracker (One Entry Per Month)',
+          backSuite: 'Back to Main Suite',
+          backSuiteTitle: 'Return to Main Suite',
+          themeToggleTitle: 'Toggle Light / Dark Mode',
+          importPlan: 'Upload Planned Scenario (CSV)',
+          importPlanTitle: 'Upload Net Worth Command Center CSV or individual module CSVs to set target plan',
+          loadTracker: 'Load Tracker CSV',
+          loadTrackerTitle: 'Load your existing Historical Tracker CSV',
+          exportTracker: 'Export Tracker CSV',
+          exportTrackerTitle: 'Download your actual monthly log history and plan comparison to CSV',
+          heroTitle: 'Monthly Net Worth Log & Progress Tracker',
+          heroDesc: 'Record your actual monthly financial reality, maintain a permanent historical timeline, and compare real-world progress against your planned projections.',
+          noticeTitle: 'Tracker vs. Planning Separation:',
+          noticeBody: 'The calculators in the main suite (Investing, Debt Payoff, Cost of Living, Net Worth Command Center) are strictly <em>forward-looking planning tools</em>. This module is the dedicated <strong>Historical Tracker</strong>. Keep your Tracker CSV files separate from your scenario planning CSVs to preserve your authentic financial record.',
+          noticeRule: 'One Entry Per Month Rule: For statistical clarity and standard net worth tracking, log exactly <strong>one snapshot per calendar month</strong> (e.g. Month-End or 1st of the month). Saving an entry for an existing month will prompt you to update that month\'s record.',
+          planCardTitle: '🎯 Active Planned Scenario Baseline',
+          planDefault: 'Default Suite Assumptions',
+          planDescDefault: 'Upload your <strong>Net Worth Command Center CSV</strong> (or single modules like Investing, Debt, or Mortgage) to compare your real timeline against your plan.',
+          planDescActive: 'Baseline scenario started in {0} ({1}). Comparing your logged reality against this curve.',
+          lblPlanAssets: 'Planned Total Assets',
+          lblPlanAssetsSub: 'Invested + Real Estate',
+          lblPlanLiab: 'Planned Liabilities',
+          lblPlanLiabSub: 'Consumer + Mortgage Debt',
+          lblPlanNw: 'Planned Net Worth',
+          lblPlanNwSub: 'Baseline Target',
+          lblPlanVariance: 'Latest Reality vs. Plan',
+          lblPlanVarianceSub: 'Comparing latest log to plan',
+          planNwGrowth: 'Plan Benchmark',
+          paydownWord: 'Paydown:',
+          perMonth: '/mo',
+          lblKpiLatestNw: 'Latest Logged Net Worth',
+          lblKpiHistoricalDelta: 'Historical Wealth Change',
+          lblKpiMonthsLogged: 'Monthly Tracking Consistency',
+          lblKpiPlanStatus: 'Plan Execution Status',
+          kpiLatestDateEmpty: 'No entries recorded',
+          kpiAsOf: 'As of {0}',
+          kpiHistoricalDeltaSubEmpty: '0 months logged',
+          kpiFromMonth: 'From {0} ({1} mos)',
+          kpiDateRangeEmpty: '0 months spanned',
+          kpiDateRangeSpan: '{0} months calendar span',
+          statusAhead: 'Ahead of Plan',
+          statusOnTrack: 'On Track',
+          statusBehind: 'Behind Plan',
+          statusAwaiting: 'Awaiting Entries',
+          subAboveCurve: '{0} above target curve',
+          subWithinCurve: 'Within {0} of target',
+          subBelowCurve: '{0} below target',
+          subUploadPlan: 'Upload or calibrate plan',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          formTitle: 'Record Monthly Financial Reality',
+          formTitleEdit: 'Edit Record for {0}',
+          txtOnePerMonth: '1 Entry Per Calendar Month',
+          lblOnePerMonthBadge: '1 Per Month',
+          lblCalendarMonth: 'Calendar Month (Unique Entry Key)',
+          statusReadyNew: '✅ Ready to record new entry for {0}',
+          statusExists: '⚠️ <strong style="color:#fbbf24;">Entry exists for {0}</strong> (Net Worth: {1}). Saving will update this month.',
+          lblEntryLiquid: 'Liquid Cash & HYSA',
+          lblEntryInvested: 'Investments & Retirement',
+          lblEntryRealEstate: 'Real Estate / Property',
+          lblEntryOtherAssets: 'Vehicles & Other Assets',
+          lblEntryConsumerDebt: 'Credit Cards & Loans',
+          lblEntryMortgage: 'Mortgage Balance',
+          lblEntrySavings: 'Actual Monthly Savings',
+          lblEntryExpenses: 'Actual Monthly Spend',
+          lblEntryNotes: 'Milestone / Event Notes (Optional)',
+          lblEntryNotesSub: 'Memory Log',
+          entryNotesPlaceholder: 'e.g. Annual bonus received, paid off car loan, vacation',
+          lblComputedNwTitle: 'Entry Computed Net Worth',
+          lblPreviewAssets: 'Assets:',
+          lblPreviewLiab: 'Liabilities:',
+          btnSaveEntry: 'Save Monthly Snapshot',
+          btnUpdateEntry: 'Update {0} Record',
+          btnCancel: 'Cancel',
+          lblChartTitle: 'Actual Net Worth Timeline vs. Planned Benchmark',
+          chartSummaryEmpty: 'Awaiting Entries',
+          chartSummaryMonths: '{0} Months',
+          chartEmpty1: 'No historical entries recorded yet.',
+          chartEmpty2: 'Log your monthly numbers on the left or click "Load Sample History" below.',
+          legActualNw: 'Actual Net Worth (Logged Dots)',
+          legPlannedTraj: 'Planned Scenario Trajectory',
+          legActualAssets: 'Actual Total Assets',
+          legActualLiab: 'Actual Liabilities',
+          lblInsightPaceTitle: 'Average Monthly Wealth Growth',
+          lblInsightDeltaTitle: 'Latest Reality vs Plan Delta',
+          tableTitle: 'Historical Monthly Log Timeline',
+          tableEntriesWord: 'Entries',
+          tableOrder: 'Chronological order (Oldest → Newest)',
+          btnLoadSample: 'Load Sample History',
+          btnClearAll: 'Clear All Logs',
+          tableEmpty: 'No monthly entries logged yet. Record your first month above or upload a CSV!',
+          thMonthYear: 'Month / Year',
+          thLiquid: 'Liquid Cash',
+          thInvested: 'Invested Assets',
+          thRealEstate: 'Real Estate',
+          thTotalAssets: 'Total Assets',
+          thTotalDebt: 'Total Debt',
+          thActualNw: 'Actual Net Worth',
+          thPlannedNw: 'Planned Net Worth',
+          thVariance: 'Variance vs Plan',
+          thSavings: 'Monthly Savings',
+          thNotes: 'Notes / Milestones',
+          thActions: 'Actions',
+          btnEdit: 'Edit',
+          btnEditTitle: 'Edit this month\'s record',
+          btnDeleteTitle: 'Delete this entry',
+          confirmDeleteEntry: 'Delete the entry for {0}?',
+          confirmClearAll: 'Are you sure you want to delete ALL historical entries? (Export to CSV first if you want a backup)',
+          confirmNotTracker: 'This file does not appear to be an exported Tracker CSV. Did you mean to upload it as a Planned Scenario? Click OK to load as Plan.',
+          alertNoEntriesExport: 'No tracker entries to export. Add at least one monthly log entry first!',
+          alertFileEmpty: 'Uploaded file is empty.',
+          alertLoadSuccess: 'Successfully loaded {0} monthly tracker entries from {1}!',
+          alertNoValidRows: 'Could not find valid monthly entry rows in this CSV.',
+          alertParseError: 'Error parsing Tracker CSV file: ',
+          alertSyncMaster: 'Successfully synced Master Planned Scenario from {0}!',
+          alertSyncInvesting: 'Updated Planned Invested Assets ({0}) from {1}!',
+          alertSyncDebt: 'Updated Planned Debt Paydown ({0}) from {1}!',
+          alertSyncMortgage: 'Updated Planned Real Estate & Mortgage from {0}!',
+          alertUnrecognizedFormat: 'Uploaded file did not match any recognizable financial suite plan format.'
+        },
+        es: {
+          suiteBadge: 'Registro de Progreso y Realidad Mensual (1 Entrada por Mes)',
+          backSuite: 'Volver a la Suite',
+          backSuiteTitle: 'Volver a la Suite Principal',
+          themeToggleTitle: 'Alternar Modo Claro / Oscuro',
+          importPlan: 'Cargar Escenario Planificado (CSV)',
+          importPlanTitle: 'Cargar CSV del Centro de Comando o de módulos individuales para fijar el plan objetivo',
+          loadTracker: 'Cargar Historial CSV',
+          loadTrackerTitle: 'Cargar tu archivo CSV de Historial existente',
+          exportTracker: 'Exportar Historial CSV',
+          exportTrackerTitle: 'Descargar tu historial mensual real y comparación con el plan en CSV',
+          heroTitle: 'Registro Mensual de Patrimonio Neto y Progreso Histórico',
+          heroDesc: 'Registra tu realidad financiera mensual, mantén una cronología histórica permanente y compara el avance real frente a tus metas planificadas.',
+          noticeTitle: 'Separación entre Historial y Planificación:',
+          noticeBody: 'Las calculadoras de la suite principal (Inversiones, Pago de Deudas, Costo de Vida, Centro de Comando) son exclusivamente <em>herramientas de planificación a futuro</em>. Este módulo es el <strong>Registro Histórico Real</strong> dedicado. Mantén tus archivos CSV de seguimiento separados de tus CSV de escenarios planificados para preservar tu historial financiero auténtico.',
+          noticeRule: 'Regla de 1 Entrada por Mes: Por claridad estadística y mejores prácticas de patrimonio neto, registra exactamente <strong>un cierre por mes calendario</strong> (ej. fin de mes o día 1). Al guardar una entrada para un mes ya existente se te solicitará actualizar dicho registro.',
+          planCardTitle: '🎯 Escenario Base Planificado Activo',
+          planDefault: 'Supuestos Predeterminados de la Suite',
+          planDescDefault: 'Carga tu <strong>CSV del Centro de Comando de Patrimonio</strong> (o módulos individuales como Inversión, Deuda o Hipoteca) para comparar tu avance real con tu plan.',
+          planDescActive: 'Escenario base iniciado en {0} ({1}). Comparando tu realidad registrada contra esta curva.',
+          lblPlanAssets: 'Activos Totales Planificados',
+          lblPlanAssetsSub: 'Inversiones + Bienes Raíces',
+          lblPlanLiab: 'Pasivos Planificados',
+          lblPlanLiabSub: 'Deuda de Consumo + Hipoteca',
+          lblPlanNw: 'Patrimonio Neto Planificado',
+          lblPlanNwSub: 'Meta Base del Plan',
+          lblPlanVariance: 'Realidad Reciente vs. Plan',
+          lblPlanVarianceSub: 'Comparando último registro con plan',
+          planNwGrowth: 'Meta de Referencia',
+          paydownWord: 'Amortización:',
+          perMonth: '/mes',
+          lblKpiLatestNw: 'Último Patrimonio Registrado',
+          lblKpiHistoricalDelta: 'Variación Histórica de Riqueza',
+          lblKpiMonthsLogged: 'Consistencia de Registro',
+          lblKpiPlanStatus: 'Estado de Ejecución del Plan',
+          kpiLatestDateEmpty: 'Sin registros guardados',
+          kpiAsOf: 'Al {0}',
+          kpiHistoricalDeltaSubEmpty: '0 meses registrados',
+          kpiFromMonth: 'Desde {0} ({1} meses)',
+          kpiDateRangeEmpty: 'Lapso de 0 meses',
+          kpiDateRangeSpan: 'Lapso de {0} meses',
+          statusAhead: 'Adelantado al Plan',
+          statusOnTrack: 'En Meta',
+          statusBehind: 'Por Detrás del Plan',
+          statusAwaiting: 'Esperando Registros',
+          subAboveCurve: '{0} por encima del objetivo',
+          subWithinCurve: 'A menos de {0} de la meta',
+          subBelowCurve: '{0} por debajo de la meta',
+          subUploadPlan: 'Carga o calibra un plan',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          formTitle: 'Registrar Realidad Financiera Mensual',
+          formTitleEdit: 'Editar Registro de {0}',
+          txtOnePerMonth: '1 Entrada por Mes Calendario',
+          lblOnePerMonthBadge: '1 Por Mes',
+          lblCalendarMonth: 'Mes Calendario (Clave Única)',
+          statusReadyNew: '✅ Listo para registrar nueva entrada de {0}',
+          statusExists: '⚠️ <strong style="color:#fbbf24;">Ya existe registro para {0}</strong> (Patrimonio: {1}). Guardar actualizará este mes.',
+          lblEntryLiquid: 'Efectivo Líquido y Ahorros',
+          lblEntryInvested: 'Inversiones y Jubilación',
+          lblEntryRealEstate: 'Bienes Raíces / Inmuebles',
+          lblEntryOtherAssets: 'Vehículos y Otros Bienes',
+          lblEntryConsumerDebt: 'Tarjetas de Crédito y Préstamos',
+          lblEntryMortgage: 'Saldo de Deuda Hipotecaria',
+          lblEntrySavings: 'Ahorro Real del Mes',
+          lblEntryExpenses: 'Gasto Real del Mes',
+          lblEntryNotes: 'Notas / Hitos del Mes (Opcional)',
+          lblEntryNotesSub: 'Bitácora',
+          entryNotesPlaceholder: 'ej. Bono anual recibido, préstamo de auto cancelado, vacaciones',
+          lblComputedNwTitle: 'Patrimonio Calculado de la Entrada',
+          lblPreviewAssets: 'Activos:',
+          lblPreviewLiab: 'Pasivos:',
+          btnSaveEntry: 'Guardar Registro Mensual',
+          btnUpdateEntry: 'Actualizar Registro de {0}',
+          btnCancel: 'Cancelar',
+          lblChartTitle: 'Línea de Tiempo del Patrimonio Real vs. Meta Planificada',
+          chartSummaryEmpty: 'Esperando Registros',
+          chartSummaryMonths: '{0} Meses',
+          chartEmpty1: 'Aún no hay registros históricos guardados.',
+          chartEmpty2: 'Registra tus datos a la izquierda o haz clic en "Cargar Historial de Ejemplo".',
+          legActualNw: 'Patrimonio Real (Puntos Registrados)',
+          legPlannedTraj: 'Trayectoria Planificada',
+          legActualAssets: 'Activos Totales Reales',
+          legActualLiab: 'Pasivos Reales',
+          lblInsightPaceTitle: 'Crecimiento Patrimonial Mensual Promedio',
+          lblInsightDeltaTitle: 'Diferencia Realidad vs. Plan',
+          tableTitle: 'Cronología Histórica Mensual',
+          tableEntriesWord: 'Entradas',
+          tableOrder: 'Orden cronológico (Más antiguo → Más reciente)',
+          btnLoadSample: 'Cargar Historial de Ejemplo',
+          btnClearAll: 'Borrar Todo el Historial',
+          tableEmpty: 'Aún no hay registros mensuales. ¡Registra tu primer mes arriba o carga un CSV!',
+          thMonthYear: 'Mes / Año',
+          thLiquid: 'Efectivo Líquido',
+          thInvested: 'Activos Invertidos',
+          thRealEstate: 'Bienes Raíces',
+          thTotalAssets: 'Activos Totales',
+          thTotalDebt: 'Deuda Total',
+          thActualNw: 'Patrimonio Real',
+          thPlannedNw: 'Patrimonio Planificado',
+          thVariance: 'Diferencia vs. Plan',
+          thSavings: 'Ahorro del Mes',
+          thNotes: 'Notas / Hitos',
+          thActions: 'Acciones',
+          btnEdit: 'Editar',
+          btnEditTitle: 'Editar el registro de este mes',
+          btnDeleteTitle: 'Eliminar este registro',
+          confirmDeleteEntry: '¿Eliminar el registro de {0}?',
+          confirmClearAll: '¿Estás seguro de que deseas eliminar TODOS los registros históricos? (Exporta a CSV primero si deseas un respaldo)',
+          confirmNotTracker: 'Este archivo no parece ser un CSV de Historial de Seguimiento. ¿Deseas cargarlo como un Escenario Planificado? Haz clic en Aceptar para cargarlo como Plan.',
+          alertNoEntriesExport: 'No hay registros que exportar. ¡Agrega al menos un registro mensual primero!',
+          alertFileEmpty: 'El archivo cargado está vacío.',
+          alertLoadSuccess: '¡Se cargaron exitosamente {0} registros mensuales desde {1}!',
+          alertNoValidRows: 'No se encontraron filas de registros mensuales válidas en este CSV.',
+          alertParseError: 'Error al procesar el archivo CSV de seguimiento: ',
+          alertSyncMaster: '¡Escenario Planificado Maestro sincronizado con éxito desde {0}!',
+          alertSyncInvesting: '¡Activos Invertidos Planificados actualizados ({0}) desde {1}!',
+          alertSyncDebt: '¡Amortización de Deuda Planificada actualizada ({0}) desde {1}!',
+          alertSyncMortgage: '¡Bienes Raíces e Hipoteca Planificados actualizados desde {0}!',
+          alertUnrecognizedFormat: 'El archivo cargado no coincide con ningún formato de plan reconocible de la suite financiera.'
+        }
+      };
+
+      function t() {
+        return I18N[currentLang] || I18N.en;
+      }
+
+      function applyTheme() {
+        if (currentTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        const btn = document.getElementById('btnThemeToggle');
+        if (btn) {
+          btn.textContent = currentTheme === 'light' ? t().themeDark : t().themeLight;
+        }
+      }
+
+      function applyStaticTranslations() {
+        document.documentElement.setAttribute('lang', currentLang);
+        document.documentElement.setAttribute('data-lang', currentLang);
+        const dict = t();
+
+        const safeSet = (id, text) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = text;
+        };
+
+        safeSet('txtSuiteBadge', dict.suiteBadge);
+        safeSet('txtBackSuite', dict.backSuite);
+        const btnBack = document.getElementById('btnBackSuite');
+        if (btnBack) btnBack.title = dict.backSuiteTitle;
+        const btnTheme = document.getElementById('btnThemeToggle');
+        if (btnTheme) {
+          btnTheme.title = dict.themeToggleTitle;
+          btnTheme.textContent = currentTheme === 'light' ? dict.themeDark : dict.themeLight;
+        }
+        safeSet('txtImportPlan', dict.importPlan);
+        const btnImp = document.getElementById('btnImportPlan');
+        if (btnImp) btnImp.title = dict.importPlanTitle;
+        safeSet('txtLoadTrackerCSV', dict.loadTracker);
+        const btnLoad = document.getElementById('btnLoadTrackerCSV');
+        if (btnLoad) btnLoad.title = dict.loadTrackerTitle;
+        safeSet('txtExportTrackerCSV', dict.exportTracker);
+        const btnExp = document.getElementById('btnExportTrackerCSV');
+        if (btnExp) btnExp.title = dict.exportTrackerTitle;
+
+        safeSet('heroTitle', dict.heroTitle);
+        safeSet('heroDesc', dict.heroDesc);
+
+        const noticeTitleEl = document.getElementById('txtNoticeTitle');
+        if (noticeTitleEl) noticeTitleEl.innerHTML = `<strong>${dict.noticeTitle}</strong>`;
+        const noticeBodyEl = document.getElementById('txtNoticeBody');
+        if (noticeBodyEl) noticeBodyEl.innerHTML = dict.noticeBody;
+        const noticeRuleEl = document.getElementById('txtNoticeRule');
+        if (noticeRuleEl) noticeRuleEl.innerHTML = `<strong>${dict.noticeRule}</strong>`;
+
+        safeSet('txtPlanCardTitle', dict.planCardTitle);
+        safeSet('lblPlanAssets', dict.lblPlanAssets);
+        safeSet('lblPlanAssetsSub', dict.lblPlanAssetsSub);
+        safeSet('lblPlanLiab', dict.lblPlanLiab);
+        safeSet('lblPlanLiabSub', dict.lblPlanLiabSub);
+        safeSet('lblPlanNw', dict.lblPlanNw);
+        safeSet('lblPlanNwSub', dict.lblPlanNwSub);
+        safeSet('lblPlanVariance', dict.lblPlanVariance);
+        safeSet('lblPlanVarianceSub', dict.lblPlanVarianceSub);
+        safeSet('planNwGrowth', dict.planNwGrowth);
+
+        safeSet('lblKpiLatestNw', dict.lblKpiLatestNw);
+        safeSet('lblKpiHistoricalDelta', dict.lblKpiHistoricalDelta);
+        safeSet('lblKpiMonthsLogged', dict.lblKpiMonthsLogged);
+        safeSet('lblKpiPlanStatus', dict.lblKpiPlanStatus);
+
+        safeSet('formTitleText', dict.formTitle);
+        safeSet('txtOnePerMonth', dict.txtOnePerMonth);
+        safeSet('lblOnePerMonthBadge', dict.lblOnePerMonthBadge);
+        safeSet('lblCalendarMonth', dict.lblCalendarMonth);
+        safeSet('lblEntryLiquid', dict.lblEntryLiquid);
+        safeSet('lblEntryInvested', dict.lblEntryInvested);
+        safeSet('lblEntryRealEstate', dict.lblEntryRealEstate);
+        safeSet('lblEntryOtherAssets', dict.lblEntryOtherAssets);
+        safeSet('lblEntryConsumerDebt', dict.lblEntryConsumerDebt);
+        safeSet('lblEntryMortgage', dict.lblEntryMortgage);
+        safeSet('lblEntrySavings', dict.lblEntrySavings);
+        safeSet('lblEntryExpenses', dict.lblEntryExpenses);
+        safeSet('lblEntryNotes', dict.lblEntryNotes);
+        safeSet('lblEntryNotesSub', dict.lblEntryNotesSub);
+        const inpNotes = document.getElementById('entryNotes');
+        if (inpNotes) inpNotes.placeholder = dict.entryNotesPlaceholder;
+
+        safeSet('lblComputedNwTitle', dict.lblComputedNwTitle);
+        safeSet('lblPreviewAssets', dict.lblPreviewAssets);
+        safeSet('lblPreviewLiab', dict.lblPreviewLiab);
+        safeSet('txtBtnSaveEntry', dict.btnSaveEntry);
+        safeSet('txtBtnCancelEdit', dict.btnCancel);
+
+        safeSet('lblChartTitle', dict.lblChartTitle);
+        safeSet('legActualNw', dict.legActualNw);
+        safeSet('legPlannedTraj', dict.legPlannedTraj);
+        safeSet('legActualAssets', dict.legActualAssets);
+        safeSet('legActualLiab', dict.legActualLiab);
+        safeSet('lblInsightPaceTitle', dict.lblInsightPaceTitle);
+        safeSet('lblInsightDeltaTitle', dict.lblInsightDeltaTitle);
+        safeSet('lblTableTimelineTitle', dict.tableTitle);
+        safeSet('lblTableEntriesWord', dict.tableEntriesWord);
+        safeSet('lblTableChronOrder', dict.tableOrder);
+        safeSet('txtLoadSampleData', dict.btnLoadSample);
+        safeSet('txtClearAllLogs', dict.btnClearAll);
+
+        safeSet('thLogMonthYear', dict.thMonthYear);
+        safeSet('thLogLiquid', dict.thLiquid);
+        safeSet('thLogInvested', dict.thInvested);
+        safeSet('thLogRealEstate', dict.thRealEstate);
+        safeSet('thLogTotalAssets', dict.thTotalAssets);
+        safeSet('thLogTotalDebt', dict.thTotalDebt);
+        safeSet('thLogActualNw', dict.thActualNw);
+        safeSet('thLogPlannedNw', dict.thPlannedNw);
+        safeSet('thLogVariance', dict.thVariance);
+        safeSet('thLogSavings', dict.thSavings);
+        safeSet('thLogNotes', dict.thNotes);
+        safeSet('thLogActions', dict.thActions);
+
+        // Update entryMonthSelect options to active language
+        const mSelect = document.getElementById('entryMonthSelect');
+        if (mSelect) {
+          const curVal = mSelect.value;
+          const fulls = getFullMonthNames();
+          mSelect.innerHTML = '';
+          fulls.forEach((mName, idx) => {
+            const opt = document.createElement('option');
+            opt.value = String(idx);
+            opt.textContent = mName;
+            mSelect.appendChild(opt);
+          });
+          mSelect.value = curVal;
+        }
+      }
+
+      // --- Tooltip Floating Bubble Initializer ---
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = currentLang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en')) : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) left = window.innerWidth - tipRect.width - 10;
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
 
       const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const FULL_MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -1008,11 +1660,11 @@
       }
 
       function formatMonthYear(year, month) {
-        return `${MONTH_NAMES[clamp(month, 0, 11)]} ${year}`;
+        return `${getMonthNames()[clamp(month, 0, 11)]} ${year}`;
       }
 
       function formatCalendarMonthClean(year, month) {
-        return `${year}-${String(month + 1).padStart(2, '0')} (${MONTH_NAMES[clamp(month, 0, 11)]})`;
+        return `${year}-${String(month + 1).padStart(2, '0')} (${getMonthNames()[clamp(month, 0, 11)]})`;
       }
 
       function detectDelimiter(input) {
@@ -1247,27 +1899,31 @@
 
         // Check if an entry for this month already exists
         const exists = trackerState.entries.find(e => e.year === v.year && e.month === v.month);
+        const dict = t();
         if (exists) {
-          monthEntryStatusText.innerHTML = `⚠️ <strong style="color:#fbbf24;">Entry exists for ${formatMonthYear(v.year, v.month)}</strong> (Net Worth: ${formatMoney((exists.liquid + exists.invested + exists.realEstate + exists.otherAssets) - (exists.consumerDebt + exists.mortgage))}). Saving will update this month.`;
+          const nw = (exists.liquid + exists.invested + exists.realEstate + exists.otherAssets) - (exists.consumerDebt + exists.mortgage);
+          monthEntryStatusText.innerHTML = dict.statusExists
+            .replace('{0}', formatMonthYear(v.year, v.month))
+            .replace('{1}', formatMoney(nw));
           btnSaveEntry.innerHTML = `
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
               <polyline points="17 21 17 13 7 13 7 21"></polyline>
               <polyline points="7 3 7 8 15 8"></polyline>
             </svg>
-            Update ${formatMonthYear(v.year, v.month)} Record
+            <span id="txtBtnSaveEntry">${dict.btnUpdateEntry.replace('{0}', formatMonthYear(v.year, v.month))}</span>
           `;
           btnSaveEntry.classList.remove('btn-primary');
           btnSaveEntry.classList.add('btn-purple');
         } else {
-          monthEntryStatusText.innerHTML = `✅ Ready to record new entry for <strong>${formatMonthYear(v.year, v.month)}</strong>`;
+          monthEntryStatusText.innerHTML = dict.statusReadyNew.replace('{0}', `<strong>${formatMonthYear(v.year, v.month)}</strong>`);
           btnSaveEntry.innerHTML = `
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
               <polyline points="17 21 17 13 7 13 7 21"></polyline>
               <polyline points="7 3 7 8 15 8"></polyline>
             </svg>
-            Save Monthly Snapshot
+            <span id="txtBtnSaveEntry">${dict.btnSaveEntry}</span>
           `;
           btnSaveEntry.classList.remove('btn-purple');
           btnSaveEntry.classList.add('btn-primary');
@@ -1317,8 +1973,8 @@
           ctx.fillStyle = '#64748b';
           ctx.font = '13px -apple-system, sans-serif';
           ctx.textAlign = 'center';
-          ctx.fillText('No historical entries recorded yet.', w / 2, h / 2 - 10);
-          ctx.fillText('Log your monthly numbers on the left or click "Load Sample History" below.', w / 2, h / 2 + 15);
+          ctx.fillText(t().chartEmpty1, w / 2, h / 2 - 10);
+          ctx.fillText(t().chartEmpty2, w / 2, h / 2 + 15);
           return;
         }
 
@@ -1376,9 +2032,10 @@
 
         // Horizontal Grid Lines
         const gridLines = 4;
-        ctx.strokeStyle = '#222e44';
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        ctx.strokeStyle = isLight ? '#cbd5e1' : '#222e44';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = isLight ? '#475569' : '#64748b';
         ctx.font = '10px -apple-system, sans-serif';
         ctx.textAlign = 'right';
 
@@ -1398,7 +2055,7 @@
           ctx.beginPath();
           ctx.moveTo(padding.left, zeroY);
           ctx.lineTo(w - padding.right, zeroY);
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+          ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255, 255, 255, 0.25)';
           ctx.stroke();
         }
 
@@ -1494,12 +2151,13 @@
       function renderTable() {
         historyTbody.innerHTML = '';
         tableCountBadge.textContent = trackerState.entries.length;
+        const dict = t();
 
         if (trackerState.entries.length === 0) {
           historyTbody.innerHTML = `
             <tr>
               <td colspan="12" style="text-align:center; padding:2rem; color:var(--text-subtle);">
-                No monthly entries logged yet. Record your first month above or upload a CSV!
+                ${dict.tableEmpty}
               </td>
             </tr>
           `;
@@ -1533,16 +2191,16 @@
             <td style="font-weight:700; color:${deltaColor};">
               ${delta >= 0 ? '+' : ''}${formatMoney(delta)}
             </td>
-            <td style="color:#c084fc;">${formatMoney(e.monthlySavings)}/mo</td>
+            <td style="color:#c084fc;">${formatMoney(e.monthlySavings)}${dict.perMonth}</td>
             <td style="font-size:0.75rem; color:var(--text-muted); max-width:180px; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(e.notes)}">
               ${escapeHtml(e.notes) || '<span style="color:#475569;">--</span>'}
             </td>
             <td>
               <div style="display:flex; gap:0.35rem;">
-                <button type="button" class="btn btn-edit" data-idx="${idx}" title="Edit this month's record">
-                  Edit
+                <button type="button" class="btn btn-edit" data-idx="${idx}" title="${dict.btnEditTitle}">
+                  ${dict.btnEdit}
                 </button>
-                <button type="button" class="btn btn-danger" data-idx="${idx}" title="Delete this entry">
+                <button type="button" class="btn btn-danger" data-idx="${idx}" title="${dict.btnDeleteTitle}">
                   ✕
                 </button>
               </div>
@@ -1556,7 +2214,7 @@
 
           // Delete Handler
           tr.querySelector('.btn-danger').addEventListener('click', () => {
-            if (confirm(`Delete the entry for ${formatMonthYear(e.year, e.month)}?`)) {
+            if (confirm(dict.confirmDeleteEntry.replace('{0}', formatMonthYear(e.year, e.month)))) {
               trackerState.entries.splice(idx, 1);
               updateAllUI();
             }
@@ -1581,14 +2239,14 @@
         entryMonthlyExpenses.value = Math.round(e.monthlyExpenses).toLocaleString();
         entryNotes.value = e.notes || '';
 
-        formTitleText.textContent = `Edit Record for ${formatMonthYear(e.year, e.month)}`;
+        formTitleText.textContent = t().formTitleEdit.replace('{0}', formatMonthYear(e.year, e.month));
         btnCancelEdit.style.display = 'inline-flex';
         updateFormPreview();
         window.scrollTo({ top: entryForm.offsetTop - 80, behavior: 'smooth' });
       }
 
       btnCancelEdit.addEventListener('click', () => {
-        formTitleText.textContent = 'Record Monthly Financial Reality';
+        formTitleText.textContent = t().formTitle;
         btnCancelEdit.style.display = 'none';
         entryForm.reset();
         const now = new Date();
@@ -1600,14 +2258,19 @@
       // --- Update All KPI Summaries ---
       function updateAllUI() {
         sortEntries();
+        const dict = t();
 
         // 1. Plan Baseline Slots
         const p = trackerState.plannedScenario;
-        planSourceBadge.textContent = p.hasPlan ? `Plan: ${p.sourceName}` : 'Default Suite Assumptions';
+        planSourceBadge.textContent = p.hasPlan ? `Plan: ${p.sourceName}` : dict.planDefault;
         planSourceBadge.className = `benchmark-badge ${p.hasPlan ? 'active' : ''}`;
 
         const planStartFmt = formatMonthYear(p.startYear, p.startMonth);
-        planDescriptionText.innerHTML = `Baseline scenario started in <strong>${planStartFmt}</strong> (${p.sourceName}). Comparing your logged reality against this curve.`;
+        if (p.hasPlan) {
+          planDescriptionText.innerHTML = dict.planDescActive.replace('{0}', `<strong>${planStartFmt}</strong>`).replace('{1}', p.sourceName);
+        } else {
+          planDescriptionText.innerHTML = dict.planDescDefault;
+        }
 
         const initAssets = p.investedAssets + p.propertyValue;
         const initLiab = p.consumerDebt + p.mortgageDebt;
@@ -1616,7 +2279,7 @@
         planSlotAssetsVal.textContent = formatMoney(initAssets);
         planAssetRate.textContent = `${p.portfolioReturnApy.toFixed(1)}% APY`;
         planSlotLiabVal.textContent = formatMoney(initLiab);
-        planDebtRate.textContent = `Paydown: ${formatMoney(p.monthlyDebtPayment)}/mo`;
+        planDebtRate.textContent = `${dict.paydownWord} ${formatMoney(p.monthlyDebtPayment)}${dict.perMonth}`;
         planSlotNwVal.textContent = formatMoney(initNw);
 
         // 2. Entries KPIs
@@ -1637,15 +2300,15 @@
 
           kpiLatestNw.textContent = formatMoney(latestNw);
           kpiLatestNw.style.color = latestNw >= 0 ? '#34d399' : '#f87171';
-          kpiLatestDate.textContent = `As of ${formatMonthYear(latest.year, latest.month)}`;
+          kpiLatestDate.textContent = dict.kpiAsOf.replace('{0}', formatMonthYear(latest.year, latest.month));
 
           const deltaAllTime = latestNw - firstNw;
           kpiHistoricalDelta.textContent = `${deltaAllTime >= 0 ? '+' : ''}${formatMoney(deltaAllTime)}`;
           kpiHistoricalDelta.style.color = deltaAllTime >= 0 ? '#34d399' : '#f87171';
-          if (kpiHistoricalDeltaSub) kpiHistoricalDeltaSub.textContent = `From ${formatMonthYear(first.year, first.month)} (${count} mos)`;
+          if (kpiHistoricalDeltaSub) kpiHistoricalDeltaSub.textContent = dict.kpiFromMonth.replace('{0}', formatMonthYear(first.year, first.month)).replace('{1}', count);
 
           const monthsBetween = Math.max(1, (latest.year * 12 + latest.month) - (first.year * 12 + first.month));
-          kpiDateRange.textContent = `${monthsBetween + 1} months calendar span`;
+          kpiDateRange.textContent = dict.kpiDateRangeSpan.replace('{0}', monthsBetween + 1);
 
           // Comparison to plan
           const planAtLatest = calculatePlannedNetWorthAt(latest.year, latest.month);
@@ -1658,41 +2321,41 @@
           planVariancePct.style.color = variance >= 0 ? '#34d399' : '#f87171';
 
           if (variance >= 0) {
-            kpiPlanStatus.textContent = 'Ahead of Plan';
+            kpiPlanStatus.textContent = dict.statusAhead;
             kpiPlanStatus.style.color = '#34d399';
-            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = `${formatMoney(variance)} above target curve`;
+            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = dict.subAboveCurve.replace('{0}', formatMoney(variance));
           } else if (Math.abs(variance) < 5000) {
-            kpiPlanStatus.textContent = 'On Track';
+            kpiPlanStatus.textContent = dict.statusOnTrack;
             kpiPlanStatus.style.color = '#fbbf24';
-            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = `Within ${formatMoney(Math.abs(variance))} of target`;
+            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = dict.subWithinCurve.replace('{0}', formatMoney(Math.abs(variance)));
           } else {
-            kpiPlanStatus.textContent = 'Behind Plan';
+            kpiPlanStatus.textContent = dict.statusBehind;
             kpiPlanStatus.style.color = '#f87171';
-            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = `${formatMoney(Math.abs(variance))} below target`;
+            if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = dict.subBelowCurve.replace('{0}', formatMoney(Math.abs(variance)));
           }
 
           // Insights
           const avgMonthly = deltaAllTime / monthsBetween;
-          insightAvgPace.textContent = `${avgMonthly >= 0 ? '+' : ''}${formatMoney(avgMonthly)}/mo`;
+          insightAvgPace.textContent = `${avgMonthly >= 0 ? '+' : ''}${formatMoney(avgMonthly)}${dict.perMonth}`;
           insightAvgPace.style.color = avgMonthly >= 0 ? '#34d399' : '#f87171';
 
           insightDeltaPlan.textContent = `${variance >= 0 ? '+' : ''}${formatMoney(variance)} (${formatMonthYear(latest.year, latest.month)})`;
           insightDeltaPlan.style.color = variance >= 0 ? '#34d399' : '#f87171';
 
-          chartProgressSummary.textContent = `${formatMonthYear(first.year, first.month)} → ${formatMonthYear(latest.year, latest.month)} (${count} Months)`;
+          chartProgressSummary.textContent = `${formatMonthYear(first.year, first.month)} → ${formatMonthYear(latest.year, latest.month)} (${dict.chartSummaryMonths.replace('{0}', count)})`;
         } else {
           kpiLatestNw.textContent = '$0';
-          kpiLatestDate.textContent = 'No entries recorded';
+          kpiLatestDate.textContent = dict.kpiLatestDateEmpty;
           kpiHistoricalDelta.textContent = '$0';
-          if (kpiHistoricalDeltaSub) kpiHistoricalDeltaSub.textContent = '0 months logged';
-          kpiDateRange.textContent = '0 months spanned';
-          kpiPlanStatus.textContent = 'Awaiting Entries';
-          if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = 'Upload or calibrate plan';
+          if (kpiHistoricalDeltaSub) kpiHistoricalDeltaSub.textContent = dict.kpiHistoricalDeltaSubEmpty;
+          kpiDateRange.textContent = dict.kpiDateRangeEmpty;
+          kpiPlanStatus.textContent = dict.statusAwaiting;
+          if (kpiPlanStatusSub) kpiPlanStatusSub.textContent = dict.subUploadPlan;
           planSlotVarianceVal.textContent = '$0';
           planVariancePct.textContent = '+0.0%';
-          insightAvgPace.textContent = '$0/mo';
+          insightAvgPace.textContent = `$0${dict.perMonth}`;
           insightDeltaPlan.textContent = '$0';
-          chartProgressSummary.textContent = 'Awaiting Entries';
+          chartProgressSummary.textContent = dict.chartSummaryEmpty;
         }
 
         drawChart();
@@ -1714,7 +2377,7 @@
         }
 
         // Reset edit mode
-        formTitleText.textContent = 'Record Monthly Financial Reality';
+        formTitleText.textContent = t().formTitle;
         btnCancelEdit.style.display = 'none';
 
         // Auto increment to next month for user convenience
@@ -1735,7 +2398,7 @@
       // --- Export Tracker to CSV ---
       function exportTrackerCSV() {
         if (trackerState.entries.length === 0) {
-          alert('No tracker entries to export. Add at least one monthly log entry first!');
+          alert(t().alertNoEntriesExport);
           return;
         }
 
@@ -1835,7 +2498,7 @@
             const text = evt.target.result;
             const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
             if (lines.length === 0) {
-              alert('Uploaded file is empty.');
+              alert(t().alertFileEmpty);
               return;
             }
 
@@ -1843,8 +2506,12 @@
             const headerJoined = lines.slice(0, 15).join(' ').toLowerCase();
 
             // Detect if this is an actual Tracker CSV
-            if (!headerJoined.includes('monthly net worth log & historical reality tracker') && !headerJoined.includes('chronological monthly net worth entries')) {
-              if (confirm('This file does not appear to be an exported Tracker CSV. Did you mean to upload it as a Planned Scenario? Click OK to load as Plan.')) {
+            if (!headerJoined.includes('monthly net worth log & historical reality tracker') && 
+                !headerJoined.includes('chronological monthly net worth entries') &&
+                !headerJoined.includes('registro mensual de patrimonio neto') &&
+                !headerJoined.includes('cronología mensual') &&
+                !headerJoined.includes('entradas cronológicas')) {
+              if (confirm(t().confirmNotTracker)) {
                 ingestPlannedScenarioCSV(text, file.name);
                 return;
               }
@@ -1859,7 +2526,11 @@
               if (cols.length === 0) continue;
 
               const firstColUpper = (cols[0] || '').trim().toUpperCase();
-              if (firstColUpper.includes('CHRONOLOGICAL MONTHLY NET WORTH ENTRIES') || rawLine.toUpperCase().includes('CHRONOLOGICAL MONTHLY NET WORTH ENTRIES')) {
+              if (firstColUpper.includes('CHRONOLOGICAL MONTHLY NET WORTH ENTRIES') || 
+                  rawLine.toUpperCase().includes('CHRONOLOGICAL MONTHLY NET WORTH ENTRIES') ||
+                  firstColUpper.includes('REGISTRO MENSUAL') ||
+                  firstColUpper.includes('CRONOLÓGIC') ||
+                  firstColUpper.includes('CRONOLOGIC')) {
                 inEntries = true;
                 i++; // skip column headers line
                 continue;
@@ -1890,14 +2561,14 @@
             if (parsedEntries.length > 0) {
               trackerState.entries = parsedEntries;
               updateAllUI();
-              alert(`Successfully loaded ${parsedEntries.length} monthly tracker entries from ${file.name}!`);
+              alert(t().alertLoadSuccess.replace('{0}', parsedEntries.length).replace('{1}', file.name));
             } else {
-              alert('Could not find valid monthly entry rows in this CSV.');
+              alert(t().alertNoValidRows);
             }
 
           } catch (err) {
             console.error(err);
-            alert('Error parsing Tracker CSV file: ' + (err.message || err));
+            alert(t().alertParseError + (err.message || err));
           }
         };
         reader.readAsText(file);
@@ -1911,38 +2582,38 @@
         const headerJoined = lines.slice(0, 15).join(' ').toLowerCase();
 
         // 1. Net Worth Command Center CSV (Primary Master Plan)
-        if (headerJoined.includes('holistic net worth command center')) {
+        if (headerJoined.includes('holistic net worth command center') || headerJoined.includes('centro de comando de patrimonio neto') || headerJoined.includes('centro de comando integral')) {
           lines.forEach(line => {
             const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
             const v = cols[1];
 
-            if (k === 'start month index') trackerState.plannedScenario.startMonth = clamp(parseInt(v, 10) - 1, 0, 11);
-            else if (k === 'start year') trackerState.plannedScenario.startYear = clamp(parseInt(v, 10), 1970, 2100);
-            else if (k.includes('liquid & invested assets')) trackerState.plannedScenario.investedAssets = Math.max(0, parseNumber(v));
-            else if (k.includes('real estate / property value')) trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(v));
-            else if (k.includes('consumer & loan debt')) trackerState.plannedScenario.consumerDebt = Math.max(0, parseNumber(v));
-            else if (k.includes('mortgage debt balance')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(v));
-            else if (k.includes('mortgage interest rate')) trackerState.plannedScenario.mortgageRate = clamp(parseNumber(v), 0, 25);
-            else if (k.includes('mortgage monthly p&i')) trackerState.plannedScenario.mortgageMonthlyPI = Math.max(0, parseNumber(v));
-            else if (k.includes('property annual appreciation')) trackerState.plannedScenario.propertyAppreciation = clamp(parseNumber(v), 0, 20);
-            else if (k.includes('monthly investment contribution')) trackerState.plannedScenario.monthlyInvestContrib = Math.max(0, parseNumber(v));
-            else if (k.includes('portfolio annual return')) trackerState.plannedScenario.portfolioReturnApy = clamp(parseNumber(v), 0, 30);
-            else if (k.includes('monthly debt paydown')) trackerState.plannedScenario.monthlyDebtPayment = Math.max(0, parseNumber(v));
-            else if (k.includes('consumer debt average apr')) trackerState.plannedScenario.debtAvgApr = clamp(parseNumber(v), 0, 50);
+            if (k === 'start month index' || k === 'índice de mes de inicio' || k === 'indice de mes de inicio') trackerState.plannedScenario.startMonth = clamp(parseInt(v, 10) - 1, 0, 11);
+            else if (k === 'start year' || k === 'año de inicio' || k === 'ano de inicio') trackerState.plannedScenario.startYear = clamp(parseInt(v, 10), 1970, 2100);
+            else if (k.includes('liquid & invested assets') || k.includes('activos líquidos e invertidos') || k.includes('activos liquidos e invertidos')) trackerState.plannedScenario.investedAssets = Math.max(0, parseNumber(v));
+            else if (k.includes('real estate / property value') || k.includes('bienes raíces / valor de inmuebles') || k.includes('bienes raices')) trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(v));
+            else if (k.includes('consumer & loan debt') || k.includes('deudas de consumo y préstamos') || k.includes('deudas de consumo')) trackerState.plannedScenario.consumerDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('mortgage debt balance') || k.includes('saldo de deuda hipotecaria')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(v));
+            else if (k.includes('mortgage interest rate') || k.includes('tasa de interés hipotecaria') || k.includes('tasa de interes')) trackerState.plannedScenario.mortgageRate = clamp(parseNumber(v), 0, 25);
+            else if (k.includes('mortgage monthly p&i') || k.includes('pago mensual c+i de hipoteca') || k.includes('c+i de hipoteca')) trackerState.plannedScenario.mortgageMonthlyPI = Math.max(0, parseNumber(v));
+            else if (k.includes('property annual appreciation') || k.includes('apreciación anual de inmuebles') || k.includes('apreciacion anual')) trackerState.plannedScenario.propertyAppreciation = clamp(parseNumber(v), 0, 20);
+            else if (k.includes('monthly investment contribution') || k.includes('aportación mensual a inversión') || k.includes('aportacion mensual')) trackerState.plannedScenario.monthlyInvestContrib = Math.max(0, parseNumber(v));
+            else if (k.includes('portfolio annual return') || k.includes('rendimiento anual del portafolio')) trackerState.plannedScenario.portfolioReturnApy = clamp(parseNumber(v), 0, 30);
+            else if (k.includes('monthly debt paydown') || k.includes('pago mensual a capital e intereses') || k.includes('amortización de deuda')) trackerState.plannedScenario.monthlyDebtPayment = Math.max(0, parseNumber(v));
+            else if (k.includes('consumer debt average apr') || k.includes('tasa anual promedio de deuda')) trackerState.plannedScenario.debtAvgApr = clamp(parseNumber(v), 0, 50);
           });
 
           trackerState.plannedScenario.hasPlan = true;
           trackerState.plannedScenario.sourceName = `Net Worth Hub (${fileName})`;
           trackerState.plannedScenario.mode = 'networth';
           updateAllUI();
-          alert(`Successfully synced Master Planned Scenario from ${fileName}!`);
+          alert(t().alertSyncMaster.replace('{0}', fileName));
           return;
         }
 
         // 2. Multi-Asset Investing CSV
-        if (headerJoined.includes('portfolio savings') || headerJoined.includes('asset configuration') || headerJoined.includes('multi-asset investing')) {
+        if (headerJoined.includes('portfolio savings') || headerJoined.includes('asset configuration') || headerJoined.includes('multi-asset investing') || headerJoined.includes('ahorro e inversión multi-activos') || headerJoined.includes('inversión y portafolio') || headerJoined.includes('configuración de portafolio de activos')) {
           let totalBal = 0;
           let totalContrib = 0;
           let inConfig = false;
@@ -1951,12 +2622,12 @@
 
           lines.forEach(line => {
             const cols = parseCSVLine(line, delimiter);
-            if (cols[0] && cols[0].toLowerCase() === 'start month index') mIdx = parseInt(cols[1], 10);
-            if (cols[0] && cols[0].toLowerCase() === 'start year') yVal = parseInt(cols[1], 10);
+            if (cols[0] && (cols[0].toLowerCase() === 'start month index' || cols[0].toLowerCase() === 'índice de mes de inicio' || cols[0].toLowerCase() === 'indice de mes de inicio')) mIdx = parseInt(cols[1], 10);
+            if (cols[0] && (cols[0].toLowerCase() === 'start year' || cols[0].toLowerCase() === 'año de inicio' || cols[0].toLowerCase() === 'ano de inicio')) yVal = parseInt(cols[1], 10);
 
-            if (cols[0] === 'ASSET CONFIGURATION') { inConfig = true; return; }
+            if (cols[0] === 'ASSET CONFIGURATION' || cols[0] === 'CONFIGURACIÓN DE PORTAFOLIO DE ACTIVOS' || cols[0] === 'CONFIGURACION DE PORTAFOLIO DE ACTIVOS') { inConfig = true; return; }
             if (inConfig) {
-              if (cols[0] === 'YEAR-BY-YEAR PROJECTION SCHEDULE' || cols.length < 4) { inConfig = false; return; }
+              if (cols[0] === 'YEAR-BY-YEAR PROJECTION SCHEDULE' || cols[0].includes('CRONOGRAMA') || cols.length < 4) { inConfig = false; return; }
               totalBal += Math.max(0, parseNumber(cols[1]));
               totalContrib += Math.max(0, parseNumber(cols[2]));
             }
@@ -1973,13 +2644,13 @@
             trackerState.plannedScenario.sourceName = `Investing Plan (${fileName})`;
             trackerState.plannedScenario.mode = 'investing';
             updateAllUI();
-            alert(`Updated Planned Invested Assets (${formatMoney(totalBal)}) from ${fileName}!`);
+            alert(t().alertSyncInvesting.replace('{0}', formatMoney(totalBal)).replace('{1}', fileName));
             return;
           }
         }
 
         // 3. Debt Payoff CSV
-        if (headerJoined.includes('debt payoff engine') || headerJoined.includes('debt accounts configuration')) {
+        if (headerJoined.includes('debt payoff engine') || headerJoined.includes('debt accounts configuration') || headerJoined.includes('motor de liquidación de deudas') || headerJoined.includes('configuración de portafolio de deudas')) {
           let totalDebt = 0;
           let totalMin = 0;
           let extra = 0;
@@ -1989,13 +2660,13 @@
 
           lines.forEach(line => {
             const cols = parseCSVLine(line, delimiter);
-            if (cols[0] && cols[0].toLowerCase() === 'start month index') mIdx = parseInt(cols[1], 10);
-            if (cols[0] && cols[0].toLowerCase() === 'start year') yVal = parseInt(cols[1], 10);
-            if (cols[0] && cols[0].toLowerCase().includes('extra monthly payment')) extra = Math.max(0, parseNumber(cols[1]));
+            if (cols[0] && (cols[0].toLowerCase() === 'start month index' || cols[0].toLowerCase() === 'índice de mes de inicio' || cols[0].toLowerCase() === 'indice de mes de inicio')) mIdx = parseInt(cols[1], 10);
+            if (cols[0] && (cols[0].toLowerCase() === 'start year' || cols[0].toLowerCase() === 'año de inicio' || cols[0].toLowerCase() === 'ano de inicio')) yVal = parseInt(cols[1], 10);
+            if (cols[0] && (cols[0].toLowerCase().includes('extra monthly payment') || cols[0].toLowerCase().includes('pago mensual extra'))) extra = Math.max(0, parseNumber(cols[1]));
 
-            if (cols[0] === 'DEBT ACCOUNTS CONFIGURATION') { inDebt = true; return; }
+            if (cols[0] === 'DEBT ACCOUNTS CONFIGURATION' || cols[0] === 'CONFIGURACIÓN DE PORTAFOLIO DE DEUDAS' || cols[0] === 'CONFIGURACION DE PORTAFOLIO DE DEUDAS') { inDebt = true; return; }
             if (inDebt) {
-              if (cols[0] === 'ANNUAL PAYOFF SCHEDULE' || cols.length < 4) { inDebt = false; return; }
+              if (cols[0] === 'ANNUAL PAYOFF SCHEDULE' || cols[0].includes('CRONOGRAMA') || cols.length < 4) { inDebt = false; return; }
               totalDebt += Math.max(0, parseNumber(cols[1]));
               totalMin += Math.max(0, parseNumber(cols[3]));
             }
@@ -2012,31 +2683,31 @@
             trackerState.plannedScenario.sourceName = `Debt Plan (${fileName})`;
             trackerState.plannedScenario.mode = 'debt';
             updateAllUI();
-            alert(`Updated Planned Debt Paydown (${formatMoney(totalDebt)}) from ${fileName}!`);
+            alert(t().alertSyncDebt.replace('{0}', formatMoney(totalDebt)).replace('{1}', fileName));
             return;
           }
         }
 
         // 4. Mortgage CSV
-        if (headerJoined.includes('mortgage calculation') || headerJoined.includes('loan parameters')) {
+        if (headerJoined.includes('mortgage calculation') || headerJoined.includes('loan parameters') || headerJoined.includes('calculadora de hipotecas') || headerJoined.includes('parámetros del préstamo') || headerJoined.includes('parametros del prestamo')) {
           lines.forEach(line => {
             const cols = parseCSVLine(line, delimiter);
             if (cols.length < 2) return;
             const k = cols[0].toLowerCase();
-            if (k === 'home price ($)') trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(cols[1]));
-            else if (k.includes('total loan amount')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(cols[1]));
-            else if (k.includes('interest rate')) trackerState.plannedScenario.mortgageRate = clamp(parseNumber(cols[1]), 0, 25);
-            else if (k.includes('principal & interest')) trackerState.plannedScenario.mortgageMonthlyPI = Math.max(0, parseNumber(cols[1]));
+            if (k === 'home price ($)' || k.includes('precio de la propiedad') || k.includes('precio del inmueble')) trackerState.plannedScenario.propertyValue = Math.max(0, parseNumber(cols[1]));
+            else if (k.includes('total loan amount') || k.includes('monto total del préstamo') || k.includes('monto del prestamo')) trackerState.plannedScenario.mortgageDebt = Math.max(0, parseNumber(cols[1]));
+            else if (k.includes('interest rate') || k.includes('tasa de interés') || k.includes('tasa de interes')) trackerState.plannedScenario.mortgageRate = clamp(parseNumber(cols[1]), 0, 25);
+            else if (k.includes('principal & interest') || k.includes('capital e interés') || k.includes('capital e interes')) trackerState.plannedScenario.mortgageMonthlyPI = Math.max(0, parseNumber(cols[1]));
           });
           trackerState.plannedScenario.hasPlan = true;
           trackerState.plannedScenario.sourceName = `Mortgage Plan (${fileName})`;
           trackerState.plannedScenario.mode = 'mortgage';
           updateAllUI();
-          alert(`Updated Planned Real Estate & Mortgage from ${fileName}!`);
+          alert(t().alertSyncMortgage.replace('{0}', fileName));
           return;
         }
 
-        alert('Uploaded file did not match any recognizable financial suite plan format.');
+        alert(t().alertUnrecognizedFormat);
       }
 
       // --- Buttons & Action Listeners ---
@@ -2071,7 +2742,7 @@
 
       btnClearAllLogs.addEventListener('click', () => {
         if (trackerState.entries.length === 0) return;
-        if (confirm('Are you sure you want to delete ALL historical entries? (Export to CSV first if you want a backup)')) {
+        if (confirm(t().confirmClearAll)) {
           trackerState.entries = [];
           updateAllUI();
         }
@@ -2109,8 +2780,36 @@
         }
       });
 
+      // --- Theme & Language Listeners ---
+      const langSelect = document.getElementById('langSelect');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+
+      if (langSelect) {
+        langSelect.value = currentLang;
+        langSelect.addEventListener('change', (e) => {
+          currentLang = e.target.value === 'es' ? 'es' : 'en';
+          localStorage.setItem('finance_suite_lang', currentLang);
+          applyStaticTranslations();
+          updateFormPreview();
+          updateAllUI();
+        });
+      }
+
+      if (btnThemeToggle) {
+        btnThemeToggle.addEventListener('click', () => {
+          currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+          localStorage.setItem('finance_suite_theme', currentTheme);
+          applyTheme();
+          updateAllUI();
+        });
+      }
+
       // --- Initialization ---
       const nowInit = new Date();
+      applyTheme();
+      applyStaticTranslations();
+      initInfoTooltips();
+
       entryMonthSelect.value = String(nowInit.getMonth());
       entryYearInput.value = nowInit.getFullYear();
       updateFormPreview();

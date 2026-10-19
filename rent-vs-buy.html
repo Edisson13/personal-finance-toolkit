@@ -478,6 +478,92 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead { background-color: #e2e8f0 !important; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value { color: var(--text-main); }
+    html[data-theme="light"] .verdict-title { color: var(--text-main); }
+    html[data-theme="light"] .badge-buyer { color: #4338ca; background: rgba(99, 102, 241, 0.18); }
+    html[data-theme="light"] .badge-renter { color: #0e7490; background: rgba(6, 182, 212, 0.18); }
+    html[data-theme="light"] .btn-secondary { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] td[style*="color:#ffffff"], html[data-theme="light"] td[style*="color: #ffffff"], html[data-theme="light"] td[style*="color:#e2e8f0"] { color: #0f172a !important; }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -494,20 +580,29 @@
           </svg>
         </div>
         <div>
-          <h1>Rent vs. Buy Comparator</h1>
-          <p>Long-term net worth crossover &amp; opportunity cost analysis</p>
+          <h1 data-i18n="appTitle">Rent vs. Buy Comparator</h1>
+          <p data-i18n="appSubtitle">Long-term net worth crossover &amp; opportunity cost analysis</p>
         </div>
       </div>
 
       <div class="header-actions">
         <!-- Return to Main Hub -->
-        <a href="./index.html" class="btn btn-secondary" title="Return to Main Suite">
+        <a href="./index.html" class="btn btn-secondary" id="btnMainHub" title="Return to Main Suite">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          Main Hub
+          <span data-i18n="btnMainHub">Main Hub</span>
         </a>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="btn btn-secondary" id="btnThemeToggle" title="Toggle Light/Dark Mode">☀️ Light</button>
+
+        <!-- Language Selector -->
+        <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" title="Select Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
 
         <!-- Hidden CSV File Input -->
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
@@ -519,7 +614,7 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          Load CSV
+          <span data-i18n="btnLoadCSV">Load CSV</span>
         </button>
 
         <!-- Export CSV Button -->
@@ -529,7 +624,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Export CSV
+          <span data-i18n="btnExportCSV">Export CSV</span>
         </button>
       </div>
     </header>
@@ -537,22 +632,22 @@
     <!-- Top KPI Row -->
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-label">Breakeven Year</div>
+        <div class="kpi-label" data-i18n="kpiBreakevenLabel" data-info-en="The milestone year when buying overtakes renting in cumulative net worth." data-info-es="El año en que comprar supera a alquilar en patrimonio neto acumulado.">Breakeven Year</div>
         <div class="kpi-value" id="kpiBreakeven" style="color: #34d399;">Year 4</div>
         <div class="kpi-subtext" id="kpiBreakevenSub">Buying becomes wealthier</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Buyer Net Worth (Yr 10)</div>
+        <div class="kpi-label" data-i18n="kpiBuyerNWLabel" data-info-en="Accumulated home equity after 10 years, net of estimated selling fees." data-info-es="Patrimonio acumulado en la vivienda a los 10 años, descontando costos de venta.">Buyer Net Worth (Yr 10)</div>
         <div class="kpi-value" id="kpiBuyerNetWorth" style="color: #818cf8;">$0</div>
-        <div class="kpi-subtext">Home equity minus selling costs</div>
+        <div class="kpi-subtext" data-i18n="kpiBuyerNWSub">Home equity minus selling costs</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Renter Net Worth (Yr 10)</div>
+        <div class="kpi-label" data-i18n="kpiRenterNWLabel" data-info-en="Value of the renter's investment portfolio after 10 years of compounding." data-info-es="Valor del portafolio del inquilino tras 10 años invirtiendo en el mercado.">Renter Net Worth (Yr 10)</div>
         <div class="kpi-value" id="kpiRenterNetWorth" style="color: #38bdf8;">$0</div>
-        <div class="kpi-subtext">Invested down payment + savings</div>
+        <div class="kpi-subtext" data-i18n="kpiRenterNWSub">Invested down payment + savings</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">10-Year Advantage</div>
+        <div class="kpi-label" data-i18n="kpiAdvantageLabel" data-info-en="Net worth difference between buying and renting at the 10-year mark." data-info-es="Diferencia de patrimonio neto entre comprar y alquilar a los 10 años.">10-Year Advantage</div>
         <div class="kpi-value" id="kpiNetAdvantage" style="color: #fbbf24;">$0</div>
         <div class="kpi-subtext" id="kpiWinnerSub">Buying ahead by year 10</div>
       </div>
@@ -582,15 +677,15 @@
             <line x1="12" y1="20" x2="12" y2="4"></line>
             <line x1="6" y1="20" x2="6" y2="14"></line>
           </svg>
-          Scenario Parameters
+          <span data-i18n="paramsTitle">Scenario Parameters</span>
         </h2>
 
         <!-- Buying Parameters -->
-        <div class="input-section-title title-buy">Home Purchase Parameters</div>
+        <div class="input-section-title title-buy" data-i18n="buySectionTitle">Home Purchase Parameters</div>
 
         <div class="input-group">
           <div class="input-header">
-            <label for="homePriceInput" class="input-label">Target Home Purchase Price</label>
+            <label for="homePriceInput" class="input-label" data-i18n="lblHomePrice" data-info-en="Total purchase price of the property." data-info-es="Precio de compra total de la vivienda.">Target Home Purchase Price</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="homePriceInput" inputmode="numeric" value="450,000">
@@ -601,14 +696,14 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="input-group">
-            <label for="downPaymentPctInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Down Payment</label>
+            <label for="downPaymentPctInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblDownPayment" data-info-en="Cash down payment percentage paid upfront." data-info-es="Porcentaje de pago inicial (enganche) pagado al inicio.">Down Payment</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="downPaymentPctInput" min="0" max="100" step="1" value="20" style="width:100%;">
               <span class="input-suffix">%</span>
             </div>
           </div>
           <div class="input-group">
-            <label for="mortgageRateInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Mortgage Rate</label>
+            <label for="mortgageRateInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblMortgageRate" data-info-en="Annual fixed mortgage interest rate." data-info-es="Tasa de interés anual fija del préstamo hipotecario.">Mortgage Rate</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="mortgageRateInput" min="1" max="15" step="0.05" value="6.5" style="width:100%;">
               <span class="input-suffix">%</span>
@@ -618,14 +713,14 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="input-group">
-            <label for="propTaxRateInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Property Tax Rate</label>
+            <label for="propTaxRateInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblPropTax" data-info-en="Annual local property tax as a percentage of home value." data-info-es="Impuesto predial anual como porcentaje del valor de la vivienda.">Property Tax Rate</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="propTaxRateInput" min="0" max="5" step="0.05" value="1.2" style="width:100%;">
               <span class="input-suffix">%</span>
             </div>
           </div>
           <div class="input-group">
-            <label for="homeApprecInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Home Appreciation</label>
+            <label for="homeApprecInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblHomeApprec" data-info-en="Expected annual price appreciation rate of the property." data-info-es="Tasa de plusvalía o apreciación anual estimada del inmueble.">Home Appreciation</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="homeApprecInput" min="0" max="12" step="0.1" value="3.5" style="width:100%;">
               <span class="input-suffix">%</span>
@@ -635,14 +730,14 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="input-group">
-            <label for="maintenanceRateInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Maintenance / Repairs</label>
+            <label for="maintenanceRateInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblMaintenance" data-info-en="Annual repairs, maintenance, and insurance reserve percentage." data-info-es="Porcentaje de reserva anual para reparaciones, mantenimiento y seguros.">Maintenance / Repairs</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="maintenanceRateInput" min="0" max="4" step="0.1" value="1.0" style="width:100%;">
               <span class="input-suffix">%</span>
             </div>
           </div>
           <div class="input-group">
-            <label for="buyingCostsInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Buyer Closing Costs</label>
+            <label for="buyingCostsInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblBuyingCosts" data-info-en="One-time settlement, title, and loan origination fees at purchase." data-info-es="Gastos únicos de escrituración, impuestos de registro y cierre de compra.">Buyer Closing Costs</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="buyingCostsInput" min="0" max="6" step="0.1" value="2.5" style="width:100%;">
               <span class="input-suffix">%</span>
@@ -651,11 +746,11 @@
         </div>
 
         <!-- Renting Parameters -->
-        <div class="input-section-title title-rent">Rental &amp; Market Opportunity Cost</div>
+        <div class="input-section-title title-rent" data-i18n="rentSectionTitle">Rental &amp; Market Opportunity Cost</div>
 
         <div class="input-group">
           <div class="input-header">
-            <label for="monthlyRentInput" class="input-label">Comparable Monthly Rent</label>
+            <label for="monthlyRentInput" class="input-label" data-i18n="lblMonthlyRent" data-info-en="Starting monthly rent for an equivalent home." data-info-es="Alquiler mensual inicial de una vivienda comparable.">Comparable Monthly Rent</label>
             <div class="input-field-wrapper has-prefix">
               <span class="input-prefix">$</span>
               <input type="text" id="monthlyRentInput" inputmode="numeric" value="2,300">
@@ -666,14 +761,14 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom:0;">
           <div class="input-group">
-            <label for="rentInflationInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Annual Rent Inflation</label>
+            <label for="rentInflationInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblRentInflation" data-info-en="Expected annual rent escalation rate." data-info-es="Tasa esperada de incremento anual en el precio del alquiler.">Annual Rent Inflation</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="rentInflationInput" min="0" max="10" step="0.1" value="3.5" style="width:100%;">
               <span class="input-suffix">%</span>
             </div>
           </div>
           <div class="input-group">
-            <label for="marketReturnInput" class="input-label" style="display:block; margin-bottom:0.3rem;">Investment Return (Stocks)</label>
+            <label for="marketReturnInput" class="input-label" style="display:block; margin-bottom:0.3rem;" data-i18n="lblMarketReturn" data-info-en="Expected annual return on invested capital in stock index funds." data-info-es="Rendimiento anual esperado del capital invertido en fondos indexados.">Investment Return (Stocks)</label>
             <div class="input-field-wrapper has-suffix" style="width:100%;">
               <input type="number" id="marketReturnInput" min="1" max="15" step="0.1" value="8.0" style="width:100%;">
               <span class="input-suffix">%</span>
@@ -690,7 +785,7 @@
             <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
             <polyline points="16 7 22 7 22 13"></polyline>
           </svg>
-          30-Year Net Worth Trajectory
+          <span data-i18n="chartTitle" data-info-en="30-year net worth projection comparing buying a home vs renting and investing the difference." data-info-es="Proyección de patrimonio a 30 años comparando comprar vivienda vs alquilar e invertir la diferencia.">30-Year Net Worth Trajectory</span>
         </h2>
 
         <div class="chart-box">
@@ -703,24 +798,24 @@
         <!-- Summary Callouts -->
         <div class="summary-callouts">
           <div class="callout-item">
-            <span class="callout-title">Buyer Initial Outlay</span>
+            <span class="callout-title" data-i18n="calloutOutlayTitle" data-info-en="Initial total cash needed out of pocket (down payment + closing costs)." data-info-es="Efectivo inicial total necesario de tu bolsillo (enganche + costos de cierre).">Buyer Initial Outlay</span>
             <span class="callout-value" id="calloutBuyerOutlay" style="color:#818cf8;">$0</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">Down payment + closing fees</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" data-i18n="calloutOutlaySub">Down payment + closing fees</span>
           </div>
           <div class="callout-item">
-            <span class="callout-title">Initial Monthly Ownership</span>
+            <span class="callout-title" data-i18n="calloutMonthlyTitle" data-info-en="Total initial monthly cost of homeownership." data-info-es="Costo mensual total inicial de ser propietario.">Initial Monthly Ownership</span>
             <span class="callout-value" id="calloutBuyerMonthly" style="color:#a5b4fc;">$0/mo</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">P&amp;I + Tax + Maint + Ins</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" data-i18n="calloutMonthlySub">P&amp;I + Tax + Maint + Ins</span>
           </div>
           <div class="callout-item">
-            <span class="callout-title">Home Value at Yr 30</span>
+            <span class="callout-title" data-i18n="calloutHomeVal30Title" data-info-en="Projected property value at year 30 with 0 mortgage debt remaining." data-info-es="Valor proyectado de la propiedad al año 30 sin deuda hipotecaria restante.">Home Value at Yr 30</span>
             <span class="callout-value" id="calloutHomeValue30" style="color:#34d399;">$0</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">100% Mortgage Paid Off</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" data-i18n="calloutHomeVal30Sub">100% Mortgage Paid Off</span>
           </div>
           <div class="callout-item">
-            <span class="callout-title">Renter Portfolio at Yr 30</span>
+            <span class="callout-title" data-i18n="calloutRenterPort30Title" data-info-en="Renter liquid investment balance compounded over 30 years." data-info-es="Saldo de inversión líquida del inquilino capitalizado durante 30 años.">Renter Portfolio at Yr 30</span>
             <span class="callout-value" id="calloutRenterPort30" style="color:#38bdf8;">$0</span>
-            <span style="font-size:0.72rem; color:var(--text-subtle);">Liquid invested capital</span>
+            <span style="font-size:0.72rem; color:var(--text-subtle);" data-i18n="calloutRenterPort30Sub">Liquid invested capital</span>
           </div>
         </div>
 
@@ -731,21 +826,21 @@
     <!-- Bottom Section: Detailed Schedule Table -->
     <section class="card" aria-label="30-Year Comparison Schedule">
       <div class="card-title">
-        <span>Year-by-Year Net Worth Progression</span>
+        <span data-i18n="tableTitle" data-info-en="Complete annual financial breakdown across all 30 years." data-info-es="Desglose financiero anual completo a lo largo de los 30 años.">Year-by-Year Net Worth Progression</span>
       </div>
 
       <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th>Year</th>
-              <th>Home Value</th>
-              <th>Mortgage Balance</th>
-              <th>Buyer Net Worth</th>
-              <th>Monthly Rent</th>
-              <th>Renter Portfolio</th>
-              <th>Net Difference</th>
-              <th>Advantage</th>
+              <th data-i18n="thYear" data-info-en="Year of simulation." data-info-es="Año de simulación.">Year</th>
+              <th data-i18n="thHomeValue" data-info-en="Estimated market value of the property." data-info-es="Valor estimado de mercado del inmueble.">Home Value</th>
+              <th data-i18n="thMortgageBalance" data-info-en="Remaining mortgage debt balance." data-info-es="Saldo restante de la deuda hipotecaria.">Mortgage Balance</th>
+              <th data-i18n="thBuyerNW" data-info-en="Home equity after subtracting 6% selling costs." data-info-es="Patrimonio neto en la vivienda descontando 6% de costos de venta.">Buyer Net Worth</th>
+              <th data-i18n="thMonthlyRent" data-info-en="Monthly rent for this year adjusted for inflation." data-info-es="Alquiler mensual ajustado por inflación en este año.">Monthly Rent</th>
+              <th data-i18n="thRenterNW" data-info-en="Renter's total investment balance." data-info-es="Saldo total del portafolio del inquilino.">Renter Portfolio</th>
+              <th data-i18n="thNetDiff" data-info-en="Net worth gap between buying and renting." data-info-es="Brecha de patrimonio neto entre comprar y alquilar.">Net Difference</th>
+              <th data-i18n="thAdvantage" data-info-en="Indicates whether buying or renting yields higher net worth." data-info-es="Indica si comprar o alquilar genera mayor patrimonio neto.">Advantage</th>
             </tr>
           </thead>
           <tbody id="scheduleTbody"></tbody>
@@ -759,6 +854,208 @@
     (function() {
       'use strict';
 
+      // --- I18N Dictionary ---
+      const I18N = {
+        en: {
+          pageTitle: 'Rent vs. Buy Comparator',
+          appTitle: 'Rent vs. Buy Comparator',
+          appSubtitle: 'Long-term net worth crossover & opportunity cost analysis',
+          btnMainHub: 'Main Hub',
+          btnMainHubTitle: 'Return to Main Suite',
+          btnLoadCSV: 'Load CSV',
+          btnLoadCSVTitle: 'Load a saved Rent vs. Buy scenario from CSV',
+          btnExportCSV: 'Export CSV',
+          btnExportCSVTitle: 'Export complete 30-year comparison schedule to CSV/Excel',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          kpiBreakevenLabel: 'Breakeven Year',
+          kpiBuyerNWLabel: 'Buyer Net Worth (Yr 10)',
+          kpiBuyerNWSub: 'Home equity minus selling costs',
+          kpiRenterNWLabel: 'Renter Net Worth (Yr 10)',
+          kpiRenterNWSub: 'Invested down payment + savings',
+          kpiAdvantageLabel: '10-Year Advantage',
+          paramsTitle: 'Scenario Parameters',
+          buySectionTitle: 'Home Purchase Parameters',
+          lblHomePrice: 'Target Home Purchase Price',
+          lblDownPayment: 'Down Payment',
+          lblMortgageRate: 'Mortgage Rate',
+          lblPropTax: 'Property Tax Rate',
+          lblHomeApprec: 'Home Appreciation',
+          lblMaintenance: 'Maintenance / Repairs',
+          lblBuyingCosts: 'Buyer Closing Costs',
+          rentSectionTitle: 'Rental & Market Opportunity Cost',
+          lblMonthlyRent: 'Comparable Monthly Rent',
+          lblRentInflation: 'Annual Rent Inflation',
+          lblMarketReturn: 'Investment Return (Stocks)',
+          chartTitle: '30-Year Net Worth Trajectory',
+          calloutOutlayTitle: 'Buyer Initial Outlay',
+          calloutOutlaySub: 'Down payment + closing fees',
+          calloutMonthlyTitle: 'Initial Monthly Ownership',
+          calloutMonthlySub: 'P&I + Tax + Maint + Ins',
+          calloutHomeVal30Title: 'Home Value at Yr 30',
+          calloutHomeVal30Sub: '100% Mortgage Paid Off',
+          calloutRenterPort30Title: 'Renter Portfolio at Yr 30',
+          calloutRenterPort30Sub: 'Liquid invested capital',
+          tableTitle: 'Year-by-Year Net Worth Progression',
+          thYear: 'Year',
+          thHomeValue: 'Home Value',
+          thMortgageBalance: 'Mortgage Balance',
+          thBuyerNW: 'Buyer Net Worth',
+          thMonthlyRent: 'Monthly Rent',
+          thRenterNW: 'Renter Portfolio',
+          thNetDiff: 'Net Difference',
+          thAdvantage: 'Advantage',
+          yearWord: 'Year',
+          yrShort: 'Yr',
+          moSuffix: '/mo',
+          years30Plus: '30+ Years',
+          buyingWealthier: 'Buying becomes wealthier',
+          rentingWealthier: 'Renting stays wealthier',
+          buyingAhead10: 'Buying ahead at Year 10',
+          rentingAhead10: 'Renting ahead at Year 10',
+          verdictBuyHeadline: (yr) => `Buying is financially advantageous starting in Year ${yr}`,
+          verdictBuyDetails: (yr) => `Before Year ${yr}, renting and investing the down payment yields higher net worth due to upfront closing costs and mortgage interest. After Year ${yr}, equity growth and appreciation overcome rental opportunity costs.`,
+          verdictBuyPill: 'Buy Favorable',
+          verdictRentHeadline: 'Renting is financially advantageous over the entire 30-year window',
+          verdictRentDetails: 'Due to current mortgage rates, property taxes, and expected market investment returns, investing your initial down payment and monthly savings in the stock market generates more wealth than purchasing this home.',
+          verdictRentPill: 'Rent Favorable',
+          legendBuyer: 'Buyer Net Worth (Equity - Selling Costs)',
+          legendRenter: 'Renter Net Worth (Invested Down Payment + Cash Flow)',
+          legendBreakeven: (yr) => `Breakeven (Year ${yr})`,
+          badgeBuyWins: (amt) => `Buying Wins +${amt}`,
+          badgeRentWins: (amt) => `Renting Wins +${amt}`,
+          csvTitle: 'RENT VS. BUY COMPARISON SIMULATION',
+          csvExportDate: 'Export Date',
+          csvHomeParams: 'HOME PURCHASE PARAMETERS',
+          csvHomePrice: 'Target Home Price ($)',
+          csvDownPayment: 'Down Payment (%)',
+          csvMortgageRate: 'Mortgage Rate (%)',
+          csvPropTax: 'Property Tax Rate (%)',
+          csvHomeApprec: 'Home Appreciation Rate (%)',
+          csvMaintenance: 'Maintenance Rate (%)',
+          csvBuyingCosts: 'Buyer Closing Costs (%)',
+          csvInitialOutlay: 'Initial Buyer Outlay ($)',
+          csvRentParams: 'RENTAL & MARKET OPPORTUNITY PARAMETERS',
+          csvMonthlyRent: 'Comparable Monthly Rent ($)',
+          csvRentInf: 'Annual Rent Inflation (%)',
+          csvMarketRet: 'Stock Market Investment Return (%)',
+          csvBreakeven: 'Breakeven Crossover Year',
+          csvNoBreakeven: 'None within 30 years',
+          csvScheduleHeader: '30-YEAR COMPARISON SCHEDULE',
+          csvColYear: 'Year',
+          csvColHomeVal: 'Home Value ($)',
+          csvColMortgage: 'Mortgage Balance ($)',
+          csvColBuyerNW: 'Buyer Net Worth ($)',
+          csvColRent: 'Monthly Rent ($)',
+          csvColRenterNW: 'Renter Net Worth ($)',
+          csvColWinner: 'Advantage Winner',
+          csvColDiff: 'Advantage Difference ($)',
+          csvBuyer: 'Buying Wins',
+          csvRenter: 'Renting Wins',
+          errCsvInvalid: 'Could not detect valid Rent vs. Buy parameters in the selected CSV file.',
+          errCsvParse: 'Error parsing CSV file. Please make sure it is a valid Rent vs. Buy export.'
+        },
+        es: {
+          pageTitle: 'Comparador Alquilar vs. Comprar',
+          appTitle: 'Comparador Alquilar vs. Comprar',
+          appSubtitle: 'Análisis de cruce de patrimonio neto y costo de oportunidad a largo plazo',
+          btnMainHub: 'Panel Principal',
+          btnMainHubTitle: 'Volver al Panel Principal',
+          btnLoadCSV: 'Cargar CSV',
+          btnLoadCSVTitle: 'Cargar un escenario de Alquilar vs. Comprar desde CSV',
+          btnExportCSV: 'Exportar CSV',
+          btnExportCSVTitle: 'Exportar tabla comparativa de 30 años a CSV/Excel',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          kpiBreakevenLabel: 'Año de Equilibrio',
+          kpiBuyerNWLabel: 'Patrimonio Comprador (Año 10)',
+          kpiBuyerNWSub: 'Capital de vivienda menos costos de venta',
+          kpiRenterNWLabel: 'Patrimonio Inquilino (Año 10)',
+          kpiRenterNWSub: 'Enganche invertido + ahorros',
+          kpiAdvantageLabel: 'Ventaja a 10 Años',
+          paramsTitle: 'Parámetros del Escenario',
+          buySectionTitle: 'Parámetros de Compra de Vivienda',
+          lblHomePrice: 'Precio Objetivo de Compra',
+          lblDownPayment: 'Pago Inicial (Enganche)',
+          lblMortgageRate: 'Tasa Hipotecaria',
+          lblPropTax: 'Impuesto a la Propiedad',
+          lblHomeApprec: 'Plusvalía Anual',
+          lblMaintenance: 'Mantenimiento / Reparaciones',
+          lblBuyingCosts: 'Costos de Cierre (Compra)',
+          rentSectionTitle: 'Alquiler y Costo de Oportunidad',
+          lblMonthlyRent: 'Alquiler Mensual Comparable',
+          lblRentInflation: 'Inflación Anual del Alquiler',
+          lblMarketReturn: 'Retorno de Inversión (Acciones)',
+          chartTitle: 'Trayectoria de Patrimonio Neto a 30 Años',
+          calloutOutlayTitle: 'Desembolso Inicial Comprador',
+          calloutOutlaySub: 'Enganche + costos de cierre',
+          calloutMonthlyTitle: 'Costo Mensual Inicial de Propiedad',
+          calloutMonthlySub: 'C&I + Impuestos + Mant. + Seguro',
+          calloutHomeVal30Title: 'Valor de Vivienda al Año 30',
+          calloutHomeVal30Sub: '100% Hipoteca Pagada',
+          calloutRenterPort30Title: 'Portafolio Inquilino al Año 30',
+          calloutRenterPort30Sub: 'Capital líquido invertido',
+          tableTitle: 'Progresión Anual del Patrimonio Neto',
+          thYear: 'Año',
+          thHomeValue: 'Valor Vivienda',
+          thMortgageBalance: 'Saldo Hipotecario',
+          thBuyerNW: 'Patrimonio Comprador',
+          thMonthlyRent: 'Alquiler Mensual',
+          thRenterNW: 'Portafolio Inquilino',
+          thNetDiff: 'Diferencia Neta',
+          thAdvantage: 'Ventaja',
+          yearWord: 'Año',
+          yrShort: 'Año',
+          moSuffix: '/mes',
+          years30Plus: '30+ Años',
+          buyingWealthier: 'Comprar genera mayor patrimonio',
+          rentingWealthier: 'Alquilar mantiene mayor patrimonio',
+          buyingAhead10: 'Comprar lidera en el Año 10',
+          rentingAhead10: 'Alquilar lidera en el Año 10',
+          verdictBuyHeadline: (yr) => `Comprar es financieramente ventajoso a partir del Año ${yr}`,
+          verdictBuyDetails: (yr) => `Antes del Año ${yr}, alquilar e invertir el enganche genera mayor patrimonio debido a los costos iniciales de cierre e intereses hipotecarios. Después del Año ${yr}, la acumulación de capital y la plusvalía superan el costo de oportunidad.`,
+          verdictBuyPill: 'Comprar Favorable',
+          verdictRentHeadline: 'Alquilar es financieramente ventajoso durante todo el horizonte de 30 años',
+          verdictRentDetails: 'Debido a las tasas hipotecarias actuales, impuestos a la propiedad y retornos esperados del mercado, invertir el pago inicial y el ahorro mensual en acciones genera más riqueza que comprar esta propiedad.',
+          verdictRentPill: 'Alquilar Favorable',
+          legendBuyer: 'Patrimonio Comprador (Capital - Costos de Venta)',
+          legendRenter: 'Patrimonio Inquilino (Enganche Invertido + Flujo)',
+          legendBreakeven: (yr) => `Equilibrio (Año ${yr})`,
+          badgeBuyWins: (amt) => `Comprar Gana +${amt}`,
+          badgeRentWins: (amt) => `Alquilar Gana +${amt}`,
+          csvTitle: 'SIMULACIÓN COMPARATIVA ALQUILAR VS. COMPRAR',
+          csvExportDate: 'Fecha de Exportación',
+          csvHomeParams: 'PARÁMETROS DE COMPRA DE VIVIENDA',
+          csvHomePrice: 'Precio Objetivo de Compra ($)',
+          csvDownPayment: 'Pago Inicial (%)',
+          csvMortgageRate: 'Tasa Hipotecaria (%)',
+          csvPropTax: 'Impuesto a la Propiedad (%)',
+          csvHomeApprec: 'Tasa de Plusvalía Anual (%)',
+          csvMaintenance: 'Tasa de Mantenimiento (%)',
+          csvBuyingCosts: 'Costos de Cierre del Comprador (%)',
+          csvInitialOutlay: 'Desembolso Inicial del Comprador ($)',
+          csvRentParams: 'PARÁMETROS DE ALQUILER Y COSTO DE OPORTUNIDAD',
+          csvMonthlyRent: 'Alquiler Mensual Comparable ($)',
+          csvRentInf: 'Inflación Anual del Alquiler (%)',
+          csvMarketRet: 'Retorno de Inversión en Acciones (%)',
+          csvBreakeven: 'Año de Cruce de Equilibrio',
+          csvNoBreakeven: 'Ninguno en 30 años',
+          csvScheduleHeader: 'TABLA COMPARATIVA A 30 AÑOS',
+          csvColYear: 'Año',
+          csvColHomeVal: 'Valor Vivienda ($)',
+          csvColMortgage: 'Saldo Hipotecario ($)',
+          csvColBuyerNW: 'Patrimonio Comprador ($)',
+          csvColRent: 'Alquiler Mensual ($)',
+          csvColRenterNW: 'Patrimonio Inquilino ($)',
+          csvColWinner: 'Ganador de Ventaja',
+          csvColDiff: 'Diferencia de Ventaja ($)',
+          csvBuyer: 'Comprar Gana',
+          csvRenter: 'Alquilar Gana',
+          errCsvInvalid: 'No se pudieron detectar parámetros válidos de Alquilar vs. Comprar en el archivo CSV seleccionado.',
+          errCsvParse: 'Error al analizar el archivo CSV. Asegúrese de que sea una exportación válida de Alquilar vs. Comprar.'
+        }
+      };
+
       // --- State ---
       const state = {
         homePrice: 450000,
@@ -771,8 +1068,15 @@
         monthlyRent: 2300,
         rentInflation: 3.5,
         marketReturn: 8.0,
-        sellerCostsPct: 6.0 // standard real estate commission & transfer
+        sellerCostsPct: 6.0, // standard real estate commission & transfer
+        lang: localStorage.getItem('finance_suite_lang') || 'en',
+        theme: localStorage.getItem('finance_suite_theme') || 'dark'
       };
+
+      function t(key) {
+        const dict = I18N[state.lang] || I18N.en;
+        return dict[key] !== undefined ? dict[key] : I18N.en[key];
+      }
 
       // --- Helpers ---
       function formatMoney(amount) {
@@ -933,6 +1237,107 @@
       const csvFileInput = document.getElementById('csvFileInput');
       const btnLoadCSV = document.getElementById('btnLoadCSV');
       const btnExportCSV = document.getElementById('btnExportCSV');
+      const btnMainHub = document.getElementById('btnMainHub');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+      const langSelect = document.getElementById('langSelect');
+
+      // --- Tooltip System ---
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = state.lang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs
+            ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en'))
+            : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) {
+            left = window.innerWidth - tipRect.width - 10;
+          }
+
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
+
+      // --- Theme & Language Updaters ---
+      function applyThemeAndLangUI() {
+        if (state.theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        document.documentElement.lang = state.lang;
+        document.title = t('pageTitle');
+
+        if (btnThemeToggle) {
+          btnThemeToggle.textContent = state.theme === 'light' ? t('themeDark') : t('themeLight');
+        }
+        if (langSelect) {
+          langSelect.value = state.lang;
+        }
+        if (btnMainHub) btnMainHub.title = t('btnMainHubTitle');
+        if (btnLoadCSV) btnLoadCSV.title = t('btnLoadCSVTitle');
+        if (btnExportCSV) btnExportCSV.title = t('btnExportCSVTitle');
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          const val = t(key);
+          if (typeof val === 'string') {
+            const tipEn = el.getAttribute('data-info-en');
+            const tipEs = el.getAttribute('data-info-es');
+            if (tipEn) {
+              el.innerHTML = `${val} <span class="info-icon" data-info-en="${tipEn}" data-info-es="${tipEs}">i</span>`;
+            } else {
+              el.textContent = val;
+            }
+          }
+        });
+      }
 
       // --- Chart Engine (HTML5 Canvas) ---
       function drawChart(schedule, breakevenYear) {
@@ -959,11 +1364,13 @@
         });
         maxVal = Math.ceil(maxVal * 1.06);
 
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
         // Horizontal Grid Lines
         const gridLines = 4;
-        ctx.strokeStyle = '#222e44';
+        ctx.strokeStyle = isLight ? '#cbd5e1' : '#222e44';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = isLight ? '#475569' : '#64748b';
         ctx.font = '10px -apple-system, sans-serif';
         ctx.textAlign = 'right';
 
@@ -981,7 +1388,7 @@
         ctx.textAlign = 'center';
         for (let y = 5; y <= 30; y += 5) {
           const x = padding.left + ((y - 1) / 29) * graphW;
-          ctx.fillText(`Yr ${y}`, x, h - 12);
+          ctx.fillText(`${t('yrShort')} ${y}`, x, h - 12);
         }
 
         // 1. Draw Renter Curve
@@ -1027,16 +1434,16 @@
         chartLegend.innerHTML = `
           <div class="legend-item">
             <span class="legend-color" style="background:#6366f1;"></span>
-            <span>Buyer Net Worth (Equity - Selling Costs)</span>
+            <span>${t('legendBuyer')}</span>
           </div>
           <div class="legend-item">
             <span class="legend-color" style="background:#06b6d4;"></span>
-            <span>Renter Net Worth (Invested Down Payment + Cash Flow)</span>
+            <span>${t('legendRenter')}</span>
           </div>
           ${breakevenYear ? `
           <div class="legend-item">
             <span class="legend-color" style="background:#10b981; border-radius:50%;"></span>
-            <span>Breakeven (Year ${breakevenYear})</span>
+            <span>${t('legendBreakeven')(breakevenYear)}</span>
           </div>` : ''}
         `;
       }
@@ -1049,15 +1456,15 @@
         schedule.forEach(r => {
           const tr = document.createElement('tr');
           const badge = r.buyerWon
-            ? `<span class="badge-buyer">Buyer +${formatMoney(r.diff)}</span>`
-            : `<span class="badge-renter">Renter +${formatMoney(r.diff)}</span>`;
+            ? `<span class="badge-buyer">${t('badgeBuyWins')(formatMoney(r.diff))}</span>`
+            : `<span class="badge-renter">${t('badgeRentWins')(formatMoney(r.diff))}</span>`;
 
           tr.innerHTML = `
-            <td style="font-weight:700;">Year ${r.year}</td>
+            <td style="font-weight:700;">${t('yearWord')} ${r.year}</td>
             <td>${formatMoney(r.homeValue)}</td>
             <td style="color:#f87171;">${formatMoney(r.mortgageBalance)}</td>
             <td style="font-weight:700; color:#818cf8;">${formatMoney(r.buyerNetWorth)}</td>
-            <td>${formatMoney(r.monthlyRent)}/mo</td>
+            <td>${formatMoney(r.monthlyRent)}${t('moSuffix')}</td>
             <td style="font-weight:700; color:#38bdf8;">${formatMoney(r.renterNetWorth)}</td>
             <td style="font-weight:600;">${formatMoney(r.diff)}</td>
             <td>${badge}</td>
@@ -1070,6 +1477,8 @@
 
       // --- Recalculate Orchestrator ---
       function recalculateAll() {
+        applyThemeAndLangUI();
+
         // Sync Inputs & Sliders
         homePriceInput.value = Math.round(state.homePrice).toLocaleString();
         homePriceSlider.value = state.homePrice;
@@ -1092,32 +1501,32 @@
 
         // Update KPIs
         if (results.breakevenYear) {
-          kpiBreakeven.textContent = `Year ${results.breakevenYear}`;
-          kpiBreakevenSub.textContent = `Buying becomes wealthier`;
+          kpiBreakeven.textContent = `${t('yearWord')} ${results.breakevenYear}`;
+          kpiBreakevenSub.textContent = t('buyingWealthier');
           kpiBreakeven.style.color = '#34d399';
         } else {
-          kpiBreakeven.textContent = `30+ Years`;
-          kpiBreakevenSub.textContent = `Renting stays wealthier`;
+          kpiBreakeven.textContent = t('years30Plus');
+          kpiBreakevenSub.textContent = t('rentingWealthier');
           kpiBreakeven.style.color = '#06b6d4';
         }
 
         kpiBuyerNetWorth.textContent = formatMoney(yr10.buyerNetWorth);
         kpiRenterNetWorth.textContent = formatMoney(yr10.renterNetWorth);
         kpiNetAdvantage.textContent = formatMoney(yr10.diff);
-        kpiWinnerSub.textContent = yr10.buyerWon ? 'Buying ahead at Year 10' : 'Renting ahead at Year 10';
+        kpiWinnerSub.textContent = yr10.buyerWon ? t('buyingAhead10') : t('rentingAhead10');
 
         // Update Verdict Banner
         if (results.breakevenYear) {
-          verdictHeadline.textContent = `Buying is financially advantageous starting in Year ${results.breakevenYear}`;
-          verdictDetails.textContent = `Before Year ${results.breakevenYear}, renting and investing the down payment yields higher net worth due to upfront closing costs and mortgage interest. After Year ${results.breakevenYear}, equity growth and appreciation overcome rental opportunity costs.`;
-          verdictPill.textContent = 'Buy Favorable';
+          verdictHeadline.textContent = t('verdictBuyHeadline')(results.breakevenYear);
+          verdictDetails.textContent = t('verdictBuyDetails')(results.breakevenYear);
+          verdictPill.textContent = t('verdictBuyPill');
           verdictPill.style.color = '#34d399';
           verdictPill.style.background = 'rgba(16, 185, 129, 0.2)';
           verdictPill.style.borderColor = 'rgba(16, 185, 129, 0.4)';
         } else {
-          verdictHeadline.textContent = `Renting is financially advantageous over the entire 30-year window`;
-          verdictDetails.textContent = `Due to current mortgage rates, property taxes, and expected market investment returns, investing your initial down payment and monthly savings in the stock market generates more wealth than purchasing this home.`;
-          verdictPill.textContent = 'Rent Favorable';
+          verdictHeadline.textContent = t('verdictRentHeadline');
+          verdictDetails.textContent = t('verdictRentDetails');
+          verdictPill.textContent = t('verdictRentPill');
           verdictPill.style.color = '#38bdf8';
           verdictPill.style.background = 'rgba(6, 182, 212, 0.2)';
           verdictPill.style.borderColor = 'rgba(6, 182, 212, 0.4)';
@@ -1125,7 +1534,7 @@
 
         // Update Callouts
         calloutBuyerOutlay.textContent = formatMoney(results.initialOutlay);
-        calloutBuyerMonthly.textContent = `${formatMoney(results.yr1BuyerMonthly)}/mo`;
+        calloutBuyerMonthly.textContent = `${formatMoney(results.yr1BuyerMonthly)}${t('moSuffix')}`;
         calloutHomeValue30.textContent = formatMoney(yr30.homeValue);
         calloutRenterPort30.textContent = formatMoney(yr30.renterNetWorth);
 
@@ -1139,30 +1548,39 @@
         const results = simulateRentVsBuy();
         const rows = [];
 
-        rows.push(['RENT VS. BUY COMPARISON SIMULATION']);
-        rows.push(['Export Date', new Date().toLocaleDateString()]);
+        rows.push([t('csvTitle')]);
+        rows.push([t('csvExportDate'), new Date().toLocaleDateString()]);
         rows.push([]);
 
-        rows.push(['HOME PURCHASE PARAMETERS']);
-        rows.push(['Target Home Price ($)', state.homePrice.toFixed(2)]);
-        rows.push(['Down Payment (%)', `${state.downPaymentPct}%`]);
-        rows.push(['Mortgage Rate (%)', `${state.mortgageRate.toFixed(2)}%`]);
-        rows.push(['Property Tax Rate (%)', `${state.propTaxRate.toFixed(2)}%`]);
-        rows.push(['Home Appreciation Rate (%)', `${state.homeApprec.toFixed(2)}%`]);
-        rows.push(['Maintenance Rate (%)', `${state.maintenanceRate.toFixed(2)}%`]);
-        rows.push(['Buyer Closing Costs (%)', `${state.buyingCostsPct.toFixed(2)}%`]);
-        rows.push(['Initial Buyer Outlay ($)', results.initialOutlay.toFixed(2)]);
+        rows.push([t('csvHomeParams')]);
+        rows.push([t('csvHomePrice'), state.homePrice.toFixed(2)]);
+        rows.push([t('csvDownPayment'), `${state.downPaymentPct}%`]);
+        rows.push([t('csvMortgageRate'), `${state.mortgageRate.toFixed(2)}%`]);
+        rows.push([t('csvPropTax'), `${state.propTaxRate.toFixed(2)}%`]);
+        rows.push([t('csvHomeApprec'), `${state.homeApprec.toFixed(2)}%`]);
+        rows.push([t('csvMaintenance'), `${state.maintenanceRate.toFixed(2)}%`]);
+        rows.push([t('csvBuyingCosts'), `${state.buyingCostsPct.toFixed(2)}%`]);
+        rows.push([t('csvInitialOutlay'), results.initialOutlay.toFixed(2)]);
         rows.push([]);
 
-        rows.push(['RENTAL & MARKET OPPORTUNITY PARAMETERS']);
-        rows.push(['Comparable Monthly Rent ($)', state.monthlyRent.toFixed(2)]);
-        rows.push(['Annual Rent Inflation (%)', `${state.rentInflation.toFixed(2)}%`]);
-        rows.push(['Stock Market Investment Return (%)', `${state.marketReturn.toFixed(2)}%`]);
-        rows.push(['Breakeven Crossover Year', results.breakevenYear ? `Year ${results.breakevenYear}` : 'None within 30 years']);
+        rows.push([t('csvRentParams')]);
+        rows.push([t('csvMonthlyRent'), state.monthlyRent.toFixed(2)]);
+        rows.push([t('csvRentInf'), `${state.rentInflation.toFixed(2)}%`]);
+        rows.push([t('csvMarketRet'), `${state.marketReturn.toFixed(2)}%`]);
+        rows.push([t('csvBreakeven'), results.breakevenYear ? `${t('yearWord')} ${results.breakevenYear}` : t('csvNoBreakeven')]);
         rows.push([]);
 
-        rows.push(['30-YEAR COMPARISON SCHEDULE']);
-        rows.push(['Year', 'Home Value ($)', 'Mortgage Balance ($)', 'Buyer Net Worth ($)', 'Monthly Rent ($)', 'Renter Net Worth ($)', 'Advantage Winner', 'Advantage Difference ($)']);
+        rows.push([t('csvScheduleHeader')]);
+        rows.push([
+          t('csvColYear'),
+          t('csvColHomeVal'),
+          t('csvColMortgage'),
+          t('csvColBuyerNW'),
+          t('csvColRent'),
+          t('csvColRenterNW'),
+          t('csvColWinner'),
+          t('csvColDiff')
+        ]);
         results.schedule.forEach(r => {
           rows.push([
             r.year,
@@ -1171,7 +1589,7 @@
             r.buyerNetWorth.toFixed(2),
             r.monthlyRent.toFixed(2),
             r.renterNetWorth.toFixed(2),
-            r.buyerWon ? 'Buyer' : 'Renter',
+            r.buyerWon ? t('csvBuyer') : t('csvRenter'),
             r.diff.toFixed(2)
           ]);
         });
@@ -1225,7 +1643,7 @@
         return result;
       }
 
-      // --- Load / Import CSV ---
+      // --- Load / Import CSV (Supports both EN and ES exports) ---
       function handleCSVFile(file) {
         if (!file) return;
         const reader = new FileReader();
@@ -1244,34 +1662,34 @@
               const label = cols[0].toLowerCase();
               const rawVal = cols[1];
 
-              if (label.includes('target home price')) {
+              if (label.includes('target home price') || label.includes('precio objetivo de compra')) {
                 state.homePrice = Math.max(0, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('down payment')) {
+              } else if (label.includes('down payment') || label.includes('pago inicial') || label.includes('enganche')) {
                 state.downPaymentPct = clamp(parseCleanNumber(rawVal), 0, 100);
                 detected++;
-              } else if (label.includes('mortgage rate')) {
+              } else if (label.includes('mortgage rate') || label.includes('tasa hipotecaria')) {
                 state.mortgageRate = clamp(parseCleanNumber(rawVal), 0.1, 20);
                 detected++;
-              } else if (label.includes('property tax rate')) {
+              } else if (label.includes('property tax rate') || label.includes('impuesto a la propiedad')) {
                 state.propTaxRate = clamp(parseCleanNumber(rawVal), 0, 10);
                 detected++;
-              } else if (label.includes('home appreciation rate')) {
+              } else if (label.includes('home appreciation rate') || label.includes('plusvalía anual') || label.includes('plusvalia anual')) {
                 state.homeApprec = clamp(parseCleanNumber(rawVal), 0, 15);
                 detected++;
-              } else if (label.includes('maintenance rate')) {
+              } else if (label.includes('maintenance rate') || label.includes('tasa de mantenimiento')) {
                 state.maintenanceRate = clamp(parseCleanNumber(rawVal), 0, 10);
                 detected++;
-              } else if (label.includes('buyer closing costs')) {
+              } else if (label.includes('buyer closing costs') || label.includes('costos de cierre')) {
                 state.buyingCostsPct = clamp(parseCleanNumber(rawVal), 0, 10);
                 detected++;
-              } else if (label.includes('comparable monthly rent')) {
+              } else if (label.includes('comparable monthly rent') || label.includes('alquiler mensual comparable')) {
                 state.monthlyRent = Math.max(0, parseCleanNumber(rawVal));
                 detected++;
-              } else if (label.includes('annual rent inflation')) {
+              } else if (label.includes('annual rent inflation') || label.includes('inflación anual del alquiler') || label.includes('inflacion anual del alquiler')) {
                 state.rentInflation = clamp(parseCleanNumber(rawVal), 0, 15);
                 detected++;
-              } else if (label.includes('investment return')) {
+              } else if (label.includes('investment return') || label.includes('retorno de inversión') || label.includes('retorno de inversion')) {
                 state.marketReturn = clamp(parseCleanNumber(rawVal), 0, 25);
                 detected++;
               }
@@ -1280,17 +1698,29 @@
             if (detected >= 5) {
               recalculateAll();
             } else {
-              alert('Could not detect valid Rent vs. Buy parameters in the selected CSV file.');
+              alert(t('errCsvInvalid'));
             }
           } catch (err) {
             console.error(err);
-            alert('Error parsing CSV file. Please make sure it is a valid Rent vs. Buy export.');
+            alert(t('errCsvParse'));
           }
         };
         reader.readAsText(file);
       }
 
       // --- Event Listeners ---
+      btnThemeToggle.addEventListener('click', () => {
+        state.theme = state.theme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('finance_suite_theme', state.theme);
+        recalculateAll();
+      });
+
+      langSelect.addEventListener('change', (e) => {
+        state.lang = e.target.value === 'es' ? 'es' : 'en';
+        localStorage.setItem('finance_suite_lang', state.lang);
+        recalculateAll();
+      });
+
       homePriceSlider.addEventListener('input', (e) => {
         state.homePrice = parseFloat(e.target.value);
         recalculateAll();
@@ -1362,6 +1792,7 @@
       });
 
       // Initial Bootstrap
+      initInfoTooltips();
       recalculateAll();
 
     })();

@@ -1041,6 +1041,124 @@
       border: 1px solid rgba(16, 185, 129, 0.45);
       color: #6ee7b7;
     }
+
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
+      --pass-bg: rgba(16, 185, 129, 0.12);
+      --pass-border: rgba(16, 185, 129, 0.5);
+      --pass-text: #047857;
+      --warn-bg: rgba(245, 158, 11, 0.14);
+      --warn-border: rgba(245, 158, 11, 0.55);
+      --warn-text: #b45309;
+      --fail-bg: rgba(244, 63, 94, 0.12);
+      --fail-border: rgba(244, 63, 94, 0.5);
+      --fail-text: #be123c;
+    }
+    html[data-theme="light"] thead,
+    html[data-theme="light"] table.screener-table th,
+    html[data-theme="light"] table.screener-table th:first-child { background-color: #e2e8f0 !important; color: #1e293b; }
+    html[data-theme="light"] table.screener-table th.col-primary-rule { background-color: #e0e7ff !important; color: #312e81; }
+    html[data-theme="light"] tbody tr,
+    html[data-theme="light"] table.screener-table td { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value { color: var(--text-main); }
+    html[data-theme="light"] .btn-secondary { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] .btn-cyan { background-color: #cffafe; border-color: #06b6d4; color: #0e7490; }
+    html[data-theme="light"] .btn-cyan:hover { background-color: #0891b2; color: #ffffff; }
+    html[data-theme="light"] .btn-edit { background-color: #e0e7ff; border-color: #818cf8; color: #3730a3; }
+    html[data-theme="light"] .btn-danger { background-color: #ffe4e6; border-color: #fb7185; color: #be123c; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] .top-header { background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); }
+    html[data-theme="light"] .header-title-block h1 { background: linear-gradient(135deg, #0f172a 35%, #4f46e5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    html[data-theme="light"] .suite-badge { background: rgba(99, 102, 241, 0.12); color: #4338ca; }
+    html[data-theme="light"] .strategy-btn.active { background: linear-gradient(145deg, rgba(99, 102, 241, 0.14), #eef2ff); }
+    html[data-theme="light"] .strategy-btn.active .strategy-name { color: #312e81; }
+    html[data-theme="light"] .playbook-title-group h3 { color: #1e1b4b; }
+    html[data-theme="light"] .playbook-archetype { color: #0369a1; }
+    html[data-theme="light"] .rule-pill { background: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .playbook-col { background: #ffffff; }
+    html[data-theme="light"] .playbook-col li span.metric-hl { color: #047857; }
+    html[data-theme="light"] .legend-bar { background: #f8fafc; }
+    html[data-theme="light"] details.cheat-sheet-details summary { background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, #f1f5f9 100%); }
+    html[data-theme="light"] .summary-badge { background: #cffafe; border-color: #06b6d4; color: #0e7490; }
+    html[data-theme="light"] .summary-toggle-hint { color: #4338ca; }
+    html[data-theme="light"] .stmt-line { background: #ffffff; border-color: #cbd5e1; }
+    html[data-theme="light"] .formula-box { background: #f8fafc; }
+    html[data-theme="light"] .formula-name { color: #0f172a; }
+    html[data-theme="light"] .formula-math { color: #0e7490; background: #ecfeff; border-color: #a5f3fc; }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -1051,20 +1169,25 @@
     <header class="top-header">
       <div class="top-bar">
         <div class="brand-group">
-          <a href="./index.html" class="btn">
+          <a href="./index.html" class="btn" id="btnReturnHub">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            Return to Main Hub
+            <span id="txtReturnHub">Return to Main Hub</span>
           </a>
           <div class="suite-badge">
             <span class="status-dot"></span>
-            Equity Research &amp; Fundamental Screener
+            <span id="txtSuiteBadge">Equity Research &amp; Fundamental Screener</span>
           </div>
         </div>
 
         <div class="top-actions">
+          <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" aria-label="Language">
+            <option value="en">EN · English</option>
+            <option value="es">ES · Español</option>
+          </select>
+          <button type="button" id="btnThemeToggle" class="btn btn-secondary" style="padding:0.45rem 0.75rem;" title="Toggle Light / Dark Mode">☀️ Light</button>
           <input type="file" id="csvFileInput" accept=".csv,text/csv" style="display: none;">
           <button type="button" id="btnLoadCSV" class="btn btn-cyan" title="Load a previously exported Stock Screener CSV">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -1072,7 +1195,7 @@
               <polyline points="17 8 12 3 7 8"></polyline>
               <line x1="12" y1="3" x2="12" y2="15"></line>
             </svg>
-            Load CSV
+            <span id="txtBtnLoadCSV">Load CSV</span>
           </button>
           <button type="button" id="btnExportCSV" class="btn btn-success" title="Export current stock comparison grid to UTF-8 CSV">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -1080,7 +1203,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            Export CSV
+            <span id="txtBtnExportCSV">Export CSV</span>
           </button>
         </div>
       </div>
@@ -1152,67 +1275,67 @@
       <form id="stockForm" class="input-form-card" novalidate>
         <div class="form-grid">
           <div class="field-group">
-            <label class="field-label" for="inpTicker">Ticker Symbol <span class="unit-hint">e.g. AAPL</span></label>
+            <label class="field-label" for="inpTicker">Ticker Symbol <span class="unit-hint">e.g. AAPL</span> <span class="info-icon" data-info-en="Stock market ticker symbol or company identifier." data-info-es="Símbolo bursátil o código de cotización de la empresa.">i</span></label>
             <input type="text" id="inpTicker" class="field-input" placeholder="MSFT" required maxlength="12" style="text-transform: uppercase;">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpPrice">Current Price <span class="unit-hint">$ USD</span></label>
+            <label class="field-label" for="inpPrice">Current Price <span class="unit-hint">$ USD</span> <span class="info-icon" data-info-en="Latest market traded price per share in USD." data-info-es="Precio actual de mercado por acción en dólares.">i</span></label>
             <input type="text" inputmode="decimal" id="inpPrice" class="field-input" placeholder="415.50" required>
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpPE">P/E Ratio <span class="unit-hint">x (TTM)</span></label>
+            <label class="field-label" for="inpPE">P/E Ratio <span class="unit-hint">x (TTM)</span> <span class="info-icon" data-info-en="Price to Earnings (TTM): Valuation multiple comparing share price to company annual profit. Lower often means value bargains." data-info-es="Ratio P/E (TTM): Precio dividido entre el beneficio anual por acción. Valores bajos reflejan posible descuento de valor.">i</span></label>
             <input type="text" inputmode="decimal" id="inpPE" class="field-input" placeholder="14.2">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpPB">P/B Ratio <span class="unit-hint">x (Book)</span></label>
+            <label class="field-label" for="inpPB">P/B Ratio <span class="unit-hint">x (Book)</span> <span class="info-icon" data-info-en="Price to Book Value: Compares market cap to accounting net assets. Under 1.5 indicates deep tangible backing." data-info-es="Ratio P/B: Precio sobre valor contable neto. Menos de 1.5 refleja un sólido respaldo de activos tangibles.">i</span></label>
             <input type="text" inputmode="decimal" id="inpPB" class="field-input" placeholder="1.35">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpDE">Debt / Equity <span class="unit-hint">Ratio</span></label>
+            <label class="field-label" for="inpDE">Debt / Equity <span class="unit-hint">Ratio</span> <span class="info-icon" data-info-en="Total Debt divided by Shareholder Equity. Under 0.50 means conservative solvency with very low bankruptcy risk." data-info-es="Deuda Total sobre Patrimonio Neto. Menor a 0.50 indica bajo apalancamiento y mínimo riesgo de insolvencia.">i</span></label>
             <input type="text" inputmode="decimal" id="inpDE" class="field-input" placeholder="0.38">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpPEG">PEG Ratio <span class="unit-hint">P/E &divide; Grw</span></label>
+            <label class="field-label" for="inpPEG">PEG Ratio <span class="unit-hint">P/E &divide; Grw</span> <span class="info-icon" data-info-en="Price/Earnings to Growth: Under 1.0 means paying an attractive price for high earnings growth (Lynch rule)." data-info-es="Ratio PEG: P/E dividido entre la tasa de crecimiento. Menos de 1.0 significa comprar crecimiento con descuento.">i</span></label>
             <input type="text" inputmode="decimal" id="inpPEG" class="field-input" placeholder="0.85">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpGrowth">Forward Growth <span class="unit-hint">% Est</span></label>
+            <label class="field-label" for="inpGrowth">Forward Growth <span class="unit-hint">% Est</span> <span class="info-icon" data-info-en="Projected annual percentage expansion in bottom-line earnings per share (EPS)." data-info-es="Crecimiento porcentual anual estimado de las ganancias por acción (BPA).">i</span></label>
             <input type="text" inputmode="decimal" id="inpGrowth" class="field-input" placeholder="16.5">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpDivYield">Dividend Yield <span class="unit-hint">% Ann</span></label>
+            <label class="field-label" for="inpDivYield">Dividend Yield <span class="unit-hint">% Ann</span> <span class="info-icon" data-info-en="Annual cash dividend payout expressed as a percentage of the share price." data-info-es="Dividendo anual en efectivo expresado como porcentaje del precio de la acción.">i</span></label>
             <input type="text" inputmode="decimal" id="inpDivYield" class="field-input" placeholder="3.10">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpPayout">Payout Ratio <span class="unit-hint">% EPS</span></label>
+            <label class="field-label" for="inpPayout">Payout Ratio <span class="unit-hint">% EPS</span> <span class="info-icon" data-info-en="Percentage of net earnings paid out as dividends. Under 60% provides healthy safety headroom." data-info-es="Porcentaje del beneficio neto pagado como dividendos. Menor al 60% brinda seguridad y margen de reinversión.">i</span></label>
             <input type="text" inputmode="decimal" id="inpPayout" class="field-input" placeholder="42.0">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpROE">ROE % <span class="unit-hint">Ret/Eq</span></label>
+            <label class="field-label" for="inpROE">ROE % <span class="unit-hint">Ret/Eq</span> <span class="info-icon" data-info-en="Return on Equity: Net profit earned per dollar of shareholder book capital. Over 15% denotes elite efficiency." data-info-es="Retorno sobre Patrimonio (ROE): Beneficio neto generado sobre el capital de los accionistas. Mayor a 15% es excelente.">i</span></label>
             <input type="text" inputmode="decimal" id="inpROE" class="field-input" placeholder="19.4">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpROIC">ROIC % <span class="unit-hint">Ret/Cap</span></label>
+            <label class="field-label" for="inpROIC">ROIC % <span class="unit-hint">Ret/Cap</span> <span class="info-icon" data-info-en="Return on Invested Capital: Profit generated from all capital invested. Above 15% reveals a durable competitive moat." data-info-es="Retorno sobre Capital Invertido (ROIC): Rendimiento generado sobre el capital total. Mayor a 15% indica foso económico.">i</span></label>
             <input type="text" inputmode="decimal" id="inpROIC" class="field-input" placeholder="22.8">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpGrossMargin">Gross Margin % <span class="unit-hint">% Rev</span></label>
+            <label class="field-label" for="inpGrossMargin">Gross Margin % <span class="unit-hint">% Rev</span> <span class="info-icon" data-info-en="Percentage of revenue retained after subtracting direct product manufacturing costs (COGS)." data-info-es="Porcentaje de ingresos restante tras descontar costos directos de producción (COGS).">i</span></label>
             <input type="text" inputmode="decimal" id="inpGrossMargin" class="field-input" placeholder="48.5">
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="inpFCFYield">FCF Yield % <span class="unit-hint">FCF/MCap</span></label>
+            <label class="field-label" for="inpFCFYield">FCF Yield % <span class="unit-hint">FCF/MCap</span> <span class="info-icon" data-info-en="Free Cash Flow Yield: Operating cash flow minus CapEx, divided by market cap. Hard distributable cash flow." data-info-es="Rendimiento de Flujo de Caja Libre: Dinero real disponible tras financiar operaciones y reinversión de capital.">i</span></label>
             <input type="text" inputmode="decimal" id="inpFCFYield" class="field-input" placeholder="6.20">
           </div>
 
@@ -2166,12 +2289,191 @@
         };
       }
 
-      // --- 6. RENDERING FUNCTIONS ---
+      // --- 6. I18N & THEME ENGINE ---
+      let currentLang = localStorage.getItem('finance_suite_lang') || 'en';
+      if (currentLang !== 'en' && currentLang !== 'es') currentLang = 'en';
+
+      let currentTheme = localStorage.getItem('finance_suite_theme') || 'dark';
+      if (currentTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+
+      const STRATEGIES_ES = {
+        value: {
+          id: 'value',
+          name: 'Valor Clásico',
+          tag: 'Graham',
+          shortRules: 'P/E < 15 | P/B < 1.5 | D/C < 0.5 | Razón Cor. > 1.5',
+          archetype: 'Benjamin Graham / Margen de Seguridad de Valor Profundo',
+          corePills: ['P/E < 15', 'P/B < 1.5', 'Deuda/Capital < 0.5', 'Razón Corriente > 1.5'],
+          primaryCols: ['pe', 'pb', 'de'],
+          goal: 'Comprar empresas solventes y establecidas que coticen con un fuerte descuento sobre su valor en libros intrínseco y poder de ganancias actual, brindando un "Margen de Seguridad" estructural contra la pérdida permanente de capital.',
+          screenerFilters: [
+            '<span class="metric-hl">Ratio P/E (TTM) &lt; 15.0</span> (Evitar pagar por euforia especulativa futura)',
+            '<span class="metric-hl">Precio / Valor Contable (P/B) &lt; 1.5</span> (Respaldado por activos tangibles netos en balance)',
+            '<span class="metric-hl">Deuda Total / Capital &lt; 0.50</span> (Bajo riesgo de quiebra y refinanciación)',
+            '<span class="metric-hl">Razón Corriente &gt; 1.50</span> (Activos corrientes cubren cómodamente pasivos a 12 meses)'
+          ],
+          whyItMatters: 'Cuando las expectativas ya están deprimidas (bajo P/E y P/B) y el balance tiene un apalancamiento mínimo (Deuda/Capital < 0.5), el riesgo a la baja está amortiguado por activos tangibles mientras la reversión a la media impulsa la revalorización.'
+        },
+        garp: {
+          id: 'garp',
+          name: 'GARP (Lynch)',
+          tag: 'Peter Lynch',
+          shortRules: 'PEG < 1.0 | Crec. > 15% | ROE > 15% | P/E < 30',
+          archetype: 'Crecimiento a un Precio Razonable (Un Paso por Delante de Wall Street)',
+          corePills: ['PEG < 1.0', 'Crec. Fut. > 15%', 'ROE > 15%', 'P/E < 30'],
+          primaryCols: ['peg', 'growth', 'roe', 'pe'],
+          goal: 'Capturar empresas de rápido crecimiento (>15% de expansión anual de BPA) cuyo múltiplo de valoración sigue siendo barato en relación con su trayectoria de crecimiento (PEG < 1.0), evitando acciones sobrevaloradas.',
+          screenerFilters: [
+            '<span class="metric-hl">Ratio PEG &lt; 1.0</span> (El múltiplo P/E es inferior a la tasa de crecimiento anual del BPA)',
+            '<span class="metric-hl">Crecimiento Futuro del BPA &gt; 15%</span> (Fuerte pista de expansión de ganancias plurianual)',
+            '<span class="metric-hl">Retorno sobre el Capital (ROE) &gt; 15%</span> (Modelo de negocio rentable y autofinanciado)',
+            '<span class="metric-hl">Ratio P/E &lt; 30</span> (Limita el riesgo extremo de compresión de múltiplos)'
+          ],
+          whyItMatters: 'Los filtros de valor puro suelen perderse ganadores compuestos, mientras que los de crecimiento puro pagan de más. Al exigir un PEG menor a 1.0 junto con ROE > 15% y P/E < 30, compras crecimiento de alta velocidad con descuento.'
+        },
+        dividend: {
+          id: 'dividend',
+          name: 'Calidad de Dividendos',
+          tag: 'Fortaleza de Ingresos',
+          shortRules: 'Rend. > 2.5% | Payout < 60% | FCF > Div | Cob. Int > 4',
+          archetype: 'Crecimiento Sostenible de Dividendos y Rendimiento Respaldado por Efectivo',
+          corePills: ['Rend. > 2.5%', 'Ratio Payout < 60%', 'FCF > Dividendos', 'Cob. Intereses > 4'],
+          primaryCols: ['divYield', 'payout', 'fcfYield', 'de'],
+          goal: 'Construir un flujo de ingresos creciente y resistente a recesiones, filtrando sistemáticamente las "trampas de rendimiento": empresas que se endeudan o sacrifican CapEx solo para mantener un dividendo insostenible.',
+          screenerFilters: [
+            '<span class="metric-hl">Rendimiento por Dividendo &gt; 2.5%</span> (Retorno en efectivo significativo superior al promedio del S&P 500)',
+            '<span class="metric-hl">Ratio de Pago (Payout) &lt; 60%</span> (Retiene 40%+ de las ganancias para reinversión y colchón)',
+            '<span class="metric-hl">Rendimiento FCF &gt; Rend. Dividendo</span> (El Flujo de Caja Libre cubre totalmente los dividendos pagados)',
+            '<span class="metric-hl">Cobertura de Intereses &gt; 4x y Bajo D/C</span> (El EBIT cubre fácilmente las obligaciones de deuda)'
+          ],
+          whyItMatters: 'Las ganancias contables pueden manipularse, pero los dividendos se pagan en efectivo real. Asegurar un Payout < 60% y Flujo de Caja Libre > Dividendos garantiza que el pago se financie orgánicamente con margen para aumentos anuales.'
+        },
+        moat: {
+          id: 'moat',
+          name: 'Foso Amplio (Wide Moat)',
+          tag: 'Compuesto',
+          shortRules: 'ROIC > 15% | Margen Bruto > 40% | Margen Op. > 18%',
+          archetype: 'Ventaja Competitiva Duradera de Buffett / Munger',
+          corePills: ['ROIC > 15%', 'Margen Bruto > 40%', 'Margen Operativo > 18%'],
+          primaryCols: ['roic', 'grossMargin', 'roe'],
+          goal: 'Identificar franquicias dominantes con poder de fijación de precios estructural, costos de cambio o efectos de red que capitalicen el capital reinvertido a altas tasas durante décadas sin que la competencia erosione los márgenes.',
+          screenerFilters: [
+            '<span class="metric-hl">Retorno sobre Capital Invertido (ROIC) &gt; 15%</span> (Creación de valor económico superior al WACC)',
+            '<span class="metric-hl">Margen Bruto &gt; 40%</span> (Fuerte poder de fijación de precios y bajos costos directos unitarios)',
+            '<span class="metric-hl">Margen Operativo &gt; 18%</span> (Escala operativa y gastos generales disciplinados)',
+            '<span class="metric-hl">ROE Consistente &gt; 18%</span> (Alto retorno sobre el capital sin deuda excesiva)'
+          ],
+          whyItMatters: 'En un período de tenencia de más de 10 años, el rendimiento anualizado de una acción converge hacia su ROIC. Una empresa que mantiene Márgenes Brutos > 40% y ROIC > 15% posee un foso económico que los competidores no pueden cruzar fácilmente.'
+        },
+        cashflow: {
+          id: 'cashflow',
+          name: 'Reyes del Flujo de Caja',
+          tag: 'Máquina de FCF',
+          shortRules: 'P/FCF < 18 | Rend. FCF > 5.5% | CapEx/Ing < 10%',
+          archetype: 'Generadores de Flujo de Caja Libre Ligeros en Capital',
+          corePills: ['P/FCF < 18', 'Rend. FCF > 5.5%', 'CapEx/Ingresos < 10%'],
+          primaryCols: ['fcfYield', 'roic', 'grossMargin'],
+          goal: 'Apuntar a negocios ligeros en capital que conviertan una gran parte de los ingresos en Flujo de Caja Libre distribuible (OCF menos CapEx), cotizando a un atractivo P/FCF < 18 (equivalente a Rendimiento FCF > 5.55%).',
+          screenerFilters: [
+            '<span class="metric-hl">Precio / Flujo de Caja Libre (P/FCF) &lt; 18</span> (Implícito automáticamente cuando Rend. FCF &gt; 5.55%)',
+            '<span class="metric-hl">Rendimiento de Flujo de Caja Libre &gt; 5.5%</span> (Alta generación de efectivo en relación con la Cap. de Mercado)',
+            '<span class="metric-hl">CapEx / Ingresos &lt; 10%</span> (Modelo ligero en activos que requiere mínimo CapEx de mantenimiento)',
+            '<span class="metric-hl">ROIC &gt; 15%</span> (Alto retorno en efectivo sobre el capital desplegado)'
+          ],
+          whyItMatters: 'El Ingreso Neto incluye devengos no monetarios, mientras que el Flujo de Caja Libre representa las ganancias reales del propietario disponibles para recompras de acciones, reducción de deuda, fusiones y dividendos.'
+        },
+        magic: {
+          id: 'magic',
+          name: 'Fórmula Mágica',
+          tag: 'Greenblatt',
+          shortRules: 'Rend. Ganancias > 8% (P/E < 12.5) | Retorno Capital > 25%',
+          archetype: 'Ranking Cuantitativo de Valor + Calidad de Joel Greenblatt',
+          corePills: ['Rend. Ganancias > 8%', 'Retorno sobre Capital (ROIC) > 25%'],
+          primaryCols: ['pe', 'roic', 'fcfYield'],
+          goal: 'Clasificar y comprar sistemáticamente empresas extraordinarias (Retorno sobre el Capital > 25%) solo cuando estén disponibles a precios de ganga (Rendimiento de Ganancias > 8%, correspondiente a P/E < 12.5x).',
+          screenerFilters: [
+            '<span class="metric-hl">Rendimiento de Ganancias &gt; 8.0%</span> (Equivalente a P/E &lt; 12.5x o EBIT/EV &gt; 8%)',
+            '<span class="metric-hl">Retorno sobre el Capital (ROIC) &gt; 25%</span> (Eficiencia de capital de élite en el decil superior)',
+            '<span class="metric-hl">Rendimiento FCF &gt; 6.0%</span> (Confirma que el alto rendimiento de ganancias está respaldado por efectivo)',
+            '<span class="metric-hl">Excluir Financieras y Servicios Públicos</span> (Enfoque en firmas industriales, tecnológicas y de consumo)'
+          ],
+          whyItMatters: 'Greenblatt demostró que combinar dos factores simples —alto Retorno sobre el Capital (calidad del negocio) y alto Rendimiento de Ganancias (precio bajo)— supera al mercado comprando negocios de élite durante pesimismos temporales.'
+        }
+      };
+
+      function getActiveStrategiesDict() {
+        return currentLang === 'es' ? STRATEGIES_ES : STRATEGIES;
+      }
+
+      const TABLE_COLUMNS = [
+        { key: 'pe', label: 'P/E Ratio', labelEs: 'Ratio P/E', decimals: 1, suffix: 'x',
+          infoEn: 'Price to Earnings (TTM): Valuation multiple comparing share price to company annual net income. Lower values indicate potential value bargains.',
+          infoEs: 'Ratio Precio-Beneficio (TTM): Compara el precio bursátil con las ganancias anuales por acción. Valores menores señalan posible descuento de valor.' },
+        { key: 'pb', label: 'P/B Ratio', labelEs: 'Ratio P/B', decimals: 2, suffix: 'x',
+          infoEn: 'Price to Book Value: Compares market cap to accounting net assets. Values under 1.5 indicate strong tangible asset backing.',
+          infoEs: 'Ratio Precio a Valor Contable: Compara el precio con los activos netos del balance. Menor a 1.5x refleja gran respaldo tangible.' },
+        { key: 'de', label: 'Debt/Eq', labelEs: 'Deuda/Cap', decimals: 2, suffix: '',
+          infoEn: 'Total Debt to Equity: Financial leverage ratio. Under 0.50 signals very low bankruptcy, solvency, and interest rate risk.',
+          infoEs: 'Deuda Total a Capital Contable: Nivel de endeudamiento. Menor a 0.50 refleja bajo riesgo financiero y de solvencia.' },
+        { key: 'peg', label: 'PEG Ratio', labelEs: 'Ratio PEG', decimals: 2, suffix: '',
+          infoEn: 'Price/Earnings to Growth: P/E divided by EPS growth rate. Under 1.0 means buying high earnings growth at a discount (Lynch rule).',
+          infoEs: 'Ratio PEG: P/E dividido entre el crecimiento anual proyectado. Menor a 1.0 significa comprar alto crecimiento a buen precio.' },
+        { key: 'growth', label: 'Fwd Growth', labelEs: 'Crec. Fut.', decimals: 1, suffix: '%',
+          infoEn: 'Forward EPS Growth: Consensus projected annual percentage expansion in bottom-line earnings over future years.',
+          infoEs: 'Crecimiento Futuro: Tasa proyectada anual de aumento del beneficio por acción (BPA) en próximos ejercicios.' },
+        { key: 'divYield', label: 'Div Yield', labelEs: 'Rend. Div', decimals: 2, suffix: '%',
+          infoEn: 'Dividend Yield: Annual cash dividends returned to shareholders as a percentage of current stock price.',
+          infoEs: 'Rendimiento por Dividendo: Porcentaje anual en efectivo distribuido al accionista respecto al precio actual.' },
+        { key: 'payout', label: 'Payout %', labelEs: 'Payout %', decimals: 1, suffix: '%',
+          infoEn: 'Payout Ratio: Fraction of net income distributed as dividends. Under 60% ensures healthy reinvestment headroom.',
+          infoEs: 'Ratio de Pay-out: Porcentaje de las ganancias destinado a dividendos. Menor al 60% garantiza margen de reinversión.' },
+        { key: 'roe', label: 'ROE %', labelEs: 'ROE %', decimals: 1, suffix: '%',
+          infoEn: 'Return on Equity: Net profit earned per dollar of book equity. Above 15% indicates superior compounding efficiency.',
+          infoEs: 'Retorno sobre Patrimonio (ROE): Beneficio generado sobre los fondos propios. Superior al 15% indica alta rentabilidad.' },
+        { key: 'roic', label: 'ROIC %', labelEs: 'ROIC %', decimals: 1, suffix: '%',
+          infoEn: 'Return on Invested Capital: Operating profit generated from total debt + equity capital. Above 15% demonstrates an economic moat.',
+          infoEs: 'Retorno sobre Capital Invertido (ROIC): Eficiencia operativa sobre el capital total. Mayor al 15% refleja foso defensivo económico.' },
+        { key: 'grossMargin', label: 'Gross Margin', labelEs: 'Margen Bruto', decimals: 1, suffix: '%',
+          infoEn: 'Gross Profit Margin: Percentage of revenue left after direct costs (COGS). Above 40% shows durable pricing power.',
+          infoEs: 'Margen Bruto: Porcentaje de ingresos tras restar costos directos. Superior al 40% denota fuerte poder de fijación de precios.' },
+        { key: 'fcfYield', label: 'FCF Yield', labelEs: 'Rend. FCF', decimals: 2, suffix: '%',
+          infoEn: 'Free Cash Flow Yield: Operating cash flow minus CapEx, divided by market cap. Represents true distributable cash yield.',
+          infoEs: 'Rendimiento de Flujo de Caja Libre: Flujo de caja operativo menos CapEx sobre valor de mercado. Ganancia de efectivo real distribuible.' }
+      ];
+
+      function getPrimaryRuleBadgeText(strategyId, colKey) {
+        if (currentLang === 'es') {
+          const mapEs = {
+            value: { pe: 'Regla: < 15x', pb: 'Regla: < 1.5x', de: 'Regla: < 0.50' },
+            garp: { peg: 'Regla: < 1.0', growth: 'Regla: > 15%', roe: 'Regla: > 15%', pe: 'Regla: < 30x' },
+            dividend: { divYield: 'Regla: > 2.5%', payout: 'Regla: < 60%', fcfYield: 'Regla: > Div%', de: 'Cob.Int > 4' },
+            moat: { roic: 'Regla: > 15%', grossMargin: 'Regla: > 40%', roe: 'MgnOp > 18%' },
+            cashflow: { fcfYield: 'P/FCF < 18 (>5.5%)', roic: 'CapEx/Ing < 10%', grossMargin: 'Alta Conv.' },
+            magic: { pe: 'EY > 8% (<12.5x)', roic: 'ROC > 25%', fcfYield: 'Resp. Efectivo' }
+          };
+          return (mapEs[strategyId] && mapEs[strategyId][colKey]) ? mapEs[strategyId][colKey] : '';
+        }
+        const map = {
+          value: { pe: 'Rule: < 15x', pb: 'Rule: < 1.5x', de: 'Rule: < 0.50' },
+          garp: { peg: 'Rule: < 1.0', growth: 'Rule: > 15%', roe: 'Rule: > 15%', pe: 'Rule: < 30x' },
+          dividend: { divYield: 'Rule: > 2.5%', payout: 'Rule: < 60%', fcfYield: 'Rule: > Div%', de: 'Int.Cov > 4' },
+          moat: { roic: 'Rule: > 15%', grossMargin: 'Rule: > 40%', roe: 'OpMgn > 18%' },
+          cashflow: { fcfYield: 'P/FCF < 18 (>5.5%)', roic: 'CapEx/Rev < 10%', grossMargin: 'High Conv.' },
+          magic: { pe: 'EY > 8% (<12.5x)', roic: 'ROC > 25%', fcfYield: 'Cash Backing' }
+        };
+        return (map[strategyId] && map[strategyId][colKey]) ? map[strategyId][colKey] : '';
+      }
+
       function renderStrategyButtons() {
         const container = document.getElementById('strategyButtonsContainer');
         container.innerHTML = '';
+        const dict = getActiveStrategiesDict();
 
-        Object.values(STRATEGIES).forEach(strat => {
+        Object.values(dict).forEach(strat => {
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'strategy-btn' + (state.activeStrategy === strat.id ? ' active' : '');
@@ -2192,15 +2494,24 @@
       }
 
       function renderPlaybookCard() {
-        const strat = STRATEGIES[state.activeStrategy];
+        const dict = getActiveStrategiesDict();
+        const strat = dict[state.activeStrategy];
         const card = document.getElementById('playbookCard');
         const indicator = document.getElementById('activeStrategyIndicator');
         if (indicator) {
-          indicator.textContent = `Active Scoring Mode: ${strat.name} (${strat.tag})`;
+          indicator.textContent = currentLang === 'es'
+            ? `Modo de Puntuación Activo: ${strat.name} (${strat.tag})`
+            : `Active Scoring Mode: ${strat.name} (${strat.tag})`;
         }
 
         const pillsHtml = strat.corePills.map(p => `<span class="rule-pill">${p}</span>`).join('');
         const filtersHtml = strat.screenerFilters.map(f => `<li>${f}</li>`).join('');
+
+        const titleSuffix = currentLang === 'es' ? 'Manual de Estrategia:' : 'Playbook';
+        const headingText = currentLang === 'es' ? `${titleSuffix} ${strat.name}` : `${strat.name} ${titleSuffix}`;
+        const col1Title = currentLang === 'es' ? '1. El Objetivo de la Estrategia' : '1. The Goal of the Strategy';
+        const col2Title = currentLang === 'es' ? '2. Filtros Exactos del Screener' : '2. Exact Public Screener Filters';
+        const col3Title = currentLang === 'es' ? '3. Por Qué Importan Estas Métricas' : '3. Why These Metrics Matter';
 
         card.innerHTML = `
           <div class="playbook-header">
@@ -2210,7 +2521,7 @@
                   <path d="M12 20h9"></path>
                   <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                 </svg>
-                ${strat.name} Playbook
+                ${headingText}
               </h3>
               <div class="playbook-archetype">${strat.archetype}</div>
             </div>
@@ -2222,21 +2533,21 @@
           <div class="playbook-body-grid">
             <div class="playbook-col">
               <div class="playbook-col-label label-goal">
-                <span>1. The Goal of the Strategy</span>
+                <span>${col1Title}</span>
               </div>
               <p>${strat.goal}</p>
             </div>
 
             <div class="playbook-col">
               <div class="playbook-col-label label-filters">
-                <span>2. Exact Public Screener Filters</span>
+                <span>${col2Title}</span>
               </div>
               <ul>${filtersHtml}</ul>
             </div>
 
             <div class="playbook-col">
               <div class="playbook-col-label label-why">
-                <span>3. Why These Metrics Matter</span>
+                <span>${col3Title}</span>
               </div>
               <p>${strat.whyItMatters}</p>
             </div>
@@ -2244,60 +2555,43 @@
         `;
       }
 
-      const TABLE_COLUMNS = [
-        { key: 'pe', label: 'P/E Ratio', decimals: 1, suffix: 'x' },
-        { key: 'pb', label: 'P/B Ratio', decimals: 2, suffix: 'x' },
-        { key: 'de', label: 'Debt/Eq', decimals: 2, suffix: '' },
-        { key: 'peg', label: 'PEG Ratio', decimals: 2, suffix: '' },
-        { key: 'growth', label: 'Fwd Growth', decimals: 1, suffix: '%' },
-        { key: 'divYield', label: 'Div Yield', decimals: 2, suffix: '%' },
-        { key: 'payout', label: 'Payout %', decimals: 1, suffix: '%' },
-        { key: 'roe', label: 'ROE %', decimals: 1, suffix: '%' },
-        { key: 'roic', label: 'ROIC %', decimals: 1, suffix: '%' },
-        { key: 'grossMargin', label: 'Gross Margin', decimals: 1, suffix: '%' },
-        { key: 'fcfYield', label: 'FCF Yield', decimals: 2, suffix: '%' }
-      ];
-
-      function getPrimaryRuleBadgeText(strategyId, colKey) {
-        const map = {
-          value: { pe: 'Rule: < 15x', pb: 'Rule: < 1.5x', de: 'Rule: < 0.50' },
-          garp: { peg: 'Rule: < 1.0', growth: 'Rule: > 15%', roe: 'Rule: > 15%', pe: 'Rule: < 30x' },
-          dividend: { divYield: 'Rule: > 2.5%', payout: 'Rule: < 60%', fcfYield: 'Rule: > Div%', de: 'Int.Cov > 4' },
-          moat: { roic: 'Rule: > 15%', grossMargin: 'Rule: > 40%', roe: 'OpMgn > 18%' },
-          cashflow: { fcfYield: 'P/FCF < 18 (>5.5%)', roic: 'CapEx/Rev < 10%', grossMargin: 'High Conv.' },
-          magic: { pe: 'EY > 8% (<12.5x)', roic: 'ROC > 25%', fcfYield: 'Cash Backing' }
-        };
-        return (map[strategyId] && map[strategyId][colKey]) ? map[strategyId][colKey] : '';
-      }
-
       function renderComparisonTable() {
-        const strat = STRATEGIES[state.activeStrategy];
+        const strat = getActiveStrategiesDict()[state.activeStrategy];
         const thead = document.getElementById('comparisonThead');
         const tbody = document.getElementById('comparisonTbody');
 
+        const priceHdr = currentLang === 'es' ? 'Precio ($)' : 'Price ($)';
+        const fitHdr = currentLang === 'es' ? 'Ajuste Estrat.' : 'Strategy Fit';
+        const actHdr = currentLang === 'es' ? 'Acciones' : 'Actions';
+
         // Build Header Row
         let headHtml = `<tr>
-          <th>Ticker</th>
-          <th>Price ($)</th>`;
+          <th>Ticker <span class="info-icon" data-info-en="Stock ticker symbol and company identifier." data-info-es="Símbolo o identificador bursátil de la empresa.">i</span></th>
+          <th>${priceHdr} <span class="info-icon" data-info-en="Current market price per share in USD." data-info-es="Precio de cotización actual por acción en dólares.">i</span></th>`;
 
         TABLE_COLUMNS.forEach(col => {
           const isPrimary = strat.primaryCols.includes(col.key);
           const badgeTxt = getPrimaryRuleBadgeText(state.activeStrategy, col.key);
+          const colLabel = currentLang === 'es' ? col.labelEs : col.label;
           headHtml += `<th class="${isPrimary ? 'col-primary-rule' : ''}">
             ${badgeTxt ? `<span class="th-rule-badge">${badgeTxt}</span>` : ''}
-            ${col.label}
+            ${colLabel}
+            <span class="info-icon" data-info-en="${col.infoEn}" data-info-es="${col.infoEs}">i</span>
           </th>`;
         });
 
         headHtml += `
-          <th>Strategy Fit</th>
-          <th>Actions</th>
+          <th>${fitHdr} <span class="info-icon" data-info-en="Weighted alignment percentage against active strategy rules (Primary metrics weighted 2.5x)." data-info-es="Porcentaje de ajuste ponderado según las reglas de la estrategia activa (métricas principales pesan 2.5x).">i</span></th>
+          <th>${actHdr} <span class="info-icon" data-info-en="Edit input fundamentals or delete stock row." data-info-es="Editar métricas o eliminar fila de la acción.">i</span></th>
         </tr>`;
         thead.innerHTML = headHtml;
 
         // Build Body Rows
         if (!state.stocks || state.stocks.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="15" class="empty-state">No stocks in comparison grid yet. Add a stock above or click "Restore Sample Watchlist".</td></tr>`;
+          const emptyMsg = currentLang === 'es'
+            ? 'No hay acciones en la tabla de comparación. Añade una acción arriba o haz clic en "Restaurar Lista de Ejemplo".'
+            : 'No stocks in comparison grid yet. Add a stock above or click "Restore Sample Watchlist".';
+          tbody.innerHTML = `<tr><td colspan="15" class="empty-state">${emptyMsg}</td></tr>`;
           return;
         }
 
@@ -2335,16 +2629,22 @@
             `;
           });
 
+          const editLbl = currentLang === 'es' ? 'Editar' : 'Edit';
+          const delLbl = currentLang === 'es' ? 'Borrar' : 'Delete';
+          const rulesPassedTitle = currentLang === 'es'
+            ? `${scoreObj.primaryPassed} de ${scoreObj.primaryTotal} Reglas Principales Cumplidas`
+            : `${scoreObj.primaryPassed} of ${scoreObj.primaryTotal} Core Playbook Rules Passed`;
+
           rowHtml += `
             <td>
-              <span class="score-badge ${scoreClass}" title="${scoreObj.primaryPassed} of ${scoreObj.primaryTotal} Core Playbook Rules Passed">
+              <span class="score-badge ${scoreClass}" title="${rulesPassedTitle}">
                 ${scoreObj.pct}% (${scoreObj.primaryPassed}/${scoreObj.primaryTotal})
               </span>
             </td>
             <td>
               <div class="row-actions">
-                <button type="button" class="btn btn-edit" data-action="edit" data-id="${stock.id}" title="Load stock into form to edit">Edit</button>
-                <button type="button" class="btn btn-danger" data-action="delete" data-id="${stock.id}" title="Delete row">Delete</button>
+                <button type="button" class="btn btn-edit" data-action="edit" data-id="${stock.id}" title="${editLbl}">${editLbl}</button>
+                <button type="button" class="btn btn-danger" data-action="delete" data-id="${stock.id}" title="${delLbl}">${delLbl}</button>
               </div>
             </td>
           `;
@@ -2362,10 +2662,194 @@
           .replace(/"/g, '&quot;');
       }
 
+      function updateThemeButtonLabel() {
+        const btn = document.getElementById('btnThemeToggle');
+        if (!btn) return;
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        if (currentLang === 'es') {
+          btn.textContent = isLight ? '🌙 Oscuro' : '☀️ Claro';
+        } else {
+          btn.textContent = isLight ? '🌙 Dark' : '☀️ Light';
+        }
+      }
+
+      function applyStaticTranslations() {
+        const isEs = currentLang === 'es';
+        document.documentElement.lang = isEs ? 'es' : 'en';
+        document.title = isEs
+          ? 'Motor de Análisis y Screener de Acciones | Suite Offline'
+          : 'Stock Analysis & Screener Engine | Offline Suite';
+
+        const setTxt = (id, en, es) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = isEs ? es : en;
+        };
+
+        setTxt('txtReturnHub', 'Return to Main Hub', 'Volver al Panel Principal');
+        setTxt('txtSuiteBadge', 'Equity Research & Fundamental Screener', 'Investigación de Renta Variable y Screener Fundamental');
+        setTxt('txtBtnLoadCSV', 'Load CSV', 'Cargar CSV');
+        setTxt('txtBtnExportCSV', 'Export CSV', 'Exportar CSV');
+
+        const h1 = document.querySelector('.header-title-block h1');
+        if (h1) h1.textContent = isEs ? 'Motor de Análisis y Screener de Acciones' : 'Stock Analysis & Screener Engine';
+        const hp = document.querySelector('.header-title-block p');
+        if (hp) hp.textContent = isEs
+          ? 'Evalúa acciones bajo 6 estrategias institucionales (Valor Graham, GARP de Peter Lynch, Calidad de Dividendos, Foso Amplio, Reyes del Flujo de Caja y Fórmula Mágica de Joel Greenblatt). Codifica por colores cada métrica fundamental dinámicamente y guarda 100% offline vía CSV.'
+          : "Evaluate equities across 6 institutional investment playbooks (Graham Value, Peter Lynch GARP, Dividend Quality, Wide Moat, Cash Flow Kings, and Joel Greenblatt's Magic Formula). Color-codes every fundamental metric dynamically and persists 100% offline via CSV.";
+
+        const secTitles = document.querySelectorAll('.panel .section-title');
+        if (secTitles[0] && secTitles[0].lastChild) {
+          secTitles[0].lastChild.textContent = isEs ? ' 1. Estrategias de Inversión (Reglas del Screener)' : ' 1. Strategy Playbook (The Screener Rules)';
+        }
+        if (secTitles[1] && secTitles[1].lastChild) {
+          secTitles[1].lastChild.textContent = isEs ? ' 2. Entrada Multi-Acción y Tabla Comparativa' : ' 2. Multi-Stock Input & Comparison Grid';
+        }
+
+        const secSubs = document.querySelectorAll('.panel .section-subtitle');
+        if (secSubs[0]) secSubs[0].textContent = isEs
+          ? 'Selecciona una filosofía de inversión activa para actualizar el Manual de Estrategia y recalificar todas las acciones al instante'
+          : 'Select an active investment philosophy to update the Playbook Card and immediately re-score all stocks below';
+        if (secSubs[1]) secSubs[1].textContent = isEs
+          ? 'Añade o edita símbolos (tickers) para comparar sus fundamentales contra los umbrales de la estrategia activa'
+          : 'Add or edit stock tickers to benchmark their fundamentals against the active strategy thresholds';
+
+        setTxt('btnResetSamples', 'Restore Sample Watchlist', 'Restaurar Lista de Ejemplo');
+        setTxt('btnClearAll', 'Clear All', 'Limpiar Todo');
+
+        // Form labels
+        const setLabel = (forId, mainEn, hintEn, mainEs, hintEs, infoEn, infoEs) => {
+          const lbl = document.querySelector(`label[for="${forId}"]`);
+          if (lbl) {
+            lbl.innerHTML = `${isEs ? mainEs : mainEn} <span class="unit-hint">${isEs ? hintEs : hintEn}</span> <span class="info-icon" data-info-en="${infoEn}" data-info-es="${infoEs}">i</span>`;
+          }
+        };
+        setLabel('inpTicker', 'Ticker Symbol', 'e.g. AAPL', 'Símbolo (Ticker)', 'ej. AAPL', 'Stock market ticker symbol or company identifier.', 'Símbolo bursátil o código de cotización de la empresa.');
+        setLabel('inpPrice', 'Current Price', '$ USD', 'Precio Actual', '$ USD', 'Latest market traded price per share in USD.', 'Precio actual de mercado por acción en dólares.');
+        setLabel('inpPE', 'P/E Ratio', 'x (TTM)', 'Ratio P/E', 'x (TTM)', 'Price to Earnings (TTM): Valuation multiple comparing share price to company annual profit. Lower often means value bargains.', 'Ratio P/E (TTM): Precio dividido entre el beneficio anual por acción. Valores bajos reflejan posible descuento de valor.');
+        setLabel('inpPB', 'P/B Ratio', 'x (Book)', 'Ratio P/B', 'x (Libros)', 'Price to Book Value: Compares market cap to accounting net assets. Under 1.5 indicates deep tangible backing.', 'Ratio P/B: Precio sobre valor contable neto. Menos de 1.5 refleja un sólido respaldo de activos tangibles.');
+        setLabel('inpDE', 'Debt / Equity', 'Ratio', 'Deuda / Capital', 'Ratio', 'Total Debt divided by Shareholder Equity. Under 0.50 means conservative solvency with very low bankruptcy risk.', 'Deuda Total sobre Patrimonio Neto. Menor a 0.50 indica bajo apalancamiento y mínimo riesgo de insolvencia.');
+        setLabel('inpPEG', 'PEG Ratio', 'P/E ÷ Grw', 'Ratio PEG', 'P/E ÷ Crec', 'Price/Earnings to Growth: Under 1.0 means paying an attractive price for high earnings growth (Lynch rule).', 'Ratio PEG: P/E dividido entre la tasa de crecimiento. Menos de 1.0 significa comprar crecimiento con descuento.');
+        setLabel('inpGrowth', 'Forward Growth', '% Est', 'Crec. Futuro', '% Est', 'Projected annual percentage expansion in bottom-line earnings per share (EPS).', 'Crecimiento porcentual anual estimado de las ganancias por acción (BPA).');
+        setLabel('inpDivYield', 'Dividend Yield', '% Ann', 'Rend. Dividendo', '% Anual', 'Annual cash dividend payout expressed as a percentage of the share price.', 'Dividendo anual en efectivo expresado como porcentaje del precio de la acción.');
+        setLabel('inpPayout', 'Payout Ratio', '% EPS', 'Ratio Payout', '% BPA', 'Percentage of net earnings paid out as dividends. Under 60% provides healthy safety headroom.', 'Porcentaje del beneficio neto pagado como dividendos. Menor al 60% brinda seguridad y margen de reinversión.');
+        setLabel('inpROE', 'ROE %', 'Ret/Eq', 'ROE %', 'Ret/Cap', 'Return on Equity: Net profit earned per dollar of shareholder book capital. Over 15% denotes elite efficiency.', 'Retorno sobre Patrimonio (ROE): Beneficio neto generado sobre el capital de los accionistas. Mayor a 15% es excelente.');
+        setLabel('inpROIC', 'ROIC %', 'Ret/Cap', 'ROIC %', 'Ret/Inv', 'Return on Invested Capital: Profit generated from all capital invested. Above 15% reveals a durable competitive moat.', 'Retorno sobre Capital Invertido (ROIC): Rendimiento generado sobre el capital total. Mayor a 15% indica foso económico.');
+        setLabel('inpGrossMargin', 'Gross Margin %', '% Rev', 'Margen Bruto %', '% Ing', 'Percentage of revenue retained after subtracting direct product manufacturing costs (COGS).', 'Porcentaje de ingresos restante tras descontar costos directos de producción (COGS).');
+        setLabel('inpFCFYield', 'FCF Yield %', 'FCF/MCap', 'Rend. FCF %', 'FCF/Cap', 'Free Cash Flow Yield: Operating cash flow minus CapEx, divided by market cap. Hard distributable cash flow.', 'Rendimiento de Flujo de Caja Libre: Dinero real disponible tras financiar operaciones y reinversión de capital.');
+
+        const helperSpan = document.querySelector('.form-helper-text span');
+        if (helperSpan) {
+          helperSpan.innerHTML = isEs
+            ? '<strong>Consejo:</strong> Deja el PEG en blanco para calcularlo automáticamente con <code>P/E &divide; Crec. Futuro %</code>. El <code>P/FCF</code> implícito (100 &divide; Rend. FCF) y el <code>Rendimiento de Ganancias</code> (100 &divide; P/E) se calculan automáticamente.'
+            : '<strong>Tip:</strong> Leave PEG blank to auto-derive it from <code>P/E &divide; Forward Growth %</code>. Implied <code>P/FCF</code> ($100 \\div \\text{FCF Yield}$) and <code>Earnings Yield</code> ($100 \\div \\text{P/E}$) are computed automatically in the grid.';
+        }
+
+        const btnCancel = document.getElementById('btnCancelEdit');
+        if (btnCancel) btnCancel.textContent = isEs ? 'Cancelar Edición' : 'Cancel Edit';
+
+        const btnSubmit = document.getElementById('btnSubmitStock');
+        if (btnSubmit) {
+          if (state.editingId) {
+            const stk = state.stocks.find(s => s.id === state.editingId);
+            btnSubmit.textContent = stk ? (isEs ? `Guardar ${stk.ticker}` : `Save ${stk.ticker}`) : (isEs ? 'Guardar' : 'Save');
+          } else {
+            btnSubmit.textContent = isEs ? '+ Añadir Acción' : '+ Add Stock';
+          }
+        }
+
+        // Legend items
+        const legendSpans = document.querySelectorAll('.legend-items .legend-item span:last-child');
+        if (legendSpans.length >= 4) {
+          legendSpans[0].textContent = isEs ? 'PASA (Cumple Objetivo)' : 'PASS (Meets Strategy Target)';
+          legendSpans[1].textContent = isEs ? 'ALERTA (Límite / Vigilar)' : 'WARN (Borderline / Watch)';
+          legendSpans[2].textContent = isEs ? 'FALLA / N/A (Fuera de Rango)' : 'FAIL / N/A (Outside Threshold)';
+          legendSpans[3].textContent = isEs ? 'Columna Resaltada = Regla Principal de Estrategia Activa' : 'Highlighted Column = Primary Rule for Active Strategy';
+        }
+
+        // Cheat sheet
+        const sumTitle = document.querySelector('.summary-title');
+        if (sumTitle) sumTitle.textContent = isEs
+          ? '3. ¿Dónde encontrar estos números? (Guía Rápida 10-Q / 10-K)'
+          : '3. Where to find these numbers? (10-Q / 10-K Cheat Sheet)';
+        const sumBadge = document.querySelector('.summary-badge');
+        if (sumBadge) sumBadge.textContent = isEs ? 'Reportes SEC y Fórmulas de Ratios' : 'SEC Filings & Ratio Formulas';
+        const sumHint = document.querySelector('.summary-toggle-hint span');
+        if (sumHint) sumHint.textContent = isEs ? 'Clic para Mostrar/Ocultar Guía' : 'Click to Toggle Guide';
+
+        const cheatIntro = document.querySelector('.cheat-sheet-body > p');
+        if (cheatIntro) {
+          cheatIntro.innerHTML = isEs
+            ? 'Toda empresa pública presenta reportes trimestrales (<strong>Formulario 10-Q</strong>) y anuales (<strong>Formulario 10-K</strong>) ante la SEC (Ítem 8: Estados Financieros Consolidados). Abajo tienes un mapa visual de los tres estados financieros clave mostrando las partidas exactas y cómo convertirlas en los ratios del screener.'
+            : 'Every public company files quarterly (<strong>Form 10-Q</strong>) and annual (<strong>Form 10-K</strong>) reports with the SEC (Item 8: Consolidated Financial Statements). Below is a visual map of the three core financial statements showing the exact raw line items to locate and how to turn them into the screener ratios above.';
+        }
+
+        const stmtTitles = document.querySelectorAll('.statement-card .stmt-title span');
+        if (stmtTitles.length >= 3) {
+          stmtTitles[0].textContent = isEs ? '1. Estado de Resultados Consolidado' : '1. Consolidated Income Statement';
+          stmtTitles[1].textContent = isEs ? '2. Balance General Consolidado' : '2. Consolidated Balance Sheet';
+          stmtTitles[2].textContent = isEs ? '3. Estado de Flujos de Efectivo' : '3. Statement of Cash Flows';
+        }
+        const stmtTags = document.querySelectorAll('.statement-card .stmt-tag');
+        if (stmtTags.length >= 3) {
+          stmtTags[0].textContent = isEs ? 'Rentabilidad y Crecimiento' : 'Profitability & Growth';
+          stmtTags[1].textContent = isEs ? 'Solvencia y Patrimonio' : 'Solvency & Net Worth';
+          stmtTags[2].textContent = isEs ? 'Generación de Caja Real' : 'Real Cash Generation';
+        }
+        const stmtDescs = document.querySelectorAll('.statement-card > p');
+        if (stmtDescs.length >= 3) {
+          stmtDescs[0].textContent = isEs
+            ? 'Mide el desempeño operativo durante un período (Trimestre o Últimos Doce Meses - TTM).'
+            : 'Measures operational performance over a period (Quarter or Trailing Twelve Months - TTM).';
+          stmtDescs[1].textContent = isEs
+            ? 'Una instantánea en un momento único de lo que la empresa posee (Activos) frente a lo que debe (Pasivos).'
+            : 'A snapshot at a single point in time of what the company owns (Assets) vs. owes (Liabilities).';
+          stmtDescs[2].textContent = isEs
+            ? 'Rastrea el efectivo real que entra y sale de la cuenta bancaria en actividades Operativas, de Inversión y de Financiamiento.'
+            : 'Tracks actual cash entering and leaving the bank account across Operating, Investing, and Financing activities.';
+        }
+
+        const formulaHeading = document.querySelector('.cheat-sheet-body h3');
+        if (formulaHeading) {
+          formulaHeading.textContent = isEs
+            ? 'Cómo Calcular las Métricas de Entrada a partir de Partidas del 10-Q / 10-K'
+            : 'How to Calculate the Input Metrics from Raw 10-Q / 10-K Line Items';
+        }
+
+        updateThemeButtonLabel();
+      }
+
       function renderAll() {
+        applyStaticTranslations();
         renderStrategyButtons();
         renderPlaybookCard();
         renderComparisonTable();
+      }
+
+      // Theme & Language Event Listeners
+      const langSelect = document.getElementById('langSelect');
+      if (langSelect) {
+        langSelect.value = currentLang;
+        langSelect.addEventListener('change', (e) => {
+          currentLang = e.target.value === 'es' ? 'es' : 'en';
+          localStorage.setItem('finance_suite_lang', currentLang);
+          renderAll();
+        });
+      }
+
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+      if (btnThemeToggle) {
+        btnThemeToggle.addEventListener('click', () => {
+          const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          if (isLight) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('finance_suite_theme', 'dark');
+          } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('finance_suite_theme', 'light');
+          }
+          updateThemeButtonLabel();
+          renderAll();
+        });
       }
 
       // --- 7. FORM SUBMISSION, EDITING & DELETION ---
@@ -2376,7 +2860,7 @@
       function resetFormMode() {
         state.editingId = null;
         stockForm.reset();
-        btnSubmitStock.textContent = '+ Add Stock';
+        btnSubmitStock.textContent = currentLang === 'es' ? '+ Añadir Acción' : '+ Add Stock';
         btnCancelEdit.style.display = 'none';
       }
 
@@ -2385,7 +2869,7 @@
 
         const rawTicker = document.getElementById('inpTicker').value.trim().toUpperCase();
         if (!rawTicker) {
-          showToast('Please enter a Ticker Symbol (e.g. AAPL).', true);
+          showToast(currentLang === 'es' ? 'Por favor ingresa un Símbolo (ej. AAPL).' : 'Please enter a Ticker Symbol (e.g. AAPL).', true);
           document.getElementById('inpTicker').focus();
           return;
         }
@@ -2429,7 +2913,7 @@
           const idx = state.stocks.findIndex(s => s.id === state.editingId);
           if (idx > -1) {
             state.stocks[idx] = entryData;
-            showToast(`Updated ${rawTicker} in comparison grid.`);
+            showToast(currentLang === 'es' ? `Actualizado ${rawTicker} en la tabla.` : `Updated ${rawTicker} in comparison grid.`);
           }
         } else {
           // If ticker already exists, update it or add new row
@@ -2437,10 +2921,10 @@
           if (existingIdx > -1) {
             entryData.id = state.stocks[existingIdx].id;
             state.stocks[existingIdx] = entryData;
-            showToast(`Updated existing ticker ${rawTicker}.`);
+            showToast(currentLang === 'es' ? `Ticker existente ${rawTicker} actualizado.` : `Updated existing ticker ${rawTicker}.`);
           } else {
             state.stocks.push(entryData);
-            showToast(`Added ${rawTicker} to comparison grid.`);
+            showToast(currentLang === 'es' ? `Añadido ${rawTicker} a la tabla.` : `Added ${rawTicker} to comparison grid.`);
           }
         }
 
@@ -2464,7 +2948,7 @@
           state.stocks = state.stocks.filter(s => s.id !== id);
           if (state.editingId === id) resetFormMode();
           renderComparisonTable();
-          if (target) showToast(`Removed ${target.ticker} from grid.`);
+          if (target) showToast(currentLang === 'es' ? `Eliminado ${target.ticker} de la tabla.` : `Removed ${target.ticker} from grid.`);
         } else if (action === 'edit') {
           const stock = state.stocks.find(s => s.id === id);
           if (!stock) return;
@@ -2483,7 +2967,7 @@
           document.getElementById('inpGrossMargin').value = isNaN(stock.grossMargin) ? '' : stock.grossMargin;
           document.getElementById('inpFCFYield').value = isNaN(stock.fcfYield) ? '' : stock.fcfYield;
 
-          btnSubmitStock.textContent = `Save ${stock.ticker}`;
+          btnSubmitStock.textContent = currentLang === 'es' ? `Guardar ${stock.ticker}` : `Save ${stock.ticker}`;
           btnCancelEdit.style.display = 'inline-flex';
           stockForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -2493,32 +2977,48 @@
         state.stocks = JSON.parse(JSON.stringify(DEFAULT_STOCKS));
         resetFormMode();
         renderComparisonTable();
-        showToast('Restored 6 sample benchmark stocks.');
+        showToast(currentLang === 'es' ? 'Restauradas 6 acciones de referencia.' : 'Restored 6 sample benchmark stocks.');
       });
 
       document.getElementById('btnClearAll').addEventListener('click', () => {
         state.stocks = [];
         resetFormMode();
         renderComparisonTable();
-        showToast('Cleared all stocks from grid.');
+        showToast(currentLang === 'es' ? 'Todas las acciones fueron eliminadas.' : 'Cleared all stocks from grid.');
       });
 
       // --- 8. BI-DIRECTIONAL CSV PERSISTENCE (EXPORT & LOAD) ---
       function exportToCSV() {
         const now = new Date();
         const dateStr = now.toISOString().split('T')[0];
-        const strat = STRATEGIES[state.activeStrategy];
+        const strat = getActiveStrategiesDict()[state.activeStrategy];
+        const isEs = currentLang === 'es';
 
         const rows = [];
-        rows.push(['STOCK ANALYSIS & SCREENER ENGINE']);
-        rows.push(['Export Date', dateStr]);
-        rows.push(['Active Strategy ID', strat.id]);
-        rows.push(['Active Strategy Name', `"${strat.name} (${strat.tag})"`]);
-        rows.push(['Total Analyzed Stocks', state.stocks.length]);
+        rows.push([isEs ? 'MOTOR DE ANÁLISIS Y SCREENER DE ACCIONES' : 'STOCK ANALYSIS & SCREENER ENGINE']);
+        rows.push([isEs ? 'Fecha de Exportación' : 'Export Date', dateStr]);
+        rows.push([isEs ? 'ID de Estrategia Activa' : 'Active Strategy ID', strat.id]);
+        rows.push([isEs ? 'Nombre de Estrategia Activa' : 'Active Strategy Name', `"${strat.name} (${strat.tag})"`]);
+        rows.push([isEs ? 'Total de Acciones Analizadas' : 'Total Analyzed Stocks', state.stocks.length]);
         rows.push([]);
 
-        rows.push(['MULTI-STOCK COMPARISON GRID']);
-        rows.push([
+        rows.push([isEs ? 'TABLA COMPARATIVA MULTI-ACCIÓN' : 'MULTI-STOCK COMPARISON GRID']);
+        rows.push(isEs ? [
+          'Símbolo (Ticker)',
+          'Precio Actual ($)',
+          'Ratio P/E',
+          'Ratio P/B',
+          'Deuda/Capital',
+          'Ratio PEG',
+          'Crecimiento Futuro (%)',
+          'Rendimiento Dividendo (%)',
+          'Ratio Payout (%)',
+          'ROE (%)',
+          'ROIC (%)',
+          'Margen Bruto (%)',
+          'Rendimiento FCF (%)',
+          'Ajuste Estrategia (%)'
+        ] : [
           'Ticker Symbol',
           'Current Price ($)',
           'P/E Ratio',
@@ -2568,7 +3068,20 @@
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
 
-        showToast(`Exported ${state.stocks.length} stocks to CSV.`);
+        showToast(isEs ? `Exportadas ${state.stocks.length} acciones a CSV.` : `Exported ${state.stocks.length} stocks to CSV.`);
+      }
+
+      function resolveStrategyNameOrId(rawVal) {
+        if (!rawVal) return null;
+        const clean = String(rawVal).replace(/^"|"$/g, '').trim().toLowerCase();
+        if (STRATEGIES[clean]) return clean;
+        if (clean.includes('value') || clean.includes('valor') || clean.includes('graham')) return 'value';
+        if (clean.includes('garp') || clean.includes('lynch')) return 'garp';
+        if (clean.includes('dividend') || clean.includes('dividendo')) return 'dividend';
+        if (clean.includes('moat') || clean.includes('foso')) return 'moat';
+        if (clean.includes('cash') || clean.includes('flujo') || clean.includes('fcf')) return 'cashflow';
+        if (clean.includes('magic') || clean.includes('mágica') || clean.includes('magica') || clean.includes('greenblatt')) return 'magic';
+        return null;
       }
 
       function handleCSVFile(file) {
@@ -2589,19 +3102,29 @@
               const firstCol = (cols[0] || '').replace(/^"|"$/g, '').trim();
               const firstLower = firstCol.toLowerCase();
 
-              if (firstLower === 'active strategy id') {
-                const candidate = (cols[1] || '').replace(/^"|"$/g, '').trim().toLowerCase();
-                if (STRATEGIES[candidate]) {
-                  importedStrategy = candidate;
+              if (
+                firstLower === 'active strategy id' ||
+                firstLower === 'id de estrategia activa' ||
+                firstLower === 'active strategy name' ||
+                firstLower === 'nombre de estrategia activa' ||
+                firstLower === 'estrategia activa'
+              ) {
+                const resolved = resolveStrategyNameOrId(cols[1]);
+                if (resolved) {
+                  importedStrategy = resolved;
                 }
                 continue;
               }
 
-              // Detect header row of stock table (supports both suite format and direct header CSVs)
+              // Detect header row of stock table (supports both English and Spanish suite format and direct header CSVs)
               if (
                 firstLower === 'ticker symbol' ||
                 firstLower === 'ticker' ||
-                (firstLower.includes('ticker') && cols.length >= 10)
+                firstLower === 'símbolo (ticker)' ||
+                firstLower === 'simbolo (ticker)' ||
+                firstLower === 'símbolo' ||
+                firstLower === 'simbolo' ||
+                ((firstLower.includes('ticker') || firstLower.includes('símbolo') || firstLower.includes('simbolo')) && cols.length >= 10)
               ) {
                 inStockTable = true;
                 continue;
@@ -2635,13 +3158,20 @@
               state.stocks = importedStocks;
               resetFormMode();
               renderAll();
-              showToast(`Loaded ${importedStocks.length} stocks and scored against ${STRATEGIES[state.activeStrategy].name}.`);
+              const stratName = getActiveStrategiesDict()[state.activeStrategy].name;
+              showToast(currentLang === 'es'
+                ? `Cargadas ${importedStocks.length} acciones y evaluadas con ${stratName}.`
+                : `Loaded ${importedStocks.length} stocks and scored against ${stratName}.`);
             } else {
-              showToast('Could not find valid stock rows in the selected CSV file.', true);
+              showToast(currentLang === 'es'
+                ? 'No se encontraron filas de acciones válidas en el archivo CSV.'
+                : 'Could not find valid stock rows in the selected CSV file.', true);
             }
           } catch (err) {
             console.error(err);
-            showToast('Error parsing CSV file. Please verify its format.', true);
+            showToast(currentLang === 'es'
+              ? 'Error al analizar el archivo CSV. Verifica su formato.'
+              : 'Error parsing CSV file. Please verify its format.', true);
           }
         };
         reader.readAsText(file);
@@ -2661,7 +3191,60 @@
         }
       });
 
+      // Tooltip Floating Bubble Initializer
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = currentLang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en')) : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) left = window.innerWidth - tipRect.width - 10;
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
+
       // Bootstrap Application
+      initInfoTooltips();
       renderAll();
     })();
   </script>

@@ -919,6 +919,186 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    /* Light Mode Theme */
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --border-focus: #6366f1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-lg: 0 10px 25px -4px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead,
+    html[data-theme="light"] th { background-color: #e2e8f0 !important; color: #1e293b; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .nw-kpi-val,
+    html[data-theme="light"] .nw-panel-title,
+    html[data-theme="light"] .tool-title,
+    html[data-theme="light"] .info-card-title,
+    html[data-theme="light"] .guide-step-title,
+    html[data-theme="light"] .sync-slot-title,
+    html[data-theme="light"] .section-header h2 { color: var(--text-main); }
+    html[data-theme="light"] .hero h1 {
+      background: linear-gradient(135deg, #0f172a 40%, #475569 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    html[data-theme="light"] .btn { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .btn-refresh { background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.3); color: #4338ca; }
+    html[data-theme="light"] .btn-refresh:hover { background: #6366f1; color: #fff; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] .btn-purple { background-color: #f3e8ff; border-color: #a855f7; color: #6b21a8; }
+    html[data-theme="light"] .btn-purple:hover { background-color: #a855f7; color: #ffffff; }
+    html[data-theme="light"] .suite-badge { background: rgba(99, 102, 241, 0.1); color: #4338ca; }
+    html[data-theme="light"] .action-badge { color: #6366f1; }
+    html[data-theme="light"] .action-badge svg { stroke: #6366f1; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] .guide-section {
+      background: #ffffff;
+      border-color: #cbd5e1;
+    }
+    html[data-theme="light"] .guide-step-card {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    html[data-theme="light"] .guide-step-tip {
+      border-top-color: #cbd5e1;
+      color: #0284c7;
+    }
+    html[data-theme="light"] .sync-slot {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    html[data-theme="light"] .sync-slot:hover {
+      background: rgba(99, 102, 241, 0.08);
+      border-color: #6366f1;
+    }
+    html[data-theme="light"] .toggle-row {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #1e293b;
+    }
+    html[data-theme="light"] .card-footer {
+      border-top-color: #cbd5e1;
+      color: #475569;
+    }
+    html[data-theme="light"] .infographic-section,
+    html[data-theme="light"] .nw-hub-section,
+    html[data-theme="light"] .viewer-section {
+      background: #ffffff;
+      border-color: #cbd5e1;
+    }
+    html[data-theme="light"] .info-card {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    html[data-theme="light"] .tool-card {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    html[data-theme="light"] .tool-card:hover {
+      background: #f1f5f9;
+      border-color: #6366f1;
+    }
+    html[data-theme="light"] .card-tracker {
+      background: linear-gradient(145deg, #f8fafc, #faf5ff) !important;
+      border-color: #d8b4fe !important;
+    }
+    html[data-theme="light"] .card-tracker .tool-title {
+      color: #7e22ce !important;
+    }
+    html[data-theme="light"] .dropzone {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    html[data-theme="light"] .hero-alert-banner {
+      background: rgba(99, 102, 241, 0.08) !important;
+      border-color: #cbd5e1 !important;
+      color: #334155 !important;
+    }
+    html[data-theme="light"] .hero-alert-banner strong,
+    html[data-theme="light"] .hero-alert-banner .hero-alert-title {
+      color: #0f172a !important;
+    }
+    html[data-theme="light"] td[style*="color:#e2e8f0"],
+    html[data-theme="light"] td[style*="color: #e2e8f0"],
+    html[data-theme="light"] td[style*="color:#ffffff"],
+    html[data-theme="light"] td[style*="color: #ffffff"] {
+      color: #0f172a !important;
+    }
+    html[data-theme="light"] #metaFileName {
+      color: #0f172a !important;
+    }
+
+    /* Tooltip & Info Icon */
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -929,35 +1109,40 @@
     <div class="top-bar">
       <div class="suite-badge">
         <span class="status-dot"></span>
-        100% Offline &amp; Client-Side Suite
+        <span id="txtSuiteBadge">100% Offline &amp; Client-Side Suite</span>
       </div>
 
       <div class="top-actions">
+        <select id="langSelect" class="btn" style="width:auto; padding:0.45rem 0.65rem;" aria-label="Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
+        <button type="button" id="btnThemeToggle" class="btn" style="padding:0.45rem 0.75rem;" title="Toggle Light / Dark Mode">☀️ Light</button>
         <button type="button" class="btn btn-refresh" id="btnPageRefresh" title="Reload Landing Dashboard">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="23 4 23 10 17 10"></polyline>
             <polyline points="1 20 1 14 7 14"></polyline>
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
           </svg>
-          Refresh Hub
+          <span id="txtBtnRefresh">Refresh Hub</span>
         </button>
       </div>
     </div>
 
     <!-- Header Hero -->
     <header class="hero">
-      <h1>Personal Finance &amp; Net Worth Suite</h1>
-      <p>
+      <h1 id="txtHeroTitle">Personal Finance &amp; Net Worth Suite</h1>
+      <p id="txtHeroDesc">
         A private, zero-dependency financial ecosystem that runs 100% locally in your browser. Model multi-asset investing, eliminate debt, factor in cost of living &amp; inflation, and project your total net worth into the future.
       </p>
 
       <!-- Planning vs Tracking Distinction Notice -->
-      <div style="margin-top:0.75rem; max-width:880px; background:rgba(99, 102, 241, 0.08); border:1px solid rgba(99, 102, 241, 0.3); border-radius:var(--radius-md); padding:0.9rem 1.25rem; text-align:left; font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+      <div class="hero-alert-banner" style="margin-top:0.75rem; max-width:880px; background:rgba(99, 102, 241, 0.08); border:1px solid rgba(99, 102, 241, 0.3); border-radius:var(--radius-md); padding:0.9rem 1.25rem; text-align:left; font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
         <div style="display:flex; align-items:center; gap:0.5rem; font-weight:700; color:#fff; margin-bottom:0.3rem;">
           <span style="font-size:1.05rem;">📌</span>
-          <span>Important: Planning Engine vs. Historical Progress Tracker</span>
+          <span id="txtNoticeTitle" class="hero-alert-title">Important: Planning Engine vs. Historical Progress Tracker</span>
         </div>
-        <div>
+        <div id="txtNoticeBody">
           The calculators here (Investing, Debt Payoff, Cost of Living, and the Net Worth Command Center) are <strong>forward-looking planning tools</strong> used to model growth, simulate compound interest, and project scenarios. 
           To record your <em>actual real-world monthly progress</em> over time and compare reality against your plan, use the dedicated <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700; text-decoration:underline;">Monthly Net Worth Log &amp; Progress Tracker</a> module. Files created in the Tracker module should be stored and loaded exclusively within the Tracker module.
         </div>
@@ -972,54 +1157,54 @@
             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
           </svg>
-          Quick-Start Guide: How to Use This Suite
+          <span id="txtGuideTitle">Quick-Start Guide: How to Use This Suite</span>
         </h2>
-        <p>Four simple steps to model, connect, and back up your complete financial life offline</p>
+        <p id="txtGuideSub">Four simple steps to model, connect, and back up your complete financial life offline</p>
       </div>
 
       <div class="guide-steps-grid">
         <div class="guide-step-card">
           <div class="guide-step-top">
-            <span class="guide-badge">Step 1</span>
-            <span class="guide-step-title">Model Your Modules</span>
+            <span class="guide-badge" id="txtStep1Badge">Step 1</span>
+            <span class="guide-step-title" id="txtStep1Title">Model Your Modules</span>
           </div>
-          <p class="guide-step-desc">
+          <p class="guide-step-desc" id="txtStep1Desc">
             Open any calculator below—such as <strong>Multi-Asset Investing</strong>, <strong>Debt Payoff</strong>, or <strong>Cost of Living</strong>—and enter your current balances, interest rates, and monthly cash flows.
           </p>
-          <div class="guide-step-tip">Tip: All charts &amp; tables update in real time</div>
+          <div class="guide-step-tip" id="txtStep1Tip">Tip: All charts &amp; tables update in real time</div>
         </div>
 
         <div class="guide-step-card">
           <div class="guide-step-top">
-            <span class="guide-badge">Step 2</span>
-            <span class="guide-step-title">Export Module CSVs</span>
+            <span class="guide-badge" id="txtStep2Badge">Step 2</span>
+            <span class="guide-step-title" id="txtStep2Title">Export Module CSVs</span>
           </div>
-          <p class="guide-step-desc">
+          <p class="guide-step-desc" id="txtStep2Desc">
             Click the green <strong>Export CSV</strong> button in the top-right corner of any calculator to save your exact configuration and year-by-year projection to your computer.
           </p>
-          <div class="guide-step-tip">Tip: Files open in Excel or reload back into any tool</div>
+          <div class="guide-step-tip" id="txtStep2Tip">Tip: Files open in Excel or reload back into any tool</div>
         </div>
 
         <div class="guide-step-card">
           <div class="guide-step-top">
-            <span class="guide-badge">Step 3</span>
-            <span class="guide-step-title">Combine for Net Worth</span>
+            <span class="guide-badge" id="txtStep3Badge">Step 3</span>
+            <span class="guide-step-title" id="txtStep3Title">Combine for Net Worth</span>
           </div>
-          <p class="guide-step-desc">
+          <p class="guide-step-desc" id="txtStep3Desc">
             In the <strong>Net Worth Command Center</strong> right below, load your exported Investing, Debt, and Cost of Living CSVs (or type numbers directly) to see where you stand today and project your future wealth.
           </p>
-          <div class="guide-step-tip">Tip: Automatically links debt payoff rollovers</div>
+          <div class="guide-step-tip" id="txtStep3Tip">Tip: Automatically links debt payoff rollovers</div>
         </div>
 
         <div class="guide-step-card">
           <div class="guide-step-top">
-            <span class="guide-badge">Step 4</span>
-            <span class="guide-step-title">Track Reality vs. Plan</span>
+            <span class="guide-badge" id="txtStep4Badge">Step 4</span>
+            <span class="guide-step-title" id="txtStep4Title">Track Reality vs. Plan</span>
           </div>
-          <p class="guide-step-desc">
+          <p class="guide-step-desc" id="txtStep4Desc">
             Use the <strong>Net Worth Command Center</strong> to plan scenarios. Once per month, log your real balances in the <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700;">Monthly Tracker</a> to build a permanent timeline and see if you are ahead of or behind your plan!
           </p>
-          <div class="guide-step-tip">Tip: Tracker CSVs are dedicated to the Tracker module</div>
+          <div class="guide-step-tip" id="txtStep4Tip">Tip: Tracker CSVs are dedicated to the Tracker module</div>
         </div>
       </div>
     </section>
@@ -1035,9 +1220,9 @@
                 <polyline points="2 17 12 22 22 17"></polyline>
                 <polyline points="2 12 12 17 22 12"></polyline>
               </svg>
-              Net Worth Command Center &amp; Future Projector
+              <span id="txtNwTitle">Net Worth Command Center &amp; Future Projector</span>
             </h2>
-            <p style="margin-top:0.25rem;">
+            <p style="margin-top:0.25rem;" id="txtNwSub">
               Import CSV files from your Investing, Debt, Cost of Living, or Mortgage modules—or adjust values directly—to view your current net worth and multi-year trajectory.
             </p>
           </div>
@@ -1052,7 +1237,7 @@
               <polyline points="17 8 12 3 7 8"></polyline>
               <line x1="12" y1="3" x2="12" y2="15"></line>
             </svg>
-            Load / Sync CSV Files
+            <span id="txtBtnLoadSync">Load / Sync CSV Files</span>
           </button>
 
           <button type="button" class="btn btn-success" id="btnExportNwCSV" title="Download complete Net Worth Snapshot and Future Projection as CSV">
@@ -1061,7 +1246,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            Export Net Worth CSV
+            <span id="txtBtnExportNw">Export Net Worth CSV</span>
           </button>
         </div>
       </div>
@@ -1070,7 +1255,7 @@
       <div class="nw-sync-grid">
         <div class="sync-slot" id="slotInvesting" title="Click to load an Investing & Portfolio CSV file">
           <div class="sync-slot-top">
-            <span>📈 Investing CSV</span>
+            <span id="txtSlot1Tag">📈 Investing CSV</span>
             <span class="sync-status-pill" id="pillInvesting">Manual / Default</span>
           </div>
           <div class="sync-slot-title" id="slotInvestingVal">$40,000 Assets</div>
@@ -1079,7 +1264,7 @@
 
         <div class="sync-slot" id="slotDebt" title="Click to load a Debt Payoff CSV file">
           <div class="sync-slot-top">
-            <span>🛡️ Debt Payoff CSV</span>
+            <span id="txtSlot2Tag">🛡️ Debt Payoff CSV</span>
             <span class="sync-status-pill" id="pillDebt">Manual / Default</span>
           </div>
           <div class="sync-slot-title" id="slotDebtVal">$36,000 Debt</div>
@@ -1088,7 +1273,7 @@
 
         <div class="sync-slot" id="slotCol" title="Click to load a Cost of Living CSV file">
           <div class="sync-slot-top">
-            <span>🛒 Cost of Living CSV</span>
+            <span id="txtSlot3Tag">🛒 Cost of Living CSV</span>
             <span class="sync-status-pill" id="pillCol">Manual / Default</span>
           </div>
           <div class="sync-slot-title" id="slotColVal">$4,580/mo Spend</div>
@@ -1097,7 +1282,7 @@
 
         <div class="sync-slot" id="slotRealEstate" title="Click to load a Mortgage or Emergency Runway CSV file">
           <div class="sync-slot-top">
-            <span>🏠 Real Estate / Snapshot</span>
+            <span id="txtSlot4Tag">🏠 Real Estate / Snapshot</span>
             <span class="sync-status-pill" id="pillRealEstate">Manual / Default</span>
           </div>
           <div class="sync-slot-title" id="slotRealEstateVal">$85,000 Equity</div>
@@ -1108,25 +1293,37 @@
       <!-- Net Worth Top KPIs -->
       <div class="nw-kpi-grid">
         <div class="nw-kpi-card">
-          <span class="nw-kpi-label">Current Net Worth (Today)</span>
+          <span class="nw-kpi-label">
+            <span id="lblKpiCurrent">Current Net Worth (Today)</span>
+            <span class="info-icon" data-info-en="Total Assets minus Total Liabilities today. The single truest score of your financial solvency." data-info-es="Activos Totales menos Pasivos Totales hoy. La medida más auténtica de tu solvencia financiera.">i</span>
+          </span>
           <span class="nw-kpi-val" id="nwKpiCurrent" style="color:#34d399;">$0</span>
           <span class="nw-kpi-sub" id="nwKpiCurrentSub">Assets minus Liabilities</span>
         </div>
 
         <div class="nw-kpi-card">
-          <span class="nw-kpi-label">Total Assets vs. Liabilities</span>
+          <span class="nw-kpi-label">
+            <span id="lblKpiAssetsLiab">Total Assets vs. Liabilities</span>
+            <span class="info-icon" data-info-en="Everything you own (cash, stocks, real estate) compared to everything you owe (loans, credit cards, mortgages)." data-info-es="Todo lo que posees (efectivo, acciones, inmuebles) comparado con lo que debes (préstamos, tarjetas, hipotecas).">i</span>
+          </span>
           <span class="nw-kpi-val" id="nwKpiAssetsLiab" style="color:#38bdf8; font-size:1.3rem;">$0 / $0</span>
           <span class="nw-kpi-sub" id="nwKpiDebtRatio">0% debt-to-asset ratio</span>
         </div>
 
         <div class="nw-kpi-card">
-          <span class="nw-kpi-label">Projected Future Net Worth</span>
+          <span class="nw-kpi-label">
+            <span id="lblKpiProjected">Projected Future Net Worth</span>
+            <span class="info-icon" data-info-en="Estimated total wealth at the end of your planning horizon based on ongoing contributions, market compound growth, and debt paydown." data-info-es="Patrimonio total estimado al final de tu horizonte de planificación según tus aportaciones, interés compuesto y amortización de deuda.">i</span>
+          </span>
           <span class="nw-kpi-val" id="nwKpiProjected" style="color:#a855f7;">$0</span>
           <span class="nw-kpi-sub" id="nwKpiProjectedSub">At Year 10 (Nominal)</span>
         </div>
 
         <div class="nw-kpi-card">
-          <span class="nw-kpi-label">Inflation-Adjusted (Real NW)</span>
+          <span class="nw-kpi-label">
+            <span id="lblKpiReal">Inflation-Adjusted (Real NW)</span>
+            <span class="info-icon" data-info-en="Future net worth discounted for annual inflation. Reflects what your future wealth will actually buy in today's purchasing power dollars." data-info-es="Patrimonio futuro descontando la inflación anual. Refleja el poder adquisitivo real que tendrá ese dinero en moneda de hoy.">i</span>
+          </span>
           <span class="nw-kpi-val" id="nwKpiReal" style="color:#fbbf24;">$0</span>
           <span class="nw-kpi-sub" id="nwKpiRealSub">In today's purchasing power</span>
         </div>
@@ -1138,14 +1335,17 @@
         <!-- Left Panel: Current Position & Cash Flow Inputs -->
         <div class="nw-panel">
           <div class="nw-panel-title">
-            <span>Where You Are &amp; Future Drivers</span>
-            <span style="font-size:0.74rem; font-weight:500; color:var(--text-muted);">Editable or CSV-synced</span>
+            <span id="lblNwPanelTitle">Where You Are &amp; Future Drivers</span>
+            <span style="font-size:0.74rem; font-weight:500; color:var(--text-muted);" id="lblNwPanelSub">Editable or CSV-synced</span>
           </div>
 
           <div class="nw-inputs-grid">
             <div class="field-group" style="grid-column: 1 / -1;">
               <label class="field-label">
-                <span>Snapshot Date (Where You Are As Of)</span>
+                <span>
+                  <span id="lblNwStartDate">Snapshot Date (Where You Are As Of)</span>
+                  <span class="info-icon" data-info-en="The starting calendar baseline date for your net worth position. Future years project forward from this point." data-info-es="Fecha de inicio de referencia para tu patrimonio neto. Los años futuros se proyectan hacia adelante a partir de este mes.">i</span>
+                </span>
                 <span id="nwStartDateBadge" style="color:#a5b4fc;">Oct 2026</span>
               </label>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
@@ -1169,7 +1369,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Liquid &amp; Invested Assets</span>
+                <span>
+                  <span id="lblNwInvested">Liquid &amp; Invested Assets</span>
+                  <span class="info-icon" data-info-en="Total cash savings, checking balances, index funds, brokerage accounts, and retirement funds." data-info-es="Total de ahorros en efectivo, cuentas corrientes, fondos indexados, cuentas de inversión y fondos de retiro.">i</span>
+                </span>
                 <span style="color:#38bdf8;">+$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -1180,7 +1383,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Real Estate / Other Value</span>
+                <span>
+                  <span id="lblNwProperty">Real Estate / Other Value</span>
+                  <span class="info-icon" data-info-en="Current market estimated value of your primary residence, investment properties, vehicles, and other valuable property." data-info-es="Valor de mercado estimado de tu vivienda principal, propiedades de inversión, vehículos u otros activos de valor.">i</span>
+                </span>
                 <span style="color:#38bdf8;">+$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -1191,7 +1397,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Consumer &amp; Loan Debt</span>
+                <span>
+                  <span id="lblNwConsumerDebt">Consumer &amp; Loan Debt</span>
+                  <span class="info-icon" data-info-en="Credit card balances, personal bank loans, auto loans, student loans, or any high-interest consumer liabilities." data-info-es="Tarjetas de crédito, préstamos bancarios personales, préstamos para vehículos, deudas estudiantiles o deudas de consumo de alto interés.">i</span>
+                </span>
                 <span style="color:#f87171;">-$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -1202,7 +1411,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Mortgage Debt Balance</span>
+                <span>
+                  <span id="lblNwMortgageDebt">Mortgage Debt Balance</span>
+                  <span class="info-icon" data-info-en="The remaining principal balance owed on your home or real estate mortgages." data-info-es="El saldo de capital que aún adeudas sobre tu hipoteca o préstamos de vivienda.">i</span>
+                </span>
                 <span style="color:#f87171;">-$</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -1213,7 +1425,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Monthly Investment Contrib.</span>
+                <span>
+                  <span id="lblNwMonthlyInvest">Monthly Investment Contrib.</span>
+                  <span class="info-icon" data-info-en="New fresh cash transferred into your investment portfolio and savings each month from your monthly income." data-info-es="Dinero nuevo transferido cada mes a tu portafolio de inversiones y cuentas de ahorro desde tus ingresos mensuales.">i</span>
+                </span>
                 <span id="nwPortfolioReturnBadge" style="color:#34d399;">7.2% APY</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -1224,7 +1439,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Monthly Debt Paydown</span>
+                <span>
+                  <span id="lblNwMonthlyDebtPay">Monthly Debt Paydown</span>
+                  <span class="info-icon" data-info-en="Total cash sent monthly toward amortizing consumer debt (minimums plus extra avalanche/snowball payments)." data-info-es="Dinero mensual total destinado al pago de deudas de consumo (pagos mínimos más amortizaciones extra avalancha/nieve).">i</span>
+                </span>
                 <span id="nwDebtAprBadge" style="color:#fbbf24;">11.3% APR</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -1235,7 +1453,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Monthly Cost of Living</span>
+                <span>
+                  <span id="lblNwMonthlyCol">Monthly Cost of Living</span>
+                  <span class="info-icon" data-info-en="All monthly living expenses (housing, groceries, utilities, transportation, health, lifestyle). Scales up annually with inflation." data-info-es="Gastos mensuales de manutención (vivienda, comida, servicios, transporte, ocio). Se ajusta anualmente con la inflación.">i</span>
+                </span>
                 <span style="color:#a855f7;">Living</span>
               </label>
               <div class="input-wrapper has-prefix">
@@ -1246,7 +1467,10 @@
 
             <div class="field-group">
               <label class="field-label">
-                <span>Expected Annual Inflation</span>
+                <span>
+                  <span id="lblNwInflation">Expected Annual Inflation</span>
+                  <span class="info-icon" data-info-en="Expected annual loss of purchasing power (Consumer Price Index). Used to compute Real Net Worth in constant dollars." data-info-es="Pérdida anual esperada de poder adquisitivo (IPC). Se usa para calcular el Patrimonio Real en dinero de valor constante.">i</span>
+                </span>
                 <span>CPI %</span>
               </label>
               <div class="input-wrapper has-suffix">
@@ -1259,7 +1483,10 @@
           <!-- Horizon Slider -->
           <div style="margin-top:0.25rem;">
             <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:600; margin-bottom:0.35rem;">
-              <span>Projection Horizon:</span>
+              <span>
+                <span id="lblNwHorizon">Projection Horizon:</span>
+                <span class="info-icon" data-info-en="Number of years to simulate and project your wealth trajectory into the future." data-info-es="Cantidad de años hacia el futuro para simular y proyectar la trayectoria de tu patrimonio.">i</span>
+              </span>
               <span id="nwHorizonLabel" style="color:#a5b4fc;">10 Years</span>
             </div>
             <input type="range" id="nwHorizonSlider" min="1" max="30" step="1" value="10">
@@ -1267,13 +1494,19 @@
 
           <!-- Smart Rollover Toggle -->
           <label class="toggle-row">
-            <span><strong>Auto-Rollover Freed Debt Payments:</strong> Redirect monthly debt payments into investments once consumer debt hits $0</span>
+            <span>
+              <strong id="lblNwRolloverTitle">Auto-Rollover Freed Debt Payments:</strong> <span id="lblNwRolloverDesc">Redirect monthly debt payments into investments once consumer debt hits $0</span>
+              <span class="info-icon" data-info-en="When debts reach zero, automatically channels the cash that was going to debt payments directly into investment compounding." data-info-es="Cuando las deudas llegan a cero, canaliza automáticamente el dinero que iba a cuotas de deuda directamente a inversión compuesta.">i</span>
+            </span>
             <input type="checkbox" id="nwRolloverToggle" checked>
           </label>
 
           <!-- Historical CSV Fast-Forward Toggle -->
           <label class="toggle-row">
-            <span><strong>Fast-Forward Older CSVs:</strong> If an imported CSV starts before the Snapshot Date (e.g. Mar 2021 → Oct 2026), simulate the months in between so balances reflect the Snapshot Date</span>
+            <span>
+              <strong id="lblNwFastForwardTitle">Fast-Forward Older CSVs:</strong> <span id="lblNwFastForwardDesc">If an imported CSV starts before the Snapshot Date (e.g. Mar 2021 → Oct 2026), simulate the months in between so balances reflect the Snapshot Date</span>
+              <span class="info-icon" data-info-en="Simulates compounding and debt paydown between an older exported file's start date and today's snapshot date." data-info-es="Simula el crecimiento compuesto y la amortización de deudas entre la fecha del archivo importado y la fecha de hoy.">i</span>
+            </span>
             <input type="checkbox" id="nwFastForwardToggle" checked>
           </label>
         </div>
@@ -1281,7 +1514,7 @@
         <!-- Right Panel: Net Worth Trajectory Chart & Milestones -->
         <div class="nw-panel">
           <div class="nw-panel-title">
-            <span>Net Worth Trajectory (Assets vs. Debt vs. Net Worth)</span>
+            <span id="lblNwChartTitle">Net Worth Trajectory (Assets vs. Debt vs. Net Worth)</span>
             <span id="nwDebtFreeBadge" style="font-size:0.75rem; color:#34d399; font-weight:600;">Consumer Debt Free: Yr 3</span>
           </div>
 
@@ -1292,29 +1525,39 @@
           <div class="chart-legend">
             <div class="legend-item">
               <span class="legend-color" style="background:#10b981;"></span>
-              <span style="color:#fff; font-weight:600;">Nominal Net Worth</span>
+              <span style="color:#fff; font-weight:600;" id="legNominalNw">Nominal Net Worth</span>
+              <span class="info-icon" data-info-en="Future face-value dollars of Total Assets minus Total Liabilities." data-info-es="Valor nominal futuro en dólares de Activos Totales menos Pasivos Totales.">i</span>
             </div>
             <div class="legend-item">
               <span class="legend-color" style="background:#fbbf24; border:1px dashed #fff;"></span>
-              <span>Real Net Worth (Today's $)</span>
+              <span id="legRealNw">Real Net Worth (Today's $)</span>
+              <span class="info-icon" data-info-en="Net worth purchasing power discounted for annual inflation rate." data-info-es="Poder de compra real descontando la tasa de inflación anual esperada.">i</span>
             </div>
             <div class="legend-item">
               <span class="legend-color" style="background:#38bdf8;"></span>
-              <span>Total Assets</span>
+              <span id="legTotalAssets">Total Assets</span>
+              <span class="info-icon" data-info-en="Compounded investment accounts plus appreciated real estate values." data-info-es="Cuentas de inversión compuestas más valor apreciado de inmuebles.">i</span>
             </div>
             <div class="legend-item">
               <span class="legend-color" style="background:#f43f5e;"></span>
-              <span>Total Liabilities</span>
+              <span id="legTotalLiab">Total Liabilities</span>
+              <span class="info-icon" data-info-en="Remaining consumer debt and amortizing mortgage balances." data-info-es="Deuda de consumo remanente y saldos hipotecarios en amortización.">i</span>
             </div>
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:auto;">
             <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
-              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Safe 4% Annual Income (Yr 10)</div>
+              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">
+                <span id="lblSwrTitle">Safe 4% Annual Income (Horizon)</span>
+                <span class="info-icon" data-info-en="Based on the Trinity Study 4% Safe Withdrawal Rate (SWR): monthly passive income that your invested portfolio can provide indefinitely." data-info-es="Basado en la regla del 4% (Estudio Trinity): ingreso pasivo mensual que tu portafolio invertido puede pagar indefinidamente.">i</span>
+              </div>
               <div style="font-size:1.05rem; font-weight:700; color:#38bdf8; margin-top:0.15rem;" id="nwSwrCoverage">$0/mo</div>
             </div>
             <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:0.7rem;">
-              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">Cost of Living Coverage</div>
+              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-subtle); font-weight:600;">
+                <span id="lblColCovTitle">Cost of Living Coverage</span>
+                <span class="info-icon" data-info-en="Percentage of your projected future living expenses that can be paid entirely from your safe 4% investment returns." data-info-es="Porcentaje de tus gastos futuros de vida que pueden cubrirse al 100% solo con el retiro seguro del 4% de tus inversiones.">i</span>
+              </div>
               <div style="font-size:1.05rem; font-weight:700; color:#34d399; margin-top:0.15rem;" id="nwColCoveragePct">0% of future spend</div>
             </div>
           </div>
@@ -1327,14 +1570,38 @@
         <table class="nw-table">
           <thead>
             <tr>
-              <th>Year / Date</th>
-              <th>Invested Assets</th>
-              <th>Real Estate Value</th>
-              <th>Total Assets</th>
-              <th>Total Liabilities</th>
-              <th>Nominal Net Worth</th>
-              <th>Real Net Worth (Today $)</th>
-              <th>Inflated Cost of Living</th>
+              <th>
+                <span id="thYearDate">Year / Date</span>
+                <span class="info-icon" data-info-en="Projection year index and calendar month/year." data-info-es="Año de proyección y mes/año del calendario.">i</span>
+              </th>
+              <th>
+                <span id="thInvestedAssets">Invested Assets</span>
+                <span class="info-icon" data-info-en="Balance of compounding stocks, index funds, and savings." data-info-es="Saldo de acciones compuestas, fondos indexados y ahorros.">i</span>
+              </th>
+              <th>
+                <span id="thRealEstateVal">Real Estate Value</span>
+                <span class="info-icon" data-info-en="Appreciated market value of real estate and properties." data-info-es="Valor de mercado apreciado de inmuebles y propiedades.">i</span>
+              </th>
+              <th>
+                <span id="thTotalAssets">Total Assets</span>
+                <span class="info-icon" data-info-en="Sum of Invested Assets + Real Estate." data-info-es="Suma de Activos Invertidos + Inmuebles.">i</span>
+              </th>
+              <th>
+                <span id="thTotalLiab">Total Liabilities</span>
+                <span class="info-icon" data-info-en="Sum of Consumer Debt + Remaining Mortgage." data-info-es="Suma de Deudas de Consumo + Hipoteca Remanente.">i</span>
+              </th>
+              <th>
+                <span id="thNominalNw">Nominal Net Worth</span>
+                <span class="info-icon" data-info-en="Total Assets minus Total Liabilities (future dollars)." data-info-es="Activos Totales menos Pasivos Totales (dólares futuros).">i</span>
+              </th>
+              <th>
+                <span id="thRealNw">Real Net Worth (Today $)</span>
+                <span class="info-icon" data-info-en="Net worth in constant today-dollar purchasing power." data-info-es="Patrimonio neto en poder adquisitivo de valor constante actual.">i</span>
+              </th>
+              <th>
+                <span id="thInflatedCol">Inflated Cost of Living</span>
+                <span class="info-icon" data-info-en="Monthly living expenses adjusted forward by annual inflation." data-info-es="Gasto mensual de manutención ajustado con la inflación anual.">i</span>
+              </th>
             </tr>
           </thead>
           <tbody id="nwScheduleTbody"></tbody>
@@ -1352,9 +1619,9 @@
             <rect x="14" y="14" width="7" height="7"></rect>
             <rect x="3" y="14" width="7" height="7"></rect>
           </svg>
-          Specialized Financial Engines
+          <span id="txtToolsHeader">Specialized Financial Engines</span>
         </h2>
-        <p>Launch any standalone module to build detailed schedules and export CSVs</p>
+        <p id="txtToolsSub">Launch any standalone module to build detailed schedules and export CSVs</p>
       </div>
 
       <div class="tools-grid">
@@ -1370,17 +1637,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Multi-Asset Investing &amp; Portfolio</div>
-                <span class="tool-tag">Wealth &amp; Compounding</span>
+                <div class="tool-title" id="t1Title">Multi-Asset Investing &amp; Portfolio</div>
+                <span class="tool-tag" id="t1Tag">Wealth &amp; Compounding</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t1Desc">
               Model compound returns across multiple investment vehicles (Index Funds, ETFs, HYSA, Crypto, Bonds). Features custom compounding frequencies, portfolio weighting, and full schedules.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t1Footer">Launch Engine</span>
+            <span class="action-badge" id="t1Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1396,17 +1663,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Cost of Living &amp; Cash Flow</div>
-                <span class="tool-tag">Budget &amp; Inflation</span>
+                <div class="tool-title" id="t2Title">Cost of Living &amp; Cash Flow</div>
+                <span class="tool-tag" id="t2Tag">Budget &amp; Inflation</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t2Desc">
               Factor in your monthly living expenses across Essential Needs vs. Discretionary Wants. Benchmarks your 50/30/20 ratios, location cost multipliers, and category-specific inflation.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t2Footer">Launch Engine</span>
+            <span class="action-badge" id="t2Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1421,17 +1688,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Debt Payoff Engine</div>
-                <span class="tool-tag">Liability Elimination</span>
+                <div class="tool-title" id="t3Title">Debt Payoff Engine</div>
+                <span class="tool-tag" id="t3Tag">Liability Elimination</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t3Desc">
               Accelerate debt freedom by comparing Debt Avalanche (highest APR first) against Debt Snowball (lowest balance first). Models extra monthly payments and automatic rollover cascades.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t3Footer">Launch Engine</span>
+            <span class="action-badge" id="t3Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1446,17 +1713,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Mortgage &amp; Amortization</div>
-                <span class="tool-tag">Real Estate Debt</span>
+                <div class="tool-title" id="t4Title">Mortgage &amp; Amortization</div>
+                <span class="tool-tag" id="t4Tag">Real Estate Debt</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t4Desc">
               Calculate total monthly housing commitments including principal, interest, property taxes, homeowners insurance, and HOA fees. Includes dual annual/monthly amortization schedules.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t4Footer">Launch Engine</span>
+            <span class="action-badge" id="t4Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1470,17 +1737,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">FIRE &amp; Retirement</div>
-                <span class="tool-tag">Financial Independence</span>
+                <div class="tool-title" id="t5Title">FIRE &amp; Retirement</div>
+                <span class="tool-tag" id="t5Tag">Financial Independence</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t5Desc">
               Determine your exact FIRE number and retirement age using the 4% Safe Withdrawal Rule. Simulates pre-retirement asset compounding and post-retirement inflation-adjusted drawdowns.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t5Footer">Launch Engine</span>
+            <span class="action-badge" id="t5Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1494,17 +1761,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Emergency Fund Runway</div>
-                <span class="tool-tag">Capital Preservation</span>
+                <div class="tool-title" id="t6Title">Emergency Fund Runway</div>
+                <span class="tool-tag" id="t6Tag">Capital Preservation</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t6Desc">
               Calculate how many months your liquid cash and HYSA will last under three distinct lifestyle burn tiers: Lean Survival, Moderate Comfort, and Full Current Spend, with bridge income buffers.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t6Footer">Launch Engine</span>
+            <span class="action-badge" id="t6Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1520,17 +1787,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Rent vs. Buy Comparator</div>
-                <span class="tool-tag">Opportunity Cost</span>
+                <div class="tool-title" id="t7Title">Rent vs. Buy Comparator</div>
+                <span class="tool-tag" id="t7Tag">Opportunity Cost</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t7Desc">
               Identify the exact breakeven crossover year between buying a property and renting while investing the down payment and cash flow differential into market index funds.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t7Footer">Launch Engine</span>
+            <span class="action-badge" id="t7Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1545,17 +1812,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title" style="color:#d8b4fe;">Monthly Progress Tracker</div>
-                <span class="tool-tag" style="background:rgba(168, 85, 247, 0.2); color:#c084fc;">Reality vs. Plan</span>
+                <div class="tool-title" id="t8Title" style="color:#d8b4fe;">Monthly Progress Tracker</div>
+                <span class="tool-tag" id="t8Tag" style="background:rgba(168, 85, 247, 0.2); color:#c084fc;">Reality vs. Plan</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t8Desc">
               Dedicated tracker module to log your real historical wealth month by month (1 entry per month). Upload your planned scenario from the Net Worth hub to compare actual progress against your projections.
             </p>
           </div>
           <div class="card-footer" style="border-top:1px solid rgba(168, 85, 247, 0.25);">
-            <span style="color:#c084fc; font-weight:700;">Launch Tracker</span>
-            <span class="action-badge" style="background:rgba(168, 85, 247, 0.25); color:#e9d5ff;">Open in new tab &rarr;</span>
+            <span id="t8Footer" style="color:#c084fc; font-weight:700;">Launch Tracker</span>
+            <span class="action-badge" id="t8Action" style="background:rgba(168, 85, 247, 0.25); color:#e9d5ff;">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1569,17 +1836,17 @@
                 </svg>
               </div>
               <div class="tool-heading">
-                <div class="tool-title">Stock Analysis &amp; Screener</div>
-                <span class="tool-tag">Equity Valuation</span>
+                <div class="tool-title" id="t9Title">Stock Analysis &amp; Screener</div>
+                <span class="tool-tag" id="t9Tag">Equity Valuation</span>
               </div>
             </div>
-            <p class="tool-desc">
+            <p class="tool-desc" id="t9Desc">
               Benchmark stocks against 6 institutional playbooks (Classic Value, GARP, Dividend Quality, Wide Moat, Cash Flow Kings, Magic Formula) with dynamic cell scoring and a 10-K/10-Q cheat sheet.
             </p>
           </div>
           <div class="card-footer">
-            <span>Launch Engine</span>
-            <span class="action-badge">Open in new tab &rarr;</span>
+            <span id="t9Footer">Launch Engine</span>
+            <span class="action-badge" id="t9Action">Open in new tab &rarr;</span>
           </div>
         </a>
 
@@ -1594,9 +1861,9 @@
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          The Financial Health Blueprint
+          <span id="txtInfoHead">The Financial Health Blueprint</span>
         </h2>
-        <p>How to sequence these engines to systematically build and protect wealth</p>
+        <p id="txtInfoSub">How to sequence these engines to systematically build and protect wealth</p>
       </div>
 
       <div class="infographic-grid">
@@ -1604,67 +1871,67 @@
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">1</span>
-            <span class="info-card-title">Audit Cost of Living &amp; Runway</span>
+            <span class="info-card-title" id="inf1Title">Audit Cost of Living &amp; Runway</span>
           </div>
-          <p class="info-card-body">
+          <p class="info-card-body" id="inf1Body">
             Map your monthly Essential Needs vs. Discretionary Wants to uncover your true investable surplus, and keep 3 to 6 months of survival expenses in liquid HYSA reserves.
           </p>
-          <span class="info-rule-pill">Cost of Living &amp; Runway Tools</span>
+          <span class="info-rule-pill" id="inf1Pill">Cost of Living &amp; Runway Tools</span>
         </div>
 
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">2</span>
-            <span class="info-card-title">Eradicate Toxic High-APR Debt</span>
+            <span class="info-card-title" id="inf2Title">Eradicate Toxic High-APR Debt</span>
           </div>
-          <p class="info-card-body">
+          <p class="info-card-body" id="inf2Body">
             Returns on high-interest debt (15–28%) mathematically outweigh average stock market gains. Roll over extra payments aggressively using the Avalanche strategy.
           </p>
-          <span class="info-rule-pill">Debt Payoff Engine</span>
+          <span class="info-rule-pill" id="inf2Pill">Debt Payoff Engine</span>
         </div>
 
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">3</span>
-            <span class="info-card-title">Stress-Test Housing Costs</span>
+            <span class="info-card-title" id="inf3Title">Stress-Test Housing Costs</span>
           </div>
-          <p class="info-card-body">
+          <p class="info-card-body" id="inf3Body">
             A home is shelter first and an investment second. Factor in property taxes, ongoing maintenance, and down-payment opportunity cost before committing capital.
           </p>
-          <span class="info-rule-pill">Rent vs. Buy &amp; Mortgage</span>
+          <span class="info-rule-pill" id="inf3Pill">Rent vs. Buy &amp; Mortgage</span>
         </div>
 
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">4</span>
-            <span class="info-card-title">Automate Multi-Asset Investing</span>
+            <span class="info-card-title" id="inf4Title">Automate Multi-Asset Investing</span>
           </div>
-          <p class="info-card-body">
+          <p class="info-card-body" id="inf4Body">
             Direct monthly surplus and freed-up debt payments across diversified vehicles (Index Funds, ETFs, HYSA, Retirement) so compounding works uninterrupted over decades.
           </p>
-          <span class="info-rule-pill">Multi-Asset Investing Tool</span>
+          <span class="info-rule-pill" id="inf4Pill">Multi-Asset Investing Tool</span>
         </div>
 
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">5</span>
-            <span class="info-card-title">Track Net Worth &amp; Independence</span>
+            <span class="info-card-title" id="inf5Title">Track Net Worth &amp; Independence</span>
           </div>
-          <p class="info-card-body">
+          <p class="info-card-body" id="inf5Body">
             Sync your assets, liabilities, and living costs in the Net Worth Command Center and target a portfolio equal to 25x–30x your annual spending (the 4% rule).
           </p>
-          <span class="info-rule-pill">Net Worth Hub &amp; FIRE Tool</span>
+          <span class="info-rule-pill" id="inf5Pill">Net Worth Hub &amp; FIRE Tool</span>
         </div>
 
         <div class="info-card">
           <div class="info-card-header">
             <span class="info-step-num">6</span>
-            <span class="info-card-title">Maintain Sovereign Offline Data</span>
+            <span class="info-card-title" id="inf6Title">Maintain Sovereign Offline Data</span>
           </div>
-          <p class="info-card-body">
+          <p class="info-card-body" id="inf6Body">
             Keep your financial records 100% private. Export periodic CSV snapshots from each engine and reload them anytime without relying on external cloud providers.
           </p>
-          <span class="info-rule-pill">Bi-Directional Local CSV</span>
+          <span class="info-rule-pill" id="inf6Pill">Bi-Directional Local CSV</span>
         </div>
 
       </div>
@@ -1681,9 +1948,9 @@
             <line x1="16" y1="17" x2="8" y2="17"></line>
             <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
-          Universal CSV Schedule Inspector
+          <span id="txtInspectorHead">Universal CSV Schedule Inspector</span>
         </h2>
-        <p>Drop or select any CSV exported from this suite to preview its raw schedules and tables offline</p>
+        <p id="txtInspectorSub">Drop or select any CSV exported from this suite to preview its raw schedules and tables offline</p>
       </div>
 
       <!-- Hidden Input & Interactive Dropzone -->
@@ -1697,16 +1964,16 @@
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
         </div>
-        <div class="dropzone-title">Click to browse or drop an exported CSV file here</div>
-        <div class="dropzone-subtitle">Compatible with Investing, Cost of Living, Net Worth, Debt, Mortgage, FIRE, Runway, and Rent vs. Buy exports</div>
+        <div class="dropzone-title" id="txtDropzoneTitle">Click to browse or drop an exported CSV file here</div>
+        <div class="dropzone-subtitle" id="txtDropzoneSub">Compatible with Investing, Cost of Living, Net Worth, Debt, Mortgage, FIRE, Runway, and Rent vs. Buy exports</div>
       </div>
 
       <!-- Output Table View -->
       <div class="viewer-container" id="viewerContainer">
         <div class="viewer-meta">
-          <div>File: <strong id="metaFileName" style="color:#fff;">--</strong> (<span id="metaRowCount">0</span> rows detected)</div>
+          <div><span id="txtMetaFileLabel">File:</span> <strong id="metaFileName" style="color:#fff;">--</strong> (<span id="metaRowCount">0</span> <span id="txtMetaRowsLabel">rows detected</span>)</div>
           <div style="display:flex; align-items:center; gap:0.75rem;">
-            <span>Detected Origin: <span class="viewer-tag" id="metaOrigin">General CSV</span></span>
+            <span><span id="txtMetaOriginLabel">Detected Origin:</span> <span class="viewer-tag" id="metaOrigin">General CSV</span></span>
             <button type="button" class="btn btn-purple" id="btnSyncInspectorToNw" style="padding:0.3rem 0.65rem; font-size:0.76rem;">Sync into Net Worth Hub &uarr;</button>
           </div>
         </div>
@@ -1725,6 +1992,621 @@
   <script>
     (function() {
       'use strict';
+
+      // --- Internationalization (i18n) & Theme Management ---
+      let currentTheme = localStorage.getItem('finance_suite_theme') || 'dark';
+      let currentLang = localStorage.getItem('finance_suite_lang') || 'en';
+
+      const I18N = {
+        en: {
+          suiteBadge: '100% Offline & Client-Side Suite',
+          btnRefresh: 'Refresh Hub',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          heroTitle: 'Personal Finance & Net Worth Suite',
+          heroDesc: 'A private, zero-dependency financial ecosystem that runs 100% locally in your browser. Model multi-asset investing, eliminate debt, factor in cost of living & inflation, and project your total net worth into the future.',
+          noticeTitle: 'Important: Planning Engine vs. Historical Progress Tracker',
+          noticeBody: 'The calculators here (Investing, Debt Payoff, Cost of Living, and the Net Worth Command Center) are <strong>forward-looking planning tools</strong> used to model growth, simulate compound interest, and project scenarios. To record your <em>actual real-world monthly progress</em> over time and compare reality against your plan, use the dedicated <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700; text-decoration:underline;">Monthly Net Worth Log &amp; Progress Tracker</a> module. Files created in the Tracker module should be stored and loaded exclusively within the Tracker module.',
+          
+          guideTitle: 'Quick-Start Guide: How to Use This Suite',
+          guideSub: 'Four simple steps to model, connect, and back up your complete financial life offline',
+          step1Badge: 'Step 1',
+          step1Title: 'Model Your Modules',
+          step1Desc: 'Open any calculator below—such as <strong>Multi-Asset Investing</strong>, <strong>Debt Payoff</strong>, or <strong>Cost of Living</strong>—and enter your current balances, interest rates, and monthly cash flows.',
+          step1Tip: 'Tip: All charts & tables update in real time',
+          step2Badge: 'Step 2',
+          step2Title: 'Export Module CSVs',
+          step2Desc: 'Click the green <strong>Export CSV</strong> button in the top-right corner of any calculator to save your exact configuration and year-by-year projection to your computer.',
+          step2Tip: 'Tip: Files open in Excel or reload back into any tool',
+          step3Badge: 'Step 3',
+          step3Title: 'Combine for Net Worth',
+          step3Desc: 'In the <strong>Net Worth Command Center</strong> right below, load your exported Investing, Debt, and Cost of Living CSVs (or type numbers directly) to see where you stand today and project your future wealth.',
+          step3Tip: 'Tip: Automatically links debt payoff rollovers',
+          step4Badge: 'Step 4',
+          step4Title: 'Track Reality vs. Plan',
+          step4Desc: 'Use the <strong>Net Worth Command Center</strong> to plan scenarios. Once per month, log your real balances in the <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700;">Monthly Tracker</a> to build a permanent timeline and see if you are ahead of or behind your plan!',
+          step4Tip: 'Tip: Tracker CSVs are dedicated to the Tracker module',
+
+          nwTitle: 'Net Worth Command Center & Future Projector',
+          nwSub: 'Import CSV files from your Investing, Debt, Cost of Living, or Mortgage modules—or adjust values directly—to view your current net worth and multi-year trajectory.',
+          btnLoadSync: 'Load / Sync CSV Files',
+          btnExportNw: 'Export Net Worth CSV',
+
+          slot1Tag: '📈 Investing CSV',
+          slot2Tag: '🛡️ Debt Payoff CSV',
+          slot3Tag: '🛒 Cost of Living CSV',
+          slot4Tag: '🏠 Real Estate / Snapshot',
+          slot1DefaultSub: 'Click to import Investing CSV',
+          slot2DefaultSub: 'Click to import Debt Payoff CSV',
+          slot3DefaultSub: 'Click to import Cost of Living CSV',
+          slot4DefaultSub: 'Click to import Mortgage or NW CSV',
+          slotDefaultPill: 'Manual / Default',
+
+          kpiCurrent: 'Current Net Worth (Today)',
+          kpiCurrentSub: 'Assets minus Liabilities',
+          kpiAssetsLiab: 'Total Assets vs. Liabilities',
+          kpiProjected: 'Projected Future Net Worth',
+          kpiProjectedSub: 'At Year 10 (Nominal)',
+          kpiReal: 'Inflation-Adjusted (Real NW)',
+          kpiRealSub: "In today's purchasing power",
+          nwPanelTitle: 'Where You Are & Future Drivers',
+          nwPanelSub: 'Editable or CSV-synced',
+          lblNwStartDate: 'Snapshot Date (Where You Are As Of)',
+          lblNwInvested: 'Liquid & Invested Assets',
+          lblNwProperty: 'Real Estate / Other Value',
+          lblNwConsumerDebt: 'Consumer & Loan Debt',
+          lblNwMortgageDebt: 'Mortgage Debt Balance',
+          lblNwMonthlyInvest: 'Monthly Investment Contrib.',
+          lblNwMonthlyDebtPay: 'Monthly Debt Paydown',
+          lblNwMonthlyCol: 'Monthly Cost of Living',
+          lblNwInflation: 'Expected Annual Inflation',
+          lblNwHorizon: 'Projection Horizon:',
+          lblNwRolloverTitle: 'Auto-Rollover Freed Debt Payments:',
+          lblNwRolloverDesc: 'Redirect monthly debt payments into investments once consumer debt hits $0',
+          lblNwFastForwardTitle: 'Fast-Forward Older CSVs:',
+          lblNwFastForwardDesc: 'If an imported CSV starts before the Snapshot Date (e.g. Mar 2021 → Oct 2026), simulate the months in between so balances reflect the Snapshot Date',
+          lblNwChartTitle: 'Net Worth Trajectory (Assets vs. Debt vs. Net Worth)',
+          legNominalNw: 'Nominal Net Worth',
+          legRealNw: "Real Net Worth (Today's $)",
+          legTotalAssets: 'Total Assets',
+          legTotalLiab: 'Total Liabilities',
+          lblSwrTitle: 'Safe 4% Annual Income (Horizon)',
+          lblColCovTitle: 'Cost of Living Coverage',
+          thYearDate: 'Year / Date',
+          thInvestedAssets: 'Invested Assets',
+          thRealEstateVal: 'Real Estate Value',
+          thTotalAssets: 'Total Assets',
+          thTotalLiab: 'Total Liabilities',
+          thNominalNw: 'Nominal Net Worth',
+          thRealNw: 'Real Net Worth (Today $)',
+          thInflatedCol: 'Inflated Cost of Living',
+
+          toolsHeader: 'Specialized Financial Engines',
+          toolsSub: 'Launch any standalone module to build detailed schedules and export CSVs',
+          launchEngine: 'Launch Engine',
+          launchTracker: 'Launch Tracker',
+          openNewTab: 'Open in new tab →',
+
+          t1Title: 'Multi-Asset Investing & Portfolio',
+          t1Tag: 'Wealth & Compounding',
+          t1Desc: 'Model compound returns across multiple investment vehicles (Index Funds, ETFs, HYSA, Crypto, Bonds). Features custom compounding frequencies, portfolio weighting, and full schedules.',
+
+          t2Title: 'Cost of Living & Cash Flow',
+          t2Tag: 'Budget & Inflation',
+          t2Desc: 'Factor in your monthly living expenses across Essential Needs vs. Discretionary Wants. Benchmarks your 50/30/20 ratios, location cost multipliers, and category-specific inflation.',
+
+          t3Title: 'Debt Payoff Engine',
+          t3Tag: 'Liability Elimination',
+          t3Desc: 'Accelerate debt freedom by comparing Debt Avalanche (highest APR first) against Debt Snowball (lowest balance first). Models extra monthly payments and automatic rollover cascades.',
+
+          t4Title: 'Mortgage & Amortization',
+          t4Tag: 'Real Estate Debt',
+          t4Desc: 'Calculate total monthly housing commitments including principal, interest, property taxes, homeowners insurance, and HOA fees. Includes dual annual/monthly amortization schedules.',
+
+          t5Title: 'FIRE & Retirement',
+          t5Tag: 'Financial Independence',
+          t5Desc: 'Determine your exact FIRE number and retirement age using the 4% Safe Withdrawal Rule. Simulates pre-retirement asset compounding and post-retirement inflation-adjusted drawdowns.',
+
+          t6Title: 'Emergency Fund Runway',
+          t6Tag: 'Capital Preservation',
+          t6Desc: 'Calculate how many months your liquid cash and HYSA will last under three distinct lifestyle burn tiers: Lean Survival, Moderate Comfort, and Full Current Spend, with bridge income buffers.',
+
+          t7Title: 'Rent vs. Buy Comparator',
+          t7Tag: 'Opportunity Cost',
+          t7Desc: 'Identify the exact breakeven crossover year between buying a property and renting while investing the down payment and cash flow differential into market index funds.',
+
+          t8Title: 'Monthly Progress Tracker',
+          t8Tag: 'Reality vs. Plan',
+          t8Desc: 'Dedicated tracker module to log your real historical wealth month by month (1 entry per month). Upload your planned scenario from the Net Worth hub to compare actual progress against your projections.',
+
+          t9Title: 'Stock Analysis & Screener',
+          t9Tag: 'Equity Valuation',
+          t9Desc: 'Benchmark stocks against 6 institutional playbooks (Classic Value, GARP, Dividend Quality, Wide Moat, Cash Flow Kings, Magic Formula) with dynamic cell scoring and a 10-K/10-Q cheat sheet.',
+
+          infoHead: 'The Financial Health Blueprint',
+          infoSub: 'How to sequence these engines to systematically build and protect wealth',
+          inf1Title: 'Audit Cost of Living & Runway',
+          inf1Body: 'Map your monthly Essential Needs vs. Discretionary Wants to uncover your true investable surplus, and keep 3 to 6 months of survival expenses in liquid HYSA reserves.',
+          inf1Pill: 'Cost of Living & Runway Tools',
+
+          inf2Title: 'Eradicate Toxic High-APR Debt',
+          inf2Body: 'Returns on high-interest debt (15–28%) mathematically outweigh average stock market gains. Roll over extra payments aggressively using the Avalanche strategy.',
+          inf2Pill: 'Debt Payoff Engine',
+
+          inf3Title: 'Stress-Test Housing Costs',
+          inf3Body: 'A home is shelter first and an investment second. Factor in property taxes, ongoing maintenance, and down-payment opportunity cost before committing capital.',
+          inf3Pill: 'Rent vs. Buy & Mortgage',
+
+          inf4Title: 'Automate Multi-Asset Investing',
+          inf4Body: 'Direct monthly surplus and freed-up debt payments across diversified vehicles (Index Funds, ETFs, HYSA, Retirement) so compounding works uninterrupted over decades.',
+          inf4Pill: 'Multi-Asset Investing Tool',
+
+          inf5Title: 'Track Net Worth & Independence',
+          inf5Body: 'Sync your assets, liabilities, and living costs in the Net Worth Command Center and target a portfolio equal to 25x–30x your annual spending (the 4% rule).',
+          inf5Pill: 'Net Worth Hub & FIRE Tool',
+
+          inf6Title: 'Maintain Sovereign Offline Data',
+          inf6Body: 'Keep your financial records 100% private. Export periodic CSV snapshots from each engine and reload them anytime without relying on external cloud providers.',
+          inf6Pill: 'Bi-Directional Local CSV',
+
+          inspectorHead: 'Universal CSV Schedule Inspector',
+          inspectorSub: 'Drop or select any CSV exported from this suite to preview its raw schedules and tables offline',
+          dropzoneTitle: 'Click to browse or drop an exported CSV file here',
+          dropzoneSub: 'Compatible with Investing, Cost of Living, Net Worth, Debt, Mortgage, FIRE, Runway, and Rent vs. Buy exports',
+          metaFileLabel: 'File:',
+          metaRowsLabel: 'rows detected',
+          metaOriginLabel: 'Detected Origin:',
+          btnSyncInspector: 'Sync into Net Worth Hub ↑'
+        },
+        es: {
+          suiteBadge: 'Suite 100% Local y Fuera de Línea',
+          btnRefresh: 'Recargar Panel',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          heroTitle: 'Suite de Finanzas Personales y Patrimonio Neto',
+          heroDesc: 'Un ecosistema financiero privado y sin dependencias que funciona 100% en tu navegador. Modela inversiones multiactivo, elimina deudas, proyecta costo de vida e inflación, y visualiza tu patrimonio futuro.',
+          noticeTitle: 'Importante: Motor de Planificación vs. Registro Histórico de Progreso',
+          noticeBody: 'Las calculadoras aquí (Inversión, Pago de Deudas, Costo de Vida y el Centro de Comando de Patrimonio) son <strong>herramientas de planificación a futuro</strong> para modelar crecimiento, simular interés compuesto y proyectar escenarios. Para registrar tu <em>progreso real mensual</em> a lo largo del tiempo y contrastar la realidad contra tu plan, utiliza el módulo dedicado <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700; text-decoration:underline;">Registro Mensual de Patrimonio y Seguimiento de Progreso</a>. Los archivos creados en el Rastreador deben almacenarse y cargarse exclusivamente en ese módulo.',
+
+          guideTitle: 'Guía de Inicio Rápido: Cómo Usar Esta Suite',
+          guideSub: 'Cuatro sencillos pasos para modelar, conectar y respaldar todas tus finanzas fuera de línea',
+          step1Badge: 'Paso 1',
+          step1Title: 'Modela tus Módulos',
+          step1Desc: 'Abre cualquier calculadora abajo—como <strong>Inversión Multiactivo</strong>, <strong>Pago de Deudas</strong> o <strong>Costo de Vida</strong>—e ingresa tus saldos actuales, tasas de interés y flujos de efectivo mensuales.',
+          step1Tip: 'Consejo: Todos los gráficos y tablas se actualizan en tiempo real',
+          step2Badge: 'Paso 2',
+          step2Title: 'Exporta los CSVs de tus Módulos',
+          step2Desc: 'Haz clic en el botón verde <strong>Exportar CSV</strong> en la esquina superior derecha de cualquier calculadora para guardar tu configuración y proyección año por año en tu equipo.',
+          step2Tip: 'Consejo: Los archivos abren en Excel o se pueden recargar en cualquier herramienta',
+          step3Badge: 'Paso 3',
+          step3Title: 'Consolida en Patrimonio Neto',
+          step3Desc: 'En el <strong>Centro de Comando de Patrimonio Neto</strong> aquí abajo, carga los CSVs exportados de Inversión, Deuda y Costo de Vida (o ingresa cifras directamente) para conocer tu situación actual y proyectar tu riqueza futura.',
+          step3Tip: 'Consejo: Vincula automáticamente la reinversión de deudas saldadas',
+          step4Badge: 'Paso 4',
+          step4Title: 'Registra Realidad vs. Plan',
+          step4Desc: 'Usa el <strong>Centro de Comando de Patrimonio Neto</strong> para proyectar escenarios. Una vez al mes, registra tus saldos reales en el <a href="./networth-tracker.html" style="color:#c084fc; font-weight:700;">Rastreador Mensual</a> para crear una línea de tiempo continua y comprobar si vas por delante o por detrás de tu plan.',
+          step4Tip: 'Consejo: Los CSVs del Rastreador son exclusivos del módulo Rastreador',
+
+          nwTitle: 'Centro de Comando de Patrimonio Neto y Proyector Futuro',
+          nwSub: 'Importa archivos CSV de tus módulos de Inversión, Deuda, Costo de Vida o Hipoteca—o ajusta los valores directamente—para ver tu patrimonio actual y su trayectoria a varios años.',
+          btnLoadSync: 'Cargar / Sincronizar CSVs',
+          btnExportNw: 'Exportar Patrimonio CSV',
+
+          slot1Tag: '📈 CSV de Inversión',
+          slot2Tag: '🛡️ CSV de Pago de Deudas',
+          slot3Tag: '🛒 CSV de Costo de Vida',
+          slot4Tag: '🏠 Inmuebles / Referencia',
+          slot1DefaultSub: 'Clic para importar CSV de Inversión',
+          slot2DefaultSub: 'Clic para importar CSV de Pago de Deudas',
+          slot3DefaultSub: 'Clic para importar CSV de Costo de Vida',
+          slot4DefaultSub: 'Clic para importar CSV de Hipoteca o Patrimonio',
+          slotDefaultPill: 'Manual / Por Defecto',
+
+          kpiCurrent: 'Patrimonio Neto Actual (Hoy)',
+          kpiCurrentSub: 'Activos menos Pasivos',
+          kpiAssetsLiab: 'Activos Totales vs. Pasivos',
+          kpiProjected: 'Patrimonio Neto Proyectado',
+          kpiProjectedSub: 'En Año 10 (Nominal)',
+          kpiReal: 'Ajustado a Inflación (Real)',
+          kpiRealSub: 'En poder de compra de hoy',
+          nwPanelTitle: 'Posición Actual y Parámetros Futuros',
+          nwPanelSub: 'Editable o sincronizado por CSV',
+          lblNwStartDate: 'Fecha de Referencia (Punto de Partida)',
+          lblNwInvested: 'Activos Líquidos e Invertidos',
+          lblNwProperty: 'Valor de Inmuebles y Otros',
+          lblNwConsumerDebt: 'Deudas de Consumo y Préstamos',
+          lblNwMortgageDebt: 'Saldo de Deuda Hipotecaria',
+          lblNwMonthlyInvest: 'Aporte Mensual a Inversión',
+          lblNwMonthlyDebtPay: 'Pago Mensual a Deudas',
+          lblNwMonthlyCol: 'Costo de Vida Mensual',
+          lblNwInflation: 'Inflación Anual Esperada',
+          lblNwHorizon: 'Horizonte de Proyección:',
+          lblNwRolloverTitle: 'Reinvertir Pagos de Deuda Liberados:',
+          lblNwRolloverDesc: 'Redirige automáticamente el dinero de deudas hacia inversiones cuando la deuda de consumo llegue a $0',
+          lblNwFastForwardTitle: 'Avanzar CSVs Históricos:',
+          lblNwFastForwardDesc: 'Si un CSV importado inicia antes de la Fecha de Referencia (ej. Mar 2021 → Oct 2026), simula los meses intermedios para reflejar la fecha actual',
+          lblNwChartTitle: 'Trayectoria del Patrimonio (Activos vs. Deuda vs. Patrimonio)',
+          legNominalNw: 'Patrimonio Nominal',
+          legRealNw: "Patrimonio Real (Dinero de Hoy)",
+          legTotalAssets: 'Activos Totales',
+          legTotalLiab: 'Pasivos Totales',
+          lblSwrTitle: 'Retiro Seguro 4% Anual (Horizonte)',
+          lblColCovTitle: 'Cobertura del Costo de Vida',
+          thYearDate: 'Año / Fecha',
+          thInvestedAssets: 'Activos Invertidos',
+          thRealEstateVal: 'Valor Inmobiliario',
+          thTotalAssets: 'Activos Totales',
+          thTotalLiab: 'Pasivos Totales',
+          thNominalNw: 'Patrimonio Nominal',
+          thRealNw: 'Patrimonio Real ($ Hoy)',
+          thInflatedCol: 'Costo de Vida Inflado',
+
+          toolsHeader: 'Motores Financieros Especializados',
+          toolsSub: 'Inicia cualquier módulo independiente para generar cronogramas detallados y exportar CSVs',
+          launchEngine: 'Iniciar Motor',
+          launchTracker: 'Iniciar Rastreador',
+          openNewTab: 'Abrir en nueva pestaña →',
+
+          t1Title: 'Inversión Multiactivo y Portafolio',
+          t1Tag: 'Riqueza y Compuesto',
+          t1Desc: 'Modela rendimientos compuestos a través de múltiples vehículos de inversión (Fondos Indexados, ETFs, Cuentas de Alto Rendimiento, Cripto, Bonos). Con frecuencias personalizadas, ponderación y cronogramas completos.',
+
+          t2Title: 'Costo de Vida y Flujo de Caja',
+          t2Tag: 'Presupuesto e Inflación',
+          t2Desc: 'Estructura tus gastos mensuales entre Necesidades Esenciales y Deseos Discrecionales. Evalúa tu regla 50/30/20, multiplicadores por ubicación e inflación por categoría.',
+
+          t3Title: 'Motor de Pago de Deudas',
+          t3Tag: 'Eliminación de Pasivos',
+          t3Desc: 'Acelera tu libertad financiera comparando Avalancha de Deuda (mayor interés primero) contra Bola de Nieve (menor saldo primero). Modela pagos adicionales y cascadas de amortización.',
+
+          t4Title: 'Hipoteca y Amortización',
+          t4Tag: 'Deuda Inmobiliaria',
+          t4Desc: 'Calcula la cuota mensual total de vivienda incluyendo capital, intereses, impuestos, seguros y gastos de comunidad. Incluye tablas de amortización anual y mensual.',
+
+          t5Title: 'FIRE y Jubilación',
+          t5Tag: 'Independencia Financiera',
+          t5Desc: 'Determina tu número FIRE y edad de retiro con la Regla del Retiro Seguro del 4%. Simula acumulación previa y retiros ajustados por inflación durante el retiro.',
+
+          t6Title: 'Pista de Fondo de Emergencia',
+          t6Tag: 'Preservación de Capital',
+          t6Desc: 'Calcula cuántos meses durará tu efectivo y ahorros bajo tres niveles de gasto: Supervivencia Básica, Confort Moderado y Gasto Actual Completo, con ingresos puente.',
+
+          t7Title: 'Comparador Alquilar vs. Comprar',
+          t7Tag: 'Costo de Oportunidad',
+          t7Desc: 'Identifica el año exacto de equilibrio entre comprar una vivienda o alquilar mientras inviertes el pago inicial y la diferencia de flujo en fondos indexados.',
+
+          t8Title: 'Rastreador de Progreso Mensual',
+          t8Tag: 'Realidad vs. Plan',
+          t8Desc: 'Módulo dedicado para registrar tu patrimonio histórico mes a mes (1 entrada por mes). Carga tu escenario planificado para comparar tu avance real contra las proyecciones.',
+
+          t9Title: 'Análisis y Screener de Acciones',
+          t9Tag: 'Valoración de Acciones',
+          t9Desc: 'Evalúa acciones según 6 estrategias institucionales (Valor Clásico, GARP, Calidad de Dividendos, Foso Amplio, Reyes de Flujo de Caja, Fórmula Mágica) con puntuación visual y guía 10-K.',
+
+          infoHead: 'Plano de Salud Financiera',
+          infoSub: 'Cómo secuenciar estos motores para construir y proteger tu patrimonio de manera sistemática',
+          inf1Title: 'Audita tu Costo de Vida y Pista',
+          inf1Body: 'Clasifica tus Gastos Esenciales vs. Deseos Discrecionales para descubrir tu verdadero excedente de inversión y mantén de 3 a 6 meses de supervivencia en reservas líquidas.',
+          inf1Pill: 'Herramientas de Costo de Vida y Pista',
+
+          inf2Title: 'Erradica Deudas Tóxicas de Alto Interés',
+          inf2Body: 'El rendimiento de eliminar deudas de alto interés (15–28%) supera matemáticamente las ganancias del mercado de valores. Reinvierte pagos agresivamente con la estrategia Avalancha.',
+          inf2Pill: 'Motor de Pago de Deudas',
+
+          inf3Title: 'Evalúa Costos de Vivienda',
+          inf3Body: 'Una vivienda es primero un hogar y segundo una inversión. Considera impuestos sobre la propiedad, mantenimiento y el costo de oportunidad del pago inicial.',
+          inf3Pill: 'Alquilar vs. Comprar e Hipoteca',
+
+          inf4Title: 'Automatiza la Inversión Multiactivo',
+          inf4Body: 'Canaliza tu excedente mensual y pagos liberados hacia vehículos diversificados (Fondos Indexados, ETFs, Ahorro, Retiro) para que el interés compuesto crezca por décadas.',
+          inf4Pill: 'Herramienta de Inversión Multiactivo',
+
+          inf5Title: 'Monitorea tu Patrimonio e Independencia',
+          inf5Body: 'Sincroniza activos, pasivos y costos de vida en el Centro de Comando y busca un portafolio de 25x a 30x tu gasto anual (la regla del 4%).',
+          inf5Pill: 'Centro de Patrimonio y Módulo FIRE',
+
+          inf6Title: 'Mantén tus Datos Soberanos Fuera de Línea',
+          inf6Body: 'Mantén tus registros 100% privados. Exporta instantáneas CSV periódicas de cada motor y recárgalas cuando quieras sin depender de servidores en la nube.',
+          inf6Pill: 'Bi-Directional Local CSV',
+
+          inspectorHead: 'Inspector Universal de Cronogramas CSV',
+          inspectorSub: 'Arrastra o selecciona cualquier CSV exportado de esta suite para previsualizar sus tablas fuera de línea',
+          dropzoneTitle: 'Haz clic para explorar o arrastra aquí un archivo CSV exportado',
+          dropzoneSub: 'Compatible con archivos exportados de Inversión, Costo de Vida, Patrimonio, Deuda, Hipoteca, FIRE, Pista y Alquilar vs. Comprar',
+          metaFileLabel: 'Archivo:',
+          metaRowsLabel: 'filas detectadas',
+          metaOriginLabel: 'Origen Detectado:',
+          btnSyncInspector: 'Sincronizar con el Centro de Patrimonio ↑'
+        }
+      };
+
+      function t() {
+        return I18N[currentLang] || I18N.en;
+      }
+
+      function applyTheme() {
+        if (currentTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        const btn = document.getElementById('btnThemeToggle');
+        if (btn) {
+          btn.textContent = currentTheme === 'light' ? t().themeDark : t().themeLight;
+        }
+      }
+
+      function applyStaticTranslations() {
+        document.documentElement.setAttribute('lang', currentLang);
+        document.documentElement.setAttribute('data-lang', currentLang);
+        const dict = t();
+
+        const safeSet = (id, text) => {
+          const el = document.getElementById(id);
+          if (el && text !== undefined) el.textContent = text;
+        };
+
+        const safeSetHtml = (id, html) => {
+          const el = document.getElementById(id);
+          if (el && html !== undefined) el.innerHTML = html;
+        };
+
+        // Top bar & buttons
+        safeSet('txtSuiteBadge', dict.suiteBadge);
+        safeSet('txtBtnRefresh', dict.btnRefresh);
+
+        // Hero & Notice
+        safeSet('txtHeroTitle', dict.heroTitle);
+        safeSet('txtHeroDesc', dict.heroDesc);
+        safeSet('txtNoticeTitle', dict.noticeTitle);
+        safeSetHtml('txtNoticeBody', dict.noticeBody);
+
+        // Guide
+        safeSet('txtGuideTitle', dict.guideTitle);
+        safeSet('txtGuideSub', dict.guideSub);
+        safeSet('txtStep1Badge', dict.step1Badge);
+        safeSet('txtStep1Title', dict.step1Title);
+        safeSetHtml('txtStep1Desc', dict.step1Desc);
+        safeSet('txtStep1Tip', dict.step1Tip);
+        safeSet('txtStep2Badge', dict.step2Badge);
+        safeSet('txtStep2Title', dict.step2Title);
+        safeSetHtml('txtStep2Desc', dict.step2Desc);
+        safeSet('txtStep2Tip', dict.step2Tip);
+        safeSet('txtStep3Badge', dict.step3Badge);
+        safeSet('txtStep3Title', dict.step3Title);
+        safeSetHtml('txtStep3Desc', dict.step3Desc);
+        safeSet('txtStep3Tip', dict.step3Tip);
+        safeSet('txtStep4Badge', dict.step4Badge);
+        safeSet('txtStep4Title', dict.step4Title);
+        safeSetHtml('txtStep4Desc', dict.step4Desc);
+        safeSet('txtStep4Tip', dict.step4Tip);
+
+        // Net worth hub
+        safeSet('txtNwTitle', dict.nwTitle);
+        safeSet('txtNwSub', dict.nwSub);
+        safeSet('txtBtnLoadSync', dict.btnLoadSync);
+        safeSet('txtBtnExportNw', dict.btnExportNw);
+
+        safeSet('txtSlot1Tag', dict.slot1Tag);
+        safeSet('txtSlot2Tag', dict.slot2Tag);
+        safeSet('txtSlot3Tag', dict.slot3Tag);
+        safeSet('txtSlot4Tag', dict.slot4Tag);
+
+        if (!slotInvesting.classList.contains('loaded')) {
+          pillInvesting.textContent = dict.slotDefaultPill;
+          slotInvestingSub.textContent = dict.slot1DefaultSub;
+        }
+        if (!slotDebt.classList.contains('loaded')) {
+          pillDebt.textContent = dict.slotDefaultPill;
+          slotDebtSub.textContent = dict.slot2DefaultSub;
+        }
+        if (!slotCol.classList.contains('loaded')) {
+          pillCol.textContent = dict.slotDefaultPill;
+          slotColSub.textContent = dict.slot3DefaultSub;
+        }
+        if (!slotRealEstate.classList.contains('loaded')) {
+          pillRealEstate.textContent = dict.slotDefaultPill;
+          slotRealEstateSub.textContent = dict.slot4DefaultSub;
+        }
+
+        // Net Worth KPIs
+        safeSet('lblKpiCurrent', dict.kpiCurrent);
+        safeSet('nwKpiCurrentSub', dict.kpiCurrentSub);
+        safeSet('lblKpiAssetsLiab', dict.kpiAssetsLiab);
+        safeSet('lblKpiProjected', dict.kpiProjected);
+        safeSet('nwKpiProjectedSub', dict.kpiProjectedSub);
+        safeSet('lblKpiReal', dict.kpiReal);
+        safeSet('nwKpiRealSub', dict.kpiRealSub);
+        safeSet('lblNwPanelTitle', dict.nwPanelTitle);
+        safeSet('lblNwPanelSub', dict.nwPanelSub);
+        safeSet('lblNwStartDate', dict.lblNwStartDate);
+        safeSet('lblNwInvested', dict.lblNwInvested);
+        safeSet('lblNwProperty', dict.lblNwProperty);
+        safeSet('lblNwConsumerDebt', dict.lblNwConsumerDebt);
+        safeSet('lblNwMortgageDebt', dict.lblNwMortgageDebt);
+        safeSet('lblNwMonthlyInvest', dict.lblNwMonthlyInvest);
+        safeSet('lblNwMonthlyDebtPay', dict.lblNwMonthlyDebtPay);
+        safeSet('lblNwMonthlyCol', dict.lblNwMonthlyCol);
+        safeSet('lblNwInflation', dict.lblNwInflation);
+        safeSet('lblNwHorizon', dict.lblNwHorizon);
+        safeSet('lblNwRolloverTitle', dict.lblNwRolloverTitle);
+        safeSet('lblNwRolloverDesc', dict.lblNwRolloverDesc);
+        safeSet('lblNwFastForwardTitle', dict.lblNwFastForwardTitle);
+        safeSet('lblNwFastForwardDesc', dict.lblNwFastForwardDesc);
+        safeSet('lblNwChartTitle', dict.lblNwChartTitle);
+        safeSet('legNominalNw', dict.legNominalNw);
+        safeSet('legRealNw', dict.legRealNw);
+        safeSet('legTotalAssets', dict.legTotalAssets);
+        safeSet('legTotalLiab', dict.legTotalLiab);
+        safeSet('lblSwrTitle', dict.lblSwrTitle);
+        safeSet('lblColCovTitle', dict.lblColCovTitle);
+        safeSet('thYearDate', dict.thYearDate);
+        safeSet('thInvestedAssets', dict.thInvestedAssets);
+        safeSet('thRealEstateVal', dict.thRealEstateVal);
+        safeSet('thTotalAssets', dict.thTotalAssets);
+        safeSet('thTotalLiab', dict.thTotalLiab);
+        safeSet('thNominalNw', dict.thNominalNw);
+        safeSet('thRealNw', dict.thRealNw);
+        safeSet('thInflatedCol', dict.thInflatedCol);
+
+        // Specialized engines
+        safeSet('txtToolsHeader', dict.toolsHeader);
+        safeSet('txtToolsSub', dict.toolsSub);
+
+        safeSet('t1Title', dict.t1Title);
+        safeSet('t1Tag', dict.t1Tag);
+        safeSet('t1Desc', dict.t1Desc);
+        safeSet('t1Footer', dict.launchEngine);
+        safeSet('t1Action', dict.openNewTab);
+
+        safeSet('t2Title', dict.t2Title);
+        safeSet('t2Tag', dict.t2Tag);
+        safeSet('t2Desc', dict.t2Desc);
+        safeSet('t2Footer', dict.launchEngine);
+        safeSet('t2Action', dict.openNewTab);
+
+        safeSet('t3Title', dict.t3Title);
+        safeSet('t3Tag', dict.t3Tag);
+        safeSet('t3Desc', dict.t3Desc);
+        safeSet('t3Footer', dict.launchEngine);
+        safeSet('t3Action', dict.openNewTab);
+
+        safeSet('t4Title', dict.t4Title);
+        safeSet('t4Tag', dict.t4Tag);
+        safeSet('t4Desc', dict.t4Desc);
+        safeSet('t4Footer', dict.launchEngine);
+        safeSet('t4Action', dict.openNewTab);
+
+        safeSet('t5Title', dict.t5Title);
+        safeSet('t5Tag', dict.t5Tag);
+        safeSet('t5Desc', dict.t5Desc);
+        safeSet('t5Footer', dict.launchEngine);
+        safeSet('t5Action', dict.openNewTab);
+
+        safeSet('t6Title', dict.t6Title);
+        safeSet('t6Tag', dict.t6Tag);
+        safeSet('t6Desc', dict.t6Desc);
+        safeSet('t6Footer', dict.launchEngine);
+        safeSet('t6Action', dict.openNewTab);
+
+        safeSet('t7Title', dict.t7Title);
+        safeSet('t7Tag', dict.t7Tag);
+        safeSet('t7Desc', dict.t7Desc);
+        safeSet('t7Footer', dict.launchEngine);
+        safeSet('t7Action', dict.openNewTab);
+
+        safeSet('t8Title', dict.t8Title);
+        safeSet('t8Tag', dict.t8Tag);
+        safeSet('t8Desc', dict.t8Desc);
+        safeSet('t8Footer', dict.launchTracker);
+        safeSet('t8Action', dict.openNewTab);
+
+        safeSet('t9Title', dict.t9Title);
+        safeSet('t9Tag', dict.t9Tag);
+        safeSet('t9Desc', dict.t9Desc);
+        safeSet('t9Footer', dict.launchEngine);
+        safeSet('t9Action', dict.openNewTab);
+
+        // Infographic
+        safeSet('txtInfoHead', dict.infoHead);
+        safeSet('txtInfoSub', dict.infoSub);
+        safeSet('inf1Title', dict.inf1Title);
+        safeSet('inf1Body', dict.inf1Body);
+        safeSet('inf1Pill', dict.inf1Pill);
+        safeSet('inf2Title', dict.inf2Title);
+        safeSet('inf2Body', dict.inf2Body);
+        safeSet('inf2Pill', dict.inf2Pill);
+        safeSet('inf3Title', dict.inf3Title);
+        safeSet('inf3Body', dict.inf3Body);
+        safeSet('inf3Pill', dict.inf3Pill);
+        safeSet('inf4Title', dict.inf4Title);
+        safeSet('inf4Body', dict.inf4Body);
+        safeSet('inf4Pill', dict.inf4Pill);
+        safeSet('inf5Title', dict.inf5Title);
+        safeSet('inf5Body', dict.inf5Body);
+        safeSet('inf5Pill', dict.inf5Pill);
+        safeSet('inf6Title', dict.inf6Title);
+        safeSet('inf6Body', dict.inf6Body);
+        safeSet('inf6Pill', dict.inf6Pill);
+
+        // Inspector
+        safeSet('txtInspectorHead', dict.inspectorHead);
+        safeSet('txtInspectorSub', dict.inspectorSub);
+        safeSet('txtDropzoneTitle', dict.dropzoneTitle);
+        safeSet('txtDropzoneSub', dict.dropzoneSub);
+        safeSet('txtMetaFileLabel', dict.metaFileLabel);
+        safeSet('txtMetaRowsLabel', dict.metaRowsLabel);
+        safeSet('txtMetaOriginLabel', dict.metaOriginLabel);
+        safeSet('btnSyncInspectorToNw', dict.btnSyncInspector);
+
+        // Start month select options
+        const monthNamesEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const monthNamesEs = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        const monthNames = currentLang === 'es' ? monthNamesEs : monthNamesEn;
+        const sel = document.getElementById('nwStartMonthSelect');
+        if (sel) {
+          const curVal = sel.value;
+          for (let i = 0; i < 12; i++) {
+            if (sel.options[i]) sel.options[i].textContent = monthNames[i];
+          }
+          sel.value = curVal;
+        }
+
+        const btnTheme = document.getElementById('btnThemeToggle');
+        if (btnTheme) btnTheme.textContent = currentTheme === 'light' ? dict.themeDark : dict.themeLight;
+      }
+
+      // --- Tooltip Floating Bubble Initializer ---
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = currentLang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en')) : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) left = window.innerWidth - tipRect.width - 10;
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
 
       // --- Refresh Button ---
       const btnPageRefresh = document.getElementById('btnPageRefresh');
@@ -1840,14 +2722,17 @@
 
       // --- Calendar & Historical Alignment Helpers ---
       const NW_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const NW_MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
       function nwDateLabel(monthOffset) {
         const total = nwState.startYear * 12 + nwState.startMonth + monthOffset;
-        return `${NW_MONTHS[((total % 12) + 12) % 12]} ${Math.floor(total / 12)}`;
+        const mList = currentLang === 'es' ? NW_MONTHS_ES : NW_MONTHS;
+        return `${mList[((total % 12) + 12) % 12]} ${Math.floor(total / 12)}`;
       }
 
       function fmtMonthYear(m, y) {
-        return `${NW_MONTHS[clamp(m, 0, 11)]} ${y}`;
+        const mList = currentLang === 'es' ? NW_MONTHS_ES : NW_MONTHS;
+        return `${mList[clamp(m, 0, 11)]} ${y}`;
       }
 
       // Reads "Start Month Index" (1-12) & "Start Year" rows from any suite CSV, with Export Date fallback
@@ -1944,12 +2829,13 @@
 
       // Human-readable badge text describing how a CSV was aligned to the hub date
       function alignmentNote(csvStart, months, didForward) {
-        if (!csvStart) return 'no start date in CSV';
+        const isEs = currentLang === 'es';
+        if (!csvStart) return isEs ? 'sin fecha en CSV' : 'no start date in CSV';
         const from = fmtMonthYear(csvStart.month, csvStart.year);
-        if (months === 0) return `dated ${from}`;
-        if (months > 0 && didForward) return `${from} → fast-forwarded +${months} mo`;
-        if (months > 0) return `dated ${from} (${months} mo old, not adjusted)`;
-        return `dated ${from} (${-months} mo after snapshot)`;
+        if (months === 0) return isEs ? `fecha ${from}` : `dated ${from}`;
+        if (months > 0 && didForward) return isEs ? `${from} → avanzado +${months} m` : `${from} → fast-forwarded +${months} mo`;
+        if (months > 0) return isEs ? `fecha ${from} (${months} m de antigüedad, sin ajuste)` : `dated ${from} (${months} mo old, not adjusted)`;
+        return isEs ? `fecha ${from} (${-months} m posterior a la referencia)` : `dated ${from} (${-months} mo after snapshot)`;
       }
 
       // DOM Elements for Net Worth Hub
@@ -2219,9 +3105,10 @@
 
         // Grid lines
         const gridLines = 4;
-        ctx.strokeStyle = '#222e44';
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        ctx.strokeStyle = isLight ? '#cbd5e1' : '#222e44';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = isLight ? '#475569' : '#64748b';
         ctx.font = '10px -apple-system, sans-serif';
         ctx.textAlign = 'right';
 
@@ -2241,7 +3128,7 @@
           ctx.beginPath();
           ctx.moveTo(padding.left, zeroY);
           ctx.lineTo(w - padding.right, zeroY);
-          ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+          ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.25)';
           ctx.stroke();
         }
 
@@ -2279,19 +3166,21 @@
       function renderNetWorthTable(schedule) {
         nwScheduleTbody.innerHTML = '';
         const fragment = document.createDocumentFragment();
+        const yrPrefix = currentLang === 'es' ? 'Año' : 'Year';
+        const moSuffix = currentLang === 'es' ? '/mes' : '/mo';
 
         schedule.forEach(r => {
           const tr = document.createElement('tr');
           const nwColor = r.nominalNetWorth >= 0 ? '#34d399' : '#f87171';
           tr.innerHTML = `
-            <td style="font-weight:700;">Year ${r.year} <span style="color:var(--text-subtle); font-weight:500; font-size:0.76rem;">(${r.calendarDate})</span></td>
+            <td style="font-weight:700;">${yrPrefix} ${r.year} <span style="color:var(--text-subtle); font-weight:500; font-size:0.76rem;">(${r.calendarDate})</span></td>
             <td style="color:#38bdf8;">${formatMoney(r.investedAssets)}</td>
             <td>${formatMoney(r.propertyValue)}</td>
-            <td style="font-weight:600; color:#e2e8f0;">${formatMoney(r.totalAssets)}</td>
+            <td style="font-weight:600; color:var(--text-main);">${formatMoney(r.totalAssets)}</td>
             <td style="color:#f43f5e;">${formatMoney(r.totalLiabilities)}</td>
             <td style="font-weight:800; color:${nwColor};">${formatMoney(r.nominalNetWorth)}</td>
             <td style="font-weight:700; color:#fbbf24;">${formatMoney(r.realNetWorth)}</td>
-            <td style="color:#d8b4fe;">${formatMoney(r.monthlyCostOfLiving)}/mo</td>
+            <td style="color:#d8b4fe;">${formatMoney(r.monthlyCostOfLiving)}${moSuffix}</td>
           `;
           fragment.appendChild(tr);
         });
@@ -2300,6 +3189,9 @@
       }
 
       function updateNetWorthUI() {
+        const isEs = currentLang === 'es';
+        const moSuffix = isEs ? '/mes' : '/mo';
+
         // Sync inputs
         nwInvestedInput.value = Math.round(nwState.investedAssets).toLocaleString();
         nwPropertyValInput.value = Math.round(nwState.propertyValue).toLocaleString();
@@ -2310,7 +3202,9 @@
         nwMonthlyColInput.value = Math.round(nwState.monthlyCostOfLiving).toLocaleString();
         nwInflationInput.value = nwState.inflationRate.toFixed(1);
         nwHorizonSlider.value = nwState.horizonYears;
-        nwHorizonLabel.textContent = `${nwState.horizonYears} Year${nwState.horizonYears > 1 ? 's' : ''}`;
+        nwHorizonLabel.textContent = isEs
+          ? `${nwState.horizonYears} Año${nwState.horizonYears > 1 ? 's' : ''}`
+          : `${nwState.horizonYears} Year${nwState.horizonYears > 1 ? 's' : ''}`;
         nwRolloverToggle.checked = nwState.rolloverFreedDebt;
         nwFastForwardToggle.checked = nwState.fastForwardHistorical;
         nwStartMonthSelect.value = String(nwState.startMonth);
@@ -2321,11 +3215,11 @@
         nwDebtAprBadge.textContent = `${nwState.debtAvgApr.toFixed(1)}% APR`;
 
         // Update Sync Slot Cards
-        slotInvestingVal.textContent = `${formatMoney(nwState.investedAssets)} (+${formatMoney(nwState.monthlyInvestContrib)}/mo)`;
-        slotDebtVal.textContent = `${formatMoney(nwState.consumerDebt)} (-${formatMoney(nwState.monthlyDebtPayment)}/mo)`;
-        slotColVal.textContent = `${formatMoney(nwState.monthlyCostOfLiving)}/mo (${nwState.inflationRate.toFixed(1)}% inf)`;
+        slotInvestingVal.textContent = `${formatMoney(nwState.investedAssets)} (+${formatMoney(nwState.monthlyInvestContrib)}${moSuffix})`;
+        slotDebtVal.textContent = `${formatMoney(nwState.consumerDebt)} (-${formatMoney(nwState.monthlyDebtPayment)}${moSuffix})`;
+        slotColVal.textContent = `${formatMoney(nwState.monthlyCostOfLiving)}${moSuffix} (${nwState.inflationRate.toFixed(1)}% inf)`;
         const homeEq = nwState.propertyValue - nwState.mortgageDebt;
-        slotRealEstateVal.textContent = `${formatMoney(homeEq)} Equity`;
+        slotRealEstateVal.textContent = `${formatMoney(homeEq)} ${isEs ? 'Capital Inmueble' : 'Equity'}`;
 
         const { schedule, consumerDebtFreeMonth } = simulateNetWorthTrajectory();
         const yr0 = schedule[0];
@@ -2337,34 +3231,50 @@
         nwKpiCurrent.textContent = formatMoney(yr0.nominalNetWorth);
         nwKpiCurrent.style.color = yr0.nominalNetWorth >= 0 ? '#34d399' : '#f87171';
         const liquidNet = nwState.investedAssets - nwState.consumerDebt;
-        nwKpiCurrentSub.textContent = `As of ${startLbl} · Liquid: ${formatMoney(liquidNet)} | Home Eq: ${formatMoney(homeEq)}`;
+        nwKpiCurrentSub.textContent = isEs
+          ? `Al ${startLbl} · Líquido: ${formatMoney(liquidNet)} | Inmueble: ${formatMoney(homeEq)}`
+          : `As of ${startLbl} · Liquid: ${formatMoney(liquidNet)} | Home Eq: ${formatMoney(homeEq)}`;
 
         nwKpiAssetsLiab.textContent = `${formatMoney(yr0.totalAssets)} / ${formatMoney(yr0.totalLiabilities)}`;
         const debtRatio = yr0.totalAssets > 0 ? ((yr0.totalLiabilities / yr0.totalAssets) * 100).toFixed(1) : 0;
-        nwKpiDebtRatio.textContent = `${debtRatio}% debt-to-asset ratio (${startLbl})`;
+        nwKpiDebtRatio.textContent = isEs
+          ? `${debtRatio}% razón deuda/activos (${startLbl})`
+          : `${debtRatio}% debt-to-asset ratio (${startLbl})`;
 
         nwKpiProjected.textContent = formatMoney(yrFinal.nominalNetWorth);
         const nwDelta = yrFinal.nominalNetWorth - yr0.nominalNetWorth;
-        nwKpiProjectedSub.textContent = `By ${endLbl} (${nwDelta >= 0 ? '+' : ''}${formatMoney(nwDelta)} growth)`;
+        nwKpiProjectedSub.textContent = isEs
+          ? `Para ${endLbl} (${nwDelta >= 0 ? '+' : ''}${formatMoney(nwDelta)} crecimiento)`
+          : `By ${endLbl} (${nwDelta >= 0 ? '+' : ''}${formatMoney(nwDelta)} growth)`;
 
         nwKpiReal.textContent = formatMoney(yrFinal.realNetWorth);
-        nwKpiRealSub.textContent = `In ${startLbl} dollars (${nwState.inflationRate.toFixed(1)}%/yr inflation)`;
+        nwKpiRealSub.textContent = isEs
+          ? `En dólares de ${startLbl} (${nwState.inflationRate.toFixed(1)}%/año inflación)`
+          : `In ${startLbl} dollars (${nwState.inflationRate.toFixed(1)}%/yr inflation)`;
 
         if (consumerDebtFreeMonth === 0) {
-          nwDebtFreeBadge.textContent = `Consumer Debt Free as of ${startLbl}`;
+          nwDebtFreeBadge.textContent = isEs
+            ? `Sin deuda de consumo a partir de ${startLbl}`
+            : `Consumer Debt Free as of ${startLbl}`;
         } else if (consumerDebtFreeMonth !== null) {
-          nwDebtFreeBadge.textContent = `Consumer Debt Free: ${nwDateLabel(consumerDebtFreeMonth)} (${(consumerDebtFreeMonth / 12).toFixed(1)} Yrs)`;
+          nwDebtFreeBadge.textContent = isEs
+            ? `Libre de Deuda: ${nwDateLabel(consumerDebtFreeMonth)} (${(consumerDebtFreeMonth / 12).toFixed(1)} Años)`
+            : `Consumer Debt Free: ${nwDateLabel(consumerDebtFreeMonth)} (${(consumerDebtFreeMonth / 12).toFixed(1)} Yrs)`;
         } else {
-          nwDebtFreeBadge.textContent = `Consumer Debt Extends Beyond ${endLbl}`;
+          nwDebtFreeBadge.textContent = isEs
+            ? `La deuda de consumo se extiende más allá de ${endLbl}`
+            : `Consumer Debt Extends Beyond ${endLbl}`;
         }
 
         // 4% Safe Withdrawal Coverage vs Cost of Living at Horizon
         const swrMonthlyAtFinal = (Math.max(0, yrFinal.investedAssets) * 0.04) / 12;
-        nwSwrCoverage.textContent = `${formatMoney(swrMonthlyAtFinal)}/mo`;
+        nwSwrCoverage.textContent = `${formatMoney(swrMonthlyAtFinal)}${moSuffix}`;
         const colCov = yrFinal.monthlyCostOfLiving > 0
           ? ((swrMonthlyAtFinal / yrFinal.monthlyCostOfLiving) * 100).toFixed(1)
           : 0;
-        nwColCoveragePct.textContent = `${colCov}% of ${endLbl} living costs`;
+        nwColCoveragePct.textContent = isEs
+          ? `${colCov}% de los costos de vida en ${endLbl}`
+          : `${colCov}% of ${endLbl} living costs`;
 
         drawNetWorthChart(schedule);
         renderNetWorthTable(schedule);
@@ -2841,8 +3751,12 @@
       btnSyncInspectorToNw.addEventListener('click', () => {
         if (!lastInspectedRawCSV) return;
         const origin = detectToolType(lastInspectedRawCSV.split(/\r?\n/).slice(0, 10));
-        if (origin.includes('Reality Tracker')) {
-          if (confirm('This file is an exported Historical Tracker CSV containing your monthly reality logs. Tracker files should be loaded in the dedicated "Monthly Net Worth Log & Reality Tracker" module. Would you like to open it now?')) {
+        const isEs = currentLang === 'es';
+        if (origin.includes('Reality Tracker') || origin.includes('Registro Mensual')) {
+          const msg = isEs
+            ? 'Este archivo es un CSV del Rastreador Histórico con tus registros mensuales reales. Debe cargarse en el módulo dedicado "Registro Mensual de Patrimonio y Realidad Histórica". ¿Deseas abrirlo ahora?'
+            : 'This file is an exported Historical Tracker CSV containing your monthly reality logs. Tracker files should be loaded in the dedicated "Monthly Net Worth Log & Reality Tracker" module. Would you like to open it now?';
+          if (confirm(msg)) {
             window.open('./networth-tracker.html', '_blank');
           }
           return;
@@ -2851,23 +3765,26 @@
         if (synced) {
           document.querySelector('.nw-hub-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
-          alert('This CSV format does not contain Net Worth, Investing, Debt, Mortgage, or Cost of Living parameters.');
+          alert(isEs
+            ? 'Este formato CSV no contiene parámetros de Patrimonio Neto, Inversión, Deuda, Hipoteca o Costo de Vida.'
+            : 'This CSV format does not contain Net Worth, Investing, Debt, Mortgage, or Cost of Living parameters.');
         }
       });
 
       function detectToolType(firstFewLines) {
         const joined = firstFewLines.join(' ').toLowerCase();
-        if (joined.includes('monthly net worth log & historical reality tracker') || joined.includes('chronological monthly net worth entries')) return 'Monthly Net Worth Log & Reality Tracker (History)';
-        if (joined.includes('stock analysis & screener engine') || joined.includes('multi-stock comparison grid')) return 'Stock Analysis & Screener Engine';
-        if (joined.includes('holistic net worth command center')) return 'Net Worth Command Center';
-        if (joined.includes('cost of living') || joined.includes('expense categories')) return 'Cost of Living & Cash Flow Budgeter';
-        if (joined.includes('portfolio savings') || joined.includes('asset configuration') || joined.includes('multi-asset investing')) return 'Multi-Asset Investing & Portfolio';
-        if (joined.includes('mortgage calculation') || joined.includes('loan parameters')) return 'Mortgage Calculator';
-        if (joined.includes('debt payoff engine') || joined.includes('avalanche') || joined.includes('snowball')) return 'Debt Payoff Engine';
-        if (joined.includes('fire & retirement') || joined.includes('fire milestone')) return 'FIRE & Retirement Planner';
-        if (joined.includes('emergency fund runway') || joined.includes('liquid reserves')) return 'Emergency Fund Runway';
-        if (joined.includes('rent vs. buy') || joined.includes('breakeven crossover')) return 'Rent vs. Buy Comparator';
-        return 'Standard Financial CSV';
+        const isEs = currentLang === 'es';
+        if (joined.includes('monthly net worth log & historical reality tracker') || joined.includes('chronological monthly net worth entries') || joined.includes('registro mensual de patrimonio neto') || joined.includes('entradas cronológicas mensuales')) return isEs ? 'Registro Mensual de Patrimonio y Realidad Histórica' : 'Monthly Net Worth Log & Reality Tracker (History)';
+        if (joined.includes('stock analysis & screener engine') || joined.includes('multi-stock comparison grid') || joined.includes('motor de análisis y screener de acciones')) return isEs ? 'Motor de Análisis y Screener de Acciones' : 'Stock Analysis & Screener Engine';
+        if (joined.includes('holistic net worth command center') || joined.includes('centro de comando de patrimonio neto')) return isEs ? 'Centro de Comando de Patrimonio Neto' : 'Net Worth Command Center';
+        if (joined.includes('cost of living') || joined.includes('expense categories') || joined.includes('costo de vida') || joined.includes('categorías de gastos')) return isEs ? 'Presupuesto de Costo de Vida y Flujo de Caja' : 'Cost of Living & Cash Flow Budgeter';
+        if (joined.includes('portfolio savings') || joined.includes('asset configuration') || joined.includes('multi-asset investing') || joined.includes('portafolio de inversión') || joined.includes('configuración de activos')) return isEs ? 'Inversión Multiactivo y Portafolio' : 'Multi-Asset Investing & Portfolio';
+        if (joined.includes('mortgage calculation') || joined.includes('loan parameters') || joined.includes('cálculo de hipoteca') || joined.includes('parámetros del préstamo')) return isEs ? 'Calculadora de Hipotecas' : 'Mortgage Calculator';
+        if (joined.includes('debt payoff engine') || joined.includes('avalanche') || joined.includes('snowball') || joined.includes('motor de pago de deudas') || joined.includes('avalancha') || joined.includes('bola de nieve')) return isEs ? 'Motor de Pago de Deudas' : 'Debt Payoff Engine';
+        if (joined.includes('fire & retirement') || joined.includes('fire milestone') || joined.includes('fire y jubilación') || joined.includes('hito fire')) return isEs ? 'Planificador FIRE y Jubilación' : 'FIRE & Retirement Planner';
+        if (joined.includes('emergency fund runway') || joined.includes('liquid reserves') || joined.includes('fondo de emergencia') || joined.includes('reservas líquidas')) return isEs ? 'Pista de Fondo de Emergencia' : 'Emergency Fund Runway';
+        if (joined.includes('rent vs. buy') || joined.includes('breakeven crossover') || joined.includes('alquilar vs. comprar') || joined.includes('cruce de equilibrio')) return isEs ? 'Comparador Alquilar vs. Comprar' : 'Rent vs. Buy Comparator';
+        return isEs ? 'CSV Financiero Estándar' : 'Standard Financial CSV';
       }
 
       function processCSV(file) {
@@ -2883,7 +3800,7 @@
             const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
 
             if (lines.length === 0) {
-              alert('The selected CSV file appears to be empty.');
+              alert(currentLang === 'es' ? 'El archivo CSV seleccionado parece estar vacío.' : 'The selected CSV file appears to be empty.');
               return;
             }
 
@@ -2904,7 +3821,7 @@
             const headerRow = document.createElement('tr');
             for (let c = 0; c < maxCols; c++) {
               const th = document.createElement('th');
-              th.textContent = `Col ${c + 1}`;
+              th.textContent = `${currentLang === 'es' ? 'Col' : 'Col'} ${c + 1}`;
               headerRow.appendChild(th);
             }
             viewerThead.appendChild(headerRow);
@@ -2934,14 +3851,39 @@
 
           } catch (err) {
             console.error(err);
-            alert('Failed to parse CSV file. Ensure it is a valid comma-separated text file.');
+            alert(currentLang === 'es' ? 'Error al analizar el archivo CSV. Asegúrate de que sea un archivo de texto válido.' : 'Failed to parse CSV file. Ensure it is a valid comma-separated text file.');
           }
         };
 
         reader.readAsText(file);
       }
 
-      // Bootstrap Net Worth Command Center
+      // --- Bootstrap Application, Theme, Language & Tooltips ---
+      const langSelect = document.getElementById('langSelect');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+
+      if (langSelect) {
+        langSelect.value = currentLang;
+        langSelect.addEventListener('change', (e) => {
+          currentLang = e.target.value === 'es' ? 'es' : 'en';
+          localStorage.setItem('finance_suite_lang', currentLang);
+          applyStaticTranslations();
+          updateNetWorthUI();
+        });
+      }
+
+      if (btnThemeToggle) {
+        btnThemeToggle.addEventListener('click', () => {
+          currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+          localStorage.setItem('finance_suite_theme', currentTheme);
+          applyTheme();
+          updateNetWorthUI();
+        });
+      }
+
+      applyTheme();
+      applyStaticTranslations();
+      initInfoTooltips();
       updateNetWorthUI();
 
     })();

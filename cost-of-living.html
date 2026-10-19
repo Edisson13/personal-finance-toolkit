@@ -196,16 +196,97 @@
       border-radius: var(--radius-lg);
       padding: 1.25rem 1.4rem;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.15rem;
       align-items: end;
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 1100px) {
+      .macro-card { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 760px) {
       .macro-card { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 540px) {
       .macro-card { grid-template-columns: 1fr; }
+    }
+
+    /* Budget Philosophy Variant Selector */
+    .preset-selector-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 0.95rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .preset-pills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 0.45rem;
+    }
+
+    .preset-btn {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.45rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .preset-btn:hover {
+      border-color: #475569;
+      color: var(--text-main);
+    }
+
+    .preset-btn.active {
+      background: rgba(168, 85, 247, 0.16);
+      border-color: var(--accent-primary);
+      color: #ffffff;
+      box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.35);
+    }
+
+    .preset-btn-ratio {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .preset-btn.active .preset-btn-ratio {
+      color: #d8b4fe;
+    }
+
+    .preset-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      padding-top: 0.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dti-summary-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 0.35rem;
+      padding-top: 0.55rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.2);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 540px) {
+      .dti-summary-strip { grid-template-columns: 1fr; }
     }
 
     /* Main Grid */
@@ -213,6 +294,11 @@
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       gap: 1.5rem;
+    }
+
+    .main-grid > .card {
+      display: flex;
+      flex-direction: column;
     }
 
     @media (max-width: 1024px) {
@@ -243,9 +329,17 @@
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
-      max-height: 620px;
+      flex: 1 1 0;
+      min-height: 420px;
       overflow-y: auto;
       padding-right: 0.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .expenses-list {
+        flex: none;
+        max-height: 620px;
+      }
     }
 
     .expense-item {
@@ -577,6 +671,95 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    /* Light Mode Theme */
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead { background-color: #e2e8f0 !important; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value { color: var(--text-main); }
+    html[data-theme="light"] .btn-secondary { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] .preset-btn.active { color: #0f172a; background: rgba(168, 85, 247, 0.14); }
+    html[data-theme="light"] .preset-btn-ratio { color: #1e293b; }
+    html[data-theme="light"] .preset-btn.active .preset-btn-ratio { color: #7e22ce; }
+    html[data-theme="light"] #activePresetBadge { color: #7e22ce !important; }
+    html[data-theme="light"] .warning-banner { background: rgba(239, 68, 68, 0.1); color: #b91c1c; }
+    html[data-theme="light"] td[style*="color:#ffffff"], html[data-theme="light"] td[style*="color: #ffffff"] { color: #0f172a !important; }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -594,20 +777,31 @@
           </svg>
         </div>
         <div>
-          <h1>Cost of Living &amp; Cash Flow Budgeter</h1>
-          <p>Analyze monthly living expenses, 50/30/20 ratios, and inflation-adjusted cash flow surplus</p>
+          <h1 id="appTitle">Cost of Living &amp; Cash Flow Budgeter</h1>
+          <p id="appSubtitle">Analyze monthly living expenses, 50/30/20 ratios, and inflation-adjusted cash flow surplus</p>
         </div>
       </div>
 
       <div class="header-actions">
         <!-- Return to Main Hub -->
-        <a href="./index.html" class="btn btn-secondary" title="Return to Main Suite">
+        <a href="./index.html" class="btn btn-secondary" id="btnMainHub" title="Return to Main Suite">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          Main Hub
+          <span id="btnMainHubText">Main Hub</span>
         </a>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="btn btn-secondary" id="btnThemeToggle" title="Toggle Light / Dark Mode">
+          ☀️ Light
+        </button>
+
+        <!-- Language Selector -->
+        <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" aria-label="Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
 
         <!-- Hidden CSV File Input -->
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
@@ -619,7 +813,7 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          Load CSV
+          <span id="btnLoadCSVText">Load CSV</span>
         </button>
 
         <!-- Export CSV Button -->
@@ -629,7 +823,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Export CSV
+          <span id="btnExportCSVText">Export CSV</span>
         </button>
 
         <!-- Add Expense Button -->
@@ -638,7 +832,7 @@
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          Add Expense Item
+          <span id="btnAddExpenseText">Add Expense Item</span>
         </button>
       </div>
     </header>
@@ -646,7 +840,7 @@
     <!-- Macro Income & Inflation Controls -->
     <section class="macro-card" aria-label="Income and Macro Assumptions">
       <div class="field-group">
-        <label for="netIncomeInput" class="field-label">Monthly Net Take-Home Income</label>
+        <label for="netIncomeInput" class="field-label" id="lblNetIncome">Monthly Net Take-Home Income</label>
         <div class="input-wrapper has-prefix">
           <span class="input-prefix">$</span>
           <input type="text" id="netIncomeInput" inputmode="numeric" value="6,800">
@@ -655,7 +849,7 @@
       </div>
 
       <div class="field-group">
-        <label for="incomeGrowthInput" class="field-label">Annual Income Growth (COLA)</label>
+        <label for="incomeGrowthInput" class="field-label" id="lblIncomeGrowth">Annual Income Growth (COLA)</label>
         <div class="input-wrapper has-suffix">
           <input type="number" id="incomeGrowthInput" step="0.1" min="0" max="25" value="3.0">
           <span class="input-suffix">%</span>
@@ -664,21 +858,30 @@
       </div>
 
       <div class="field-group">
-        <label for="horizonInput" class="field-label">Projection Horizon (Years)</label>
+        <label for="horizonInput" class="field-label" id="lblHorizon">Projection Horizon (Years)</label>
         <div class="input-wrapper has-suffix">
           <input type="number" id="horizonInput" step="1" min="1" max="40" value="10">
-          <span class="input-suffix">Yrs</span>
+          <span class="input-suffix" id="sfxHorizon">Yrs</span>
         </div>
         <input type="range" id="horizonSlider" min="1" max="30" step="1" value="10">
       </div>
 
       <div class="field-group">
-        <label for="locationMultInput" class="field-label">Location Cost Multiplier (100% = Current)</label>
+        <label for="locationMultInput" class="field-label" id="lblLocationMult">Location Cost Multiplier (100% = Current)</label>
         <div class="input-wrapper has-suffix">
           <input type="number" id="locationMultInput" step="1" min="40" max="250" value="100">
           <span class="input-suffix">%</span>
         </div>
         <input type="range" id="locationMultSlider" min="50" max="200" step="5" value="100">
+      </div>
+
+      <div class="field-group">
+        <label for="maxDebtDtiInput" class="field-label" id="lblMaxDebtDti">Bank Max Debt-to-Income Limit (DTI)</label>
+        <div class="input-wrapper has-suffix">
+          <input type="number" id="maxDebtDtiInput" step="1" min="5" max="80" value="30">
+          <span class="input-suffix">%</span>
+        </div>
+        <input type="range" id="maxDebtDtiSlider" min="10" max="60" step="1" value="30">
       </div>
     </section>
 
@@ -690,22 +893,22 @@
     <!-- KPI Summary Row -->
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-label">Total Monthly Cost of Living</div>
+        <div class="kpi-label" id="kpiTitleTotalMonthlyCost">Total Monthly Cost of Living</div>
         <div class="kpi-value" id="kpiTotalMonthlyCost" style="color: #f43f5e;">$0/mo</div>
         <div class="kpi-subtext" id="kpiAnnualCost">$0/year total spend</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Monthly Investable Surplus</div>
+        <div class="kpi-label" id="kpiTitleMonthlySurplus">Monthly Investable Surplus</div>
         <div class="kpi-value" id="kpiMonthlySurplus" style="color: #34d399;">$0/mo</div>
         <div class="kpi-subtext" id="kpiSavingsRate">0% net savings rate</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Essential Survival Floor</div>
+        <div class="kpi-label" id="kpiTitleEssentialFloor">Essential Survival Floor</div>
         <div class="kpi-value" id="kpiEssentialFloor" style="color: #38bdf8;">$0/mo</div>
         <div class="kpi-subtext" id="kpiEssentialRatio">0% of take-home pay</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Future Monthly Cost (Inflation)</div>
+        <div class="kpi-label" id="kpiTitleFutureCost">Future Monthly Cost (Inflation)</div>
         <div class="kpi-value" id="kpiFutureCost" style="color: #fbbf24;">$0/mo</div>
         <div class="kpi-subtext" id="kpiFutureHorizon">At Year 10</div>
       </div>
@@ -717,24 +920,57 @@
       <!-- Left Column: Expense Categories Configurator -->
       <section class="card" aria-label="Living Expense Categories">
         <div class="card-title">
-          <span>Living Expense Categories (<span id="expenseCountBadge">6</span>)</span>
-          <span style="font-size:0.75rem; font-weight:400; color:var(--text-muted);">Set amount, tier &amp; inflation</span>
+          <span><span id="leftCardTitleText">Living Expense Categories</span> (<span id="expenseCountBadge">6</span>)</span>
+          <span style="font-size:0.75rem; font-weight:400; color:var(--text-muted);" id="leftCardHint">Set amount, tier &amp; inflation</span>
         </div>
 
         <div class="expenses-list" id="expensesContainer"></div>
       </section>
 
-      <!-- Right Column: 50/30/20 Analysis & Multi-Year Trajectory -->
+      <!-- Right Column: Budget Philosophy Variants, Bank DTI & Multi-Year Trajectory -->
       <section class="card" aria-label="Budget Ratios and Trajectory">
         <div class="card-title">
-          <span>50 / 30 / 20 Budget Health &amp; Cash Flow Trajectory</span>
+          <span id="budgetSectionTitle">50 / 30 / 20 Budget Health &amp; Cash Flow Trajectory</span>
         </div>
 
-        <!-- 50/30/20 Rule Benchmark -->
+        <!-- Budget Philosophy Variant Selector -->
+        <div class="preset-selector-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem;">
+            <span style="font-size:0.74rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted);" id="presetSelectorHeading">Select Budget Philosophy Variant (Needs / Wants / Savings)</span>
+            <span id="activePresetBadge" style="font-size:0.72rem; font-weight:700; color:#d8b4fe; background:rgba(168,85,247,0.18); padding:0.15rem 0.5rem; border-radius:999px;">Balanced Standard</span>
+          </div>
+          <div class="preset-pills" id="presetPills">
+            <button type="button" class="preset-btn active" data-preset="standard_50_30_20">
+              <span class="preset-btn-ratio">50 / 30 / 20</span>
+              <span class="preset-btn-label" data-preset-label="standard_50_30_20">Balanced Standard</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="accelerated_45_15_40">
+              <span class="preset-btn-ratio">45 / 15 / 40</span>
+              <span class="preset-btn-label" data-preset-label="accelerated_45_15_40">Accelerated Saver</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="grinding_35_10_55">
+              <span class="preset-btn-ratio">35 / 10 / 55</span>
+              <span class="preset-btn-label" data-preset-label="grinding_35_10_55">Grinding / FIRE Mode</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="retiree_60_25_15">
+              <span class="preset-btn-ratio">60 / 25 / 15</span>
+              <span class="preset-btn-label" data-preset-label="retiree_60_25_15">Retiree / Golden Years</span>
+            </button>
+            <button type="button" class="preset-btn" data-preset="metro_60_20_20">
+              <span class="preset-btn-ratio">60 / 20 / 20</span>
+              <span class="preset-btn-label" data-preset-label="metro_60_20_20">High-Cost Metro</span>
+            </button>
+          </div>
+          <div class="preset-desc" id="presetDesc">
+            Classic balanced budget framework: caps essential needs at 50% and lifestyle wants at 30%, locking in a steady 20% compound investment rate.
+          </div>
+        </div>
+
+        <!-- Budget Rule & Bank Loan DTI Benchmark -->
         <div class="benchmark-box">
           <div class="benchmark-row">
             <div class="benchmark-top">
-              <span style="color:#38bdf8;">Essential Needs (Target &le; 50%)</span>
+              <span style="color:#38bdf8;" id="benchNeedsTitle">Essential Needs &amp; Debt (Target &le; 50%)</span>
               <span id="benchNeedsLabel">0% ($0)</span>
             </div>
             <div class="progress-track">
@@ -744,7 +980,7 @@
 
           <div class="benchmark-row">
             <div class="benchmark-top">
-              <span style="color:#f59e0b;">Discretionary Wants (Target &le; 30%)</span>
+              <span style="color:#f59e0b;" id="benchWantsTitle">Discretionary Wants (Target &le; 30%)</span>
               <span id="benchWantsLabel">0% ($0)</span>
             </div>
             <div class="progress-track">
@@ -754,11 +990,32 @@
 
           <div class="benchmark-row">
             <div class="benchmark-top">
-              <span style="color:#10b981;">Savings &amp; Investing Surplus (Target &ge; 20%)</span>
+              <span style="color:#10b981;" id="benchSavingsTitle">Savings &amp; Investing Surplus (Target &ge; 20%)</span>
               <span id="benchSavingsLabel">0% ($0)</span>
             </div>
             <div class="progress-track">
               <div class="progress-fill" id="benchSavingsBar" style="width:0%; background:#10b981;"></div>
+            </div>
+          </div>
+
+          <!-- Bank Loan / Mortgage Debt-to-Income (DTI) Limitation Bar -->
+          <div class="benchmark-row" style="margin-top:0.35rem; padding-top:0.65rem; border-top:1px solid rgba(148,163,184,0.18);">
+            <div class="benchmark-top">
+              <span style="color:#c084fc;" id="benchDtiTitle">Attached Debt Service vs. Bank DTI Limit (&le; 30%)</span>
+              <span id="benchDtiLabel">0% ($0 / $0 max)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="benchDtiBar" style="width:0%; background:#a855f7;"></div>
+            </div>
+            <div class="dti-summary-strip">
+              <div>
+                <span style="color:var(--text-subtle); display:block;" id="dtiRemainingLabel">Remaining Bank DTI Borrowing Room:</span>
+                <strong id="dtiRemainingVal" style="color:#34d399; font-size:0.84rem;">$0/mo available</strong>
+              </div>
+              <div>
+                <span style="color:var(--text-subtle); display:block;" id="dtiSafeLoanLabel">Safe Budget-Aligned Loan Capacity:</span>
+                <strong id="dtiSafeLoanVal" style="color:#38bdf8; font-size:0.84rem;">$0/mo max new payment</strong>
+              </div>
             </div>
           </div>
         </div>
@@ -771,17 +1028,26 @@
           <div class="chart-legend" id="chartLegend"></div>
         </div>
 
+        <!-- Expense Category Percentage Breakdown Below Graph -->
+        <div class="benchmark-box" id="categoryPercentagesBox" style="margin-top:1rem; margin-bottom:0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; font-weight:600; color:var(--text-muted); margin-bottom:0.2rem;">
+            <span id="catBreakdownHeaderLeft">EXPENSE CATEGORY SHARE (% OF SPEND &amp; % OF INCOME)</span>
+            <span id="catBreakdownHeaderRight">MONTHLY COST &amp; SHARE</span>
+          </div>
+          <div id="categoryPercentagesList" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+        </div>
+
         <!-- Additional Callouts -->
         <div class="insights-grid">
           <div class="insight-box">
-            <span class="insight-label">Cumulative 10-Yr Surplus</span>
+            <span class="insight-label" id="insightCumSurplusLabel">Cumulative 10-Yr Surplus</span>
             <span class="insight-val" id="insightCumSurplus" style="color:#34d399;">$0</span>
             <span style="font-size:0.73rem; color:var(--text-muted);" id="insightCumSub">Uninvested cash saved</span>
           </div>
           <div class="insight-box">
-            <span class="insight-label">Weighted Expense Inflation</span>
+            <span class="insight-label" id="insightWeightedInfLabel">Weighted Expense Inflation</span>
             <span class="insight-val" id="insightWeightedInf" style="color:#a855f7;">0.0%</span>
-            <span style="font-size:0.73rem; color:var(--text-muted);">Blended annual cost rise</span>
+            <span style="font-size:0.73rem; color:var(--text-muted);" id="insightWeightedInfSub">Blended annual cost rise</span>
           </div>
         </div>
       </section>
@@ -791,13 +1057,13 @@
     <!-- Bottom Section: Year-by-Year Cash Flow & Inflation Table -->
     <section class="card" aria-label="Annual Cost of Living Schedule">
       <div class="card-title">
-        <span>Year-by-Year Cost of Living &amp; Cash Flow Schedule</span>
+        <span id="tableSectionTitle">Year-by-Year Cost of Living &amp; Cash Flow Schedule</span>
       </div>
 
       <div class="table-container">
         <table>
           <thead>
-            <tr>
+            <tr id="scheduleTheadRow">
               <th>Year</th>
               <th>Monthly Income</th>
               <th>Essential Needs/mo</th>
@@ -824,23 +1090,295 @@
         '#ec4899', '#a855f7', '#14b8a6', '#f97316'
       ];
 
+      let currentLang = localStorage.getItem('finance_suite_lang') === 'es' ? 'es' : 'en';
+      let currentTheme = localStorage.getItem('finance_suite_theme') === 'light' ? 'light' : 'dark';
+
+      const DEFAULT_EXPENSE_NAMES = {
+        exp_1: {
+          en: 'Housing (Mortgage / Loan Debt Service)',
+          es: 'Vivienda (Hipoteca / Servicio de Deuda)'
+        },
+        exp_2: {
+          en: 'Groceries & Household Supplies',
+          es: 'Supermercado y Artículos del Hogar'
+        },
+        exp_3: {
+          en: 'Utilities, Property Tax & Internet',
+          es: 'Servicios, Impuestos e Internet'
+        },
+        exp_4: {
+          en: 'Transportation, Fuel & Insurance',
+          es: 'Transporte, Combustible y Seguro'
+        },
+        exp_5: {
+          en: 'Healthcare & Medical Reserve',
+          es: 'Salud y Reserva Médica'
+        },
+        exp_6: {
+          en: 'Dining Out, Entertainment & Travel',
+          es: 'Restaurantes, Entretenimiento y Viajes'
+        }
+      };
+
+      const BUDGET_PRESETS = {
+        standard_50_30_20: {
+          ratioText: '50 / 30 / 20',
+          needsTarget: 50,
+          wantsTarget: 30,
+          savingsTarget: 20,
+          en: {
+            name: 'Balanced Standard',
+            desc: 'Classic balanced budget framework: caps essential needs & debt at 50% and lifestyle wants at 30%, locking in a steady 20% compound investment rate.'
+          },
+          es: {
+            name: 'Estándar Equilibrado',
+            desc: 'Marco clásico equilibrado: limita necesidades esenciales y deuda al 50% y deseos al 30%, asegurando una tasa constante del 20% para inversión compuesta.'
+          }
+        },
+        accelerated_45_15_40: {
+          ratioText: '45 / 15 / 40',
+          needsTarget: 45,
+          wantsTarget: 15,
+          savingsTarget: 40,
+          en: {
+            name: 'Accelerated Saver',
+            desc: 'High-discipline wealth builder: trims lifestyle wants to 15% and keeps fixed overhead under 45% to channel 40% of net income into investments.'
+          },
+          es: {
+            name: 'Ahorrador Acelerado',
+            desc: 'Generador de patrimonio disciplinado: reduce deseos al 15% y mantiene gastos fijos bajo el 45% para canalizar el 40% del ingreso neto a inversiones.'
+          }
+        },
+        grinding_35_10_55: {
+          ratioText: '35 / 10 / 55',
+          needsTarget: 35,
+          wantsTarget: 10,
+          savingsTarget: 55,
+          en: {
+            name: 'Grinding / FIRE Mode',
+            desc: 'Aggressive financial independence ("Grinding") mode: keeps survival overhead ultra-lean (<=35%) and discretionary wants minimal (<=10%) to invest 55%+ of take-home pay.'
+          },
+          es: {
+            name: 'Modo Intensivo / FIRE',
+            desc: 'Modo agresivo de independencia financiera ("FIRE"): mantiene costos esenciales ultraligeros (<=35%) y deseos mínimos (<=10%) para invertir el 55%+ del ingreso.'
+          }
+        },
+        retiree_60_25_15: {
+          ratioText: '60 / 25 / 15',
+          needsTarget: 60,
+          wantsTarget: 25,
+          savingsTarget: 15,
+          en: {
+            name: 'Retiree / Golden Years',
+            desc: 'Healthy retirement & preservation profile: accommodates higher healthcare & living stability (up to 60%), 25% for leisure/family, and a 15% liquidity & emergency reserve buffer while keeping debt attachment low.'
+          },
+          es: {
+            name: 'Jubilación / Años Dorados',
+            desc: 'Perfil saludable de retiro y preservación: permite mayor estabilidad médica y de vida (hasta 60%), 25% para ocio/familia y 15% de reserva de liquidez con baja deuda.'
+          }
+        },
+        metro_60_20_20: {
+          ratioText: '60 / 20 / 20',
+          needsTarget: 60,
+          wantsTarget: 20,
+          savingsTarget: 20,
+          en: {
+            name: 'High-Cost Metro',
+            desc: 'High-cost-of-living adaptation: allows up to 60% for essential housing & utilities while compressing discretionary wants to 20% so the 20% savings floor is never sacrificed.'
+          },
+          es: {
+            name: 'Metrópoli de Alto Costo',
+            desc: 'Adaptación a ciudades de alto costo: permite hasta 60% para vivienda y servicios esenciales comprimiendo deseos al 20% para nunca sacrificar el piso de ahorro del 20%.'
+          }
+        }
+      };
+
+      const I18N = {
+        en: {
+          pageTitle: 'Cost of Living & Cash Flow Budgeter',
+          appTitle: 'Cost of Living & Cash Flow Budgeter',
+          appSubtitle: 'Analyze monthly living expenses, 50/30/20 ratios, and inflation-adjusted cash flow surplus',
+          mainHub: 'Main Hub',
+          mainHubTitle: 'Return to Main Suite',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          loadCSV: 'Load CSV',
+          loadCSVTitle: 'Load a previously saved Cost of Living CSV',
+          exportCSV: 'Export CSV',
+          exportCSVTitle: 'Export Cost of Living & Cash Flow schedule to CSV',
+          addExpense: 'Add Expense Item',
+          lblNetIncome: 'Monthly Net Take-Home Income',
+          lblIncomeGrowth: 'Annual Income Growth (COLA)',
+          lblHorizon: 'Projection Horizon (Years)',
+          sfxHorizon: 'Yrs',
+          lblLocationMult: 'Location Cost Multiplier (100% = Current)',
+          lblMaxDebtDti: 'Bank Max Debt-to-Income Limit (DTI)',
+          deficitBanner: '⚠️ Cash Flow Deficit Alert: Your monthly cost of living exceeds your net take-home income! Reduce discretionary spending or adjust housing costs to prevent net worth erosion.',
+          kpiTitleTotalMonthlyCost: 'Total Monthly Cost of Living',
+          kpiTitleMonthlySurplus: 'Monthly Investable Surplus',
+          kpiTitleEssentialFloor: 'Essential Survival Floor',
+          kpiTitleFutureCost: 'Future Monthly Cost (Inflation)',
+          leftCardTitleText: 'Living Expense Categories',
+          leftCardHint: 'Set amount, tier & inflation',
+          presetSelectorHeading: 'Select Budget Philosophy Variant (Needs / Wants / Savings)',
+          dtiRemainingLabel: 'Remaining Bank DTI Borrowing Room:',
+          dtiSafeLoanLabel: 'Safe Budget-Aligned Loan Capacity:',
+          catBreakdownHeaderLeft: 'EXPENSE CATEGORY SHARE (% OF SPEND & % OF INCOME)',
+          catBreakdownHeaderRight: 'MONTHLY COST & SHARE',
+          insightCumSurplusLabel: (yrs) => `Cumulative ${yrs}-Yr Surplus`,
+          insightWeightedInfLabel: 'Weighted Expense Inflation',
+          insightWeightedInfSub: 'Blended annual cost rise',
+          tableSectionTitle: 'Year-by-Year Cost of Living & Cash Flow Schedule',
+          tableHeaders: ['Year', 'Monthly Income', 'Essential Needs/mo', 'Discretionary/mo', 'Total Monthly Spend', 'Monthly Surplus', 'Annual Surplus', 'Cumulative Surplus'],
+          moSuffix: '/mo',
+          yrSuffix: '/yr',
+          annualSpendSub: (amt) => `${amt}/year total spend`,
+          savingsRateSub: (pct, target) => `${pct}% net cash flow margin (Target >= ${target}%)`,
+          essentialRatioSub: (pct, target) => `${pct}% of take-home pay (Target <= ${target}%)`,
+          futureHorizonSub: (yrs, inf) => `At Year ${yrs} (${inf}% avg inf)`,
+          budgetSectionTitle: (ratio) => `${ratio} Budget Health & Cash Flow Trajectory`,
+          benchNeedsTitle: (target) => `Essential Needs &amp; Debt (Target &le; ${target}%)`,
+          benchWantsTitle: (target) => `Discretionary Wants (Target &le; ${target}%)`,
+          benchSavingsTitle: (target) => `Savings &amp; Investing Surplus (Target &ge; ${target}%)`,
+          benchDtiTitle: (target) => `Attached Debt Service vs. Bank DTI Limit (&le; ${target}%)`,
+          capWord: 'cap',
+          goalWord: 'goal',
+          maxWord: 'max',
+          dtiRoomAvail: (amt, pct) => `${amt}/mo (${pct}% of income left)`,
+          dtiOverLimit: (amt, pct) => `Over limit by ${amt}/mo (+${pct}%)`,
+          dtiSafeLoanVal: (amt, ratio) => `${amt}/mo (keeps ${ratio} intact)`,
+          insightCumSub: (yrs) => `Over ${yrs} years (uninvested cash)`,
+          expSharePill: (pct) => `${pct}% of spend`,
+          removeCategoryTitle: 'Remove Category',
+          expPlaceholder: 'Expense Category',
+          lblMonthlyCost: 'Monthly Cost',
+          lblTier: 'Budget & DTI Tier',
+          tierEssentialOpt: 'Essential Need (Non-Debt)',
+          tierDebtOpt: 'Debt / Loan Service (Needs + Bank DTI)',
+          tierDiscretionaryOpt: 'Discretionary Want',
+          lblAnnualInf: 'Annual Inflation',
+          untitledExpense: 'Untitled Expense',
+          newExpenseDefault: (n) => `Expense Category ${n}`,
+          tierBadgeEssential: 'Essential Need',
+          tierBadgeDebt: 'Debt / Bank DTI',
+          tierBadgeDiscretionary: 'Discretionary Want',
+          catRowStats: (pctSpend, pctInc, amt) => `${pctSpend}% of spend &bull; ${pctInc}% of income (${amt}/mo)`,
+          catRowInf: (inf) => `Inflation: ${inf}%/yr`,
+          catRowProj: (yrs, amt) => `Year ${yrs} Projected: ${amt}/mo`,
+          chartAxisYr: (yr) => `Yr ${yr}`,
+          legendIncome: 'Monthly Net Income (100%)',
+          legendTotalCost: (pct) => `Total Cost of Living (${pct}%)`,
+          legendEssential: (pct) => `Essential Survival Floor (${pct}%)`,
+          legendDebt: (pct) => `Attached Debt Service (${pct}% DTI)`,
+          tableYearRow: (yr) => `Year ${yr}`,
+          csvAlertNoCategories: 'Could not detect valid Cost of Living categories in the selected CSV file.',
+          csvAlertParseError: 'Error parsing CSV file. Please ensure it is a valid Cost of Living export.'
+        },
+        es: {
+          pageTitle: 'Presupuestador de Costo de Vida y Flujo de Caja',
+          appTitle: 'Presupuestador de Costo de Vida y Flujo de Caja',
+          appSubtitle: 'Analiza gastos mensuales, reglas 50/30/20 y excedente de flujo de caja ajustado por inflación',
+          mainHub: 'Panel Principal',
+          mainHubTitle: 'Volver al Panel Principal',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          loadCSV: 'Cargar CSV',
+          loadCSVTitle: 'Cargar un archivo CSV de Costo de Vida guardado previamente',
+          exportCSV: 'Exportar CSV',
+          exportCSVTitle: 'Exportar cronograma de Costo de Vida y Flujo de Caja a CSV',
+          addExpense: 'Añadir Gasto',
+          lblNetIncome: 'Ingreso Mensual Neto Disponible',
+          lblIncomeGrowth: 'Crecimiento Anual de Ingresos (COLA)',
+          lblHorizon: 'Horizonte de Proyección (Años)',
+          sfxHorizon: 'Años',
+          lblLocationMult: 'Multiplicador de Costo Local (100% = Actual)',
+          lblMaxDebtDti: 'Límite Bancario Máx. Endeudamiento (DTI)',
+          deficitBanner: '⚠️ Alerta de Déficit de Flujo de Caja: ¡Tu costo de vida mensual supera tu ingreso neto! Reduce gastos discrecionales o ajusta costos de vivienda para evitar erosionar tu patrimonio.',
+          kpiTitleTotalMonthlyCost: 'Costo de Vida Mensual Total',
+          kpiTitleMonthlySurplus: 'Excedente Mensual Invertible',
+          kpiTitleEssentialFloor: 'Piso de Supervivencia Esencial',
+          kpiTitleFutureCost: 'Costo Mensual Futuro (Inflación)',
+          leftCardTitleText: 'Categorías de Gastos de Vida',
+          leftCardHint: 'Define monto, nivel e inflación',
+          presetSelectorHeading: 'Selecciona Variante de Filosofía Presupuestaria (Necesidades / Deseos / Ahorro)',
+          dtiRemainingLabel: 'Margen Bancario DTI Disponible:',
+          dtiSafeLoanLabel: 'Capacidad de Cuota Segura según Presupuesto:',
+          catBreakdownHeaderLeft: 'PARTICIPACIÓN POR CATEGORÍA (% DEL GASTO Y % DEL INGRESO)',
+          catBreakdownHeaderRight: 'COSTO MENSUAL Y %',
+          insightCumSurplusLabel: (yrs) => `Excedente Acumulado (${yrs} Años)`,
+          insightWeightedInfLabel: 'Inflación Ponderada de Gastos',
+          insightWeightedInfSub: 'Aumento anual promedio ponderado',
+          tableSectionTitle: 'Cronograma Año por Año de Costo de Vida y Flujo de Caja',
+          tableHeaders: ['Año', 'Ingreso Mensual', 'Necesidades/mes', 'Discrecional/mes', 'Gasto Mensual Total', 'Excedente Mensual', 'Excedente Anual', 'Excedente Acumulado'],
+          moSuffix: '/mes',
+          yrSuffix: '/año',
+          annualSpendSub: (amt) => `${amt}/año gasto total`,
+          savingsRateSub: (pct, target) => `${pct}% margen neto de ahorro (Meta >= ${target}%)`,
+          essentialRatioSub: (pct, target) => `${pct}% del ingreso neto (Meta <= ${target}%)`,
+          futureHorizonSub: (yrs, inf) => `En el Año ${yrs} (${inf}% inf. prom.)`,
+          budgetSectionTitle: (ratio) => `Salud Presupuestaria ${ratio} y Trayectoria de Flujo de Caja`,
+          benchNeedsTitle: (target) => `Necesidades Esenciales y Deuda (Meta &le; ${target}%)`,
+          benchWantsTitle: (target) => `Deseos Discrecionales (Meta &le; ${target}%)`,
+          benchSavingsTitle: (target) => `Excedente de Ahorro e Inversión (Meta &ge; ${target}%)`,
+          benchDtiTitle: (target) => `Servicio de Deuda vs. Límite Bancario DTI (&le; ${target}%)`,
+          capWord: 'tope',
+          goalWord: 'meta',
+          maxWord: 'máx',
+          dtiRoomAvail: (amt, pct) => `${amt}/mes (${pct}% de ingreso libre)`,
+          dtiOverLimit: (amt, pct) => `Excede límite por ${amt}/mes (+${pct}%)`,
+          dtiSafeLoanVal: (amt, ratio) => `${amt}/mes (mantiene ${ratio} intacto)`,
+          insightCumSub: (yrs) => `En ${yrs} años (efectivo no invertido)`,
+          expSharePill: (pct) => `${pct}% del gasto`,
+          removeCategoryTitle: 'Eliminar Categoría',
+          expPlaceholder: 'Categoría de Gasto',
+          lblMonthlyCost: 'Costo Mensual',
+          lblTier: 'Nivel de Presupuesto y DTI',
+          tierEssentialOpt: 'Necesidad Esencial (Sin Deuda)',
+          tierDebtOpt: 'Servicio de Deuda / Préstamo (Necesidades + DTI)',
+          tierDiscretionaryOpt: 'Deseo Discrecional',
+          lblAnnualInf: 'Inflación Anual',
+          untitledExpense: 'Gasto sin título',
+          newExpenseDefault: (n) => `Categoría de Gasto ${n}`,
+          tierBadgeEssential: 'Necesidad Esencial',
+          tierBadgeDebt: 'Deuda / DTI Bancario',
+          tierBadgeDiscretionary: 'Deseo Discrecional',
+          catRowStats: (pctSpend, pctInc, amt) => `${pctSpend}% del gasto &bull; ${pctInc}% del ingreso (${amt}/mes)`,
+          catRowInf: (inf) => `Inflación: ${inf}%/año`,
+          catRowProj: (yrs, amt) => `Proyectado Año ${yrs}: ${amt}/mes`,
+          chartAxisYr: (yr) => `Año ${yr}`,
+          legendIncome: 'Ingreso Mensual Neto (100%)',
+          legendTotalCost: (pct) => `Costo de Vida Total (${pct}%)`,
+          legendEssential: (pct) => `Piso de Supervivencia Esencial (${pct}%)`,
+          legendDebt: (pct) => `Servicio de Deuda (${pct}% DTI)`,
+          tableYearRow: (yr) => `Año ${yr}`,
+          csvAlertNoCategories: 'No se pudieron detectar categorías válidas de Costo de Vida en el archivo CSV seleccionado.',
+          csvAlertParseError: 'Error al leer el archivo CSV. Asegúrate de que sea una exportación válida de Costo de Vida.'
+        }
+      };
+
+      function t() {
+        return I18N[currentLang] || I18N.en;
+      }
+
       let state = {
         netMonthlyIncome: 6800,
         incomeGrowthRate: 3.0,
         horizonYears: 10,
         locationMultiplier: 100,
+        maxDebtDtiPct: 30,
+        budgetPreset: 'standard_50_30_20',
         expenses: [
           {
             id: 'exp_1',
-            name: 'Housing (Rent / Mortgage & Tax)',
+            name: DEFAULT_EXPENSE_NAMES.exp_1[currentLang],
             color: COLOR_PALETTE[0],
-            monthlyAmount: 2100,
-            tier: 'essential', // 'essential' | 'discretionary'
-            inflationRate: 3.2
+            monthlyAmount: 1850,
+            tier: 'debt',
+            inflationRate: 2.5
           },
           {
             id: 'exp_2',
-            name: 'Groceries & Household Supplies',
+            name: DEFAULT_EXPENSE_NAMES.exp_2[currentLang],
             color: COLOR_PALETTE[1],
             monthlyAmount: 650,
             tier: 'essential',
@@ -848,15 +1386,15 @@
           },
           {
             id: 'exp_3',
-            name: 'Utilities, Internet & Mobile',
+            name: DEFAULT_EXPENSE_NAMES.exp_3[currentLang],
             color: COLOR_PALETTE[2],
-            monthlyAmount: 320,
+            monthlyAmount: 420,
             tier: 'essential',
-            inflationRate: 2.8
+            inflationRate: 3.0
           },
           {
             id: 'exp_4',
-            name: 'Transportation, Fuel & Insurance',
+            name: DEFAULT_EXPENSE_NAMES.exp_4[currentLang],
             color: COLOR_PALETTE[3],
             monthlyAmount: 480,
             tier: 'essential',
@@ -864,7 +1402,7 @@
           },
           {
             id: 'exp_5',
-            name: 'Healthcare & Medical Reserve',
+            name: DEFAULT_EXPENSE_NAMES.exp_5[currentLang],
             color: COLOR_PALETTE[4],
             monthlyAmount: 280,
             tier: 'essential',
@@ -872,7 +1410,7 @@
           },
           {
             id: 'exp_6',
-            name: 'Dining Out, Entertainment & Travel',
+            name: DEFAULT_EXPENSE_NAMES.exp_6[currentLang],
             color: COLOR_PALETTE[5],
             monthlyAmount: 750,
             tier: 'discretionary',
@@ -892,7 +1430,6 @@
         if (typeof val === 'number') return val;
         if (!val) return 0;
         let str = String(val).trim().replace(/[$€£\s"']/g, '');
-        // Handle European vs US decimals
         if (str.includes(',') && !str.includes('.')) {
           str = str.replace(',', '.');
         } else if (str.includes('.') && str.includes(',')) {
@@ -938,12 +1475,16 @@
           const monthlyIncome = state.netMonthlyIncome * Math.pow(1 + (state.incomeGrowthRate / 100), y);
 
           let essentialMonthly = 0;
+          let debtMonthly = 0;
           let discretionaryMonthly = 0;
 
           state.expenses.forEach(exp => {
             const baseAdj = exp.monthlyAmount * locFactor;
             const inflated = baseAdj * Math.pow(1 + (exp.inflationRate / 100), y);
-            if (exp.tier === 'essential') {
+            if (exp.tier === 'debt') {
+              essentialMonthly += inflated;
+              debtMonthly += inflated;
+            } else if (exp.tier === 'essential') {
               essentialMonthly += inflated;
             } else {
               discretionaryMonthly += inflated;
@@ -962,6 +1503,7 @@
             year: y,
             monthlyIncome,
             essentialMonthly,
+            debtMonthly,
             discretionaryMonthly,
             totalMonthlySpend,
             monthlySurplus,
@@ -985,6 +1527,8 @@
       const horizonSlider = document.getElementById('horizonSlider');
       const locationMultInput = document.getElementById('locationMultInput');
       const locationMultSlider = document.getElementById('locationMultSlider');
+      const maxDebtDtiInput = document.getElementById('maxDebtDtiInput');
+      const maxDebtDtiSlider = document.getElementById('maxDebtDtiSlider');
 
       const deficitBanner = document.getElementById('deficitBanner');
       const expensesContainer = document.getElementById('expensesContainer');
@@ -999,12 +1543,28 @@
       const kpiFutureCost = document.getElementById('kpiFutureCost');
       const kpiFutureHorizon = document.getElementById('kpiFutureHorizon');
 
+      const budgetSectionTitle = document.getElementById('budgetSectionTitle');
+      const activePresetBadge = document.getElementById('activePresetBadge');
+      const presetPills = document.getElementById('presetPills');
+      const presetDesc = document.getElementById('presetDesc');
+
+      const benchNeedsTitle = document.getElementById('benchNeedsTitle');
       const benchNeedsLabel = document.getElementById('benchNeedsLabel');
       const benchNeedsBar = document.getElementById('benchNeedsBar');
+      const benchWantsTitle = document.getElementById('benchWantsTitle');
       const benchWantsLabel = document.getElementById('benchWantsLabel');
       const benchWantsBar = document.getElementById('benchWantsBar');
+      const benchSavingsTitle = document.getElementById('benchSavingsTitle');
       const benchSavingsLabel = document.getElementById('benchSavingsLabel');
       const benchSavingsBar = document.getElementById('benchSavingsBar');
+
+      const benchDtiTitle = document.getElementById('benchDtiTitle');
+      const benchDtiLabel = document.getElementById('benchDtiLabel');
+      const benchDtiBar = document.getElementById('benchDtiBar');
+      const dtiRemainingVal = document.getElementById('dtiRemainingVal');
+      const dtiSafeLoanVal = document.getElementById('dtiSafeLoanVal');
+
+      const categoryPercentagesList = document.getElementById('categoryPercentagesList');
 
       const insightCumSurplus = document.getElementById('insightCumSurplus');
       const insightCumSub = document.getElementById('insightCumSub');
@@ -1018,26 +1578,141 @@
       const btnLoadCSV = document.getElementById('btnLoadCSV');
       const btnExportCSV = document.getElementById('btnExportCSV');
       const btnAddExpense = document.getElementById('btnAddExpense');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+      const langSelect = document.getElementById('langSelect');
+
+      function applyTheme() {
+        if (currentTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        updateThemeButtonText();
+      }
+
+      function updateThemeButtonText() {
+        const tr = t();
+        btnThemeToggle.textContent = currentTheme === 'light' ? tr.themeDark : tr.themeLight;
+      }
+
+      function translateDefaultExpenseNames(prevLang, nextLang) {
+        state.expenses.forEach(exp => {
+          if (DEFAULT_EXPENSE_NAMES[exp.id] && exp.name === DEFAULT_EXPENSE_NAMES[exp.id][prevLang]) {
+            exp.name = DEFAULT_EXPENSE_NAMES[exp.id][nextLang];
+          } else {
+            const matchEn = /^Expense Category (\d+)$/i.exec(exp.name);
+            const matchEs = /^Categoría de Gasto (\d+)$/i.exec(exp.name);
+            if (nextLang === 'es' && matchEn) {
+              exp.name = `Categoría de Gasto ${matchEn[1]}`;
+            } else if (nextLang === 'en' && matchEs) {
+              exp.name = `Expense Category ${matchEs[1]}`;
+            }
+          }
+        });
+      }
+
+      function applyStaticTranslations() {
+        const tr = t();
+        document.documentElement.lang = currentLang;
+        document.title = tr.pageTitle;
+        document.getElementById('appTitle').textContent = tr.appTitle;
+        document.getElementById('appSubtitle').textContent = tr.appSubtitle;
+        document.getElementById('btnMainHubText').textContent = tr.mainHub;
+        document.getElementById('btnMainHub').title = tr.mainHubTitle;
+        document.getElementById('btnLoadCSVText').textContent = tr.loadCSV;
+        btnLoadCSV.title = tr.loadCSVTitle;
+        document.getElementById('btnExportCSVText').textContent = tr.exportCSV;
+        btnExportCSV.title = tr.exportCSVTitle;
+        document.getElementById('btnAddExpenseText').textContent = tr.addExpense;
+
+        const setElWithTip = (id, text, infoEn, infoEs) => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.innerHTML = `${escapeHtml(text)} <span class="info-icon" data-info-en="${infoEn}" data-info-es="${infoEs}">i</span>`;
+          }
+        };
+
+        setElWithTip('lblNetIncome', tr.lblNetIncome, 'Your take-home salary or net household earnings after taxes and payroll deductions.', 'Tu salario neto en mano o ingresos familiares después de impuestos y deducciones de nómina.');
+        setElWithTip('lblIncomeGrowth', tr.lblIncomeGrowth, 'Expected annual cost-of-living raise or salary percentage increase (COLA).', 'Aumento salarial porcentual anual esperado por costo de vida o mérito.');
+        setElWithTip('lblHorizon', tr.lblHorizon, 'Number of forward years to simulate inflation and cost trajectory.', 'Número de años hacia adelante para simular la inflación y trayectoria de costos.');
+        document.getElementById('sfxHorizon').textContent = tr.sfxHorizon;
+        setElWithTip('lblLocationMult', tr.lblLocationMult, 'Relative cost index if relocating to a different city (100% = current baseline).', 'Índice de costo relativo si te trasladas de ciudad (100% = tu ubicación actual).');
+        setElWithTip('lblMaxDebtDti', tr.lblMaxDebtDti, 'Maximum percentage of monthly income banks permit toward debt service (typically 30% to 43%).', 'Porcentaje máximo de ingresos que los bancos permiten destinar al pago de deudas e hipoteca (típicamente 30% a 43%).');
+
+        deficitBanner.textContent = tr.deficitBanner;
+
+        setElWithTip('kpiTitleTotalMonthlyCost', tr.kpiTitleTotalMonthlyCost, 'Combined monthly living spend across all essential and discretionary categories.', 'Gasto de vida mensual total sumando todas las categorías esenciales y discrecionales.');
+        setElWithTip('kpiTitleMonthlySurplus', tr.kpiTitleMonthlySurplus, 'Net income remaining after all living expenses, available for investing and debt payoff.', 'Ingreso neto restante tras pagar todos los gastos de vida, disponible para invertir y ahorrar.');
+        setElWithTip('kpiTitleEssentialFloor', tr.kpiTitleEssentialFloor, 'Bare-minimum monthly expenses strictly required for survival (shelter, utilities, groceries, healthcare).', 'Gasto mensual indispensable mínimo estrictamente requerido para subsistir (vivienda, servicios, comida, salud).');
+        setElWithTip('kpiTitleFutureCost', tr.kpiTitleFutureCost, 'Projected monthly expenses at the end of the horizon factoring in compounding price inflation.', 'Gasto mensual proyectado al término del horizonte considerando la inflación acumulada.');
+
+        setElWithTip('leftCardTitleText', tr.leftCardTitleText, 'Living expenses configured with individual inflation rates and budget tiers.', 'Gastos de vida configurados con tasas de inflación individuales y niveles de presupuesto.');
+        document.getElementById('leftCardHint').textContent = tr.leftCardHint;
+        setElWithTip('presetSelectorHeading', tr.presetSelectorHeading, 'Budget framework allocating income among Needs, Wants, and Savings according to personal lifestyle goals.', 'Marco de presupuesto que distribuye ingresos entre Necesidades, Deseos y Ahorros según tus objetivos.');
+        document.getElementById('dtiRemainingLabel').textContent = tr.dtiRemainingLabel;
+        document.getElementById('dtiSafeLoanLabel').textContent = tr.dtiSafeLoanLabel;
+        setElWithTip('catBreakdownHeaderLeft', tr.catBreakdownHeaderLeft, 'Percentage breakdown of each budget category relative to total monthly spend and monthly income.', 'Desglose porcentual de cada categoría de gasto respecto al gasto total y a tus ingresos netos.');
+        document.getElementById('catBreakdownHeaderRight').textContent = tr.catBreakdownHeaderRight;
+
+        setElWithTip('insightWeightedInfLabel', tr.insightWeightedInfLabel, 'Blended average annual inflation rate weighted across all your individual spending categories.', 'Tasa de inflación anual promedio ponderada según el peso de cada categoría de gasto.');
+        document.getElementById('insightWeightedInfSub').textContent = tr.insightWeightedInfSub;
+        document.getElementById('tableSectionTitle').textContent = tr.tableSectionTitle;
+
+        presetPills.querySelectorAll('[data-preset-label]').forEach(span => {
+          const key = span.getAttribute('data-preset-label');
+          if (BUDGET_PRESETS[key]) {
+            span.textContent = BUDGET_PRESETS[key][currentLang].name;
+          }
+        });
+
+        const tableHeaderTooltips = [
+          { en: 'Projection year index.', es: 'Año de la proyección.' },
+          { en: 'Projected monthly take-home income adjusted by annual salary growth (COLA).', es: 'Ingreso mensual neto proyectado con aumentos salariales por costo de vida (COLA).' },
+          { en: 'Projected monthly cost of essential survival needs (shelter, utilities, food, debts).', es: 'Costo mensual proyectado de necesidades básicas (vivienda, servicios, comida, deudas).' },
+          { en: 'Projected monthly cost of discretionary lifestyle spending and wants.', es: 'Gasto mensual proyectado en estilo de vida y compras discrecionales.' },
+          { en: 'Combined projected monthly cost of living.', es: 'Costo de vida mensual total proyectado.' },
+          { en: 'Net monthly cash remaining after all living expenses.', es: 'Efectivo neto mensual disponible tras pagar todos los gastos.' },
+          { en: 'Annualized net surplus saved or invested during the 12-month period.', es: 'Excedente neto anualizado acumulado durante los 12 meses.' },
+          { en: 'Cumulative cash surplus accumulated from year 1 to this year.', es: 'Excedente acumulado total de efectivo desde el año 1 hasta este año.' }
+        ];
+        const theadRow = document.getElementById('scheduleTheadRow');
+        if (theadRow) {
+          theadRow.innerHTML = tr.tableHeaders.map((h, i) => {
+            const tip = tableHeaderTooltips[i] || { en: '', es: '' };
+            return `<th>${escapeHtml(h)} <span class="info-icon" data-info-en="${tip.en}" data-info-es="${tip.es}">i</span></th>`;
+          }).join('');
+        }
+
+        updateThemeButtonText();
+      }
 
       // --- Render Expense Inputs ---
       function renderExpenseInputs() {
+        const tr = t();
         expensesContainer.innerHTML = '';
         expenseCountBadge.textContent = state.expenses.length;
+
+        const locFactor = state.locationMultiplier / 100;
+        const totalSpend = state.expenses.reduce((acc, e) => acc + e.monthlyAmount * locFactor, 0);
 
         state.expenses.forEach(exp => {
           const card = document.createElement('div');
           card.className = 'expense-item';
           card.dataset.id = exp.id;
 
+          const adjAmt = exp.monthlyAmount * locFactor;
+          const shareOfSpend = totalSpend > 0 ? ((adjAmt / totalSpend) * 100).toFixed(1) : '0.0';
+
           card.innerHTML = `
             <div class="expense-header">
               <div class="expense-title-group">
                 <span class="expense-color-badge" style="background-color: ${exp.color};"></span>
-                <input type="text" class="expense-name-input" value="${escapeHtml(exp.name)}" placeholder="Expense Category" data-field="name">
+                <input type="text" class="expense-name-input" value="${escapeHtml(exp.name)}" placeholder="${escapeHtml(tr.expPlaceholder)}" data-field="name">
               </div>
-              <div>
+              <div style="display:flex; align-items:center; gap:0.45rem;">
+                <span class="exp-share-pill" style="font-size:0.72rem; font-weight:700; color:var(--text-muted); background:var(--bg-input); padding:0.15rem 0.45rem; border-radius:4px;">${tr.expSharePill(shareOfSpend)}</span>
                 ${state.expenses.length > 1 ? `
-                  <button type="button" class="btn-icon btn-delete" title="Remove Category" data-id="${exp.id}">
+                  <button type="button" class="btn-icon btn-delete" title="${escapeHtml(tr.removeCategoryTitle)}" data-id="${exp.id}">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <polyline points="3 6 5 6 21 6"></polyline>
                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -1049,7 +1724,7 @@
 
             <div class="expense-controls-grid">
               <div class="field-group">
-                <label class="field-label">Monthly Cost</label>
+                <label class="field-label">${escapeHtml(tr.lblMonthlyCost)}</label>
                 <div class="input-wrapper has-prefix">
                   <span class="input-prefix">$</span>
                   <input type="text" inputmode="numeric" value="${Math.round(exp.monthlyAmount).toLocaleString()}" data-field="monthlyAmount">
@@ -1057,15 +1732,16 @@
               </div>
 
               <div class="field-group">
-                <label class="field-label">Budget Tier</label>
+                <label class="field-label">${escapeHtml(tr.lblTier)}</label>
                 <select data-field="tier">
-                  <option value="essential" ${exp.tier === 'essential' ? 'selected' : ''}>Essential Need</option>
-                  <option value="discretionary" ${exp.tier === 'discretionary' ? 'selected' : ''}>Discretionary Want</option>
+                  <option value="essential" ${exp.tier === 'essential' ? 'selected' : ''}>${escapeHtml(tr.tierEssentialOpt)}</option>
+                  <option value="debt" ${exp.tier === 'debt' ? 'selected' : ''}>${escapeHtml(tr.tierDebtOpt)}</option>
+                  <option value="discretionary" ${exp.tier === 'discretionary' ? 'selected' : ''}>${escapeHtml(tr.tierDiscretionaryOpt)}</option>
                 </select>
               </div>
 
               <div class="field-group">
-                <label class="field-label">Annual Inflation</label>
+                <label class="field-label">${escapeHtml(tr.lblAnnualInf)}</label>
                 <div class="input-wrapper has-suffix">
                   <input type="number" step="0.1" min="0" max="25" value="${exp.inflationRate}" data-field="inflationRate">
                   <span class="input-suffix">%</span>
@@ -1080,6 +1756,23 @@
         attachExpenseListeners();
       }
 
+      function updateExpenseSharePills() {
+        const tr = t();
+        const locFactor = state.locationMultiplier / 100;
+        const totalSpend = state.expenses.reduce((acc, e) => acc + e.monthlyAmount * locFactor, 0);
+        const items = expensesContainer.querySelectorAll('.expense-item');
+        items.forEach(item => {
+          const id = item.dataset.id;
+          const exp = state.expenses.find(e => e.id === id);
+          const pill = item.querySelector('.exp-share-pill');
+          if (exp && pill) {
+            const adjAmt = exp.monthlyAmount * locFactor;
+            const share = totalSpend > 0 ? ((adjAmt / totalSpend) * 100).toFixed(1) : '0.0';
+            pill.textContent = tr.expSharePill(share);
+          }
+        });
+      }
+
       function attachExpenseListeners() {
         const items = expensesContainer.querySelectorAll('.expense-item');
         items.forEach(item => {
@@ -1089,7 +1782,7 @@
 
           const nameInput = item.querySelector('[data-field="name"]');
           nameInput.addEventListener('input', (e) => {
-            exp.name = e.target.value || 'Untitled Expense';
+            exp.name = e.target.value || t().untitledExpense;
             recalculateAll(false);
           });
 
@@ -1104,6 +1797,7 @@
               } else if (field === 'inflationRate') {
                 exp.inflationRate = clamp(parseFloat(e.target.value) || 0, 0, 30);
               }
+              updateExpenseSharePills();
               recalculateAll(false);
             });
           });
@@ -1120,8 +1814,61 @@
         });
       }
 
+      // --- Render Category Percentage Breakdown Below Graph ---
+      function renderCategoryPercentages(yr0) {
+        if (!categoryPercentagesList) return;
+        const tr = t();
+        categoryPercentagesList.innerHTML = '';
+
+        const locFactor = state.locationMultiplier / 100;
+        const totalSpend = Math.max(0, yr0.totalMonthlySpend);
+        const incomeBase = Math.max(1, yr0.monthlyIncome);
+
+        state.expenses.forEach(exp => {
+          const adjNow = exp.monthlyAmount * locFactor;
+          const adjFinal = adjNow * Math.pow(1 + (exp.inflationRate / 100), state.horizonYears);
+          const pctOfSpend = totalSpend > 0 ? (adjNow / totalSpend) * 100 : 0;
+          const pctOfIncome = (adjNow / incomeBase) * 100;
+
+          let tierLabel = tr.tierBadgeEssential;
+          let tierColor = '#38bdf8';
+          if (exp.tier === 'debt') {
+            tierLabel = tr.tierBadgeDebt;
+            tierColor = '#c084fc';
+          } else if (exp.tier === 'discretionary') {
+            tierLabel = tr.tierBadgeDiscretionary;
+            tierColor = '#f59e0b';
+          }
+
+          const row = document.createElement('div');
+          row.className = 'benchmark-row';
+          row.innerHTML = `
+            <div class="benchmark-top">
+              <span style="display:inline-flex; align-items:center; gap:0.45rem; color:var(--text-main);">
+                <span style="width:9px; height:9px; border-radius:2px; background:${exp.color}; display:inline-block;"></span>
+                ${escapeHtml(exp.name)}
+                <span style="font-size:0.68rem; font-weight:700; color:${tierColor}; background:rgba(148,163,184,0.12); padding:0.1rem 0.38rem; border-radius:4px;">${tierLabel}</span>
+              </span>
+              <span style="color:${exp.color}; font-weight:700;">
+                ${tr.catRowStats(pctOfSpend.toFixed(1), pctOfIncome.toFixed(1), formatMoney(adjNow))}
+              </span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width:${Math.min(100, pctOfSpend).toFixed(1)}%; background:${exp.color};"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.71rem; color:var(--text-subtle);">
+              <span>${tr.catRowInf(exp.inflationRate.toFixed(1))}</span>
+              <span>${tr.catRowProj(state.horizonYears, formatMoney(adjFinal))}</span>
+            </div>
+          `;
+          categoryPercentagesList.appendChild(row);
+        });
+      }
+
       // --- Canvas Chart ---
       function drawChart(schedule) {
+        const tr = t();
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
         const dpr = window.devicePixelRatio || 1;
         const rect = colCanvas.getBoundingClientRect();
         colCanvas.width = rect.width * dpr;
@@ -1146,9 +1893,9 @@
         maxVal = Math.ceil(maxVal * 1.1);
 
         const gridLines = 4;
-        ctx.strokeStyle = '#222e44';
+        ctx.strokeStyle = isLight ? '#cbd5e1' : '#222e44';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = isLight ? '#475569' : '#64748b';
         ctx.font = '10px -apple-system, sans-serif';
         ctx.textAlign = 'right';
 
@@ -1168,7 +1915,7 @@
 
         for (let yr = 0; yr <= numYears; yr += stepX) {
           const x = padding.left + (yr / numYears) * graphW;
-          ctx.fillText(`Yr ${yr}`, x, h - 12);
+          ctx.fillText(tr.chartAxisYr(yr), x, h - 12);
         }
 
         function plotCurve(key, color, width, dashed = false) {
@@ -1191,36 +1938,52 @@
         plotCurve('monthlyIncome', '#10b981', 2.5);
         plotCurve('totalMonthlySpend', '#f43f5e', 2.5);
         plotCurve('essentialMonthly', '#38bdf8', 2, true);
+        plotCurve('debtMonthly', '#c084fc', 1.8, true);
+
+        const yr0 = schedule[0];
+        const inc0 = Math.max(1, yr0.monthlyIncome);
+        const spendPct0 = ((yr0.totalMonthlySpend / inc0) * 100).toFixed(1);
+        const essPct0 = ((yr0.essentialMonthly / inc0) * 100).toFixed(1);
+        const debtPct0 = ((yr0.debtMonthly / inc0) * 100).toFixed(1);
 
         chartLegend.innerHTML = `
           <div class="legend-item">
             <span class="legend-color" style="background:#10b981;"></span>
-            <span>Monthly Net Income</span>
+            <span>${tr.legendIncome}</span>
+            <span class="info-icon" data-info-en="Net take-home income compounding by annual raises (COLA)." data-info-es="Ingreso neto en mano compuesto por aumentos salariales (COLA).">i</span>
           </div>
           <div class="legend-item">
             <span class="legend-color" style="background:#f43f5e;"></span>
-            <span>Total Monthly Cost of Living</span>
+            <span>${tr.legendTotalCost(spendPct0)}</span>
+            <span class="info-icon" data-info-en="Combined projected monthly cost of living across all categories." data-info-es="Costo mensual total proyectado sumando todas las categorías.">i</span>
           </div>
           <div class="legend-item">
-            <span class="legend-color" style="background:#38bdf8; border:1px dashed #fff;"></span>
-            <span>Essential Survival Floor</span>
+            <span class="legend-color" style="background:#38bdf8; border:1px dashed var(--text-main);"></span>
+            <span>${tr.legendEssential(essPct0)}</span>
+            <span class="info-icon" data-info-en="Essential survival floor required to maintain shelter, food, and minimum solvency." data-info-es="Piso de subsistencia esencial requerido para mantener vivienda, comida y solvencia.">i</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background:#c084fc; border:1px dashed var(--text-main);"></span>
+            <span>${tr.legendDebt(debtPct0)}</span>
+            <span class="info-icon" data-info-en="Monthly debt service obligations impacting bank loan capacity." data-info-es="Obligaciones mensuales de deuda que impactan la capacidad de endeudamiento bancario.">i</span>
           </div>
         `;
       }
 
       // --- Render Schedule Table ---
       function renderTable(schedule) {
+        const trObj = t();
         scheduleTbody.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
         schedule.forEach(row => {
           const tr = document.createElement('tr');
-          const surColor = row.monthlySurplus >= 0 ? '#34d399' : '#f87171';
+          const surColor = row.monthlySurplus >= 0 ? '#10b981' : '#ef4444';
           tr.innerHTML = `
-            <td style="font-weight:700;">Year ${row.year}</td>
+            <td style="font-weight:700;">${trObj.tableYearRow(row.year)}</td>
             <td style="color:#ffffff; font-weight:600;">${formatMoney(row.monthlyIncome)}</td>
             <td style="color:#38bdf8;">${formatMoney(row.essentialMonthly)}</td>
-            <td style="color:#fbbf24;">${formatMoney(row.discretionaryMonthly)}</td>
+            <td style="color:#f59e0b;">${formatMoney(row.discretionaryMonthly)}</td>
             <td style="color:#f43f5e; font-weight:600;">${formatMoney(row.totalMonthlySpend)}</td>
             <td style="color:${surColor}; font-weight:700;">${formatMoney(row.monthlySurplus)}</td>
             <td style="color:${surColor};">${formatMoney(row.annualSurplus)}</td>
@@ -1234,7 +1997,9 @@
 
       // --- Recalculate Everything ---
       function recalculateAll(rebuildInputs = false) {
+        const tr = t();
         if (rebuildInputs) renderExpenseInputs();
+        else updateExpenseSharePills();
 
         // Sync top controls
         netIncomeInput.value = Math.round(state.netMonthlyIncome).toLocaleString();
@@ -1245,6 +2010,23 @@
         horizonSlider.value = state.horizonYears;
         locationMultInput.value = state.locationMultiplier;
         locationMultSlider.value = state.locationMultiplier;
+        maxDebtDtiInput.value = state.maxDebtDtiPct;
+        maxDebtDtiSlider.value = clamp(state.maxDebtDtiPct, 10, 60);
+
+        const preset = BUDGET_PRESETS[state.budgetPreset] || BUDGET_PRESETS.standard_50_30_20;
+        const presetLocalized = preset[currentLang] || preset.en;
+
+        // Sync preset UI
+        budgetSectionTitle.textContent = tr.budgetSectionTitle(preset.ratioText);
+        activePresetBadge.textContent = presetLocalized.name;
+        presetDesc.textContent = presetLocalized.desc;
+        presetPills.querySelectorAll('.preset-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.preset === state.budgetPreset);
+        });
+
+        benchNeedsTitle.innerHTML = `${tr.benchNeedsTitle(preset.needsTarget)} <span class="info-icon" data-info-en="Target ceiling for essential survival needs: shelter, utilities, food, and minimum debt payments." data-info-es="Techo objetivo para necesidades básicas de supervivencia: vivienda, servicios, comida indispensable y deudas mínimas.">i</span>`;
+        benchWantsTitle.innerHTML = `${tr.benchWantsTitle(preset.wantsTarget)} <span class="info-icon" data-info-en="Target ceiling for lifestyle spending, dining out, entertainment, and personal shopping." data-info-es="Techo objetivo para ocio, salidas a comer, entretenimiento y compras personales.">i</span>`;
+        benchSavingsTitle.innerHTML = `${tr.benchSavingsTitle(preset.savingsTarget)} <span class="info-icon" data-info-en="Target floor of take-home income preserved for investing, emergency fund, and wealth compounding." data-info-es="Piso objetivo de ingresos destinado a inversión, fondo de emergencia y construcción de patrimonio.">i</span>`;
 
         const { yearlySchedule, blendedInflation } = simulateCostOfLiving();
         const yr0 = yearlySchedule[0];
@@ -1252,44 +2034,78 @@
 
         deficitBanner.style.display = yr0.monthlySurplus < 0 ? 'block' : 'none';
 
-        kpiTotalMonthlyCost.textContent = `${formatMoney(yr0.totalMonthlySpend)}/mo`;
-        kpiAnnualCost.textContent = `${formatMoney(yr0.totalMonthlySpend * 12)}/year total spend`;
+        kpiTotalMonthlyCost.textContent = `${formatMoney(yr0.totalMonthlySpend)}${tr.moSuffix}`;
+        kpiAnnualCost.textContent = tr.annualSpendSub(formatMoney(yr0.totalMonthlySpend * 12));
 
-        kpiMonthlySurplus.textContent = `${formatMoney(yr0.monthlySurplus)}/mo`;
-        kpiMonthlySurplus.style.color = yr0.monthlySurplus >= 0 ? '#34d399' : '#f87171';
+        kpiMonthlySurplus.textContent = `${formatMoney(yr0.monthlySurplus)}${tr.moSuffix}`;
+        kpiMonthlySurplus.style.color = yr0.monthlySurplus >= 0 ? '#10b981' : '#ef4444';
 
         const incomeBase = Math.max(1, yr0.monthlyIncome);
         const savingsRatePct = ((yr0.monthlySurplus / incomeBase) * 100).toFixed(1);
-        kpiSavingsRate.textContent = `${savingsRatePct}% net cash flow margin`;
+        kpiSavingsRate.textContent = tr.savingsRateSub(savingsRatePct, preset.savingsTarget);
 
-        kpiEssentialFloor.textContent = `${formatMoney(yr0.essentialMonthly)}/mo`;
+        kpiEssentialFloor.textContent = `${formatMoney(yr0.essentialMonthly)}${tr.moSuffix}`;
         const essPct = ((yr0.essentialMonthly / incomeBase) * 100).toFixed(1);
-        kpiEssentialRatio.textContent = `${essPct}% of take-home pay`;
+        kpiEssentialRatio.textContent = tr.essentialRatioSub(essPct, preset.needsTarget);
 
-        kpiFutureCost.textContent = `${formatMoney(yrFinal.totalMonthlySpend)}/mo`;
-        kpiFutureHorizon.textContent = `At Year ${state.horizonYears} (${blendedInflation.toFixed(1)}% avg inf)`;
+        kpiFutureCost.textContent = `${formatMoney(yrFinal.totalMonthlySpend)}${tr.moSuffix}`;
+        kpiFutureHorizon.textContent = tr.futureHorizonSub(state.horizonYears, blendedInflation.toFixed(1));
 
-        // 50/30/20 Bars
+        // Dynamic Budget Variant Bars
         const needsPct = Math.max(0, (yr0.essentialMonthly / incomeBase) * 100);
         const wantsPct = Math.max(0, (yr0.discretionaryMonthly / incomeBase) * 100);
         const savePct = Math.max(0, (yr0.monthlySurplus / incomeBase) * 100);
 
-        benchNeedsLabel.textContent = `${needsPct.toFixed(1)}% (${formatMoney(yr0.essentialMonthly)})`;
+        const needsLimit = preset.needsTarget;
+        const wantsLimit = preset.wantsTarget;
+        const saveTarget = preset.savingsTarget;
+
+        benchNeedsLabel.textContent = `${needsPct.toFixed(1)}% (${formatMoney(yr0.essentialMonthly)} / ${formatMoney((needsLimit / 100) * incomeBase)} ${tr.capWord})`;
         benchNeedsBar.style.width = `${Math.min(100, needsPct)}%`;
-        benchNeedsBar.style.background = needsPct > 55 ? '#ef4444' : '#38bdf8';
+        benchNeedsBar.style.background = needsPct > needsLimit + 5 ? '#ef4444' : (needsPct > needsLimit ? '#f59e0b' : '#38bdf8');
 
-        benchWantsLabel.textContent = `${wantsPct.toFixed(1)}% (${formatMoney(yr0.discretionaryMonthly)})`;
+        benchWantsLabel.textContent = `${wantsPct.toFixed(1)}% (${formatMoney(yr0.discretionaryMonthly)} / ${formatMoney((wantsLimit / 100) * incomeBase)} ${tr.capWord})`;
         benchWantsBar.style.width = `${Math.min(100, wantsPct)}%`;
-        benchWantsBar.style.background = wantsPct > 35 ? '#ef4444' : '#f59e0b';
+        benchWantsBar.style.background = wantsPct > wantsLimit + 5 ? '#ef4444' : (wantsPct > wantsLimit ? '#fb923c' : '#f59e0b');
 
-        benchSavingsLabel.textContent = `${savePct.toFixed(1)}% (${formatMoney(Math.max(0, yr0.monthlySurplus))})`;
+        benchSavingsLabel.textContent = `${savePct.toFixed(1)}% (${formatMoney(Math.max(0, yr0.monthlySurplus))} / ${formatMoney((saveTarget / 100) * incomeBase)} ${tr.goalWord})`;
         benchSavingsBar.style.width = `${Math.min(100, savePct)}%`;
+        benchSavingsBar.style.background = savePct >= saveTarget ? '#10b981' : (savePct >= saveTarget * 0.6 ? '#f59e0b' : '#ef4444');
 
+        // Bank Loan / Mortgage DTI Limitation Bar & Affordability
+        const dtiLimitPct = state.maxDebtDtiPct;
+        const maxDebtDollars = (dtiLimitPct / 100) * incomeBase;
+        const attachedDebtDollars = yr0.debtMonthly;
+        const attachedDebtPct = (attachedDebtDollars / incomeBase) * 100;
+        const remainingBankDtiRoom = maxDebtDollars - attachedDebtDollars;
+
+        const remainingNeedsCapRoom = ((needsLimit / 100) * incomeBase) - yr0.essentialMonthly;
+        const remainingSurplusAboveGoal = yr0.monthlySurplus - ((saveTarget / 100) * incomeBase);
+        const safeBudgetLoanRoom = Math.max(0, Math.min(remainingBankDtiRoom, Math.max(remainingNeedsCapRoom, remainingSurplusAboveGoal)));
+
+        benchDtiTitle.innerHTML = `${tr.benchDtiTitle(dtiLimitPct)} <span class="info-icon" data-info-en="Total monthly debt service compared against the banking lending limit." data-info-es="Pagos mensuales totales de deuda comparados frente al límite de endeudamiento bancario.">i</span>`;
+        benchDtiLabel.textContent = `${attachedDebtPct.toFixed(1)}% (${formatMoney(attachedDebtDollars)} / ${formatMoney(maxDebtDollars)} ${tr.maxWord})`;
+        benchDtiBar.style.width = `${Math.min(100, (attachedDebtPct / Math.max(1, dtiLimitPct)) * 100)}%`;
+        benchDtiBar.style.background = attachedDebtPct > dtiLimitPct ? '#ef4444' : (attachedDebtPct > dtiLimitPct * 0.85 ? '#f59e0b' : '#a855f7');
+
+        if (remainingBankDtiRoom >= 0) {
+          dtiRemainingVal.textContent = tr.dtiRoomAvail(formatMoney(remainingBankDtiRoom), (dtiLimitPct - attachedDebtPct).toFixed(1));
+          dtiRemainingVal.style.color = '#10b981';
+        } else {
+          dtiRemainingVal.textContent = tr.dtiOverLimit(formatMoney(Math.abs(remainingBankDtiRoom)), (attachedDebtPct - dtiLimitPct).toFixed(1));
+          dtiRemainingVal.style.color = '#ef4444';
+        }
+
+        dtiSafeLoanVal.textContent = tr.dtiSafeLoanVal(formatMoney(safeBudgetLoanRoom), preset.ratioText);
+        dtiSafeLoanVal.style.color = safeBudgetLoanRoom > 0 ? '#38bdf8' : '#f59e0b';
+
+        document.getElementById('insightCumSurplusLabel').innerHTML = `${escapeHtml(tr.insightCumSurplusLabel(state.horizonYears))} <span class="info-icon" data-info-en="Total cumulative cash saved over the projection horizon without factoring in investment returns." data-info-es="Dinero acumulado ahorrado durante todo el horizonte de proyección sin contar retornos de inversión.">i</span>`;
         insightCumSurplus.textContent = formatMoney(yrFinal.cumulativeSurplus);
-        insightCumSub.textContent = `Over ${state.horizonYears} years (uninvested cash)`;
-        insightWeightedInf.textContent = `${blendedInflation.toFixed(2)}%/yr`;
+        insightCumSub.textContent = tr.insightCumSub(state.horizonYears);
+        insightWeightedInf.textContent = `${blendedInflation.toFixed(2)}%${tr.yrSuffix}`;
 
         drawChart(yearlySchedule);
+        renderCategoryPercentages(yr0);
         renderTable(yearlySchedule);
       }
 
@@ -1297,34 +2113,78 @@
       function exportToCSV() {
         const { yearlySchedule, blendedInflation } = simulateCostOfLiving();
         const yr0 = yearlySchedule[0];
+        const preset = BUDGET_PRESETS[state.budgetPreset] || BUDGET_PRESETS.standard_50_30_20;
+        const presetName = (preset[currentLang] || preset.en).name;
         const rows = [];
 
-        rows.push(['COST OF LIVING & CASH FLOW BUDGET PROJECTION']);
-        rows.push(['Export Date', new Date().toLocaleDateString()]);
-        rows.push(['Monthly Net Take-Home Income ($)', state.netMonthlyIncome.toFixed(2)]);
-        rows.push(['Annual Income Growth Rate (%)', `${state.incomeGrowthRate.toFixed(2)}%`]);
-        rows.push(['Projection Horizon (Years)', state.horizonYears]);
-        rows.push(['Location Cost Multiplier (%)', `${state.locationMultiplier}%`]);
-        rows.push(['Current Total Monthly Cost ($)', yr0.totalMonthlySpend.toFixed(2)]);
-        rows.push(['Current Essential Floor ($)', yr0.essentialMonthly.toFixed(2)]);
-        rows.push(['Current Monthly Investable Surplus ($)', yr0.monthlySurplus.toFixed(2)]);
-        rows.push(['Blended Annual Expense Inflation (%)', `${blendedInflation.toFixed(2)}%`]);
-        rows.push([]);
+        if (currentLang === 'es') {
+          rows.push(['PROYECCIÓN DE PRESUPUESTO DE COSTO DE VIDA Y FLUJO DE CAJA']);
+          rows.push(['Fecha de Exportación', new Date().toLocaleDateString()]);
+          rows.push(['Ingreso Mensual Neto Disponible ($)', state.netMonthlyIncome.toFixed(2)]);
+          rows.push(['Tasa de Crecimiento Anual de Ingresos (%)', `${state.incomeGrowthRate.toFixed(2)}%`]);
+          rows.push(['Horizonte de Proyección (Años)', state.horizonYears]);
+          rows.push(['Multiplicador de Costo Local (%)', `${state.locationMultiplier}%`]);
+          rows.push(['Límite Bancario Máx. Endeudamiento (%)', `${state.maxDebtDtiPct}%`]);
+          rows.push(['Variante de Filosofía Presupuestaria', `${preset.ratioText} (${presetName})`]);
+          rows.push(['Costo Mensual Total Actual ($)', yr0.totalMonthlySpend.toFixed(2)]);
+          rows.push(['Piso de Supervivencia Esencial Actual ($)', yr0.essentialMonthly.toFixed(2)]);
+          rows.push(['Servicio de Deuda Adjunto Actual ($)', yr0.debtMonthly.toFixed(2)]);
+          rows.push(['Excedente Mensual Invertible Actual ($)', yr0.monthlySurplus.toFixed(2)]);
+          rows.push(['Inflación Anual Ponderada de Gastos (%)', `${blendedInflation.toFixed(2)}%`]);
+          rows.push([]);
 
-        rows.push(['EXPENSE CATEGORIES CONFIGURATION']);
-        rows.push(['Category Name', 'Base Monthly Cost ($)', 'Budget Tier', 'Annual Inflation Rate (%)']);
-        state.expenses.forEach(exp => {
-          rows.push([
-            `"${exp.name.replace(/"/g, '""')}"`,
-            exp.monthlyAmount.toFixed(2),
-            exp.tier === 'essential' ? 'Essential Need' : 'Discretionary Want',
-            `${exp.inflationRate.toFixed(2)}%`
-          ]);
-        });
-        rows.push([]);
+          rows.push(['CONFIGURACIÓN DE CATEGORÍAS DE GASTOS']);
+          rows.push(['Nombre de Categoría', 'Costo Mensual Base ($)', 'Nivel Presupuestario', 'Tasa de Inflación Anual (%)']);
+          state.expenses.forEach(exp => {
+            let tierText = 'Necesidad Esencial';
+            if (exp.tier === 'debt') tierText = 'Servicio de Deuda / Préstamo (DTI)';
+            else if (exp.tier === 'discretionary') tierText = 'Deseo Discrecional';
+            rows.push([
+              `"${exp.name.replace(/"/g, '""')}"`,
+              exp.monthlyAmount.toFixed(2),
+              tierText,
+              `${exp.inflationRate.toFixed(2)}%`
+            ]);
+          });
+          rows.push([]);
 
-        rows.push(['YEAR-BY-YEAR COST OF LIVING SCHEDULE']);
-        rows.push(['Year', 'Monthly Income ($)', 'Essential Needs ($)', 'Discretionary Wants ($)', 'Total Monthly Cost ($)', 'Monthly Surplus ($)', 'Annual Surplus ($)', 'Cumulative Surplus ($)']);
+          rows.push(['CRONOGRAMA AÑO POR AÑO DE COSTO DE VIDA']);
+          rows.push(['Año', 'Ingreso Mensual ($)', 'Necesidades Esenciales ($)', 'Deseos Discrecionales ($)', 'Costo Mensual Total ($)', 'Excedente Mensual ($)', 'Excedente Anual ($)', 'Excedente Acumulado ($)']);
+        } else {
+          rows.push(['COST OF LIVING & CASH FLOW BUDGET PROJECTION']);
+          rows.push(['Export Date', new Date().toLocaleDateString()]);
+          rows.push(['Monthly Net Take-Home Income ($)', state.netMonthlyIncome.toFixed(2)]);
+          rows.push(['Annual Income Growth Rate (%)', `${state.incomeGrowthRate.toFixed(2)}%`]);
+          rows.push(['Projection Horizon (Years)', state.horizonYears]);
+          rows.push(['Location Cost Multiplier (%)', `${state.locationMultiplier}%`]);
+          rows.push(['Bank Max Debt-to-Income Limit (%)', `${state.maxDebtDtiPct}%`]);
+          rows.push(['Budget Philosophy Variant', `${preset.ratioText} (${presetName})`]);
+          rows.push(['Current Total Monthly Cost ($)', yr0.totalMonthlySpend.toFixed(2)]);
+          rows.push(['Current Essential Floor ($)', yr0.essentialMonthly.toFixed(2)]);
+          rows.push(['Current Attached Debt Service ($)', yr0.debtMonthly.toFixed(2)]);
+          rows.push(['Current Monthly Investable Surplus ($)', yr0.monthlySurplus.toFixed(2)]);
+          rows.push(['Blended Annual Expense Inflation (%)', `${blendedInflation.toFixed(2)}%`]);
+          rows.push([]);
+
+          rows.push(['EXPENSE CATEGORIES CONFIGURATION']);
+          rows.push(['Category Name', 'Base Monthly Cost ($)', 'Budget Tier', 'Annual Inflation Rate (%)']);
+          state.expenses.forEach(exp => {
+            let tierText = 'Essential Need';
+            if (exp.tier === 'debt') tierText = 'Debt / Loan Service (Bank DTI)';
+            else if (exp.tier === 'discretionary') tierText = 'Discretionary Want';
+            rows.push([
+              `"${exp.name.replace(/"/g, '""')}"`,
+              exp.monthlyAmount.toFixed(2),
+              tierText,
+              `${exp.inflationRate.toFixed(2)}%`
+            ]);
+          });
+          rows.push([]);
+
+          rows.push(['YEAR-BY-YEAR COST OF LIVING SCHEDULE']);
+          rows.push(['Year', 'Monthly Income ($)', 'Essential Needs ($)', 'Discretionary Wants ($)', 'Total Monthly Cost ($)', 'Monthly Surplus ($)', 'Annual Surplus ($)', 'Cumulative Surplus ($)']);
+        }
+
         yearlySchedule.forEach(r => {
           rows.push([
             r.year,
@@ -1387,7 +2247,7 @@
         return result;
       }
 
-      // --- Load / Import CSV ---
+      // --- Load / Import CSV (Supports both EN and ES exports) ---
       function handleCSVFile(file) {
         if (!file) return;
         const reader = new FileReader();
@@ -1401,32 +2261,53 @@
             let loadedGrowth = state.incomeGrowthRate;
             let loadedHorizon = state.horizonYears;
             let loadedLoc = state.locationMultiplier;
+            let loadedDti = state.maxDebtDtiPct;
+            let loadedPreset = state.budgetPreset;
             const loadedExpenses = [];
             let inExpConfig = false;
 
             for (let i = 0; i < lines.length; i++) {
               const cols = parseCSVLine(lines[i], delimiter);
               if (!cols[0]) continue;
+              const col0Upper = cols[0].toUpperCase();
               const label = cols[0].toLowerCase();
 
-              if (label.includes('monthly net take-home income')) {
+              if (label.includes('monthly net take-home income') || label.includes('ingreso mensual neto disponible')) {
                 loadedIncome = Math.max(0, parseNumber(cols[1]));
-              } else if (label.includes('annual income growth rate')) {
+              } else if (label.includes('annual income growth rate') || label.includes('tasa de crecimiento anual de ingresos')) {
                 loadedGrowth = clamp(parseNumber(cols[1]), 0, 25);
-              } else if (label.includes('projection horizon')) {
+              } else if (label.includes('projection horizon') || label.includes('horizonte de proyección') || label.includes('horizonte de proyeccion')) {
                 loadedHorizon = clamp(parseInt(cols[1], 10) || 10, 1, 40);
-              } else if (label.includes('location cost multiplier')) {
+              } else if (label.includes('location cost multiplier') || label.includes('multiplicador de costo local')) {
                 loadedLoc = clamp(parseNumber(cols[1]) || 100, 40, 250);
+              } else if (label.includes('bank max debt-to-income limit') || label.includes('límite bancario máx') || label.includes('limite bancario max')) {
+                loadedDti = clamp(parseNumber(cols[1]) || 30, 5, 80);
+              } else if (label.includes('budget philosophy variant') || label.includes('variante de filosofía presupuestaria') || label.includes('variante de filosofia presupuestaria')) {
+                const rawPreset = (cols[1] || '').toLowerCase();
+                if (rawPreset.includes('35 / 10 / 55') || rawPreset.includes('grinding') || rawPreset.includes('intensivo') || rawPreset.includes('fire')) loadedPreset = 'grinding_35_10_55';
+                else if (rawPreset.includes('45 / 15 / 40') || rawPreset.includes('accelerated') || rawPreset.includes('acelerado')) loadedPreset = 'accelerated_45_15_40';
+                else if (rawPreset.includes('60 / 25 / 15') || rawPreset.includes('retiree') || rawPreset.includes('jubilación') || rawPreset.includes('jubilacion')) loadedPreset = 'retiree_60_25_15';
+                else if (rawPreset.includes('60 / 20 / 20') || rawPreset.includes('metro') || rawPreset.includes('metrópoli') || rawPreset.includes('metropoli')) loadedPreset = 'metro_60_20_20';
+                else loadedPreset = 'standard_50_30_20';
               }
 
-              if (cols[0] === 'EXPENSE CATEGORIES CONFIGURATION') {
+              if (
+                col0Upper === 'EXPENSE CATEGORIES CONFIGURATION' ||
+                col0Upper === 'CONFIGURACIÓN DE CATEGORÍAS DE GASTOS' ||
+                col0Upper === 'CONFIGURACION DE CATEGORIAS DE GASTOS'
+              ) {
                 inExpConfig = true;
                 i++; // skip header row
                 continue;
               }
 
               if (inExpConfig) {
-                if (cols[0] === 'YEAR-BY-YEAR COST OF LIVING SCHEDULE' || cols.length < 4) {
+                if (
+                  col0Upper.includes('YEAR-BY-YEAR') ||
+                  col0Upper.includes('CRONOGRAMA AÑO POR AÑO') ||
+                  col0Upper.includes('AÑO POR AÑO') ||
+                  cols.length < 4
+                ) {
                   inExpConfig = false;
                   continue;
                 }
@@ -1434,12 +2315,29 @@
                 const name = cols[0].replace(/^"|"$/g, '');
                 const amount = Math.max(0, parseNumber(cols[1]));
                 const tierRaw = (cols[2] || '').toLowerCase();
-                const tier = tierRaw.includes('discretionary') || tierRaw.includes('want') ? 'discretionary' : 'essential';
+                let tier = 'essential';
+                if (
+                  tierRaw.includes('discretionary') ||
+                  tierRaw.includes('want') ||
+                  tierRaw.includes('discrecional') ||
+                  tierRaw.includes('deseo')
+                ) {
+                  tier = 'discretionary';
+                } else if (
+                  tierRaw.includes('debt') ||
+                  tierRaw.includes('loan') ||
+                  tierRaw.includes('dti') ||
+                  tierRaw.includes('deuda') ||
+                  tierRaw.includes('préstamo') ||
+                  tierRaw.includes('prestamo')
+                ) {
+                  tier = 'debt';
+                }
                 const inf = clamp(parseNumber(cols[3]), 0, 30);
 
                 loadedExpenses.push({
                   id: 'exp_' + (Date.now() + Math.random().toString(36).substr(2, 5)),
-                  name: name || `Expense ${loadedExpenses.length + 1}`,
+                  name: name || t().newExpenseDefault(loadedExpenses.length + 1),
                   color: COLOR_PALETTE[loadedExpenses.length % COLOR_PALETTE.length],
                   monthlyAmount: amount,
                   tier: tier,
@@ -1453,21 +2351,42 @@
               state.incomeGrowthRate = loadedGrowth;
               state.horizonYears = loadedHorizon;
               state.locationMultiplier = loadedLoc;
+              state.maxDebtDtiPct = loadedDti;
+              state.budgetPreset = loadedPreset;
               state.expenses = loadedExpenses;
               renderExpenseInputs();
               recalculateAll(false);
             } else {
-              alert('Could not detect valid Cost of Living categories in the selected CSV file.');
+              alert(t().csvAlertNoCategories);
             }
           } catch (err) {
             console.error(err);
-            alert('Error parsing CSV file. Please ensure it is a valid Cost of Living export.');
+            alert(t().csvAlertParseError);
           }
         };
         reader.readAsText(file);
       }
 
       // --- Event Listeners ---
+      btnThemeToggle.addEventListener('click', () => {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('finance_suite_theme', currentTheme);
+        applyTheme();
+        recalculateAll(false);
+      });
+
+      langSelect.addEventListener('change', (e) => {
+        const nextLang = e.target.value === 'es' ? 'es' : 'en';
+        if (nextLang === currentLang) return;
+        const prevLang = currentLang;
+        currentLang = nextLang;
+        localStorage.setItem('finance_suite_lang', currentLang);
+        translateDefaultExpenseNames(prevLang, currentLang);
+        applyStaticTranslations();
+        renderExpenseInputs();
+        recalculateAll(false);
+      });
+
       netIncomeSlider.addEventListener('input', (e) => {
         state.netMonthlyIncome = parseFloat(e.target.value);
         recalculateAll(false);
@@ -1504,12 +2423,31 @@
         recalculateAll(false);
       });
 
+      maxDebtDtiSlider.addEventListener('input', (e) => {
+        state.maxDebtDtiPct = parseInt(e.target.value, 10);
+        recalculateAll(false);
+      });
+      maxDebtDtiInput.addEventListener('change', (e) => {
+        state.maxDebtDtiPct = clamp(parseFloat(e.target.value) || 30, 5, 80);
+        recalculateAll(false);
+      });
+
+      presetPills.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const presetKey = btn.dataset.preset;
+          if (BUDGET_PRESETS[presetKey]) {
+            state.budgetPreset = presetKey;
+            recalculateAll(false);
+          }
+        });
+      });
+
       btnAddExpense.addEventListener('click', () => {
         const nextId = 'exp_' + Date.now();
         const color = COLOR_PALETTE[state.expenses.length % COLOR_PALETTE.length];
         state.expenses.push({
           id: nextId,
-          name: `Expense Category ${state.expenses.length + 1}`,
+          name: t().newExpenseDefault(state.expenses.length + 1),
           color: color,
           monthlyAmount: 250,
           tier: 'discretionary',
@@ -1537,7 +2475,63 @@
         drawChart(yearlySchedule);
       });
 
+      // Tooltip Floating Bubble Initializer
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = currentLang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en')) : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) left = window.innerWidth - tipRect.width - 10;
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
+
       // Bootstrap
+      initInfoTooltips();
+      langSelect.value = currentLang;
+      applyTheme();
+      applyStaticTranslations();
       renderExpenseInputs();
       recalculateAll(false);
     })();

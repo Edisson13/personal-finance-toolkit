@@ -31,6 +31,31 @@
       --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    html[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+    }
+    html[data-theme="light"] thead { background-color: #e2e8f0 !important; }
+    html[data-theme="light"] tbody tr { border-bottom-color: #cbd5e1; }
+    html[data-theme="light"] .kpi-value, html[data-theme="light"] .hero-payment-amount { color: var(--text-main); }
+    html[data-theme="light"] .hero-banner { background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); }
+    html[data-theme="light"] .btn-secondary, html[data-theme="light"] .toggle-btn { background-color: #e2e8f0; border-color: #cbd5e1; color: #1e293b; }
+    html[data-theme="light"] .btn-secondary:hover { background-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .toggle-group { background: #e2e8f0; border-color: #cbd5e1; }
+    html[data-theme="light"] .btn-success { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+    html[data-theme="light"] .btn-success:hover { background-color: #10b981; color: #ffffff; }
+    html[data-theme="light"] input[type="range"] { background: #cbd5e1; }
+    html[data-theme="light"] td[style*="color:#ffffff"], html[data-theme="light"] td[style*="color: #ffffff"], html[data-theme="light"] td[style*="color:#e2e8f0"] { color: #0f172a !important; }
+    html[data-theme="light"] .alloc-bar { background: #e2e8f0; }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -244,8 +269,14 @@
       gap: 1.5rem;
     }
 
+    .main-grid > .card {
+      display: flex;
+      flex-direction: column;
+    }
+
     @media (max-width: 1024px) {
       .main-grid { grid-template-columns: 1fr; }
+      .debts-list { flex: none; max-height: 600px; }
     }
 
     .card {
@@ -270,7 +301,8 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      max-height: 600px;
+      flex: 1 1 0;
+      min-height: 420px;
       overflow-y: auto;
       padding-right: 0.25rem;
     }
@@ -477,13 +509,89 @@
       border-radius: 2px;
     }
 
+    /* Debt Allocation Stacked Bar & Percentage Breakdown (Cost of Living Style) */
+    .alloc-bar {
+      display: flex;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #20293d;
+      margin: 0.35rem 0 0.85rem 0;
+    }
+
+    .alloc-seg {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .benchmark-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .benchmark-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .benchmark-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+    }
+
+    .benchmark-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.81rem;
+      font-weight: 600;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .benchmark-sub {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-input);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
     /* Comparison Table / Box */
     .strategy-comparison {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
       padding: 1rem;
-      margin-top: 1rem;
+      margin-top: 0.9rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
@@ -564,6 +672,67 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.18);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: serif;
+      font-style: italic;
+      cursor: help;
+      margin-left: 0.35rem;
+      vertical-align: middle;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .info-icon:hover, .info-icon:focus {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+      border-color: var(--border-focus, #6366f1);
+    }
+    html[data-theme="light"] .info-icon {
+      background: rgba(100, 116, 139, 0.15);
+      border-color: rgba(100, 116, 139, 0.3);
+      color: #475569;
+    }
+    html[data-theme="light"] .info-icon:hover {
+      background: var(--border-focus, #6366f1);
+      color: #ffffff;
+    }
+    .app-floating-tooltip {
+      position: fixed;
+      z-index: 999999;
+      max-width: 290px;
+      padding: 0.55rem 0.8rem;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.45;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: none;
+    }
+    html[data-theme="light"] .app-floating-tooltip {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+    }
   </style>
 </head>
 <body>
@@ -580,20 +749,31 @@
           </svg>
         </div>
         <div>
-          <h1>Debt Payoff Engine</h1>
-          <p>Accelerate debt freedom with Avalanche vs. Snowball payoff rollovers</p>
+          <h1 id="appTitle">Debt Payoff Engine</h1>
+          <p id="appSubtitle">Accelerate debt freedom with Avalanche vs. Snowball payoff rollovers</p>
         </div>
       </div>
 
       <div class="header-actions">
         <!-- Return to Main Hub -->
-        <a href="./index.html" class="btn btn-secondary" title="Return to Main Suite">
+        <a href="./index.html" class="btn btn-secondary" id="btnMainHub" title="Return to Main Suite">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          Main Hub
+          <span id="lblMainHub">Main Hub</span>
         </a>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="btn btn-secondary" id="btnThemeToggle" title="Toggle Light/Dark Mode">
+          ☀️ Light
+        </button>
+
+        <!-- Language Selector -->
+        <select id="langSelect" class="btn btn-secondary" style="width:auto; padding:0.45rem 0.65rem;" aria-label="Language">
+          <option value="en">EN · English</option>
+          <option value="es">ES · Español</option>
+        </select>
 
         <!-- Hidden CSV File Input -->
         <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
@@ -605,7 +785,7 @@
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
-          Load CSV
+          <span id="lblLoadCSV">Load CSV</span>
         </button>
 
         <!-- Export CSV Button -->
@@ -615,7 +795,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Export CSV
+          <span id="lblExportCSV">Export CSV</span>
         </button>
 
         <!-- Add Debt Button -->
@@ -624,7 +804,7 @@
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          Add Debt
+          <span id="lblAddDebt">Add Debt</span>
         </button>
       </div>
     </header>
@@ -632,17 +812,17 @@
     <!-- Strategy Selection Card -->
     <section class="strategy-card" aria-label="Strategy Controls">
       <div>
-        <div style="font-size: 0.75rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin-bottom:0.35rem;">
+        <div id="lblStrategyHeader" style="font-size: 0.75rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin-bottom:0.35rem;">
           Payoff Optimization Strategy
         </div>
         <div class="strategy-tabs">
           <button type="button" class="strategy-btn active" data-strategy="avalanche" id="btnAvalanche">
-            <span>⚡ Debt Avalanche</span>
-            <span style="font-size:0.7rem; opacity:0.8;">(Highest APR First)</span>
+            <span id="lblAvalancheName">⚡ Debt Avalanche</span>
+            <span id="lblAvalancheSub" style="font-size:0.7rem; opacity:0.8;">(Highest APR First)</span>
           </button>
           <button type="button" class="strategy-btn" data-strategy="snowball" id="btnSnowball">
-            <span>❄️ Debt Snowball</span>
-            <span style="font-size:0.7rem; opacity:0.8;">(Lowest Balance First)</span>
+            <span id="lblSnowballName">❄️ Debt Snowball</span>
+            <span id="lblSnowballSub" style="font-size:0.7rem; opacity:0.8;">(Lowest Balance First)</span>
           </button>
         </div>
       </div>
@@ -650,7 +830,7 @@
       <!-- Extra Monthly Payment Input -->
       <div class="extra-budget-box">
         <div>
-          <label for="extraPaymentInput" class="field-label" style="display:block; margin-bottom:0.25rem;">Extra Monthly Budget:</label>
+          <label for="extraPaymentInput" id="lblExtraBudget" class="field-label" style="display:block; margin-bottom:0.25rem;">Extra Monthly Budget:</label>
           <div class="input-wrapper has-prefix" style="width: 140px;">
             <span class="input-prefix">$</span>
             <input type="text" id="extraPaymentInput" inputmode="numeric" value="300">
@@ -674,22 +854,22 @@
     <!-- KPI Summary Row -->
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-label">Debt-Free Date</div>
+        <div class="kpi-label" id="lblKpiDebtFree">Debt-Free Date</div>
         <div class="kpi-value" id="kpiDebtFreeDate" style="color: #34d399;">--</div>
         <div class="kpi-subtext" id="kpiMonthsTotal">In 0 months</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Total Interest Paid</div>
+        <div class="kpi-label" id="lblKpiTotalInterest">Total Interest Paid</div>
         <div class="kpi-value col-interest" id="kpiTotalInterest" style="color: #f87171;">$0</div>
         <div class="kpi-subtext" id="kpiInterestSaved">Saves $0 vs. minimums</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Total Debt Balance</div>
+        <div class="kpi-label" id="lblKpiTotalBalance">Total Debt Balance</div>
         <div class="kpi-value" id="kpiTotalPrincipal" style="color: #38bdf8;">$0</div>
         <div class="kpi-subtext" id="kpiDebtCount">Across 3 accounts</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Total Monthly Commitment</div>
+        <div class="kpi-label" id="lblKpiMonthlyCommitment">Total Monthly Commitment</div>
         <div class="kpi-value" id="kpiTotalMonthlyPayment" style="color: #fbbf24;">$0/mo</div>
         <div class="kpi-subtext" id="kpiRollOverDesc">Includes $300 extra</div>
       </div>
@@ -701,8 +881,8 @@
       <!-- Left Column: Debts Configurator -->
       <section class="card" aria-label="Debts Configuration">
         <div class="card-title">
-          <span>Active Accounts (<span id="debtCountBadge">3</span>)</span>
-          <span style="font-size:0.75rem; font-weight:400; color:var(--text-muted);">Adjust balance, APR &amp; minimums</span>
+          <span><span id="lblActiveAccounts">Active Accounts</span> (<span id="debtCountBadge">3</span>)</span>
+          <span id="lblAdjustDebtsHint" style="font-size:0.75rem; font-weight:400; color:var(--text-muted);">Adjust balance, APR &amp; minimums</span>
         </div>
 
         <div class="debts-list" id="debtsContainer"></div>
@@ -711,8 +891,14 @@
       <!-- Right Column: Trajectory Chart & Strategy Comparison -->
       <section class="card" aria-label="Visual Paydown Progress">
         <div class="card-title">
-          <span>Balance Reduction Trajectory</span>
+          <span id="lblChartCardTitle">Balance Reduction Trajectory &amp; Debt Share</span>
         </div>
+
+        <div style="display:flex; justify-content:space-between; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.2rem;">
+          <span id="lblLiabilityCompBar">Current Liability Composition Stacked Bar</span>
+          <span id="weightedAprLabel">Blended APR: 0.0%</span>
+        </div>
+        <div class="alloc-bar" id="debtAllocBar"></div>
 
         <div class="chart-box">
           <div class="canvas-container">
@@ -721,17 +907,26 @@
           <div class="chart-legend" id="chartLegend"></div>
         </div>
 
+        <!-- Debt Percentage Breakdown Box Below Graph -->
+        <div class="benchmark-box">
+          <div class="benchmark-box-header">
+            <span id="lblDebtShareHeader">Debt Share, Priority &amp; Interest Load</span>
+            <span id="lblPctTotalDebtHeader">% of Total Debt</span>
+          </div>
+          <div id="debtPercentagesList" style="display:flex; flex-direction:column; gap:0.75rem;"></div>
+        </div>
+
         <!-- Strategy Comparison Box -->
         <div class="strategy-comparison">
           <div class="strategy-metric-item">
-            <span class="strategy-metric-title">Avalanche vs. Snowball</span>
+            <span class="strategy-metric-title" id="lblAvalancheVsSnowball">Avalanche vs. Snowball</span>
             <span class="strategy-metric-val" id="strategyComparisonDelta" style="color: #34d399;">$0</span>
             <span style="font-size:0.75rem; color:var(--text-muted);" id="strategyComparisonSub">Avalanche saves more interest</span>
           </div>
           <div class="strategy-metric-item">
-            <span class="strategy-metric-title">Time Saved vs Minimums</span>
+            <span class="strategy-metric-title" id="lblTimeSavedTitle">Time Saved vs Minimums</span>
             <span class="strategy-metric-val" id="timeSavedDelta" style="color: #38bdf8;">0 Months</span>
-            <span style="font-size:0.75rem; color:var(--text-muted);">Faster by paying extra</span>
+            <span id="lblFasterByExtra" style="font-size:0.75rem; color:var(--text-muted);">Faster by paying extra</span>
           </div>
         </div>
       </section>
@@ -741,19 +936,19 @@
     <!-- Bottom Section: Detailed Schedule Table -->
     <section class="card" aria-label="Payoff Schedule">
       <div class="card-title">
-        <span>Year-by-Year Debt Reduction Schedule</span>
+        <span id="lblScheduleCardTitle">Year-by-Year Debt Reduction Schedule</span>
       </div>
 
       <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th>Year</th>
-              <th>Total Starting Balance</th>
-              <th>Total Payments</th>
-              <th>Principal Paid</th>
-              <th>Interest Accrued</th>
-              <th>Ending Balance</th>
+              <th id="thYear">Year</th>
+              <th id="thStartBal">Total Starting Balance</th>
+              <th id="thPayments">Total Payments</th>
+              <th id="thPrincipal">Principal Paid</th>
+              <th id="thInterest">Interest Accrued</th>
+              <th id="thEndBal">Ending Balance</th>
             </tr>
           </thead>
           <tbody id="scheduleTbody"></tbody>
@@ -772,13 +967,182 @@
         '#ec4899', '#8b5cf6', '#10b981', '#f97316'
       ];
 
+      const I18N = {
+        en: {
+          pageTitle: 'Debt Payoff Engine',
+          appTitle: 'Debt Payoff Engine',
+          appSubtitle: 'Accelerate debt freedom with Avalanche vs. Snowball payoff rollovers',
+          mainHub: 'Main Hub',
+          mainHubTitle: 'Return to Main Suite',
+          themeLight: '☀️ Light',
+          themeDark: '🌙 Dark',
+          loadCSV: 'Load CSV',
+          loadCSVTitle: 'Load a previously saved debt scenario',
+          exportCSV: 'Export CSV',
+          exportCSVTitle: 'Export complete payoff schedule and analysis to CSV/Excel',
+          addDebt: 'Add Debt',
+          strategyHeader: 'Payoff Optimization Strategy',
+          avalancheName: '⚡ Debt Avalanche',
+          avalancheSub: '(Highest APR First)',
+          snowballName: '❄️ Debt Snowball',
+          snowballSub: '(Lowest Balance First)',
+          extraBudget: 'Extra Monthly Budget:',
+          warningMsg: '⚠️ Warning: One or more debts have a minimum payment lower than their monthly interest charge! Balance will grow indefinitely without higher payments.',
+          kpiDebtFree: 'Debt-Free Date',
+          kpiTotalInterest: 'Total Interest Paid',
+          kpiTotalBalance: 'Total Debt Balance',
+          kpiMonthlyCommitment: 'Total Monthly Commitment',
+          activeAccounts: 'Active Accounts',
+          adjustDebtsHint: 'Adjust balance, APR & minimums',
+          chartCardTitle: 'Balance Reduction Trajectory & Debt Share',
+          liabilityCompBar: 'Current Liability Composition Stacked Bar',
+          blendedApr: (val) => `Blended APR: ${val}%`,
+          debtShareHeader: 'Debt Share, Priority & Interest Load',
+          pctTotalDebtHeader: '% of Total Debt',
+          avalancheVsSnowball: 'Avalanche vs. Snowball',
+          timeSavedTitle: 'Time Saved vs Minimums',
+          fasterByExtra: 'Faster by paying extra',
+          scheduleCardTitle: 'Year-by-Year Debt Reduction Schedule',
+          thYear: 'Year',
+          thStartBal: 'Total Starting Balance',
+          thPayments: 'Total Payments',
+          thPrincipal: 'Principal Paid',
+          thInterest: 'Interest Accrued',
+          thEndBal: 'Ending Balance',
+          acrossAccounts: (n) => `Across ${n} ${n === 1 ? 'account' : 'accounts'}`,
+          perMonthSuffix: '/mo',
+          includesExtraRollover: (amt) => `Includes $${amt} extra rollover`,
+          inMonthsYrs: (m, y) => `In ${m} months (${y} yrs)`,
+          savesVsMinimums: (amt) => `Saves ${amt} vs. minimums`,
+          avalancheSavingsSub: 'Avalanche interest savings vs. Snowball',
+          snowballExtraSub: 'Extra interest vs. Avalanche (Snowball prioritizes fast wins)',
+          monthsFaster: (m) => `${m} Months Faster`,
+          debtNamePlaceholder: 'Debt Name',
+          removeDebtTitle: 'Remove Debt',
+          currentBalance: 'Current Balance',
+          interestRateApr: 'Interest Rate (APR)',
+          minMonthlyPayment: 'Min. Monthly Payment',
+          untitledDebt: 'Untitled Debt',
+          newDebtAccount: (n) => `Debt Account ${n}`,
+          yrAxis: (y) => `Yr ${y}`,
+          yearRow: (y) => `Year ${y}`,
+          strategyLabel: (s) => s === 'avalanche' ? 'AVALANCHE' : 'SNOWBALL',
+          totalAccelerated: (s) => `Total Accelerated (${s})`,
+          minimumsOnly: 'Minimums Only',
+          paidOffInMo: (m) => `Paid off in Mo ${m}`,
+          fiftyPlusYrs: '50+ yrs',
+          targetBadge: (r) => `#${r} Target`,
+          minPayShare: 'Min Pay Share',
+          interestLabel: 'Interest',
+          csvAlertNoDebts: 'Could not detect valid debt accounts in the selected CSV file.',
+          csvAlertParseErr: 'Error parsing CSV file. Please make sure it is a valid debt engine export.',
+          defaultDebts: {
+            debt_1: 'Credit Card (High APR)',
+            debt_2: 'Personal Loan',
+            debt_3: 'Auto Loan'
+          }
+        },
+        es: {
+          pageTitle: 'Motor de Pago de Deudas',
+          appTitle: 'Motor de Pago de Deudas',
+          appSubtitle: 'Acelera tu libertad financiera con estrategias Avalancha vs. Bola de Nieve',
+          mainHub: 'Panel Principal',
+          mainHubTitle: 'Volver al Panel Principal',
+          themeLight: '☀️ Claro',
+          themeDark: '🌙 Oscuro',
+          loadCSV: 'Cargar CSV',
+          loadCSVTitle: 'Cargar un escenario de deuda guardado previamente',
+          exportCSV: 'Exportar CSV',
+          exportCSVTitle: 'Exportar cronograma completo de pagos y análisis a CSV/Excel',
+          addDebt: 'Añadir Deuda',
+          strategyHeader: 'Estrategia de Optimización de Pago',
+          avalancheName: '⚡ Avalancha de Deuda',
+          avalancheSub: '(Mayor APR Primero)',
+          snowballName: '❄️ Bola de Nieve',
+          snowballSub: '(Menor Saldo Primero)',
+          extraBudget: 'Presupuesto Mensual Extra:',
+          warningMsg: '⚠️ Advertencia: ¡Una o más deudas tienen un pago mínimo menor que su cargo mensual de intereses! El saldo crecerá indefinidamente sin pagos mayores.',
+          kpiDebtFree: 'Fecha Libre de Deudas',
+          kpiTotalInterest: 'Interés Total Pagado',
+          kpiTotalBalance: 'Saldo Total de Deuda',
+          kpiMonthlyCommitment: 'Compromiso Mensual Total',
+          activeAccounts: 'Cuentas Activas',
+          adjustDebtsHint: 'Ajusta saldo, APR y mínimos',
+          chartCardTitle: 'Trayectoria de Reducción de Saldo y Participación',
+          liabilityCompBar: 'Barra Apilada de Composición Actual de Pasivos',
+          blendedApr: (val) => `APR Ponderado: ${val}%`,
+          debtShareHeader: 'Participación de Deuda, Prioridad y Carga de Interés',
+          pctTotalDebtHeader: '% de Deuda Total',
+          avalancheVsSnowball: 'Avalancha vs. Bola de Nieve',
+          timeSavedTitle: 'Tiempo Ahorrado vs. Mínimos',
+          fasterByExtra: 'Más rápido pagando extra',
+          scheduleCardTitle: 'Cronograma Anual de Reducción de Deuda',
+          thYear: 'Año',
+          thStartBal: 'Saldo Inicial Total',
+          thPayments: 'Pagos Totales',
+          thPrincipal: 'Capital Pagado',
+          thInterest: 'Interés Acumulado',
+          thEndBal: 'Saldo Final',
+          acrossAccounts: (n) => `En ${n} ${n === 1 ? 'cuenta' : 'cuentas'}`,
+          perMonthSuffix: '/mes',
+          includesExtraRollover: (amt) => `Incluye $${amt} extra acumulable`,
+          inMonthsYrs: (m, y) => `En ${m} meses (${y} años)`,
+          savesVsMinimums: (amt) => `Ahorra ${amt} vs. mínimos`,
+          avalancheSavingsSub: 'Ahorro de interés con Avalancha vs. Bola de Nieve',
+          snowballExtraSub: 'Interés extra vs. Avalancha (Bola de Nieve prioriza victorias rápidas)',
+          monthsFaster: (m) => `${m} Meses Más Rápido`,
+          debtNamePlaceholder: 'Nombre de la Deuda',
+          removeDebtTitle: 'Eliminar Deuda',
+          currentBalance: 'Saldo Actual',
+          interestRateApr: 'Tasa de Interés (APR)',
+          minMonthlyPayment: 'Pago Mensual Mín.',
+          untitledDebt: 'Deuda sin título',
+          newDebtAccount: (n) => `Cuenta de Deuda ${n}`,
+          yrAxis: (y) => `Año ${y}`,
+          yearRow: (y) => `Año ${y}`,
+          strategyLabel: (s) => s === 'avalanche' ? 'AVALANCHA' : 'BOLA DE NIEVE',
+          totalAccelerated: (s) => `Total Acelerado (${s})`,
+          minimumsOnly: 'Solo Mínimos',
+          paidOffInMo: (m) => `Pagada en Mes ${m}`,
+          fiftyPlusYrs: '50+ años',
+          targetBadge: (r) => `Objetivo #${r}`,
+          minPayShare: 'Cuota Pago Mín.',
+          interestLabel: 'Interés',
+          csvAlertNoDebts: 'No se pudieron detectar cuentas de deuda válidas en el archivo CSV seleccionado.',
+          csvAlertParseErr: 'Error al analizar el archivo CSV. Asegúrate de que sea una exportación válida del motor de deudas.',
+          defaultDebts: {
+            debt_1: 'Tarjeta de Crédito (Alto APR)',
+            debt_2: 'Préstamo Personal',
+            debt_3: 'Préstamo de Auto'
+          }
+        }
+      };
+
+      let currentLang = localStorage.getItem('finance_suite_lang') || 'en';
+      if (!I18N[currentLang]) currentLang = 'en';
+
+      let currentTheme = localStorage.getItem('finance_suite_theme') || 'dark';
+      if (currentTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+
+      function t() {
+        return I18N[currentLang] || I18N.en;
+      }
+
+      function isLightMode() {
+        return document.documentElement.getAttribute('data-theme') === 'light';
+      }
+
       let state = {
         strategy: 'avalanche', // 'avalanche' | 'snowball'
         extraMonthlyPayment: 300,
         debts: [
           {
             id: 'debt_1',
-            name: 'Credit Card (High APR)',
+            name: I18N[currentLang].defaultDebts.debt_1,
             color: COLOR_PALETTE[0],
             balance: 6500,
             apr: 24.99,
@@ -786,7 +1150,7 @@
           },
           {
             id: 'debt_2',
-            name: 'Personal Loan',
+            name: I18N[currentLang].defaultDebts.debt_2,
             color: COLOR_PALETTE[1],
             balance: 11000,
             apr: 11.5,
@@ -794,7 +1158,7 @@
           },
           {
             id: 'debt_3',
-            name: 'Auto Loan',
+            name: I18N[currentLang].defaultDebts.debt_3,
             color: COLOR_PALETTE[2],
             balance: 18500,
             apr: 6.25,
@@ -802,6 +1166,22 @@
           }
         ]
       };
+
+      function translateUnchangedDefaultDebts(prevLang, nextLang) {
+        const prevDefaults = I18N[prevLang].defaultDebts;
+        const nextDefaults = I18N[nextLang].defaultDebts;
+        state.debts.forEach((d, idx) => {
+          if (prevDefaults[d.id] && d.name === prevDefaults[d.id]) {
+            d.name = nextDefaults[d.id];
+          } else {
+            const enAuto = `Debt Account ${idx + 1}`;
+            const esAuto = `Cuenta de Deuda ${idx + 1}`;
+            if (d.name === enAuto || d.name === esAuto) {
+              d.name = I18N[nextLang].newDebtAccount(idx + 1);
+            }
+          }
+        });
+      }
 
       // --- Helpers ---
       function formatMoney(amount) {
@@ -841,16 +1221,25 @@
 
       // --- Core Simulation Engine ---
       function simulatePayoff(debtsList, extraPayment, strategyMode) {
+        const perDebtTrajectories = {};
+        const perDebtInterest = {};
+        const perDebtPayoffMonth = {};
+
         // Clone debts for isolation
-        const debts = debtsList.map(d => ({
-          id: d.id,
-          name: d.name,
-          color: d.color,
-          balance: d.balance,
-          apr: d.apr,
-          minPayment: d.minPayment,
-          monthlyRate: (d.apr / 100) / 12
-        }));
+        const debts = debtsList.map(d => {
+          perDebtTrajectories[d.id] = [d.balance];
+          perDebtInterest[d.id] = 0;
+          perDebtPayoffMonth[d.id] = d.balance <= 0 ? 0 : null;
+          return {
+            id: d.id,
+            name: d.name,
+            color: d.color,
+            balance: d.balance,
+            apr: d.apr,
+            minPayment: d.minPayment,
+            monthlyRate: (d.apr / 100) / 12
+          };
+        });
 
         let months = 0;
         const maxMonths = 600; // 50-year cap
@@ -887,6 +1276,7 @@
             monthInterestAccrued += interest;
             totalInterestPaid += interest;
             currYearInterest += interest;
+            perDebtInterest[d.id] += interest;
           });
 
           // 2. Pay minimums
@@ -901,14 +1291,9 @@
             // If debt had lower balance than minPayment, leftover goes into rollover pool
             if (d.balance <= 0.001) {
               d.balance = 0;
+              if (perDebtPayoffMonth[d.id] === null) perDebtPayoffMonth[d.id] = months;
               rolloverPool += (d.minPayment - payment);
             }
-          });
-
-          // Debts that were already paid off in previous months contribute their minPayment to rollover
-          const paidOffDebts = debts.filter(d => d.balance === 0);
-          paidOffDebts.forEach(d => {
-            // Note: only add their original min payment once per month
           });
 
           // Calculate total freed-up minimum payments
@@ -939,8 +1324,13 @@
 
             if (target.balance <= 0.001) {
               target.balance = 0;
+              if (perDebtPayoffMonth[target.id] === null) perDebtPayoffMonth[target.id] = months;
             }
           }
+
+          debts.forEach(d => {
+            perDebtTrajectories[d.id].push(Math.max(0, d.balance));
+          });
 
           const currentTotalBal = debts.reduce((sum, d) => sum + d.balance, 0);
           monthlyTrajectory.push(Math.max(0, currentTotalBal));
@@ -971,6 +1361,9 @@
           totalInterest: totalInterestPaid,
           totalPaid: totalPaid,
           monthlyTrajectory,
+          perDebtTrajectories,
+          perDebtInterest,
+          perDebtPayoffMonth,
           yearlySnapshots,
           hasNegativeAmortization
         };
@@ -1006,12 +1399,73 @@
       const btnLoadCSV = document.getElementById('btnLoadCSV');
       const btnExportCSV = document.getElementById('btnExportCSV');
       const btnAddDebt = document.getElementById('btnAddDebt');
+      const btnThemeToggle = document.getElementById('btnThemeToggle');
+      const langSelect = document.getElementById('langSelect');
+
+      function updateThemeButtonLabel() {
+        const dict = t();
+        btnThemeToggle.textContent = isLightMode() ? dict.themeDark : dict.themeLight;
+      }
+
+      function applyStaticTranslations() {
+        const dict = t();
+        document.documentElement.lang = currentLang;
+        document.title = dict.pageTitle;
+        document.getElementById('appTitle').textContent = dict.appTitle;
+        document.getElementById('appSubtitle').textContent = dict.appSubtitle;
+        document.getElementById('lblMainHub').textContent = dict.mainHub;
+        document.getElementById('btnMainHub').title = dict.mainHubTitle;
+        document.getElementById('lblLoadCSV').textContent = dict.loadCSV;
+        btnLoadCSV.title = dict.loadCSVTitle;
+        document.getElementById('lblExportCSV').textContent = dict.exportCSV;
+        btnExportCSV.title = dict.exportCSVTitle;
+        document.getElementById('lblAddDebt').textContent = dict.addDebt;
+        const setElWithTip = (id, text, infoEn, infoEs) => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.innerHTML = `${escapeHtml(text)} <span class="info-icon" data-info-en="${infoEn}" data-info-es="${infoEs}">i</span>`;
+          }
+        };
+
+        setElWithTip('lblStrategyHeader', dict.strategyHeader, 'Mathematical payoff sequence: Avalanche targets highest APR first (minimizes total interest). Snowball targets lowest balance first (fast psychological wins).', 'Estrategia de pago: Avalancha prioriza la tasa APR más alta (minimiza intereses). Bola de Nieve prioriza el menor saldo (victorias psicológicas rápidas).');
+        document.getElementById('lblAvalancheName').textContent = dict.avalancheName;
+        document.getElementById('lblAvalancheSub').textContent = dict.avalancheSub;
+        document.getElementById('lblSnowballName').textContent = dict.snowballName;
+        document.getElementById('lblSnowballSub').textContent = dict.snowballSub;
+        setElWithTip('lblExtraBudget', dict.extraBudget, 'Additional monthly cash committed above all contractual minimum payments to accelerate debt payoff.', 'Dinero extra aportado al mes por encima de los pagos mínimos obligatorios para acelerar la liquidación.');
+        warningBanner.textContent = dict.warningMsg;
+
+        setElWithTip('lblKpiDebtFree', dict.kpiDebtFree, 'Projected month and year when all debt balances reach zero.', 'Mes y año proyectado en que todas las deudas se liquidan por completo a cero.');
+        setElWithTip('lblKpiTotalInterest', dict.kpiTotalInterest, 'Cumulative financing interest paid to lenders over the entire payoff duration.', 'Interés acumulado total pagado a los prestamistas durante todo el periodo.');
+        setElWithTip('lblKpiTotalBalance', dict.kpiTotalBalance, 'Sum of current balances across all active debt liabilities.', 'Suma total de los saldos pendientes de todas las deudas activas.');
+        setElWithTip('lblKpiMonthlyCommitment', dict.kpiMonthlyCommitment, 'Total monthly cash committed: contractual minimums plus your extra contribution.', 'Compromiso mensual total: pagos mínimos obligatorios más tu aporte extra.');
+
+        setElWithTip('lblActiveAccounts', dict.activeAccounts, 'Configured individual loans, credit cards, or lines of credit.', 'Deudas, tarjetas de crédito y préstamos configurados individualmente.');
+        document.getElementById('lblAdjustDebtsHint').textContent = dict.adjustDebtsHint;
+        setElWithTip('lblChartCardTitle', dict.chartCardTitle, 'Visual debt balance trajectory and liability percentage distribution.', 'Trayectoria visual del saldo de deuda y distribución porcentual del pasivo.');
+        setElWithTip('lblLiabilityCompBar', dict.liabilityCompBar, 'Proportion of total debt balance owed on each liability.', 'Proporción del saldo total de deuda que corresponde a cada compromiso.');
+        setElWithTip('lblDebtShareHeader', dict.debtShareHeader, 'Breakdown of current balance, APR, and required minimum payment per debt.', 'Desglose de saldo actual, tasa APR y pago mínimo por cada deuda.');
+        document.getElementById('lblPctTotalDebtHeader').textContent = dict.pctTotalDebtHeader;
+        setElWithTip('lblAvalancheVsSnowball', dict.avalancheVsSnowball, 'Comparison of total interest and payoff speed between Avalanche and Snowball methods.', 'Comparación de intereses totales y velocidad de pago entre el método Avalancha y Bola de Nieve.');
+        setElWithTip('lblTimeSavedTitle', dict.timeSavedTitle, 'Months shaved off your debt payoff timeline compared to paying only minimums.', 'Meses ahorrados de pago respecto a pagar únicamente los pagos mínimos.');
+        document.getElementById('lblFasterByExtra').textContent = dict.fasterByExtra;
+        setElWithTip('lblScheduleCardTitle', dict.scheduleCardTitle, 'Month-by-month debt reduction, payment distribution, and interest amortized.', 'Desglose mes a mes de reducción de capital, pagos aplicados e interés amortizado.');
+
+        setElWithTip('thYear', dict.thYear, 'Payment month / date index.', 'Mes de pago / fecha.');
+        setElWithTip('thStartBal', dict.thStartBal, 'Total debt balance at the start of the month.', 'Saldo total de deuda al inicio del mes.');
+        setElWithTip('thPayments', dict.thPayments, 'Total payment made this month across all debts.', 'Pago total realizado este mes sumando todas las cuentas.');
+        setElWithTip('thPrincipal', dict.thPrincipal, 'Portion of payment directly reducing principal debt.', 'Parte del pago destinada directamente a reducir capital.');
+        setElWithTip('thInterest', dict.thInterest, 'Portion of payment consumed by financing interest.', 'Parte del pago consumida por intereses de financiamiento.');
+        setElWithTip('thEndBal', dict.thEndBal, 'Remaining debt balance at month close.', 'Saldo remanente de deuda al cierre del mes.');
+        updateThemeButtonLabel();
+      }
 
       // --- Render Debts Inputs ---
       function renderDebtsInputs() {
+        const dict = t();
         debtsContainer.innerHTML = '';
         debtCountBadge.textContent = state.debts.length;
-        kpiDebtCount.textContent = `Across ${state.debts.length} accounts`;
+        kpiDebtCount.textContent = dict.acrossAccounts(state.debts.length);
 
         state.debts.forEach((debt) => {
           const item = document.createElement('div');
@@ -1022,11 +1476,11 @@
             <div class="debt-header">
               <div class="debt-title-group">
                 <span class="debt-color-badge" style="background-color: ${debt.color};"></span>
-                <input type="text" class="debt-name-input" value="${escapeHtml(debt.name)}" placeholder="Debt Name" data-field="name">
+                <input type="text" class="debt-name-input" value="${escapeHtml(debt.name)}" placeholder="${escapeHtml(dict.debtNamePlaceholder)}" data-field="name">
               </div>
               <div>
                 ${state.debts.length > 1 ? `
-                  <button type="button" class="btn-icon btn-delete" title="Remove Debt" data-id="${debt.id}">
+                  <button type="button" class="btn-icon btn-delete" title="${escapeHtml(dict.removeDebtTitle)}" data-id="${debt.id}">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <polyline points="3 6 5 6 21 6"></polyline>
                       <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -1038,7 +1492,7 @@
 
             <div class="debt-controls-grid">
               <div class="field-group">
-                <label class="field-label">Current Balance</label>
+                <label class="field-label">${escapeHtml(dict.currentBalance)} <span class="info-icon" data-info-en="Current remaining balance owed on this debt." data-info-es="Saldo de capital remanente adeudado en esta cuenta.">i</span></label>
                 <div class="input-wrapper has-prefix">
                   <span class="input-prefix">$</span>
                   <input type="text" inputmode="numeric" value="${Math.round(debt.balance).toLocaleString()}" data-field="balance">
@@ -1046,7 +1500,7 @@
               </div>
 
               <div class="field-group">
-                <label class="field-label">Interest Rate (APR)</label>
+                <label class="field-label">${escapeHtml(dict.interestRateApr)} <span class="info-icon" data-info-en="Annual Percentage Rate (APR) charged by lender on revolving balances." data-info-es="Tasa de interés anual (APR) aplicada al saldo financiado.">i</span></label>
                 <div class="input-wrapper has-suffix">
                   <input type="number" step="0.1" min="0" max="100" value="${debt.apr}" data-field="apr">
                   <span class="input-suffix">%</span>
@@ -1054,7 +1508,7 @@
               </div>
 
               <div class="field-group">
-                <label class="field-label">Min. Monthly Payment</label>
+                <label class="field-label">${escapeHtml(dict.minMonthlyPayment)} <span class="info-icon" data-info-en="Required monthly contractual minimum payment to avoid delinquency." data-info-es="Pago mínimo mensual contractual obligatorio para evitar morosidad.">i</span></label>
                 <div class="input-wrapper has-prefix">
                   <span class="input-prefix">$</span>
                   <input type="text" inputmode="numeric" value="${Math.round(debt.minPayment).toLocaleString()}" data-field="minPayment">
@@ -1078,7 +1532,7 @@
 
           const nameInput = card.querySelector('[data-field="name"]');
           nameInput.addEventListener('input', (e) => {
-            debt.name = e.target.value || 'Untitled Debt';
+            debt.name = e.target.value || t().untitledDebt;
             recalculateEngine(false);
           });
 
@@ -1108,7 +1562,9 @@
       }
 
       // --- Chart Renderer (HTML5 Canvas) ---
-      function drawChart(primaryTrajectory, baselineTrajectory) {
+      function drawChart(primaryTrajectory, baselineTrajectory, perDebtTrajectories) {
+        const dict = t();
+        const light = isLightMode();
         const dpr = window.devicePixelRatio || 1;
         const rect = payoffCanvas.getBoundingClientRect();
         payoffCanvas.width = rect.width * dpr;
@@ -1131,9 +1587,9 @@
 
         // Horizontal grid lines
         const gridLines = 4;
-        ctx.strokeStyle = '#222e44';
+        ctx.strokeStyle = light ? '#cbd5e1' : '#222e44';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = light ? '#475569' : '#64748b';
         ctx.font = '10px -apple-system, sans-serif';
         ctx.textAlign = 'right';
 
@@ -1155,7 +1611,25 @@
         for (let yIdx = 0; yIdx <= numYears; yIdx += stepYears) {
           const mIdx = yIdx * 12;
           const x = padding.left + (mIdx / totalSteps) * graphW;
-          ctx.fillText(`Yr ${yIdx}`, x, h - 12);
+          ctx.fillText(dict.yrAxis(yIdx), x, h - 12);
+        }
+
+        // 0. Draw Individual Debt Curves
+        if (perDebtTrajectories) {
+          state.debts.forEach(d => {
+            const dSeries = perDebtTrajectories[d.id];
+            if (!dSeries) return;
+            ctx.beginPath();
+            dSeries.forEach((val, m) => {
+              const x = padding.left + (m / totalSteps) * graphW;
+              const y = padding.top + graphH - (val / maxVal) * graphH;
+              if (m === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
+            });
+            ctx.strokeStyle = d.color;
+            ctx.lineWidth = 1.75;
+            ctx.stroke();
+          });
         }
 
         // 1. Draw Baseline (Minimum Payments Only)
@@ -1181,31 +1655,122 @@
           else ctx.lineTo(x, y);
         });
         ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 2.6;
         ctx.stroke();
 
-        // Legend
-        chartLegend.innerHTML = `
+        // Legend with each debt's percentage share
+        const totalDebtBal = state.debts.reduce((sum, d) => sum + d.balance, 0) || 0;
+        const stratText = dict.strategyLabel(state.strategy);
+        let legendHtml = `
           <div class="legend-item">
             <span class="legend-color" style="background:#10b981;"></span>
-            <span>Accelerated Payoff (${state.strategy.toUpperCase()})</span>
+            <span style="color:var(--text-main); font-weight:600;">${dict.totalAccelerated(stratText)}</span>
+            <span class="info-icon" data-info-en="Accelerated debt balance reduction applying payment rollovers and extra monthly budget." data-info-es="Reducción acelerada del saldo de deuda aplicando efecto bola de nieve/avalancha y pago extra.">i</span>
           </div>
           <div class="legend-item">
-            <span class="legend-color" style="background:#64748b; border:1px dashed #fff;"></span>
-            <span>Minimum Payments Only</span>
+            <span class="legend-color" style="background:#64748b; border:1px dashed var(--text-main);"></span>
+            <span>${dict.minimumsOnly}</span>
+            <span class="info-icon" data-info-en="Baseline payoff trajectory paying only required minimums without rollover acceleration." data-info-es="Trayectoria base pagando únicamente los mínimos obligatorios sin aceleración.">i</span>
           </div>
         `;
+
+        state.debts.forEach(d => {
+          const pctStr = totalDebtBal > 0 ? ((d.balance / totalDebtBal) * 100).toFixed(1) + '%' : '0.0%';
+          legendHtml += `
+            <div class="legend-item">
+              <span class="legend-color" style="background:${d.color};"></span>
+              <span>${escapeHtml(d.name)} <strong style="color:var(--text-main);">(${pctStr})</strong></span>
+            </div>
+          `;
+        });
+
+        chartLegend.innerHTML = legendHtml;
+      }
+
+      // --- Render Debt Percentage Breakdown Below Graph ---
+      function renderDebtPercentages(simActive) {
+        const dict = t();
+        const debtAllocBar = document.getElementById('debtAllocBar');
+        const debtPercentagesList = document.getElementById('debtPercentagesList');
+        const weightedAprLabel = document.getElementById('weightedAprLabel');
+        if (!debtAllocBar || !debtPercentagesList) return;
+
+        debtAllocBar.innerHTML = '';
+        debtPercentagesList.innerHTML = '';
+
+        const totalBal = state.debts.reduce((sum, d) => sum + d.balance, 0);
+        const totalMin = state.debts.reduce((sum, d) => sum + d.minPayment, 0);
+        let weightedAprNum = 0;
+
+        // Determine priority order according to active strategy
+        const prioritySorted = [...state.debts].sort((a, b) => {
+          return state.strategy === 'avalanche' ? (b.apr - a.apr) : (a.balance - b.balance);
+        });
+        const priorityRankMap = {};
+        prioritySorted.forEach((d, idx) => {
+          priorityRankMap[d.id] = idx + 1;
+        });
+
+        state.debts.forEach(d => {
+          weightedAprNum += d.balance * d.apr;
+          const balPctNum = totalBal > 0 ? (d.balance / totalBal) * 100 : 0;
+          const minPctNum = totalMin > 0 ? (d.minPayment / totalMin) * 100 : 0;
+          const pctStr = balPctNum.toFixed(1);
+
+          if (balPctNum > 0) {
+            const seg = document.createElement('div');
+            seg.className = 'alloc-seg';
+            seg.style.width = `${pctStr}%`;
+            seg.style.backgroundColor = d.color;
+            seg.title = `${d.name}: ${formatMoney(d.balance)} (${pctStr}%)`;
+            debtAllocBar.appendChild(seg);
+          }
+
+          const interestOnDebt = (simActive && simActive.perDebtInterest && simActive.perDebtInterest[d.id] !== undefined)
+            ? simActive.perDebtInterest[d.id]
+            : 0;
+          const payoffMo = (simActive && simActive.perDebtPayoffMonth && simActive.perDebtPayoffMonth[d.id] !== null)
+            ? dict.paidOffInMo(simActive.perDebtPayoffMonth[d.id])
+            : dict.fiftyPlusYrs;
+
+          const row = document.createElement('div');
+          row.className = 'benchmark-row';
+          row.innerHTML = `
+            <div class="benchmark-top">
+              <span style="display:inline-flex; align-items:center; gap:0.45rem; color:${d.color};">
+                <span style="width:10px; height:10px; border-radius:3px; background:${d.color}; display:inline-block;"></span>
+                ${escapeHtml(d.name)}
+                <span style="font-size:0.68rem; background:rgba(148,163,184,0.16); padding:0.1rem 0.4rem; border-radius:4px; color:var(--text-muted);">${dict.targetBadge(priorityRankMap[d.id])}</span>
+              </span>
+              <span style="color:var(--text-main);">${pctStr}% (${formatMoney(d.balance)})</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width:${Math.min(100, balPctNum)}%; background:${d.color};"></div>
+            </div>
+            <div class="benchmark-sub">
+              <span>APR: ${d.apr}% &bull; ${dict.minPayShare}: ${minPctNum.toFixed(1)}% (${formatMoney(d.minPayment)}${dict.perMonthSuffix})</span>
+              <span style="color:#f87171;">${dict.interestLabel}: ${formatMoney(interestOnDebt)} &bull; <strong style="color:#34d399;">${payoffMo}</strong></span>
+            </div>
+          `;
+          debtPercentagesList.appendChild(row);
+        });
+
+        const blendedApr = totalBal > 0 ? (weightedAprNum / totalBal) : 0;
+        if (weightedAprLabel) {
+          weightedAprLabel.textContent = dict.blendedApr(blendedApr.toFixed(2));
+        }
       }
 
       // --- Schedule Table Renderer ---
       function renderScheduleTable(yearlySnapshots) {
+        const dict = t();
         scheduleTbody.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
         yearlySnapshots.forEach(snap => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td style="font-weight:700;">Year ${snap.year}</td>
+            <td style="font-weight:700;">${dict.yearRow(snap.year)}</td>
             <td>${formatMoney(snap.startBalance)}</td>
             <td style="font-weight:600; color:#ffffff;">${formatMoney(snap.payments)}</td>
             <td style="color:#34d399;">${formatMoney(snap.principal)}</td>
@@ -1220,7 +1785,10 @@
 
       // --- Main Recalculate Orchestrator ---
       function recalculateEngine(rebuildInputs = false) {
+        const dict = t();
         if (rebuildInputs) renderDebtsInputs();
+
+        kpiDebtCount.textContent = dict.acrossAccounts(state.debts.length);
 
         // Sync extra payment display
         extraPaymentInput.value = Math.round(state.extraMonthlyPayment).toLocaleString();
@@ -1244,77 +1812,118 @@
 
         const baseMinMonthly = state.debts.reduce((sum, d) => sum + d.minPayment, 0);
         const totalMonthly = baseMinMonthly + state.extraMonthlyPayment;
-        kpiTotalMonthlyPayment.textContent = `${formatMoney(totalMonthly)}/mo`;
-        kpiRollOverDesc.textContent = `Includes $${Math.round(state.extraMonthlyPayment).toLocaleString()} extra rollover`;
+        kpiTotalMonthlyPayment.textContent = `${formatMoney(totalMonthly)}${dict.perMonthSuffix}`;
+        kpiRollOverDesc.textContent = dict.includesExtraRollover(Math.round(state.extraMonthlyPayment).toLocaleString());
 
         // Debt Free Date
         const now = new Date();
         now.setMonth(now.getMonth() + simActive.totalMonths);
         const dateOptions = { month: 'short', year: 'numeric' };
-        kpiDebtFreeDate.textContent = now.toLocaleDateString('en-US', dateOptions);
-        kpiMonthsTotal.textContent = `In ${simActive.totalMonths} months (${(simActive.totalMonths / 12).toFixed(1)} yrs)`;
+        const localeStr = currentLang === 'es' ? 'es-ES' : 'en-US';
+        kpiDebtFreeDate.textContent = now.toLocaleDateString(localeStr, dateOptions);
+        kpiMonthsTotal.textContent = dict.inMonthsYrs(simActive.totalMonths, (simActive.totalMonths / 12).toFixed(1));
 
         // Total Interest & Savings
         kpiTotalInterest.textContent = formatMoney(simActive.totalInterest);
         const interestSaved = Math.max(0, simBaseline.totalInterest - simActive.totalInterest);
-        kpiInterestSaved.textContent = `Saves ${formatMoney(interestSaved)} vs. minimums`;
+        kpiInterestSaved.textContent = dict.savesVsMinimums(formatMoney(interestSaved));
 
         // Strategy comparison box
         const deltaInterest = simAltStrategy.totalInterest - simActive.totalInterest;
         if (state.strategy === 'avalanche') {
           strategyComparisonDelta.textContent = `+${formatMoney(Math.abs(deltaInterest))}`;
-          strategyComparisonSub.textContent = 'Avalanche interest savings vs. Snowball';
+          strategyComparisonSub.textContent = dict.avalancheSavingsSub;
         } else {
           strategyComparisonDelta.textContent = `-${formatMoney(Math.abs(deltaInterest))}`;
-          strategyComparisonSub.textContent = 'Extra interest vs. Avalanche (Snowball prioritizes fast wins)';
+          strategyComparisonSub.textContent = dict.snowballExtraSub;
         }
 
         const monthsSaved = Math.max(0, simBaseline.totalMonths - simActive.totalMonths);
-        timeSavedDelta.textContent = `${monthsSaved} Months Faster`;
+        timeSavedDelta.textContent = dict.monthsFaster(monthsSaved);
 
         // Visuals
-        drawChart(simActive.monthlyTrajectory, simBaseline.monthlyTrajectory);
+        drawChart(simActive.monthlyTrajectory, simBaseline.monthlyTrajectory, simActive.perDebtTrajectories);
+        renderDebtPercentages(simActive);
         renderScheduleTable(simActive.yearlySnapshots);
       }
+
+      const recalculateAll = recalculateEngine;
 
       // --- Export to CSV ---
       function exportToCSV() {
         const simActive = simulatePayoff(state.debts, state.extraMonthlyPayment, state.strategy);
         const rows = [];
+        const isEs = currentLang === 'es';
 
-        rows.push(['DEBT PAYOFF ENGINE ANALYSIS & AMORTIZATION']);
-        rows.push(['Export Date', new Date().toLocaleDateString()]);
-        rows.push(['Selected Strategy', state.strategy.toUpperCase()]);
-        rows.push(['Extra Monthly Payment ($)', state.extraMonthlyPayment.toFixed(2)]);
-        rows.push(['Months to Debt Freedom', simActive.totalMonths]);
-        rows.push(['Total Interest Paid ($)', simActive.totalInterest.toFixed(2)]);
-        rows.push(['Total Amount Paid ($)', simActive.totalPaid.toFixed(2)]);
-        rows.push([]);
+        if (isEs) {
+          rows.push(['ANÁLISIS Y AMORTIZACIÓN DEL MOTOR DE PAGO DE DEUDAS']);
+          rows.push(['Fecha de Exportación', new Date().toLocaleDateString('es-ES')]);
+          rows.push(['Estrategia Seleccionada', state.strategy === 'avalanche' ? 'AVALANCHA' : 'BOLA DE NIEVE']);
+          rows.push(['Pago Mensual Extra ($)', state.extraMonthlyPayment.toFixed(2)]);
+          rows.push(['Meses hasta Libertad de Deuda', simActive.totalMonths]);
+          rows.push(['Interés Total Pagado ($)', simActive.totalInterest.toFixed(2)]);
+          rows.push(['Monto Total Pagado ($)', simActive.totalPaid.toFixed(2)]);
+          rows.push([]);
 
-        rows.push(['DEBT ACCOUNTS CONFIGURATION']);
-        rows.push(['Debt Name', 'Current Balance ($)', 'Interest Rate APR (%)', 'Min. Monthly Payment ($)']);
-        state.debts.forEach(d => {
-          rows.push([
-            `"${d.name.replace(/"/g, '""')}"`,
-            d.balance.toFixed(2),
-            `${d.apr}%`,
-            d.minPayment.toFixed(2)
-          ]);
-        });
-        rows.push([]);
+          rows.push(['CONFIGURACIÓN DE PORTAFOLIO DE DEUDAS']);
+          rows.push(['Nombre de la Deuda', 'Saldo Actual ($)', 'Tasa de Interés APR (%)', 'Pago Mensual Mín. ($)']);
+          state.debts.forEach(d => {
+            rows.push([
+              `"${d.name.replace(/"/g, '""')}"`,
+              d.balance.toFixed(2),
+              `${d.apr}%`,
+              d.minPayment.toFixed(2)
+            ]);
+          });
+          rows.push([]);
 
-        rows.push(['ANNUAL PAYOFF SCHEDULE']);
-        rows.push(['Year', 'Starting Balance ($)', 'Total Payments ($)', 'Principal Paid ($)', 'Interest Accrued ($)', 'Ending Balance ($)']);
-        simActive.yearlySnapshots.forEach(snap => {
-          rows.push([
-            `Year ${snap.year}`,
-            snap.startBalance.toFixed(2),
-            snap.payments.toFixed(2),
-            snap.principal.toFixed(2),
-            snap.interest.toFixed(2),
-            snap.endBalance.toFixed(2)
-          ]);
-        });
+          rows.push(['CRONOGRAMA DE AMORTIZACIÓN ANUAL']);
+          rows.push(['Año', 'Saldo Inicial ($)', 'Pagos Totales ($)', 'Capital Pagado ($)', 'Interés Acumulado ($)', 'Saldo Final ($)']);
+          simActive.yearlySnapshots.forEach(snap => {
+            rows.push([
+              `Año ${snap.year}`,
+              snap.startBalance.toFixed(2),
+              snap.payments.toFixed(2),
+              snap.principal.toFixed(2),
+              snap.interest.toFixed(2),
+              snap.endBalance.toFixed(2)
+            ]);
+          });
+        } else {
+          rows.push(['DEBT PAYOFF ENGINE ANALYSIS & AMORTIZATION']);
+          rows.push(['Export Date', new Date().toLocaleDateString()]);
+          rows.push(['Selected Strategy', state.strategy.toUpperCase()]);
+          rows.push(['Extra Monthly Payment ($)', state.extraMonthlyPayment.toFixed(2)]);
+          rows.push(['Months to Debt Freedom', simActive.totalMonths]);
+          rows.push(['Total Interest Paid ($)', simActive.totalInterest.toFixed(2)]);
+          rows.push(['Total Amount Paid ($)', simActive.totalPaid.toFixed(2)]);
+          rows.push([]);
+
+          rows.push(['DEBT ACCOUNTS CONFIGURATION']);
+          rows.push(['Debt Name', 'Current Balance ($)', 'Interest Rate APR (%)', 'Min. Monthly Payment ($)']);
+          state.debts.forEach(d => {
+            rows.push([
+              `"${d.name.replace(/"/g, '""')}"`,
+              d.balance.toFixed(2),
+              `${d.apr}%`,
+              d.minPayment.toFixed(2)
+            ]);
+          });
+          rows.push([]);
+
+          rows.push(['ANNUAL PAYOFF SCHEDULE']);
+          rows.push(['Year', 'Starting Balance ($)', 'Total Payments ($)', 'Principal Paid ($)', 'Interest Accrued ($)', 'Ending Balance ($)']);
+          simActive.yearlySnapshots.forEach(snap => {
+            rows.push([
+              `Year ${snap.year}`,
+              snap.startBalance.toFixed(2),
+              snap.payments.toFixed(2),
+              snap.principal.toFixed(2),
+              snap.interest.toFixed(2),
+              snap.endBalance.toFixed(2)
+            ]);
+          });
+        }
 
         const csvContent = '\uFEFF' + rows.map(r => r.join(',')).join('\r\n');
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1380,25 +1989,64 @@
             const loadedDebts = [];
             let inDebtConfig = false;
 
+            const configHeaders = [
+              'DEBT ACCOUNTS CONFIGURATION',
+              'LIABILITY PORTFOLIO CONFIGURATION',
+              'CONFIGURACIÓN DE PORTAFOLIO DE DEUDAS',
+              'CONFIGURACION DE PORTAFOLIO DE DEUDAS',
+              'CONFIGURACIÓN DE CUENTAS DE DEUDA',
+              'CONFIGURACION DE CUENTAS DE DEUDA'
+            ];
+
+            const scheduleHeaders = [
+              'ANNUAL PAYOFF SCHEDULE',
+              'MONTH-BY-MONTH',
+              'MES A MES',
+              'AMORTIZATION SCHEDULE',
+              'TABLA DE AMORTIZACIÓN',
+              'TABLA DE AMORTIZACION',
+              'CRONOGRAMA DE AMORTIZACIÓN',
+              'CRONOGRAMA DE AMORTIZACION',
+              'CRONOGRAMA DE AMORTIZACIÓN ANUAL',
+              'CRONOGRAMA DE AMORTIZACION ANUAL',
+              'CRONOGRAMA ANUAL DE PAGO'
+            ];
+
             for (let i = 0; i < lines.length; i++) {
               const line = lines[i];
               const cols = parseCSVLine(line, delimiter);
+              const firstColUpper = (cols[0] || '').toUpperCase().trim();
+              const firstColLower = (cols[0] || '').toLowerCase().trim();
 
-              if (cols[0] && cols[0].toLowerCase().includes('selected strategy')) {
+              if (
+                firstColLower.includes('selected strategy') ||
+                firstColLower.includes('estrategia seleccionada') ||
+                firstColLower.includes('payoff strategy') ||
+                firstColLower.includes('estrategia de pago')
+              ) {
                 const s = (cols[1] || '').toLowerCase();
-                if (s.includes('snowball')) loadedStrategy = 'snowball';
-              } else if (cols[0] && cols[0].toLowerCase().includes('extra monthly payment')) {
+                if (s.includes('snowball') || s.includes('bola de nieve')) {
+                  loadedStrategy = 'snowball';
+                } else if (s.includes('avalanche') || s.includes('avalancha')) {
+                  loadedStrategy = 'avalanche';
+                }
+              } else if (
+                firstColLower.includes('extra monthly payment') ||
+                firstColLower.includes('pago mensual extra') ||
+                firstColLower.includes('presupuesto mensual extra') ||
+                firstColLower.includes('extra monthly budget')
+              ) {
                 loadedExtra = Math.max(0, parseNumber(cols[1]));
               }
 
-              if (cols[0] === 'DEBT ACCOUNTS CONFIGURATION') {
+              if (configHeaders.some(h => firstColUpper.includes(h))) {
                 inDebtConfig = true;
                 i++; // skip header row
                 continue;
               }
 
               if (inDebtConfig) {
-                if (cols[0] === 'ANNUAL PAYOFF SCHEDULE' || cols.length < 4) {
+                if (scheduleHeaders.some(h => firstColUpper.includes(h)) || cols.length < 4) {
                   inDebtConfig = false;
                   continue;
                 }
@@ -1410,7 +2058,7 @@
 
                 loadedDebts.push({
                   id: 'debt_' + (Date.now() + Math.random().toString(36).substr(2, 5)),
-                  name: name || `Debt ${loadedDebts.length + 1}`,
+                  name: name || t().newDebtAccount(loadedDebts.length + 1),
                   color: COLOR_PALETTE[loadedDebts.length % COLOR_PALETTE.length],
                   balance: bal,
                   apr: apr,
@@ -1431,18 +2079,42 @@
               renderDebtsInputs();
               recalculateEngine(false);
             } else {
-              alert('Could not detect valid debt accounts in the selected CSV file.');
+              alert(t().csvAlertNoDebts);
             }
 
           } catch (err) {
             console.error(err);
-            alert('Error parsing CSV file. Please make sure it is a valid debt engine export.');
+            alert(t().csvAlertParseErr);
           }
         };
         reader.readAsText(file);
       }
 
       // --- Event Listeners ---
+      btnThemeToggle.addEventListener('click', () => {
+        if (isLightMode()) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('finance_suite_theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('finance_suite_theme', 'light');
+        }
+        updateThemeButtonLabel();
+        recalculateAll(false);
+      });
+
+      langSelect.value = currentLang;
+      langSelect.addEventListener('change', (e) => {
+        const prevLang = currentLang;
+        const nextLang = e.target.value === 'es' ? 'es' : 'en';
+        currentLang = nextLang;
+        localStorage.setItem('finance_suite_lang', currentLang);
+        translateUnchangedDefaultDebts(prevLang, nextLang);
+        applyStaticTranslations();
+        renderDebtsInputs();
+        recalculateAll(false);
+      });
+
       btnAvalanche.addEventListener('click', () => {
         state.strategy = 'avalanche';
         btnAvalanche.classList.add('active');
@@ -1476,7 +2148,7 @@
 
         state.debts.push({
           id: nextId,
-          name: `Debt Account ${state.debts.length + 1}`,
+          name: t().newDebtAccount(state.debts.length + 1),
           color: color,
           balance: 5000,
           apr: 15.0,
@@ -1503,10 +2175,64 @@
       window.addEventListener('resize', () => {
         const simActive = simulatePayoff(state.debts, state.extraMonthlyPayment, state.strategy);
         const simBaseline = simulatePayoff(state.debts, 0, 'avalanche');
-        drawChart(simActive.monthlyTrajectory, simBaseline.monthlyTrajectory);
+        drawChart(simActive.monthlyTrajectory, simBaseline.monthlyTrajectory, simActive.perDebtTrajectories);
       });
 
+      // Tooltip Floating Bubble Initializer
+      function initInfoTooltips() {
+        let tip = document.getElementById('appSharedFloatingTooltip');
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = 'appSharedFloatingTooltip';
+          tip.className = 'app-floating-tooltip';
+          document.body.appendChild(tip);
+        }
+
+        function showTip(target) {
+          const isEs = currentLang === 'es' || document.documentElement.getAttribute('data-lang') === 'es';
+          const text = isEs ? (target.getAttribute('data-info-es') || target.getAttribute('data-info-en')) : (target.getAttribute('data-info-en') || target.getAttribute('data-info-es'));
+          if (!text) return;
+          tip.textContent = text;
+          tip.style.display = 'block';
+          const rect = target.getBoundingClientRect();
+          const tipRect = tip.getBoundingClientRect();
+          let top = rect.top - tipRect.height - 8;
+          let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+          if (top < 10) top = rect.bottom + 8;
+          if (left < 10) left = 10;
+          if (left + tipRect.width > window.innerWidth - 10) left = window.innerWidth - tipRect.width - 10;
+          tip.style.top = top + 'px';
+          tip.style.left = left + 'px';
+          tip.style.opacity = '1';
+        }
+
+        function hideTip() {
+          tip.style.opacity = '0';
+          tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) showTip(icon);
+        });
+        document.addEventListener('mouseout', (e) => {
+          if (e.target.closest('.info-icon')) hideTip();
+        });
+        document.addEventListener('click', (e) => {
+          const icon = e.target.closest('.info-icon');
+          if (icon) {
+            showTip(icon);
+            e.stopPropagation();
+          } else {
+            hideTip();
+          }
+        });
+        window.addEventListener('scroll', hideTip, { passive: true });
+      }
+
       // Initial Bootstrap
+      initInfoTooltips();
+      applyStaticTranslations();
       renderDebtsInputs();
       recalculateEngine(false);
 
