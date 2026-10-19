@@ -1169,12 +1169,12 @@
     <header class="top-header">
       <div class="top-bar">
         <div class="brand-group">
-          <a href="./index.html" class="btn" id="btnReturnHub">
+          <a href="./index.html" target="_blank" rel="noopener noreferrer" class="btn" id="btnReturnHub" title="Return to Main Suite">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            <span id="txtReturnHub">Return to Main Hub</span>
+            <span id="txtReturnHub">Return to Main Suite</span>
           </a>
           <div class="suite-badge">
             <span class="status-dot"></span>
@@ -2685,7 +2685,9 @@
           if (el) el.textContent = isEs ? es : en;
         };
 
-        setTxt('txtReturnHub', 'Return to Main Hub', 'Volver al Panel Principal');
+        setTxt('txtReturnHub', 'Return to Main Suite', 'Volver a la Suite Principal');
+        const btnReturnHub = document.getElementById('btnReturnHub');
+        if (btnReturnHub) btnReturnHub.title = isEs ? 'Volver a la Suite Principal' : 'Return to Main Suite';
         setTxt('txtSuiteBadge', 'Equity Research & Fundamental Screener', 'Investigación de Renta Variable y Screener Fundamental');
         setTxt('txtBtnLoadCSV', 'Load CSV', 'Cargar CSV');
         setTxt('txtBtnExportCSV', 'Export CSV', 'Exportar CSV');
