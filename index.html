@@ -1559,6 +1559,30 @@
           </div>
         </a>
 
+        <!-- Tool 9: Stock Analysis & Screener Engine -->
+        <a href="./stock-analysis.html" target="_blank" rel="noopener noreferrer" class="tool-card card-stocks">
+          <div>
+            <div class="card-top">
+              <div class="tool-icon" style="background: linear-gradient(135deg, #10b981, #6366f1);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <div class="tool-heading">
+                <div class="tool-title">Stock Analysis &amp; Screener</div>
+                <span class="tool-tag">Equity Valuation</span>
+              </div>
+            </div>
+            <p class="tool-desc">
+              Benchmark stocks against 6 institutional playbooks (Classic Value, GARP, Dividend Quality, Wide Moat, Cash Flow Kings, Magic Formula) with dynamic cell scoring and a 10-K/10-Q cheat sheet.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span>Launch Engine</span>
+            <span class="action-badge">Open in new tab &rarr;</span>
+          </div>
+        </a>
+
       </div>
     </section>
 
@@ -2834,6 +2858,7 @@
       function detectToolType(firstFewLines) {
         const joined = firstFewLines.join(' ').toLowerCase();
         if (joined.includes('monthly net worth log & historical reality tracker') || joined.includes('chronological monthly net worth entries')) return 'Monthly Net Worth Log & Reality Tracker (History)';
+        if (joined.includes('stock analysis & screener engine') || joined.includes('multi-stock comparison grid')) return 'Stock Analysis & Screener Engine';
         if (joined.includes('holistic net worth command center')) return 'Net Worth Command Center';
         if (joined.includes('cost of living') || joined.includes('expense categories')) return 'Cost of Living & Cash Flow Budgeter';
         if (joined.includes('portfolio savings') || joined.includes('asset configuration') || joined.includes('multi-asset investing')) return 'Multi-Asset Investing & Portfolio';

@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Analysis &amp; Screener Engine | Offline Suite</title>
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #111827;
+      --bg-card: #1a2234;
+      --bg-card-hover: #232e46;
+      --bg-input: #0b111e;
+      --border-color: #26334d;
+      --border-focus: #6366f1;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+
+      --accent-indigo: #6366f1;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a855f7;
+
+      /* Dynamic Scoring Semantic Colors */
+      --pass-bg: rgba(16, 185, 129, 0.14);
+      --pass-border: rgba(16, 185, 129, 0.45);
+      --pass-text: #34d399;
+
+      --warn-bg: rgba(245, 158, 11, 0.14);
+      --warn-border: rgba(245, 158, 11, 0.45);
+      --warn-text: #fbbf24;
+
+      --fail-bg: rgba(244, 63, 94, 0.14);
+      --fail-border: rgba(244, 63, 94, 0.45);
+      --fail-text: #fb7185;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-lg: 0 12px 30px -4px rgba(0, 0, 0, 0.55);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.25rem 4rem;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1380px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* Utility Classes (Tailwind-style) */
+    .flex { display: flex; }
+    .flex-col { display: flex; flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .flex-wrap { flex-wrap: wrap; }
+    .gap-1 { gap: 0.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-6 { gap: 1.5rem; }
+    .text-xs { font-size: 0.75rem; }
+    .text-sm { font-size: 0.875rem; }
+    .text-base { font-size: 1rem; }
+    .text-lg { font-size: 1.125rem; }
+    .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .text-muted { color: var(--text-muted); }
+
+    /* Top Header & Controls */
+    .top-header {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(26, 34, 52, 0.85) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .suite-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(99, 102, 241, 0.14);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.55rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-hover);
+      border-color: #475569;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--accent-indigo);
+      border-color: var(--accent-indigo);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #4f46e5;
+      border-color: #4338ca;
+    }
+
+    .btn-success {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #34d399;
+    }
+
+    .btn-success:hover {
+      background: #059669;
+      border-color: #10b981;
+      color: #ffffff;
+    }
+
+    .btn-cyan {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: rgba(6, 182, 212, 0.45);
+      color: #67e8f9;
+    }
+
+    .btn-cyan:hover {
+      background: #0891b2;
+      border-color: #06b6d4;
+      color: #ffffff;
+    }
+
+    .btn-danger {
+      background: rgba(244, 63, 94, 0.14);
+      border-color: rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+    }
+
+    .btn-danger:hover {
+      background: var(--accent-rose);
+      border-color: var(--accent-rose);
+      color: #ffffff;
+    }
+
+    .btn-edit {
+      background: rgba(99, 102, 241, 0.14);
+      border-color: rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+    }
+
+    .btn-edit:hover {
+      background: var(--accent-indigo);
+      border-color: var(--accent-indigo);
+      color: #ffffff;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-title-block h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: linear-gradient(135deg, #ffffff 35%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.35rem;
+    }
+
+    .header-title-block p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 780px;
+    }
+
+    /* Section Card Wrapper */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-main);
+    }
+
+    .section-subtitle {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    /* Strategy Playbook Buttons Grid */
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 1180px) {
+      .strategy-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .strategy-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 440px) {
+      .strategy-grid { grid-template-columns: 1fr; }
+    }
+
+    .strategy-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .strategy-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: #475569;
+      transform: translateY(-2px);
+    }
+
+    .strategy-btn.active {
+      background: linear-gradient(145deg, rgba(99, 102, 241, 0.2), rgba(26, 34, 52, 0.95));
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.35), 0 8px 20px -4px rgba(99, 102, 241, 0.25);
+    }
+
+    .strategy-btn-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .strategy-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .strategy-btn.active .strategy-name {
+      color: #c7d2fe;
+    }
+
+    .strategy-tag {
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.14);
+      color: var(--text-muted);
+    }
+
+    .strategy-btn.active .strategy-tag {
+      background: var(--accent-indigo);
+      color: #ffffff;
+    }
+
+    .strategy-rules-mini {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Playbook Detail Card */
+    .playbook-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-left: 4px solid var(--accent-indigo);
+      border-radius: var(--radius-md);
+      padding: 1.35rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .playbook-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .playbook-title-group h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #e0e7ff;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .playbook-archetype {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      margin-top: 0.15rem;
+    }
+
+    .playbook-Core-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .rule-pill {
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.28rem 0.65rem;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .playbook-body-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
+    }
+
+    @media (max-width: 960px) {
+      .playbook-body-grid { grid-template-columns: 1fr; }
+    }
+
+    .playbook-col {
+      background: rgba(11, 17, 30, 0.55);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .playbook-col-label {
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .label-goal { color: #818cf8; }
+    .label-filters { color: #34d399; }
+    .label-why { color: #fbbf24; }
+
+    .playbook-col p,
+    .playbook-col ul {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.55;
+    }
+
+    .playbook-col ul {
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .playbook-col li span.metric-hl {
+      color: #6ee7b7;
+      font-weight: 600;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Multi-Stock Input Form */
+    .input-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.85rem;
+    }
+
+    @media (max-width: 1200px) {
+      .form-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 460px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .field-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .field-label span.unit-hint {
+      color: var(--text-subtle);
+      font-weight: 500;
+      font-size: 0.69rem;
+    }
+
+    .field-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+      outline: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .field-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.22);
+    }
+
+    .field-input::placeholder {
+      color: #475569;
+      font-weight: 400;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .form-helper-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Scoring Legend Bar */
+    .legend-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      background: rgba(11, 17, 30, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 1rem;
+    }
+
+    .legend-items {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    .swatch-pass { background: var(--pass-bg); border: 1.5px solid var(--pass-text); }
+    .swatch-warn { background: var(--warn-bg); border: 1.5px solid var(--warn-text); }
+    .swatch-fail { background: var(--fail-bg); border: 1.5px solid var(--fail-text); }
+    .swatch-key { background: rgba(99, 102, 241, 0.25); border: 1.5px solid #818cf8; }
+
+    /* Multi-Stock Comparison Table */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+    }
+
+    table.screener-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1180px;
+      text-align: right;
+    }
+
+    table.screener-table th {
+      background: #0d1424;
+      color: var(--text-muted);
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 0.65rem;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+      position: relative;
+      vertical-align: bottom;
+    }
+
+    table.screener-table th:first-child,
+    table.screener-table td:first-child {
+      text-align: left;
+      padding-left: 1rem;
+      position: sticky;
+      left: 0;
+      z-index: 2;
+    }
+
+    table.screener-table th:first-child {
+      background: #0d1424;
+    }
+
+    table.screener-table td:first-child {
+      background: var(--bg-card);
+      border-right: 1px solid var(--border-color);
+    }
+
+    table.screener-table tr:hover td:first-child {
+      background: var(--bg-card-hover);
+    }
+
+    /* Highlight active strategy's primary rule columns */
+    table.screener-table th.col-primary-rule {
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.14);
+      border-bottom: 2px solid var(--accent-indigo);
+    }
+
+    .th-rule-badge {
+      display: block;
+      font-size: 0.63rem;
+      font-weight: 700;
+      color: #818cf8;
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    table.screener-table td {
+      padding: 0.65rem 0.6rem;
+      border-bottom: 1px solid rgba(38, 51, 77, 0.65);
+      font-size: 0.84rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      transition: background-color 0.15s ease;
+    }
+
+    table.screener-table tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .ticker-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .ticker-symbol {
+      font-weight: 800;
+      font-size: 0.94rem;
+      color: var(--text-main);
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .metric-pill {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0.28rem 0.52rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.81rem;
+      min-width: 68px;
+      border: 1px solid transparent;
+      line-height: 1.2;
+    }
+
+    .metric-sub {
+      font-size: 0.63rem;
+      font-weight: 600;
+      opacity: 0.82;
+      margin-top: 0.1rem;
+    }
+
+    .cell-pass .metric-pill {
+      background: var(--pass-bg);
+      border-color: var(--pass-border);
+      color: var(--pass-text);
+    }
+
+    .cell-warn .metric-pill {
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+      color: var(--warn-text);
+    }
+
+    .cell-fail .metric-pill {
+      background: var(--fail-bg);
+      border-color: var(--fail-border);
+      color: var(--fail-text);
+    }
+
+    .cell-neutral .metric-pill {
+      background: rgba(148, 163, 184, 0.08);
+      border-color: rgba(148, 163, 184, 0.2);
+      color: var(--text-main);
+    }
+
+    /* Primary column emphasis */
+    td.col-is-primary .metric-pill {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .score-high {
+      background: var(--pass-bg);
+      border: 1px solid var(--pass-border);
+      color: var(--pass-text);
+    }
+
+    .score-mid {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      color: var(--warn-text);
+    }
+
+    .score-low {
+      background: var(--fail-bg);
+      border: 1px solid var(--fail-border);
+      color: var(--fail-text);
+    }
+
+    .row-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      justify-content: flex-end;
+    }
+
+    .empty-state {
+      padding: 2.5rem 1rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    /* Educational Collapsible Section (10-Q / 10-K Cheat Sheet) */
+    details.cheat-sheet-details {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    details.cheat-sheet-details summary {
+      padding: 1.35rem 1.75rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.12) 0%, rgba(17, 24, 39, 0.95) 100%);
+      user-select: none;
+      transition: var(--transition);
+    }
+
+    details.cheat-sheet-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.cheat-sheet-details summary:hover {
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.2) 0%, rgba(26, 34, 52, 0.95) 100%);
+    }
+
+    .summary-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .summary-title {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .summary-badge {
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      color: #67e8f9;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .summary-toggle-hint {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #a5b4fc;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cheat-sheet-body {
+      padding: 1.5rem 1.75rem 1.75rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .statements-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      .statements-grid { grid-template-columns: 1fr; }
+    }
+
+    .statement-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .stmt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .stmt-title {
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .stmt-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .stmt-income .stmt-title { color: #818cf8; }
+    .stmt-income .stmt-tag { background: rgba(99, 102, 241, 0.16); color: #a5b4fc; }
+
+    .stmt-balance .stmt-title { color: #34d399; }
+    .stmt-balance .stmt-tag { background: rgba(16, 185, 129, 0.16); color: #6ee7b7; }
+
+    .stmt-cashflow .stmt-title { color: #fbbf24; }
+    .stmt-cashflow .stmt-tag { background: rgba(245, 158, 11, 0.16); color: #fcd34d; }
+
+    .stmt-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .stmt-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0.7rem;
+      border-radius: 6px;
+      background: rgba(11, 17, 30, 0.6);
+      border: 1px solid rgba(38, 51, 77, 0.7);
+      font-size: 0.81rem;
+    }
+
+    .stmt-line.hl-income {
+      border-left: 3px solid var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.09);
+    }
+
+    .stmt-line.hl-balance {
+      border-left: 3px solid var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.09);
+    }
+
+    .stmt-line.hl-cashflow {
+      border-left: 3px solid var(--accent-amber);
+      background: rgba(245, 158, 11, 0.09);
+    }
+
+    .line-name {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .line-role {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* Formulas Conversion Reference Grid */
+    .formulas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+    }
+
+    @media (max-width: 1100px) {
+      .formulas-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .formulas-grid { grid-template-columns: 1fr; }
+    }
+
+    .formula-box {
+      background: rgba(11, 17, 30, 0.75);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .formula-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .formula-math {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      color: #67e8f9;
+      background: rgba(6, 182, 212, 0.08);
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+
+    .formula-note {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Status Toast Notification */
+    .toast-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #6ee7b7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 1. TOP HEADER -->
+    <header class="top-header">
+      <div class="top-bar">
+        <div class="brand-group">
+          <a href="./index.html" class="btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Return to Main Hub
+          </a>
+          <div class="suite-badge">
+            <span class="status-dot"></span>
+            Equity Research &amp; Fundamental Screener
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <input type="file" id="csvFileInput" accept=".csv,text/csv" style="display: none;">
+          <button type="button" id="btnLoadCSV" class="btn btn-cyan" title="Load a previously exported Stock Screener CSV">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Load CSV
+          </button>
+          <button type="button" id="btnExportCSV" class="btn btn-success" title="Export current stock comparison grid to UTF-8 CSV">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="header-content">
+        <div class="header-title-block">
+          <h1>Stock Analysis &amp; Screener Engine</h1>
+          <p>
+            Evaluate equities across 6 institutional investment playbooks (Graham Value, Peter Lynch GARP, Dividend Quality, Wide Moat, Cash Flow Kings, and Joel Greenblatt's Magic Formula). Color-codes every fundamental metric dynamically and persists 100% offline via CSV.
+          </p>
+        </div>
+        <div id="statusToast" class="toast-banner"></div>
+      </div>
+    </header>
+
+    <!-- 2. STRATEGY PLAYBOOK (THE SCREENER RULES) -->
+    <section class="panel" aria-label="Strategy Playbook">
+      <div class="section-title-row">
+        <div>
+          <h2 class="section-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            1. Strategy Playbook (The Screener Rules)
+          </h2>
+          <p class="section-subtitle">Select an active investment philosophy to update the Playbook Card and immediately re-score all stocks below</p>
+        </div>
+      </div>
+
+      <!-- 6 Toggleable Strategy Buttons -->
+      <div class="strategy-grid" id="strategyButtonsContainer">
+        <!-- Populated dynamically by JS -->
+      </div>
+
+      <!-- Dynamic Playbook Card -->
+      <div class="playbook-card" id="playbookCard">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- 3. MULTI-STOCK INPUT & COMPARISON GRID -->
+    <section class="panel" aria-label="Multi-Stock Input and Comparison Grid">
+      <div class="section-title-row">
+        <div>
+          <h2 class="section-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            2. Multi-Stock Input &amp; Comparison Grid
+          </h2>
+          <p class="section-subtitle">Add or edit stock tickers to benchmark their fundamentals against the active strategy thresholds</p>
+        </div>
+
+        <div class="flex gap-2 flex-wrap">
+          <button type="button" id="btnResetSamples" class="btn text-xs" title="Restore sample benchmark tickers">
+            Restore Sample Watchlist
+          </button>
+          <button type="button" id="btnClearAll" class="btn btn-danger text-xs" title="Remove all stocks from grid">
+            Clear All
+          </button>
+        </div>
+      </div>
+
+      <!-- Add / Edit Stock Input Form -->
+      <form id="stockForm" class="input-form-card" novalidate>
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="inpTicker">Ticker Symbol <span class="unit-hint">e.g. AAPL</span></label>
+            <input type="text" id="inpTicker" class="field-input" placeholder="MSFT" required maxlength="12" style="text-transform: uppercase;">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpPrice">Current Price <span class="unit-hint">$ USD</span></label>
+            <input type="text" inputmode="decimal" id="inpPrice" class="field-input" placeholder="415.50" required>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpPE">P/E Ratio <span class="unit-hint">x (TTM)</span></label>
+            <input type="text" inputmode="decimal" id="inpPE" class="field-input" placeholder="14.2">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpPB">P/B Ratio <span class="unit-hint">x (Book)</span></label>
+            <input type="text" inputmode="decimal" id="inpPB" class="field-input" placeholder="1.35">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpDE">Debt / Equity <span class="unit-hint">Ratio</span></label>
+            <input type="text" inputmode="decimal" id="inpDE" class="field-input" placeholder="0.38">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpPEG">PEG Ratio <span class="unit-hint">P/E &divide; Grw</span></label>
+            <input type="text" inputmode="decimal" id="inpPEG" class="field-input" placeholder="0.85">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpGrowth">Forward Growth <span class="unit-hint">% Est</span></label>
+            <input type="text" inputmode="decimal" id="inpGrowth" class="field-input" placeholder="16.5">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpDivYield">Dividend Yield <span class="unit-hint">% Ann</span></label>
+            <input type="text" inputmode="decimal" id="inpDivYield" class="field-input" placeholder="3.10">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpPayout">Payout Ratio <span class="unit-hint">% EPS</span></label>
+            <input type="text" inputmode="decimal" id="inpPayout" class="field-input" placeholder="42.0">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpROE">ROE % <span class="unit-hint">Ret/Eq</span></label>
+            <input type="text" inputmode="decimal" id="inpROE" class="field-input" placeholder="19.4">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpROIC">ROIC % <span class="unit-hint">Ret/Cap</span></label>
+            <input type="text" inputmode="decimal" id="inpROIC" class="field-input" placeholder="22.8">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpGrossMargin">Gross Margin % <span class="unit-hint">% Rev</span></label>
+            <input type="text" inputmode="decimal" id="inpGrossMargin" class="field-input" placeholder="48.5">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inpFCFYield">FCF Yield % <span class="unit-hint">FCF/MCap</span></label>
+            <input type="text" inputmode="decimal" id="inpFCFYield" class="field-input" placeholder="6.20">
+          </div>
+
+          <div class="field-group" style="justify-content: flex-end;">
+            <button type="submit" id="btnSubmitStock" class="btn btn-primary" style="height: 38px; width: 100%;">
+              + Add Stock
+            </button>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <div class="form-helper-text">
+            <span><strong>Tip:</strong> Leave PEG blank to auto-derive it from <code>P/E &divide; Forward Growth %</code>. Implied <code>P/FCF</code> ($100 \div \text{FCF Yield}$) and <code>Earnings Yield</code> ($100 \div \text{P/E}$) are computed automatically in the grid.</span>
+          </div>
+          <button type="button" id="btnCancelEdit" class="btn text-xs" style="display: none;">
+            Cancel Edit
+          </button>
+        </div>
+      </form>
+
+      <!-- Legend & Active Filter Summary Bar -->
+      <div class="legend-bar">
+        <div class="legend-items">
+          <div class="legend-item">
+            <span class="legend-swatch swatch-pass"></span>
+            <span>PASS (Meets Strategy Target)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch swatch-warn"></span>
+            <span>WARN (Borderline / Watch)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch swatch-fail"></span>
+            <span>FAIL / N/A (Outside Threshold)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch swatch-key"></span>
+            <span>Highlighted Column = Primary Rule for Active Strategy</span>
+          </div>
+        </div>
+        <div class="text-xs font-mono" style="color: #a5b4fc;" id="activeStrategyIndicator">
+          Scoring Mode: Classic Value
+        </div>
+      </div>
+
+      <!-- Scrollable Multi-Stock Comparison Table -->
+      <div class="table-wrapper">
+        <table class="screener-table" id="comparisonTable">
+          <thead id="comparisonThead">
+            <!-- Dynamically rendered with Primary Rule badges -->
+          </thead>
+          <tbody id="comparisonTbody">
+            <!-- Dynamically rendered stock rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. EDUCATIONAL "WHERE TO FIND IT?" GUIDE (10-Q / 10-K CHEAT SHEET) -->
+    <details class="cheat-sheet-details" open>
+      <summary>
+        <div class="summary-title-group">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          <span class="summary-title">3. Where to find these numbers? (10-Q / 10-K Cheat Sheet)</span>
+          <span class="summary-badge">SEC Filings &amp; Ratio Formulas</span>
+        </div>
+        <div class="summary-toggle-hint">
+          <span>Click to Toggle Guide</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </summary>
+
+      <div class="cheat-sheet-body">
+        <p class="text-sm text-muted">
+          Every public company files quarterly (<strong>Form 10-Q</strong>) and annual (<strong>Form 10-K</strong>) reports with the SEC (Item 8: Consolidated Financial Statements). Below is a visual map of the three core financial statements showing the exact raw line items to locate and how to turn them into the screener ratios above.
+        </p>
+
+        <!-- Visual Breakdown of the 3 Financial Statements -->
+        <div class="statements-grid">
+
+          <!-- Statement 1: Income Statement -->
+          <div class="statement-card stmt-income">
+            <div class="stmt-header">
+              <div class="stmt-title">
+                <span>1. Consolidated Income Statement</span>
+              </div>
+              <span class="stmt-tag">Profitability &amp; Growth</span>
+            </div>
+            <p class="text-xs text-muted">Measures operational performance over a period (Quarter or Trailing Twelve Months - TTM).</p>
+            <div class="stmt-lines">
+              <div class="stmt-line hl-income">
+                <span class="line-name">Revenue (Net Sales)</span>
+                <span class="line-role">Top-line total sales</span>
+              </div>
+              <div class="stmt-line hl-income">
+                <span class="line-name">Cost of Goods Sold (COGS)</span>
+                <span class="line-role">Direct production cost</span>
+              </div>
+              <div class="stmt-line" style="padding-left: 1.25rem; opacity: 0.85;">
+                <span class="line-name">= Gross Profit</span>
+                <span class="line-role">Revenue &minus; COGS</span>
+              </div>
+              <div class="stmt-line hl-income">
+                <span class="line-name">Operating Income (EBIT)</span>
+                <span class="line-role">Gross Profit &minus; OpEx (R&amp;D, SG&amp;A)</span>
+              </div>
+              <div class="stmt-line hl-income">
+                <span class="line-name">Net Income (Bottom Line)</span>
+                <span class="line-role">Profit after Interest &amp; Taxes</span>
+              </div>
+              <div class="stmt-line hl-income">
+                <span class="line-name">Diluted EPS (Earnings Per Share)</span>
+                <span class="line-role">Net Income &divide; Diluted Shares</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Statement 2: Balance Sheet -->
+          <div class="statement-card stmt-balance">
+            <div class="stmt-header">
+              <div class="stmt-title">
+                <span>2. Consolidated Balance Sheet</span>
+              </div>
+              <span class="stmt-tag">Solvency &amp; Net Worth</span>
+            </div>
+            <p class="text-xs text-muted">A snapshot at a single point in time of what the company owns (Assets) vs. owes (Liabilities).</p>
+            <div class="stmt-lines">
+              <div class="stmt-line hl-balance">
+                <span class="line-name">Cash &amp; Short-Term Investments</span>
+                <span class="line-role">Liquid war chest</span>
+              </div>
+              <div class="stmt-line hl-balance">
+                <span class="line-name">Total Current Assets</span>
+                <span class="line-role">Cash + Receivables + Inventory (&lt;1 yr)</span>
+              </div>
+              <div class="stmt-line hl-balance">
+                <span class="line-name">Total Current Liabilities</span>
+                <span class="line-role">Payables + Short-Term Debt (&lt;1 yr)</span>
+              </div>
+              <div class="stmt-line hl-balance">
+                <span class="line-name">Total Debt (Short + Long-Term)</span>
+                <span class="line-role">All interest-bearing obligations</span>
+              </div>
+              <div class="stmt-line hl-balance">
+                <span class="line-name">Total Shareholder Equity (Book Value)</span>
+                <span class="line-role">Total Assets &minus; Total Liabilities</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Statement 3: Cash Flow Statement -->
+          <div class="statement-card stmt-cashflow">
+            <div class="stmt-header">
+              <div class="stmt-title">
+                <span>3. Statement of Cash Flows</span>
+              </div>
+              <span class="stmt-tag">Real Cash Generation</span>
+            </div>
+            <p class="text-xs text-muted">Tracks actual cash entering and leaving the bank account across Operating, Investing, and Financing activities.</p>
+            <div class="stmt-lines">
+              <div class="stmt-line hl-cashflow">
+                <span class="line-name">Operating Cash Flow (OCF)</span>
+                <span class="line-role">Cash generated by core business</span>
+              </div>
+              <div class="stmt-line hl-cashflow">
+                <span class="line-name">Capital Expenditures (CapEx)</span>
+                <span class="line-role">Cash spent on Property, Plant &amp; Equip.</span>
+              </div>
+              <div class="stmt-line" style="padding-left: 1.25rem; opacity: 0.85;">
+                <span class="line-name">= Free Cash Flow (FCF)</span>
+                <span class="line-role">Operating Cash Flow &minus; CapEx</span>
+              </div>
+              <div class="stmt-line hl-cashflow">
+                <span class="line-name">Common Dividends Paid</span>
+                <span class="line-role">Cash returned to shareholders</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- How to Calculate the Screener Metrics from Raw Numbers -->
+        <div>
+          <h3 class="text-base font-bold" style="margin-bottom: 0.75rem; color: #e2e8f0;">
+            How to Calculate the Input Metrics from Raw 10-Q / 10-K Line Items
+          </h3>
+          <div class="formulas-grid">
+            <div class="formula-box">
+              <div class="formula-name"><span>P/E Ratio &amp; Earnings Yield</span></div>
+              <div class="formula-math">P/E = Share Price &divide; Diluted EPS</div>
+              <p class="formula-note">Or Market Cap &divide; Net Income. <strong>Earnings Yield %</strong> is the inverse: <code>(EPS &divide; Price) &times; 100</code>.</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-name"><span>P/B Ratio (Price-to-Book)</span></div>
+              <div class="formula-math">P/B = Market Cap &divide; Shareholder Equity</div>
+              <p class="formula-note">Compares market valuation to net accounting assets on the Balance Sheet.</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-name"><span>Debt / Equity &amp; Current Ratio</span></div>
+              <div class="formula-math">D/E = Total Debt &divide; Shareholder Equity</div>
+              <p class="formula-note"><strong>Current Ratio</strong> = <code>Current Assets &divide; Current Liabilities</code> (tests 12-month liquidity).</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-name"><span>PEG Ratio (Lynch Formula)</span></div>
+              <div class="formula-math">PEG = P/E Ratio &divide; Fwd EPS Growth %</div>
+              <p class="formula-note">A stock at 20x P/E growing EPS at 25%/yr has a PEG of <code>20 &divide; 25 = 0.80</code>.</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-name"><span>Gross &amp; Operating Margin %</span></div>
+              <div class="formula-math">Gross % = (Rev &minus; COGS) &divide; Rev &times; 100</div>
+              <p class="formula-note"><strong>Operating Margin %</strong> = <code>(Operating Income &divide; Revenue) &times; 100</code>. Indicates pricing power.</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-name"><span>ROE % (Return on Equity)</span></div>
+              <div class="formula-math">ROE = (Net Income &divide; Equity) &times; 100</div>
+              <p class="formula-note">Measures how efficiently shareholder capital is compounded into bottom-line profit.</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-name"><span>ROIC % (Return on Invested Cap)</span></div>
+              <div class="formula-math">ROIC = NOPAT &divide; (Debt + Equity &minus; Cash)</div>
+              <p class="formula-note">Where <code>NOPAT = Operating Income &times; (1 &minus; Tax Rate)</code>. Prevents debt-driven ROE distortion.</p>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-name"><span>FCF Yield %, P/FCF &amp; Payout %</span></div>
+              <div class="formula-math">FCF Yield = (OCF &minus; CapEx) &divide; Market Cap</div>
+              <p class="formula-note"><strong>P/FCF</strong> = <code>100 &divide; FCF Yield %</code>. <strong>Payout Ratio</strong> = <code>Dividends Paid &divide; Net Income</code>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // --- 1. STRATEGY PLAYBOOK DEFINITIONS ---
+      const STRATEGIES = {
+        value: {
+          id: 'value',
+          name: 'Classic Value',
+          tag: 'Graham',
+          shortRules: 'P/E < 15 | P/B < 1.5 | D/E < 0.5 | Cur. Ratio > 1.5',
+          archetype: 'Benjamin Graham / Deep Value Margin of Safety',
+          corePills: ['P/E < 15', 'P/B < 1.5', 'Debt/Equity < 0.5', 'Current Ratio > 1.5'],
+          primaryCols: ['pe', 'pb', 'de'],
+          goal: 'Buy established, solvent businesses trading at a steep discount to their intrinsic book value and current earnings power, providing a structural "Margin of Safety" against permanent capital loss.',
+          screenerFilters: [
+            '<span class="metric-hl">P/E Ratio (TTM) &lt; 15.0</span> (Avoid paying for speculative future hype)',
+            '<span class="metric-hl">Price / Book (P/B) &lt; 1.5</span> (Backed by tangible net balance sheet assets)',
+            '<span class="metric-hl">Total Debt / Equity &lt; 0.50</span> (Low bankruptcy and refinancing risk)',
+            '<span class="metric-hl">Current Ratio &gt; 1.50</span> (Current Assets comfortably cover 12-month liabilities)'
+          ],
+          whyItMatters: 'When expectations are already depressed (low P/E and P/B) and the balance sheet carries minimal leverage (Debt/Equity < 0.5), downside risk is cushioned by tangible assets while mean-reversion drives upside re-rating.'
+        },
+        garp: {
+          id: 'garp',
+          name: 'GARP (Lynch)',
+          tag: 'Peter Lynch',
+          shortRules: 'PEG < 1.0 | Fwd Grw > 15% | ROE > 15% | P/E < 30',
+          archetype: 'Growth at a Reasonable Price (One Up On Wall Street)',
+          corePills: ['PEG < 1.0', 'Fwd Growth > 15%', 'ROE > 15%', 'P/E < 30'],
+          primaryCols: ['peg', 'growth', 'roe', 'pe'],
+          goal: 'Capture fast-growing companies (>15% annual EPS expansion) whose valuation multiple is still cheap relative to their growth trajectory (PEG < 1.0), avoiding overpriced story stocks.',
+          screenerFilters: [
+            '<span class="metric-hl">PEG Ratio &lt; 1.0</span> (P/E multiple is lower than the annual EPS growth rate)',
+            '<span class="metric-hl">Forward EPS Growth &gt; 15%</span> (Strong multi-year earnings expansion runway)',
+            '<span class="metric-hl">Return on Equity (ROE) &gt; 15%</span> (Profitable self-funding business model)',
+            '<span class="metric-hl">P/E Ratio &lt; 30</span> (Caps extreme multiple compression risk)'
+          ],
+          whyItMatters: 'Pure value screens often miss compounding winners, while pure growth screens overpay. By demanding a PEG below 1.0 alongside ROE > 15% and P/E < 30, you buy high-velocity earnings growth at a discount.'
+        },
+        dividend: {
+          id: 'dividend',
+          name: 'Dividend Quality',
+          tag: 'Income Fortress',
+          shortRules: 'Yield > 2.5% | Payout < 60% | FCF > Div | Int. Cov > 4',
+          archetype: 'Sustainable Dividend Growth & Cash-Backed Yield',
+          corePills: ['Yield > 2.5%', 'Payout Ratio < 60%', 'FCF > Dividends', 'Int. Coverage > 4'],
+          primaryCols: ['divYield', 'payout', 'fcfYield', 'de'],
+          goal: 'Build a rising, recession-resilient income stream while systematically filtering out "yield traps"—companies borrowing money or starving CapEx just to maintain an unsustainable dividend.',
+          screenerFilters: [
+            '<span class="metric-hl">Dividend Yield &gt; 2.5%</span> (Meaningful current cash return above S&P 500 average)',
+            '<span class="metric-hl">Payout Ratio &lt; 60%</span> (Retains 40%+ of earnings for reinvestment and buffer)',
+            '<span class="metric-hl">FCF Yield &gt; Dividend Yield</span> (Free Cash Flow fully covers cash dividends paid)',
+            '<span class="metric-hl">Interest Coverage &gt; 4x &amp; Low D/E</span> (EBIT easily services debt obligations)'
+          ],
+          whyItMatters: 'Accounting earnings can be manipulated, but dividends are paid in hard cash. Ensuring Payout Ratio < 60% and Free Cash Flow > Dividends guarantees the payout is organically funded with room for annual hikes.'
+        },
+        moat: {
+          id: 'moat',
+          name: 'Wide Moat',
+          tag: 'Compounder',
+          shortRules: 'ROIC > 15% | Gross Margin > 40% | Op. Margin > 18%',
+          archetype: 'Buffett / Munger Durable Competitive Advantage',
+          corePills: ['ROIC > 15%', 'Gross Margin > 40%', 'Operating Margin > 18%'],
+          primaryCols: ['roic', 'grossMargin', 'roe'],
+          goal: 'Identify dominant franchises with structural pricing power, switching costs, or network effects that compound reinvested capital at high rates for decades without competition eroding margins.',
+          screenerFilters: [
+            '<span class="metric-hl">Return on Invested Capital (ROIC) &gt; 15%</span> (Superior economic value creation above WACC)',
+            '<span class="metric-hl">Gross Margin &gt; 40%</span> (Strong pricing power and low direct unit costs)',
+            '<span class="metric-hl">Operating Margin &gt; 18%</span> (Operational scale and disciplined overhead)',
+            '<span class="metric-hl">Consistent ROE &gt; 18%</span> (High return on shareholder capital without excessive debt)'
+          ],
+          whyItMatters: 'Over a 10+ year holding period, a stock\'s annualized return converges toward its ROIC. A company sustaining Gross Margins > 40% and ROIC > 15% possesses an economic moat that competitors cannot easily breach.'
+        },
+        cashflow: {
+          id: 'cashflow',
+          name: 'Cash Flow Kings',
+          tag: 'FCF Machine',
+          shortRules: 'P/FCF < 18 | FCF Yield > 5.5% | CapEx/Rev < 10%',
+          archetype: 'Capital-Light Free Cash Flow Generators',
+          corePills: ['P/FCF < 18', 'FCF Yield > 5.5%', 'CapEx/Rev < 10%'],
+          primaryCols: ['fcfYield', 'roic', 'grossMargin'],
+          goal: 'Target capital-light businesses that convert a massive share of revenue into distributable Free Cash Flow (OCF minus CapEx), priced at an attractive P/FCF < 18 (equivalent to FCF Yield > 5.55%).',
+          screenerFilters: [
+            '<span class="metric-hl">Price / Free Cash Flow (P/FCF) &lt; 18</span> (Implied automatically when FCF Yield &gt; 5.55%)',
+            '<span class="metric-hl">Free Cash Flow Yield &gt; 5.5%</span> (High cash generation relative to Market Cap)',
+            '<span class="metric-hl">CapEx / Revenue &lt; 10%</span> (Asset-light model requiring minimal maintenance CapEx)',
+            '<span class="metric-hl">ROIC &gt; 15%</span> (High cash return on capital deployed)'
+          ],
+          whyItMatters: 'Net Income includes non-cash accruals, whereas Free Cash Flow is the true owner earnings available for share buybacks, debt reduction, M&A, and dividends. Capital-light cash cows compound wealth fastest.'
+        },
+        magic: {
+          id: 'magic',
+          name: 'Magic Formula',
+          tag: 'Greenblatt',
+          shortRules: 'Earnings Yield > 8% (P/E < 12.5) | Return on Capital > 25%',
+          archetype: 'Joel Greenblatt Quantitative Value + Quality Rank',
+          corePills: ['Earnings Yield > 8%', 'Return on Capital (ROIC) > 25%'],
+          primaryCols: ['pe', 'roic', 'fcfYield'],
+          goal: 'Systematically rank and buy wonderful companies (Return on Capital > 25%) only when they are available at bargain prices (Earnings Yield > 8%, corresponding to P/E < 12.5x).',
+          screenerFilters: [
+            '<span class="metric-hl">Earnings Yield &gt; 8.0%</span> (Equivalent to P/E &lt; 12.5x or EBIT/EV &gt; 8%)',
+            '<span class="metric-hl">Return on Capital (ROIC) &gt; 25%</span> (Elite capital efficiency in the top decile of stocks)',
+            '<span class="metric-hl">FCF Yield &gt; 6.0%</span> (Confirms high earnings yield is backed by cash)',
+            '<span class="metric-hl">Exclude Financials &amp; Utilities</span> (Focus on operating industrial, tech, and consumer firms)'
+          ],
+          whyItMatters: 'Greenblatt proved that combining two simple factors—high Return on Capital (business quality) and high Earnings Yield (cheapness)—beats the market by buying elite businesses during temporary pessimism.'
+        }
+      };
+
+      // --- 2. DEFAULT SAMPLE STOCKS (ARCHETYPES ACROSS ALL 6 STRATEGIES) ---
+      const DEFAULT_STOCKS = [
+        {
+          id: 'stk_1',
+          ticker: 'VALU',
+          price: 68.40,
+          pe: 11.4,
+          pb: 1.18,
+          de: 0.32,
+          peg: 1.25,
+          growth: 9.1,
+          divYield: 3.40,
+          payout: 38.0,
+          roe: 14.2,
+          roic: 13.5,
+          grossMargin: 34.0,
+          fcfYield: 7.40
+        },
+        {
+          id: 'stk_2',
+          ticker: 'GARP',
+          price: 184.20,
+          pe: 21.6,
+          pb: 4.10,
+          de: 0.42,
+          peg: 0.86,
+          growth: 25.0,
+          divYield: 0.60,
+          payout: 12.0,
+          roe: 24.5,
+          roic: 21.0,
+          grossMargin: 58.0,
+          fcfYield: 4.50
+        },
+        {
+          id: 'stk_3',
+          ticker: 'DIVQ',
+          price: 112.90,
+          pe: 16.8,
+          pb: 2.30,
+          de: 0.48,
+          peg: 1.95,
+          growth: 8.6,
+          divYield: 3.85,
+          payout: 46.0,
+          roe: 17.8,
+          roic: 15.6,
+          grossMargin: 44.5,
+          fcfYield: 6.10
+        },
+        {
+          id: 'stk_4',
+          ticker: 'MOAT',
+          price: 412.50,
+          pe: 26.4,
+          pb: 7.80,
+          de: 0.35,
+          peg: 1.45,
+          growth: 18.2,
+          divYield: 0.95,
+          payout: 24.0,
+          roe: 34.0,
+          roic: 28.5,
+          grossMargin: 68.5,
+          fcfYield: 4.20
+        },
+        {
+          id: 'stk_5',
+          ticker: 'FCFK',
+          price: 94.75,
+          pe: 14.5,
+          pb: 2.85,
+          de: 0.28,
+          peg: 1.10,
+          growth: 13.2,
+          divYield: 2.80,
+          payout: 35.0,
+          roe: 26.0,
+          roic: 27.4,
+          grossMargin: 51.2,
+          fcfYield: 7.85
+        },
+        {
+          id: 'stk_6',
+          ticker: 'SPEC',
+          price: 52.10,
+          pe: 48.5,
+          pb: 6.90,
+          de: 1.65,
+          peg: 2.70,
+          growth: 18.0,
+          divYield: 0.00,
+          payout: 0.0,
+          roe: 5.2,
+          roic: 4.8,
+          grossMargin: 24.0,
+          fcfYield: 1.15
+        }
+      ];
+
+      // --- 3. APPLICATION STATE ---
+      const state = {
+        activeStrategy: 'value',
+        editingId: null,
+        stocks: JSON.parse(JSON.stringify(DEFAULT_STOCKS))
+      };
+
+      // --- 4. RESILIENT NUMBER & CSV PARSING HELPERS ---
+      function parseNumber(val) {
+        if (typeof val === 'number') return isFinite(val) ? val : 0;
+        if (val === null || val === undefined) return 0;
+        let s = String(val).trim().replace(/[$€£%\s"']/g, '');
+        if (!s || s === '-' || s.toLowerCase() === 'na' || s.toLowerCase() === 'n/a') return NaN;
+        const lastComma = s.lastIndexOf(',');
+        const lastDot = s.lastIndexOf('.');
+        if (lastComma > -1 && lastDot > -1) {
+          if (lastComma > lastDot) {
+            s = s.replace(/\./g, '').replace(',', '.');
+          } else {
+            s = s.replace(/,/g, '');
+          }
+        } else if (lastComma > -1) {
+          const parts = s.split(',');
+          if (parts.length === 2 && parts[1].length !== 3) {
+            s = s.replace(',', '.');
+          } else {
+            s = s.replace(/,/g, '');
+          }
+        }
+        const n = parseFloat(s);
+        return isNaN(n) ? NaN : n;
+      }
+
+      function detectDelimiter(input) {
+        const text = Array.isArray(input) ? input.slice(0, 25).join('\n') : String(input || '');
+        const sample = text.slice(0, 5000);
+        const tabCount = (sample.match(/\t/g) || []).length;
+        const semiCount = (sample.match(/;/g) || []).length;
+        const commaCount = (sample.match(/,/g) || []).length;
+        if (tabCount > semiCount && tabCount > commaCount) return '\t';
+        if (semiCount > commaCount && semiCount > tabCount) return ';';
+        return ',';
+      }
+
+      function parseCSVLine(line, delimiter = ',') {
+        const result = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const c = line[i];
+          if (c === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              cur += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (c === delimiter && !inQuotes) {
+            result.push(cur.trim());
+            cur = '';
+          } else {
+            cur += c;
+          }
+        }
+        result.push(cur.trim());
+        return result;
+      }
+
+      function formatVal(val, decimals = 2, suffix = '') {
+        if (val === null || val === undefined || isNaN(val)) return 'N/A';
+        return Number(val).toFixed(decimals) + suffix;
+      }
+
+      function showToast(msg, isError = false) {
+        const toast = document.getElementById('statusToast');
+        if (!toast) return;
+        toast.style.display = 'inline-flex';
+        toast.style.background = isError ? 'rgba(244, 63, 94, 0.18)' : 'rgba(16, 185, 129, 0.16)';
+        toast.style.borderColor = isError ? 'rgba(244, 63, 94, 0.45)' : 'rgba(16, 185, 129, 0.45)';
+        toast.style.color = isError ? '#fda4af' : '#6ee7b7';
+        toast.textContent = msg;
+        clearTimeout(showToast._timer);
+        showToast._timer = setTimeout(() => {
+          toast.style.display = 'none';
+        }, 4200);
+      }
+
+      // --- 5. DYNAMIC SCORING ENGINE (EVALUATES EACH METRIC BY ACTIVE STRATEGY) ---
+      // Returns { status: 'pass' | 'warn' | 'fail', sub: optional string, reason: tooltip text }
+      function evaluateMetric(strategyId, metricKey, stock) {
+        const v = stock[metricKey];
+        if (v === null || v === undefined || isNaN(v)) {
+          return { status: 'fail', sub: 'N/A', reason: 'Metric missing or N/A' };
+        }
+
+        // Derived metrics for sub-labels & cross-checks
+        const impliedEarnYield = (stock.pe > 0) ? (100 / stock.pe) : NaN;
+        const impliedPFCF = (stock.fcfYield > 0) ? (100 / stock.fcfYield) : NaN;
+
+        switch (strategyId) {
+          case 'value': {
+            // Classic Value: (P/E < 15, P/B < 1.5, Debt/Equity < 0.5, Current Ratio > 1.5)
+            if (metricKey === 'pe') {
+              if (v > 0 && v < 15) return { status: 'pass', reason: 'Classic Value PASS: P/E < 15' };
+              if (v >= 15 && v <= 20) return { status: 'warn', reason: 'Classic Value WARN: P/E between 15 and 20' };
+              return { status: 'fail', reason: 'Classic Value FAIL: P/E > 20 or negative' };
+            }
+            if (metricKey === 'pb') {
+              if (v > 0 && v < 1.5) return { status: 'pass', reason: 'Classic Value PASS: P/B < 1.5' };
+              if (v >= 1.5 && v <= 2.2) return { status: 'warn', reason: 'Classic Value WARN: P/B between 1.5 and 2.2' };
+              return { status: 'fail', reason: 'Classic Value FAIL: P/B > 2.2' };
+            }
+            if (metricKey === 'de') {
+              if (v >= 0 && v < 0.5) return { status: 'pass', reason: 'Classic Value PASS: Debt/Equity < 0.5' };
+              if (v >= 0.5 && v <= 0.9) return { status: 'warn', reason: 'Classic Value WARN: Debt/Equity 0.5 - 0.9' };
+              return { status: 'fail', reason: 'Classic Value FAIL: Debt/Equity > 0.9' };
+            }
+            if (metricKey === 'peg') {
+              if (v > 0 && v <= 1.3) return { status: 'pass', reason: 'Supportive PEG <= 1.3' };
+              if (v > 1.3 && v <= 1.8) return { status: 'warn', reason: 'Moderate PEG 1.3 - 1.8' };
+              return { status: 'fail', reason: 'High PEG > 1.8' };
+            }
+            if (metricKey === 'growth') {
+              if (v >= 8) return { status: 'pass', reason: 'Positive earnings growth >= 8%' };
+              if (v >= 3) return { status: 'warn', reason: 'Low positive growth 3% - 8%' };
+              return { status: 'fail', reason: 'Stagnant growth < 3%' };
+            }
+            if (metricKey === 'divYield') {
+              if (v >= 2.0) return { status: 'pass', reason: 'Solid Value dividend yield >= 2.0%' };
+              if (v >= 0.8) return { status: 'warn', reason: 'Modest dividend yield 0.8% - 2.0%' };
+              return { status: 'fail', reason: 'Minimal/no dividend yield < 0.8%' };
+            }
+            if (metricKey === 'payout') {
+              if (v > 0 && v <= 60) return { status: 'pass', reason: 'Safe payout ratio <= 60%' };
+              if (v === 0 || (v > 60 && v <= 75)) return { status: 'warn', reason: 'Zero payout or elevated 60% - 75%' };
+              return { status: 'fail', reason: 'Unsustainable payout > 75%' };
+            }
+            if (metricKey === 'roe') {
+              if (v >= 12) return { status: 'pass', reason: 'Solid ROE >= 12%' };
+              if (v >= 8) return { status: 'warn', reason: 'Moderate ROE 8% - 12%' };
+              return { status: 'fail', reason: 'Weak ROE < 8%' };
+            }
+            if (metricKey === 'roic') {
+              if (v >= 12) return { status: 'pass', reason: 'Solid ROIC >= 12%' };
+              if (v >= 8) return { status: 'warn', reason: 'Moderate ROIC 8% - 12%' };
+              return { status: 'fail', reason: 'Weak ROIC < 8%' };
+            }
+            if (metricKey === 'grossMargin') {
+              if (v >= 32) return { status: 'pass', reason: 'Healthy gross margin >= 32%' };
+              if (v >= 20) return { status: 'warn', reason: 'Thin gross margin 20% - 32%' };
+              return { status: 'fail', reason: 'Low gross margin < 20%' };
+            }
+            if (metricKey === 'fcfYield') {
+              if (v >= 5.5) return { status: 'pass', reason: 'Strong cash backing: FCF Yield >= 5.5%' };
+              if (v >= 3.5) return { status: 'warn', reason: 'Moderate FCF Yield 3.5% - 5.5%' };
+              return { status: 'fail', reason: 'Low FCF Yield < 3.5%' };
+            }
+            break;
+          }
+
+          case 'garp': {
+            // GARP (Lynch): (PEG < 1.0, Fwd Growth > 15%, ROE > 15%, P/E < 30)
+            if (metricKey === 'peg') {
+              if (v > 0 && v < 1.0) return { status: 'pass', reason: 'GARP PASS: PEG < 1.0' };
+              if (v >= 1.0 && v <= 1.35) return { status: 'warn', reason: 'GARP WARN: PEG between 1.0 and 1.35' };
+              return { status: 'fail', reason: 'GARP FAIL: PEG > 1.35' };
+            }
+            if (metricKey === 'growth') {
+              if (v > 15) return { status: 'pass', reason: 'GARP PASS: Forward Growth > 15%' };
+              if (v >= 10 && v <= 15) return { status: 'warn', reason: 'GARP WARN: Forward Growth 10% - 15%' };
+              return { status: 'fail', reason: 'GARP FAIL: Forward Growth < 10%' };
+            }
+            if (metricKey === 'roe') {
+              if (v > 15) return { status: 'pass', reason: 'GARP PASS: ROE > 15%' };
+              if (v >= 11 && v <= 15) return { status: 'warn', reason: 'GARP WARN: ROE 11% - 15%' };
+              return { status: 'fail', reason: 'GARP FAIL: ROE < 11%' };
+            }
+            if (metricKey === 'pe') {
+              if (v > 0 && v < 30) return { status: 'pass', reason: 'GARP PASS: P/E < 30' };
+              if (v >= 30 && v <= 36) return { status: 'warn', reason: 'GARP WARN: P/E 30 - 36' };
+              return { status: 'fail', reason: 'GARP FAIL: P/E > 36' };
+            }
+            if (metricKey === 'de') {
+              if (v >= 0 && v < 0.65) return { status: 'pass', reason: 'Lynch balance sheet health: D/E < 0.65' };
+              if (v >= 0.65 && v <= 1.1) return { status: 'warn', reason: 'Moderate leverage: D/E 0.65 - 1.1' };
+              return { status: 'fail', reason: 'High debt for growth stock: D/E > 1.1' };
+            }
+            if (metricKey === 'pb') {
+              if (v > 0 && v <= 4.5) return { status: 'pass', reason: 'Reasonable P/B <= 4.5 for GARP' };
+              if (v > 4.5 && v <= 7.5) return { status: 'warn', reason: 'Elevated P/B 4.5 - 7.5' };
+              return { status: 'fail', reason: 'Rich P/B > 7.5' };
+            }
+            if (metricKey === 'roic') {
+              if (v >= 15) return { status: 'pass', reason: 'Strong ROIC >= 15%' };
+              if (v >= 10) return { status: 'warn', reason: 'Moderate ROIC 10% - 15%' };
+              return { status: 'fail', reason: 'Low ROIC < 10%' };
+            }
+            if (metricKey === 'grossMargin') {
+              if (v >= 40) return { status: 'pass', reason: 'Strong Gross Margin >= 40%' };
+              if (v >= 28) return { status: 'warn', reason: 'Moderate Gross Margin 28% - 40%' };
+              return { status: 'fail', reason: 'Low Gross Margin < 28%' };
+            }
+            if (metricKey === 'fcfYield') {
+              if (v >= 4.0) return { status: 'pass', reason: 'Healthy FCF Yield >= 4.0% for growth' };
+              if (v >= 2.5) return { status: 'warn', reason: 'Modest FCF Yield 2.5% - 4.0%' };
+              return { status: 'fail', reason: 'Weak FCF Yield < 2.5%' };
+            }
+            if (metricKey === 'divYield') {
+              if (v >= 0.5) return { status: 'pass', reason: 'Bonus dividend yield on growth stock' };
+              return { status: 'warn', reason: 'Reinvesting all cash into growth (0% yield)' };
+            }
+            if (metricKey === 'payout') {
+              if (v <= 50) return { status: 'pass', reason: 'Retains ample earnings for growth (<= 50%)' };
+              if (v <= 70) return { status: 'warn', reason: 'Moderate payout 50% - 70%' };
+              return { status: 'fail', reason: 'High payout limits growth reinvestment (> 70%)' };
+            }
+            break;
+          }
+
+          case 'dividend': {
+            // Dividend Quality: (Yield > 2.5%, Payout Ratio < 60%, FCF > Dividends, Int. Coverage > 4)
+            if (metricKey === 'divYield') {
+              if (v > 2.5) return { status: 'pass', reason: 'Dividend Quality PASS: Yield > 2.5%' };
+              if (v >= 1.75 && v <= 2.5) return { status: 'warn', reason: 'Dividend Quality WARN: Yield 1.75% - 2.5%' };
+              return { status: 'fail', reason: 'Dividend Quality FAIL: Yield < 1.75%' };
+            }
+            if (metricKey === 'payout') {
+              if (v > 0 && v < 60) return { status: 'pass', reason: 'Dividend Quality PASS: Payout Ratio < 60%' };
+              if (v >= 60 && v <= 75) return { status: 'warn', reason: 'Dividend Quality WARN: Payout Ratio 60% - 75%' };
+              return { status: 'fail', reason: 'Dividend Quality FAIL: Payout > 75% or 0% non-payer' };
+            }
+            if (metricKey === 'fcfYield') {
+              const divY = isNaN(stock.divYield) ? 0 : stock.divYield;
+              const fcfCoversDiv = (v > divY && divY > 0);
+              const subTxt = fcfCoversDiv ? 'FCF > Div' : 'FCF < Div';
+              if (fcfCoversDiv && v >= 4.0) return { status: 'pass', sub: subTxt, reason: 'Dividend Quality PASS: FCF Yield exceeds Dividend Yield (FCF > Dividends)' };
+              if (v >= divY && v > 0) return { status: 'warn', sub: subTxt, reason: 'Dividend Quality WARN: Tight FCF coverage over dividend' };
+              return { status: 'fail', sub: subTxt, reason: 'Dividend Quality FAIL: FCF does not cover Dividend Yield' };
+            }
+            if (metricKey === 'de') {
+              if (v >= 0 && v < 0.65) return { status: 'pass', reason: 'Strong debt & interest coverage capacity: D/E < 0.65' };
+              if (v >= 0.65 && v <= 1.1) return { status: 'warn', reason: 'Moderate debt load: D/E 0.65 - 1.1' };
+              return { status: 'fail', reason: 'Heavy debt load threatens dividend: D/E > 1.1' };
+            }
+            if (metricKey === 'pe') {
+              if (v > 0 && v <= 20) return { status: 'pass', reason: 'Reasonable dividend valuation P/E <= 20' };
+              if (v > 20 && v <= 27) return { status: 'warn', reason: 'Moderate P/E 20 - 27' };
+              return { status: 'fail', reason: 'Expensive P/E > 27' };
+            }
+            if (metricKey === 'pb') {
+              if (v > 0 && v <= 3.0) return { status: 'pass', reason: 'Conservative P/B <= 3.0' };
+              if (v > 3.0 && v <= 5.0) return { status: 'warn', reason: 'Moderate P/B 3.0 - 5.0' };
+              return { status: 'fail', reason: 'High P/B > 5.0' };
+            }
+            if (metricKey === 'roe') {
+              if (v >= 14) return { status: 'pass', reason: 'Strong ROE >= 14% supports dividend hikes' };
+              if (v >= 9) return { status: 'warn', reason: 'Moderate ROE 9% - 14%' };
+              return { status: 'fail', reason: 'Weak ROE < 9%' };
+            }
+            if (metricKey === 'roic') {
+              if (v >= 12) return { status: 'pass', reason: 'Solid ROIC >= 12%' };
+              if (v >= 8) return { status: 'warn', reason: 'Moderate ROIC 8% - 12%' };
+              return { status: 'fail', reason: 'Low ROIC < 8%' };
+            }
+            if (metricKey === 'grossMargin') {
+              if (v >= 35) return { status: 'pass', reason: 'Durable gross margin >= 35%' };
+              if (v >= 22) return { status: 'warn', reason: 'Moderate gross margin 22% - 35%' };
+              return { status: 'fail', reason: 'Thin gross margin < 22%' };
+            }
+            if (metricKey === 'growth') {
+              if (v >= 7) return { status: 'pass', reason: 'Healthy dividend growth runway >= 7%' };
+              if (v >= 3) return { status: 'warn', reason: 'Slow growth 3% - 7%' };
+              return { status: 'fail', reason: 'Stagnant growth < 3%' };
+            }
+            if (metricKey === 'peg') {
+              if (v > 0 && v <= 1.8) return { status: 'pass', reason: 'Reasonable PEG <= 1.8 for income stock' };
+              if (v > 1.8 && v <= 2.4) return { status: 'warn', reason: 'Elevated PEG 1.8 - 2.4' };
+              return { status: 'fail', reason: 'High PEG > 2.4' };
+            }
+            break;
+          }
+
+          case 'moat': {
+            // Wide Moat: (ROIC > 15%, Gross Margin > 40%, Operating Margin > 18%)
+            if (metricKey === 'roic') {
+              if (v > 15) return { status: 'pass', reason: 'Wide Moat PASS: ROIC > 15%' };
+              if (v >= 11 && v <= 15) return { status: 'warn', reason: 'Wide Moat WARN: ROIC 11% - 15%' };
+              return { status: 'fail', reason: 'Wide Moat FAIL: ROIC < 11%' };
+            }
+            if (metricKey === 'grossMargin') {
+              if (v > 40) return { status: 'pass', reason: 'Wide Moat PASS: Gross Margin > 40%' };
+              if (v >= 30 && v <= 40) return { status: 'warn', reason: 'Wide Moat WARN: Gross Margin 30% - 40%' };
+              return { status: 'fail', reason: 'Wide Moat FAIL: Gross Margin < 30%' };
+            }
+            if (metricKey === 'roe') {
+              if (v > 18) return { status: 'pass', reason: 'Wide Moat PASS: Elite ROE > 18% (Operating Margin proxy)' };
+              if (v >= 13 && v <= 18) return { status: 'warn', reason: 'Wide Moat WARN: ROE 13% - 18%' };
+              return { status: 'fail', reason: 'Wide Moat FAIL: ROE < 13%' };
+            }
+            if (metricKey === 'de') {
+              if (v >= 0 && v <= 0.65) return { status: 'pass', reason: 'Self-funded moat: D/E <= 0.65' };
+              if (v > 0.65 && v <= 1.2) return { status: 'warn', reason: 'Moderate leverage: D/E 0.65 - 1.2' };
+              return { status: 'fail', reason: 'High leverage: D/E > 1.2' };
+            }
+            if (metricKey === 'fcfYield') {
+              if (v >= 4.0) return { status: 'pass', reason: 'Strong cash conversion: FCF Yield >= 4.0%' };
+              if (v >= 2.8) return { status: 'warn', reason: 'Acceptable FCF Yield 2.8% - 4.0%' };
+              return { status: 'fail', reason: 'Low FCF Yield < 2.8%' };
+            }
+            if (metricKey === 'growth') {
+              if (v >= 12) return { status: 'pass', reason: 'Strong organic compounding >= 12%' };
+              if (v >= 7) return { status: 'warn', reason: 'Steady compounding 7% - 12%' };
+              return { status: 'fail', reason: 'Slow growth < 7%' };
+            }
+            if (metricKey === 'pe') {
+              if (v > 0 && v <= 28) return { status: 'pass', reason: 'Fair multiple for wide moat (P/E <= 28)' };
+              if (v > 28 && v <= 36) return { status: 'warn', reason: 'Premium multiple (P/E 28 - 36)' };
+              return { status: 'fail', reason: 'Excessive multiple (P/E > 36)' };
+            }
+            if (metricKey === 'peg') {
+              if (v > 0 && v <= 1.5) return { status: 'pass', reason: 'Attractive moat PEG <= 1.5' };
+              if (v > 1.5 && v <= 2.1) return { status: 'warn', reason: 'Moderate PEG 1.5 - 2.1' };
+              return { status: 'fail', reason: 'High PEG > 2.1' };
+            }
+            if (metricKey === 'pb') {
+              if (v > 0 && v <= 6.0) return { status: 'pass', reason: 'Acceptable P/B <= 6.0 for asset-light compounder' };
+              if (v > 6.0 && v <= 10.0) return { status: 'warn', reason: 'Elevated P/B 6.0 - 10.0' };
+              return { status: 'fail', reason: 'Very high P/B > 10.0' };
+            }
+            if (metricKey === 'divYield') {
+              if (v >= 1.0) return { status: 'pass', reason: 'Pays regular dividend >= 1.0%' };
+              return { status: 'warn', reason: 'Retains capital internally (< 1.0% yield)' };
+            }
+            if (metricKey === 'payout') {
+              if (v <= 55) return { status: 'pass', reason: 'High reinvestment retention (Payout <= 55%)' };
+              if (v <= 75) return { status: 'warn', reason: 'Moderate payout 55% - 75%' };
+              return { status: 'fail', reason: 'Payout > 75% leaves little for moat reinvestment' };
+            }
+            break;
+          }
+
+          case 'cashflow': {
+            // Cash Flow Kings: (P/FCF < 18, FCF Yield > 5.5%, CapEx/Rev < 10%)
+            if (metricKey === 'fcfYield') {
+              const pfcfSub = !isNaN(impliedPFCF) ? `P/FCF ${impliedPFCF.toFixed(1)}x` : '';
+              if (v > 5.5) return { status: 'pass', sub: pfcfSub, reason: `Cash Flow Kings PASS: FCF Yield > 5.5% (Implied P/FCF = ${impliedPFCF.toFixed(1)}x < 18x)` };
+              if (v >= 4.2 && v <= 5.5) return { status: 'warn', sub: pfcfSub, reason: `Cash Flow Kings WARN: FCF Yield 4.2% - 5.5% (P/FCF ${impliedPFCF.toFixed(1)}x)` };
+              return { status: 'fail', sub: pfcfSub, reason: 'Cash Flow Kings FAIL: FCF Yield < 4.2% (P/FCF > 23.8x)' };
+            }
+            if (metricKey === 'roic') {
+              if (v >= 16) return { status: 'pass', reason: 'Capital-light efficiency (CapEx/Rev < 10% proxy): ROIC >= 16%' };
+              if (v >= 11) return { status: 'warn', reason: 'Moderate capital efficiency: ROIC 11% - 16%' };
+              return { status: 'fail', reason: 'Capital-heavy / low return: ROIC < 11%' };
+            }
+            if (metricKey === 'grossMargin') {
+              if (v >= 40) return { status: 'pass', reason: 'High gross margin >= 40% drives cash conversion' };
+              if (v >= 28) return { status: 'warn', reason: 'Moderate gross margin 28% - 40%' };
+              return { status: 'fail', reason: 'Low gross margin < 28%' };
+            }
+            if (metricKey === 'de') {
+              if (v >= 0 && v <= 0.6) return { status: 'pass', reason: 'Low debt load D/E <= 0.6' };
+              if (v > 0.6 && v <= 1.1) return { status: 'warn', reason: 'Moderate D/E 0.6 - 1.1' };
+              return { status: 'fail', reason: 'High debt load D/E > 1.1' };
+            }
+            if (metricKey === 'pe') {
+              if (v > 0 && v <= 18) return { status: 'pass', reason: 'Low P/E <= 18 aligns with P/FCF < 18' };
+              if (v > 18 && v <= 25) return { status: 'warn', reason: 'Moderate P/E 18 - 25' };
+              return { status: 'fail', reason: 'High P/E > 25' };
+            }
+            if (metricKey === 'roe') {
+              if (v >= 16) return { status: 'pass', reason: 'Strong ROE >= 16%' };
+              if (v >= 11) return { status: 'warn', reason: 'Moderate ROE 11% - 16%' };
+              return { status: 'fail', reason: 'Weak ROE < 11%' };
+            }
+            if (metricKey === 'payout') {
+              if (v <= 55) return { status: 'pass', reason: 'Ample surplus FCF after dividends (Payout <= 55%)' };
+              if (v <= 75) return { status: 'warn', reason: 'Moderate payout 55% - 75%' };
+              return { status: 'fail', reason: 'High payout > 75%' };
+            }
+            if (metricKey === 'divYield') {
+              if (v >= 2.0) return { status: 'pass', reason: 'Healthy cash distribution >= 2.0%' };
+              if (v >= 0.8) return { status: 'warn', reason: 'Modest yield 0.8% - 2.0%' };
+              return { status: 'fail', reason: 'Low dividend yield < 0.8%' };
+            }
+            if (metricKey === 'growth') {
+              if (v >= 10) return { status: 'pass', reason: 'Strong FCF growth runway >= 10%' };
+              if (v >= 5) return { status: 'warn', reason: 'Moderate growth 5% - 10%' };
+              return { status: 'fail', reason: 'Low growth < 5%' };
+            }
+            if (metricKey === 'peg') {
+              if (v > 0 && v <= 1.35) return { status: 'pass', reason: 'Attractive PEG <= 1.35' };
+              if (v > 1.35 && v <= 1.9) return { status: 'warn', reason: 'Moderate PEG 1.35 - 1.9' };
+              return { status: 'fail', reason: 'High PEG > 1.9' };
+            }
+            if (metricKey === 'pb') {
+              if (v > 0 && v <= 3.5) return { status: 'pass', reason: 'Reasonable P/B <= 3.5' };
+              if (v > 3.5 && v <= 6.0) return { status: 'warn', reason: 'Moderate P/B 3.5 - 6.0' };
+              return { status: 'fail', reason: 'High P/B > 6.0' };
+            }
+            break;
+          }
+
+          case 'magic': {
+            // Magic Formula: (Earnings Yield > 8%, Return on Capital > 25%)
+            if (metricKey === 'pe') {
+              const eySub = !isNaN(impliedEarnYield) ? `EY ${impliedEarnYield.toFixed(1)}%` : '';
+              if (v > 0 && v <= 12.5) return { status: 'pass', sub: eySub, reason: `Magic Formula PASS: Earnings Yield ${impliedEarnYield.toFixed(1)}% > 8.0% (P/E <= 12.5)` };
+              if (v > 12.5 && v <= 16.7) return { status: 'warn', sub: eySub, reason: `Magic Formula WARN: Earnings Yield ${impliedEarnYield.toFixed(1)}% is between 6% and 8% (P/E 12.5 - 16.7)` };
+              return { status: 'fail', sub: eySub, reason: `Magic Formula FAIL: Earnings Yield ${!isNaN(impliedEarnYield) ? impliedEarnYield.toFixed(1) + '%' : 'N/A'} < 6.0% (P/E > 16.7)` };
+            }
+            if (metricKey === 'roic') {
+              if (v > 25) return { status: 'pass', reason: 'Magic Formula PASS: Return on Capital (ROIC) > 25%' };
+              if (v >= 18 && v <= 25) return { status: 'warn', reason: 'Magic Formula WARN: Return on Capital 18% - 25%' };
+              return { status: 'fail', reason: 'Magic Formula FAIL: Return on Capital < 18%' };
+            }
+            if (metricKey === 'fcfYield') {
+              if (v >= 6.5) return { status: 'pass', reason: 'Confirms >8% Earnings Yield with cash: FCF Yield >= 6.5%' };
+              if (v >= 4.5) return { status: 'warn', reason: 'Moderate FCF Yield 4.5% - 6.5%' };
+              return { status: 'fail', reason: 'Low FCF Yield < 4.5%' };
+            }
+            if (metricKey === 'roe') {
+              if (v >= 22) return { status: 'pass', reason: 'Elite ROE >= 22%' };
+              if (v >= 15) return { status: 'warn', reason: 'Good ROE 15% - 22%' };
+              return { status: 'fail', reason: 'ROE < 15%' };
+            }
+            if (metricKey === 'de') {
+              if (v >= 0 && v <= 0.5) return { status: 'pass', reason: 'Clean balance sheet D/E <= 0.5' };
+              if (v > 0.5 && v <= 1.0) return { status: 'warn', reason: 'Moderate D/E 0.5 - 1.0' };
+              return { status: 'fail', reason: 'High D/E > 1.0' };
+            }
+            if (metricKey === 'grossMargin') {
+              if (v >= 42) return { status: 'pass', reason: 'High Gross Margin >= 42%' };
+              if (v >= 28) return { status: 'warn', reason: 'Moderate Gross Margin 28% - 42%' };
+              return { status: 'fail', reason: 'Low Gross Margin < 28%' };
+            }
+            if (metricKey === 'peg') {
+              if (v > 0 && v <= 1.1) return { status: 'pass', reason: 'Bargain growth PEG <= 1.1' };
+              if (v > 1.1 && v <= 1.6) return { status: 'warn', reason: 'Moderate PEG 1.1 - 1.6' };
+              return { status: 'fail', reason: 'High PEG > 1.6' };
+            }
+            if (metricKey === 'growth') {
+              if (v >= 10) return { status: 'pass', reason: 'Solid forward growth >= 10%' };
+              if (v >= 5) return { status: 'warn', reason: 'Modest growth 5% - 10%' };
+              return { status: 'fail', reason: 'Low growth < 5%' };
+            }
+            if (metricKey === 'pb') {
+              if (v > 0 && v <= 3.5) return { status: 'pass', reason: 'Reasonable P/B <= 3.5' };
+              if (v > 3.5 && v <= 6.0) return { status: 'warn', reason: 'Moderate P/B 3.5 - 6.0' };
+              return { status: 'fail', reason: 'High P/B > 6.0' };
+            }
+            if (metricKey === 'divYield') {
+              if (v >= 2.0) return { status: 'pass', reason: 'Strong dividend >= 2.0%' };
+              if (v >= 0.5) return { status: 'warn', reason: 'Modest dividend 0.5% - 2.0%' };
+              return { status: 'fail', reason: 'No dividend < 0.5%' };
+            }
+            if (metricKey === 'payout') {
+              if (v <= 55) return { status: 'pass', reason: 'Healthy payout ratio <= 55%' };
+              if (v <= 75) return { status: 'warn', reason: 'Moderate payout 55% - 75%' };
+              return { status: 'fail', reason: 'High payout > 75%' };
+            }
+            break;
+          }
+        }
+
+        return { status: 'neutral', reason: '' };
+      }
+
+      // Compute weighted Strategy Match Score for a stock (Primary rules weighted 2x)
+      function computeStrategyScore(strategyId, stock) {
+        const strat = STRATEGIES[strategyId];
+        const metricKeys = ['pe', 'pb', 'de', 'peg', 'growth', 'divYield', 'payout', 'roe', 'roic', 'grossMargin', 'fcfYield'];
+        let earnedPoints = 0;
+        let maxPoints = 0;
+        let primaryPassed = 0;
+
+        metricKeys.forEach(k => {
+          const isPrimary = strat.primaryCols.includes(k);
+          const weight = isPrimary ? 2.5 : 1.0;
+          maxPoints += weight;
+
+          const res = evaluateMetric(strategyId, k, stock);
+          if (res.status === 'pass') {
+            earnedPoints += weight;
+            if (isPrimary) primaryPassed++;
+          } else if (res.status === 'warn') {
+            earnedPoints += weight * 0.5;
+          }
+        });
+
+        const pct = Math.round((earnedPoints / maxPoints) * 100);
+        return {
+          pct,
+          primaryPassed,
+          primaryTotal: strat.primaryCols.length
+        };
+      }
+
+      // --- 6. RENDERING FUNCTIONS ---
+      function renderStrategyButtons() {
+        const container = document.getElementById('strategyButtonsContainer');
+        container.innerHTML = '';
+
+        Object.values(STRATEGIES).forEach(strat => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'strategy-btn' + (state.activeStrategy === strat.id ? ' active' : '');
+          btn.setAttribute('aria-pressed', state.activeStrategy === strat.id ? 'true' : 'false');
+          btn.innerHTML = `
+            <div class="strategy-btn-top">
+              <span class="strategy-name">${strat.name}</span>
+              <span class="strategy-tag">${strat.tag}</span>
+            </div>
+            <div class="strategy-rules-mini">${strat.shortRules}</div>
+          `;
+          btn.addEventListener('click', () => {
+            state.activeStrategy = strat.id;
+            renderAll();
+          });
+          container.appendChild(btn);
+        });
+      }
+
+      function renderPlaybookCard() {
+        const strat = STRATEGIES[state.activeStrategy];
+        const card = document.getElementById('playbookCard');
+        const indicator = document.getElementById('activeStrategyIndicator');
+        if (indicator) {
+          indicator.textContent = `Active Scoring Mode: ${strat.name} (${strat.tag})`;
+        }
+
+        const pillsHtml = strat.corePills.map(p => `<span class="rule-pill">${p}</span>`).join('');
+        const filtersHtml = strat.screenerFilters.map(f => `<li>${f}</li>`).join('');
+
+        card.innerHTML = `
+          <div class="playbook-header">
+            <div class="playbook-title-group">
+              <h3>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                ${strat.name} Playbook
+              </h3>
+              <div class="playbook-archetype">${strat.archetype}</div>
+            </div>
+            <div class="playbook-Core-pills">
+              ${pillsHtml}
+            </div>
+          </div>
+
+          <div class="playbook-body-grid">
+            <div class="playbook-col">
+              <div class="playbook-col-label label-goal">
+                <span>1. The Goal of the Strategy</span>
+              </div>
+              <p>${strat.goal}</p>
+            </div>
+
+            <div class="playbook-col">
+              <div class="playbook-col-label label-filters">
+                <span>2. Exact Public Screener Filters</span>
+              </div>
+              <ul>${filtersHtml}</ul>
+            </div>
+
+            <div class="playbook-col">
+              <div class="playbook-col-label label-why">
+                <span>3. Why These Metrics Matter</span>
+              </div>
+              <p>${strat.whyItMatters}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      const TABLE_COLUMNS = [
+        { key: 'pe', label: 'P/E Ratio', decimals: 1, suffix: 'x' },
+        { key: 'pb', label: 'P/B Ratio', decimals: 2, suffix: 'x' },
+        { key: 'de', label: 'Debt/Eq', decimals: 2, suffix: '' },
+        { key: 'peg', label: 'PEG Ratio', decimals: 2, suffix: '' },
+        { key: 'growth', label: 'Fwd Growth', decimals: 1, suffix: '%' },
+        { key: 'divYield', label: 'Div Yield', decimals: 2, suffix: '%' },
+        { key: 'payout', label: 'Payout %', decimals: 1, suffix: '%' },
+        { key: 'roe', label: 'ROE %', decimals: 1, suffix: '%' },
+        { key: 'roic', label: 'ROIC %', decimals: 1, suffix: '%' },
+        { key: 'grossMargin', label: 'Gross Margin', decimals: 1, suffix: '%' },
+        { key: 'fcfYield', label: 'FCF Yield', decimals: 2, suffix: '%' }
+      ];
+
+      function getPrimaryRuleBadgeText(strategyId, colKey) {
+        const map = {
+          value: { pe: 'Rule: < 15x', pb: 'Rule: < 1.5x', de: 'Rule: < 0.50' },
+          garp: { peg: 'Rule: < 1.0', growth: 'Rule: > 15%', roe: 'Rule: > 15%', pe: 'Rule: < 30x' },
+          dividend: { divYield: 'Rule: > 2.5%', payout: 'Rule: < 60%', fcfYield: 'Rule: > Div%', de: 'Int.Cov > 4' },
+          moat: { roic: 'Rule: > 15%', grossMargin: 'Rule: > 40%', roe: 'OpMgn > 18%' },
+          cashflow: { fcfYield: 'P/FCF < 18 (>5.5%)', roic: 'CapEx/Rev < 10%', grossMargin: 'High Conv.' },
+          magic: { pe: 'EY > 8% (<12.5x)', roic: 'ROC > 25%', fcfYield: 'Cash Backing' }
+        };
+        return (map[strategyId] && map[strategyId][colKey]) ? map[strategyId][colKey] : '';
+      }
+
+      function renderComparisonTable() {
+        const strat = STRATEGIES[state.activeStrategy];
+        const thead = document.getElementById('comparisonThead');
+        const tbody = document.getElementById('comparisonTbody');
+
+        // Build Header Row
+        let headHtml = `<tr>
+          <th>Ticker</th>
+          <th>Price ($)</th>`;
+
+        TABLE_COLUMNS.forEach(col => {
+          const isPrimary = strat.primaryCols.includes(col.key);
+          const badgeTxt = getPrimaryRuleBadgeText(state.activeStrategy, col.key);
+          headHtml += `<th class="${isPrimary ? 'col-primary-rule' : ''}">
+            ${badgeTxt ? `<span class="th-rule-badge">${badgeTxt}</span>` : ''}
+            ${col.label}
+          </th>`;
+        });
+
+        headHtml += `
+          <th>Strategy Fit</th>
+          <th>Actions</th>
+        </tr>`;
+        thead.innerHTML = headHtml;
+
+        // Build Body Rows
+        if (!state.stocks || state.stocks.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="15" class="empty-state">No stocks in comparison grid yet. Add a stock above or click "Restore Sample Watchlist".</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = '';
+        state.stocks.forEach(stock => {
+          const tr = document.createElement('tr');
+          const scoreObj = computeStrategyScore(state.activeStrategy, stock);
+
+          let scoreClass = 'score-low';
+          if (scoreObj.pct >= 75) scoreClass = 'score-high';
+          else if (scoreObj.pct >= 50) scoreClass = 'score-mid';
+
+          let rowHtml = `
+            <td>
+              <div class="ticker-cell">
+                <span class="ticker-symbol">${escapeHtml(stock.ticker)}</span>
+              </div>
+            </td>
+            <td class="font-semibold">$${formatVal(stock.price, 2)}</td>
+          `;
+
+          TABLE_COLUMNS.forEach(col => {
+            const isPrimary = strat.primaryCols.includes(col.key);
+            const evalRes = evaluateMetric(state.activeStrategy, col.key, stock);
+            const formatted = formatVal(stock[col.key], col.decimals, col.suffix);
+            const subHtml = evalRes.sub ? `<span class="metric-sub">${evalRes.sub}</span>` : '';
+
+            rowHtml += `
+              <td class="cell-${evalRes.status} ${isPrimary ? 'col-is-primary' : ''}" title="${escapeHtml(evalRes.reason)}">
+                <div class="metric-pill">
+                  <span>${formatted}</span>
+                  ${subHtml}
+                </div>
+              </td>
+            `;
+          });
+
+          rowHtml += `
+            <td>
+              <span class="score-badge ${scoreClass}" title="${scoreObj.primaryPassed} of ${scoreObj.primaryTotal} Core Playbook Rules Passed">
+                ${scoreObj.pct}% (${scoreObj.primaryPassed}/${scoreObj.primaryTotal})
+              </span>
+            </td>
+            <td>
+              <div class="row-actions">
+                <button type="button" class="btn btn-edit" data-action="edit" data-id="${stock.id}" title="Load stock into form to edit">Edit</button>
+                <button type="button" class="btn btn-danger" data-action="delete" data-id="${stock.id}" title="Delete row">Delete</button>
+              </div>
+            </td>
+          `;
+
+          tr.innerHTML = rowHtml;
+          tbody.appendChild(tr);
+        });
+      }
+
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function renderAll() {
+        renderStrategyButtons();
+        renderPlaybookCard();
+        renderComparisonTable();
+      }
+
+      // --- 7. FORM SUBMISSION, EDITING & DELETION ---
+      const stockForm = document.getElementById('stockForm');
+      const btnSubmitStock = document.getElementById('btnSubmitStock');
+      const btnCancelEdit = document.getElementById('btnCancelEdit');
+
+      function resetFormMode() {
+        state.editingId = null;
+        stockForm.reset();
+        btnSubmitStock.textContent = '+ Add Stock';
+        btnCancelEdit.style.display = 'none';
+      }
+
+      stockForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const rawTicker = document.getElementById('inpTicker').value.trim().toUpperCase();
+        if (!rawTicker) {
+          showToast('Please enter a Ticker Symbol (e.g. AAPL).', true);
+          document.getElementById('inpTicker').focus();
+          return;
+        }
+
+        const price = parseNumber(document.getElementById('inpPrice').value);
+        const pe = parseNumber(document.getElementById('inpPE').value);
+        const pb = parseNumber(document.getElementById('inpPB').value);
+        const de = parseNumber(document.getElementById('inpDE').value);
+        let peg = parseNumber(document.getElementById('inpPEG').value);
+        const growth = parseNumber(document.getElementById('inpGrowth').value);
+        const divYield = parseNumber(document.getElementById('inpDivYield').value);
+        const payout = parseNumber(document.getElementById('inpPayout').value);
+        const roe = parseNumber(document.getElementById('inpROE').value);
+        const roic = parseNumber(document.getElementById('inpROIC').value);
+        const grossMargin = parseNumber(document.getElementById('inpGrossMargin').value);
+        const fcfYield = parseNumber(document.getElementById('inpFCFYield').value);
+
+        // Auto-derive PEG if left blank and P/E + Growth are positive
+        if (isNaN(peg) && !isNaN(pe) && pe > 0 && !isNaN(growth) && growth > 0) {
+          peg = parseFloat((pe / growth).toFixed(2));
+        }
+
+        const entryData = {
+          id: state.editingId || ('stk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)),
+          ticker: rawTicker,
+          price: isNaN(price) ? 0 : price,
+          pe,
+          pb,
+          de,
+          peg,
+          growth,
+          divYield: isNaN(divYield) ? 0 : divYield,
+          payout: isNaN(payout) ? 0 : payout,
+          roe,
+          roic,
+          grossMargin,
+          fcfYield
+        };
+
+        if (state.editingId) {
+          const idx = state.stocks.findIndex(s => s.id === state.editingId);
+          if (idx > -1) {
+            state.stocks[idx] = entryData;
+            showToast(`Updated ${rawTicker} in comparison grid.`);
+          }
+        } else {
+          // If ticker already exists, update it or add new row
+          const existingIdx = state.stocks.findIndex(s => s.ticker === rawTicker);
+          if (existingIdx > -1) {
+            entryData.id = state.stocks[existingIdx].id;
+            state.stocks[existingIdx] = entryData;
+            showToast(`Updated existing ticker ${rawTicker}.`);
+          } else {
+            state.stocks.push(entryData);
+            showToast(`Added ${rawTicker} to comparison grid.`);
+          }
+        }
+
+        resetFormMode();
+        renderComparisonTable();
+      });
+
+      btnCancelEdit.addEventListener('click', () => {
+        resetFormMode();
+      });
+
+      // Delegate Edit / Delete clicks in Comparison Table
+      document.getElementById('comparisonTbody').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const action = btn.getAttribute('data-action');
+        const id = btn.getAttribute('data-id');
+
+        if (action === 'delete') {
+          const target = state.stocks.find(s => s.id === id);
+          state.stocks = state.stocks.filter(s => s.id !== id);
+          if (state.editingId === id) resetFormMode();
+          renderComparisonTable();
+          if (target) showToast(`Removed ${target.ticker} from grid.`);
+        } else if (action === 'edit') {
+          const stock = state.stocks.find(s => s.id === id);
+          if (!stock) return;
+          state.editingId = stock.id;
+          document.getElementById('inpTicker').value = stock.ticker;
+          document.getElementById('inpPrice').value = isNaN(stock.price) ? '' : stock.price;
+          document.getElementById('inpPE').value = isNaN(stock.pe) ? '' : stock.pe;
+          document.getElementById('inpPB').value = isNaN(stock.pb) ? '' : stock.pb;
+          document.getElementById('inpDE').value = isNaN(stock.de) ? '' : stock.de;
+          document.getElementById('inpPEG').value = isNaN(stock.peg) ? '' : stock.peg;
+          document.getElementById('inpGrowth').value = isNaN(stock.growth) ? '' : stock.growth;
+          document.getElementById('inpDivYield').value = isNaN(stock.divYield) ? '' : stock.divYield;
+          document.getElementById('inpPayout').value = isNaN(stock.payout) ? '' : stock.payout;
+          document.getElementById('inpROE').value = isNaN(stock.roe) ? '' : stock.roe;
+          document.getElementById('inpROIC').value = isNaN(stock.roic) ? '' : stock.roic;
+          document.getElementById('inpGrossMargin').value = isNaN(stock.grossMargin) ? '' : stock.grossMargin;
+          document.getElementById('inpFCFYield').value = isNaN(stock.fcfYield) ? '' : stock.fcfYield;
+
+          btnSubmitStock.textContent = `Save ${stock.ticker}`;
+          btnCancelEdit.style.display = 'inline-flex';
+          stockForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+
+      document.getElementById('btnResetSamples').addEventListener('click', () => {
+        state.stocks = JSON.parse(JSON.stringify(DEFAULT_STOCKS));
+        resetFormMode();
+        renderComparisonTable();
+        showToast('Restored 6 sample benchmark stocks.');
+      });
+
+      document.getElementById('btnClearAll').addEventListener('click', () => {
+        state.stocks = [];
+        resetFormMode();
+        renderComparisonTable();
+        showToast('Cleared all stocks from grid.');
+      });
+
+      // --- 8. BI-DIRECTIONAL CSV PERSISTENCE (EXPORT & LOAD) ---
+      function exportToCSV() {
+        const now = new Date();
+        const dateStr = now.toISOString().split('T')[0];
+        const strat = STRATEGIES[state.activeStrategy];
+
+        const rows = [];
+        rows.push(['STOCK ANALYSIS & SCREENER ENGINE']);
+        rows.push(['Export Date', dateStr]);
+        rows.push(['Active Strategy ID', strat.id]);
+        rows.push(['Active Strategy Name', `"${strat.name} (${strat.tag})"`]);
+        rows.push(['Total Analyzed Stocks', state.stocks.length]);
+        rows.push([]);
+
+        rows.push(['MULTI-STOCK COMPARISON GRID']);
+        rows.push([
+          'Ticker Symbol',
+          'Current Price ($)',
+          'P/E Ratio',
+          'P/B Ratio',
+          'Debt/Equity',
+          'PEG Ratio',
+          'Forward Growth (%)',
+          'Dividend Yield (%)',
+          'Payout Ratio (%)',
+          'ROE (%)',
+          'ROIC (%)',
+          'Gross Margin (%)',
+          'FCF Yield (%)',
+          'Strategy Match (%)'
+        ]);
+
+        state.stocks.forEach(s => {
+          const scoreObj = computeStrategyScore(state.activeStrategy, s);
+          const fmt = (v) => (v === null || v === undefined || isNaN(v)) ? 'N/A' : Number(v).toFixed(2);
+          rows.push([
+            `"${String(s.ticker).replace(/"/g, '""')}"`,
+            fmt(s.price),
+            fmt(s.pe),
+            fmt(s.pb),
+            fmt(s.de),
+            fmt(s.peg),
+            fmt(s.growth),
+            fmt(s.divYield),
+            fmt(s.payout),
+            fmt(s.roe),
+            fmt(s.roic),
+            fmt(s.grossMargin),
+            fmt(s.fcfYield),
+            `${scoreObj.pct}%`
+          ]);
+        });
+
+        const csvContent = '\uFEFF' + rows.map(r => r.join(',')).join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Stock_Screener_${strat.id}_${dateStr}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showToast(`Exported ${state.stocks.length} stocks to CSV.`);
+      }
+
+      function handleCSVFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const text = e.target.result;
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            const delimiter = detectDelimiter(lines);
+
+            let importedStrategy = state.activeStrategy;
+            const importedStocks = [];
+            let inStockTable = false;
+
+            for (let i = 0; i < lines.length; i++) {
+              const cols = parseCSVLine(lines[i], delimiter);
+              const firstCol = (cols[0] || '').replace(/^"|"$/g, '').trim();
+              const firstLower = firstCol.toLowerCase();
+
+              if (firstLower === 'active strategy id') {
+                const candidate = (cols[1] || '').replace(/^"|"$/g, '').trim().toLowerCase();
+                if (STRATEGIES[candidate]) {
+                  importedStrategy = candidate;
+                }
+                continue;
+              }
+
+              // Detect header row of stock table (supports both suite format and direct header CSVs)
+              if (
+                firstLower === 'ticker symbol' ||
+                firstLower === 'ticker' ||
+                (firstLower.includes('ticker') && cols.length >= 10)
+              ) {
+                inStockTable = true;
+                continue;
+              }
+
+              if (inStockTable && cols.length >= 10) {
+                const ticker = firstCol.toUpperCase();
+                if (!ticker || ticker.includes('---') || ticker.toLowerCase().includes('total')) continue;
+
+                importedStocks.push({
+                  id: 'stk_' + Date.now() + '_' + importedStocks.length + '_' + Math.random().toString(36).slice(2, 5),
+                  ticker,
+                  price: parseNumber(cols[1]),
+                  pe: parseNumber(cols[2]),
+                  pb: parseNumber(cols[3]),
+                  de: parseNumber(cols[4]),
+                  peg: parseNumber(cols[5]),
+                  growth: parseNumber(cols[6]),
+                  divYield: parseNumber(cols[7]),
+                  payout: parseNumber(cols[8]),
+                  roe: parseNumber(cols[9]),
+                  roic: parseNumber(cols[10]),
+                  grossMargin: parseNumber(cols[11]),
+                  fcfYield: parseNumber(cols[12])
+                });
+              }
+            }
+
+            if (importedStocks.length > 0) {
+              state.activeStrategy = importedStrategy;
+              state.stocks = importedStocks;
+              resetFormMode();
+              renderAll();
+              showToast(`Loaded ${importedStocks.length} stocks and scored against ${STRATEGIES[state.activeStrategy].name}.`);
+            } else {
+              showToast('Could not find valid stock rows in the selected CSV file.', true);
+            }
+          } catch (err) {
+            console.error(err);
+            showToast('Error parsing CSV file. Please verify its format.', true);
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      document.getElementById('btnExportCSV').addEventListener('click', exportToCSV);
+
+      const csvFileInput = document.getElementById('csvFileInput');
+      document.getElementById('btnLoadCSV').addEventListener('click', () => {
+        csvFileInput.value = '';
+        csvFileInput.click();
+      });
+
+      csvFileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleCSVFile(e.target.files[0]);
+        }
+      });
+
+      // Bootstrap Application
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
+
