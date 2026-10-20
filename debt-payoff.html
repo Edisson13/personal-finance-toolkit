@@ -797,15 +797,6 @@
           </svg>
           <span id="lblExportCSV">Export CSV</span>
         </button>
-
-        <!-- Add Debt Button -->
-        <button type="button" class="btn btn-primary" id="btnAddDebt">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-          <span id="lblAddDebt">Add Debt</span>
-        </button>
       </div>
     </header>
 
@@ -880,9 +871,20 @@
 
       <!-- Left Column: Debts Configurator -->
       <section class="card" aria-label="Debts Configuration">
-        <div class="card-title">
-          <span><span id="lblActiveAccounts">Active Accounts</span> (<span id="debtCountBadge">3</span>)</span>
-          <span id="lblAdjustDebtsHint" style="font-size:0.75rem; font-weight:400; color:var(--text-muted);">Adjust balance, APR &amp; minimums</span>
+        <div class="card-title" style="align-items: flex-start; margin-bottom: 1.1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <span><span id="lblActiveAccounts">Active Accounts</span> (<span id="debtCountBadge">3</span>)</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.45rem;">
+            <span id="lblAdjustDebtsHint" style="font-size:0.75rem; font-weight:400; color:var(--text-muted);">Adjust balance, APR &amp; minimums</span>
+            <button type="button" class="btn btn-primary" id="btnAddDebt" style="padding: 0.42rem 0.85rem; font-size: 0.82rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span id="lblAddDebt">Add Debt</span>
+            </button>
+          </div>
         </div>
 
         <div class="debts-list" id="debtsContainer"></div>
